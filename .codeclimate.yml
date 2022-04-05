@@ -1,0 +1,22 @@
+---
+engines:
+  file-lines:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript
+        - typescript
+  eslint:
+    enabled: true
+    channel: "eslint-7"
+checks:
+  method-lines:
+    enabled: false
+ratings:
+  paths:
+    - "**.ts"
+exclude_patterns:
+  - "src/contracts/"
+  - "src/api/"
