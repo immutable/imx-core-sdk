@@ -1,0 +1,24 @@
+# Swagger Typescript API
+
+https://github.com/acacode/swagger-typescript-api
+
+```
+npx swagger-typescript-api -p ../openapitools/openapi.json -o ./out -n api.ts
+```
+
+Requires node v14
+
+## Console Output
+
+```
+> swagger-typescript-api -p ../openapitools/openapi.json -o ./out -n api.ts
+
+✨   try to get swagger by path "/Users/ipekturgul/dev/experiments/imx-core-sdk-poc/client-gen/openapitools/openapi.json"
+✨   try to read templates from directory "/Users/ipekturgul/dev/experiments/imx-core-sdk-poc/client-gen/swagger-typescript-api-lib/node_modules/swagger-typescript-api/templates/default"
+☄️    start generating your typescript api
+⚠️    Module "v1" already have method "mintableTokenDetail()"
+⚠️    This method has been renamed to "mintableTokenDetail2()" to solve conflict names.
+⚠️    Module "v2" already have method "balancesDetail()"
+⚠️    This method has been renamed to "balancesDetail2()" to solve conflict names.
+✅   typescript api file api.ts created in /Users/ipekturgul/dev/experiments/imx-core-sdk-poc/client-gen/swagger-typescript-api-lib/out
+```
