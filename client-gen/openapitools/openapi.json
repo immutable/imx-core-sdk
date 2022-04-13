@@ -60,6 +60,7 @@
         "produces": ["application/json"],
         "tags": ["applications"],
         "summary": "Get details of an application with the given ID",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -2374,6 +2375,7 @@
         "produces": ["application/json"],
         "tags": ["transfers"],
         "summary": "Creates a transfer of multiple tokens between two parties",
+        "operationId": "CreateTransferV2",
         "parameters": [
           {
             "type": "string",

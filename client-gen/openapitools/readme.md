@@ -23,11 +23,22 @@ docker run --rm \
     -v $PWD:/openapitools openapitools/openapi-generator-cli generate \
     -i /openapitools/openapi.json \
     -g typescript-axios \
-    --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true  \
-    -o /openapitools/out/typescript
+    --additional-properties=withSeparateModelsAndApi=true,apiPackage=IMXAPI,modelPackage=IMXModels  \
+    -o /openapitools/out/typescript2
 ```
 
-# Kotlin Client
+Token Experiment:
+
+```
+docker run --rm \
+    -v $PWD:/openapitools openapitools/openapi-generator-cli generate \
+    -i /openapitools/openapi3.yaml \
+    -g typescript-axios \
+    --additional-properties=withSeparateModelsAndApi=true,apiPackage=IMXAPI,modelPackage=IMXModels  \
+    -o /openapitools/out/token
+```
+
+## Kotlin Client
 
 ```
 docker run --rm \

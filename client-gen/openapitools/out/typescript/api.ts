@@ -3187,6 +3187,7 @@ export const ApplicationsApiAxiosParamCreator = function (configuration?: Config
          * @summary Get details of an application with the given ID
          * @param {string} id Application ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         v1ApplicationsIdGet: async (id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -3245,6 +3246,7 @@ export const ApplicationsApiFp = function(configuration?: Configuration) {
          * @summary Get details of an application with the given ID
          * @param {string} id Application ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async v1ApplicationsIdGet(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiApplication>> {
@@ -3279,6 +3281,7 @@ export const ApplicationsApiFactory = function (configuration?: Configuration, b
          * @summary Get details of an application with the given ID
          * @param {string} id Application ID
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         v1ApplicationsIdGet(id: string, options?: any): AxiosPromise<ApiApplication> {
@@ -3314,6 +3317,7 @@ export class ApplicationsApi extends BaseAPI {
      * @summary Get details of an application with the given ID
      * @param {string} id Application ID
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ApplicationsApi
      */
@@ -7454,6 +7458,52 @@ export class TradesApi extends BaseAPI {
 export const TransfersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * Create a new transfer request
+         * @summary Creates a transfer of multiple tokens between two parties
+         * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransferV2: async (createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createTransferRequestV2' is not null or undefined
+            assertParamExists('createTransferV2', 'createTransferRequestV2', createTransferRequestV2)
+            const localVarPath = `/v2/transfers`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (xImxEthAddress !== undefined && xImxEthAddress !== null) {
+                localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
+            }
+
+            if (xImxEthSignature !== undefined && xImxEthSignature !== null) {
+                localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createTransferRequestV2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
          * @param {ApiGetSignableTransferRequest} getSignableTransferRequest get details of signable transfer
@@ -7715,52 +7765,6 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Create a new transfer request
-         * @summary Creates a transfer of multiple tokens between two parties
-         * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v2TransfersPost: async (createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createTransferRequestV2' is not null or undefined
-            assertParamExists('v2TransfersPost', 'createTransferRequestV2', createTransferRequestV2)
-            const localVarPath = `/v2/transfers`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (xImxEthAddress !== undefined && xImxEthAddress !== null) {
-                localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
-            }
-
-            if (xImxEthSignature !== undefined && xImxEthSignature !== null) {
-                localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createTransferRequestV2, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -7771,6 +7775,19 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
 export const TransfersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TransfersApiAxiosParamCreator(configuration)
     return {
+        /**
+         * Create a new transfer request
+         * @summary Creates a transfer of multiple tokens between two parties
+         * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createTransferV2(createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiCreateTransferResponseV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTransferV2(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
@@ -7843,19 +7860,6 @@ export const TransfersApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.v2SignableTransferDetailsPost(getSignableTransferRequestV2, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
-        /**
-         * Create a new transfer request
-         * @summary Creates a transfer of multiple tokens between two parties
-         * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async v2TransfersPost(createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiCreateTransferResponseV2>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.v2TransfersPost(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
     }
 };
 
@@ -7866,6 +7870,18 @@ export const TransfersApiFp = function(configuration?: Configuration) {
 export const TransfersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TransfersApiFp(configuration)
     return {
+        /**
+         * Create a new transfer request
+         * @summary Creates a transfer of multiple tokens between two parties
+         * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createTransferV2(createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options?: any): AxiosPromise<ApiCreateTransferResponseV2> {
+            return localVarFp.createTransferV2(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options).then((request) => request(axios, basePath));
+        },
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
@@ -7933,18 +7949,6 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
         v2SignableTransferDetailsPost(getSignableTransferRequestV2: ApiGetSignableTransferRequestV2, options?: any): AxiosPromise<ApiGetSignableTransferResponseV2> {
             return localVarFp.v2SignableTransferDetailsPost(getSignableTransferRequestV2, options).then((request) => request(axios, basePath));
         },
-        /**
-         * Create a new transfer request
-         * @summary Creates a transfer of multiple tokens between two parties
-         * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        v2TransfersPost(createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options?: any): AxiosPromise<ApiCreateTransferResponseV2> {
-            return localVarFp.v2TransfersPost(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -7955,6 +7959,20 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
  * @extends {BaseAPI}
  */
 export class TransfersApi extends BaseAPI {
+    /**
+     * Create a new transfer request
+     * @summary Creates a transfer of multiple tokens between two parties
+     * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
+     * @param {string} [xImxEthAddress] eth address
+     * @param {string} [xImxEthSignature] eth signature
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TransfersApi
+     */
+    public createTransferV2(createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
+        return TransfersApiFp(this.configuration).createTransferV2(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * Gets details of a signable transfer
      * @summary Gets details of a signable transfer
@@ -8030,20 +8048,6 @@ export class TransfersApi extends BaseAPI {
      */
     public v2SignableTransferDetailsPost(getSignableTransferRequestV2: ApiGetSignableTransferRequestV2, options?: AxiosRequestConfig) {
         return TransfersApiFp(this.configuration).v2SignableTransferDetailsPost(getSignableTransferRequestV2, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Create a new transfer request
-     * @summary Creates a transfer of multiple tokens between two parties
-     * @param {TransfersCreateTransferRequestV2} createTransferRequestV2 Create transfer
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof TransfersApi
-     */
-    public v2TransfersPost(createTransferRequestV2: TransfersCreateTransferRequestV2, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).v2TransfersPost(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

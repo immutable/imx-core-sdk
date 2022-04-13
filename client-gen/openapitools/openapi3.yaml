@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: Immutable X API
+  contact:
+    name: Immutable API Support
+    email: support@immutable.com
+  version: "0.1"
+servers:
+  - url: //api.ropsten.x.immutable.com/
+paths:
+  /v1/signable-deposit-details:
+    post:
+      operationId: getSignableDepositDetails
+      tags:
+        - deposits
+      summary: Gets details of a signable deposit
+      description: Gets details of a signable deposit
+      requestBody:
+        description: get details of signable deposit
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/api.GetSignableDepositRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/api.GetSignableDepositResponse"
+      x-codegen-request-body-name: GetSignableDepositRequest
+
+components:
+  schemas:
+    api.GetSignableDepositRequest:
+      required:
+        - amount
+        - token
+        - user
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount of the token the user is depositing
+        token:
+          $ref: "#/components/schemas/Token"
+        user:
+          type: string
+          description: User who is depositing
+    api.GetSignableDepositResponse:
+      type: object
+      properties:
+        amount:
+          type: string
+          description: Amount this user is depositing
+        asset_id:
+          type: string
+          description: ID of the asset this user is depositing
+        nonce:
+          type: integer
+          description: Nonce of the deposit
+        stark_key:
+          type: string
+          description: Public stark key of the depositing user
+        vault_id:
+          type: integer
+          description: ID of the vault this user is depositing to
+
+    Token:
+      title: Token
+      discriminator:
+        propertyName: "token_type"
+        mapping:
+          ERC721: "#/components/schemas/ERC721Token"
+          ERC20: "#/components/schemas/ERC20Token"
+          ETH: "#/components/schemas/ETHToken"
+      oneOf:
+        - $ref: "#/components/schemas/ERC721Token"
+        - $ref: "#/components/schemas/ERC20Token"
+        - $ref: "#/components/schemas/ETHToken"
+    ERC721Token:
+      allOf:
+        - $ref: "#/components/schemas/Token"
+        - type: object
+          properties:
+            "data":
+              type: object
+              properties:
+                "erc721_prop":
+                  type: string
+
+            "token_type":
+              type: string
+              example: "ERC721"
+    ETHToken:
+      allOf:
+        - $ref: "#/components/schemas/Token"
+        - type: object
+          properties:
+            "data":
+              type: object
+              properties:
+                "eth_prop":
+                  type: string
+
+            "token_type":
+              type: string
+              example: "ETH"
+    ERC20Token:
+      allOf:
+        - $ref: "#/components/schemas/Token"
+        - type: object
+          properties:
+            "data":
+              type: object
+              properties:
+                "erc20_prop":
+                  type: string
+
+            "token_type":
+              type: string
+              example: "ERC20"
