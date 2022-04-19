@@ -2,3 +2,12 @@ node_modules/
 /client-gen/openapitools/out/go/*
 /client-gen/openapitools/out/kotlin/*
 /client-gen/openapitools/out/html/*
+
+.env
+
+# Hardhat
+coverage
+coverage.json
+typechain
+cache
+artifacts
