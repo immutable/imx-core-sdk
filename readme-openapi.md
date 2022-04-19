@@ -20,11 +20,11 @@ https://openapi-generator.tech/docs/generators/typescript-axios/
 
 ```
 docker run --rm \
-    -v $PWD:/client-generated openapitools/openapi-generator-cli generate \
-    -i /client-generated/openapi.json \
+    -v $PWD:/src/client openapitools/openapi-generator-cli generate \
+    -i /../../openapi.json \
     -g typescript-axios \
     --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true,withSeparateModelsAndApi=true,modelPackage=models,apiPackage=api \
-    -o /client-generated/out
+    -o /src/client
 ```
 
 ## Kotlin Client
