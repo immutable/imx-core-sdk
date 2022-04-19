@@ -5,7 +5,12 @@ import {
     ORDER,
     SECP_ORDER,
 } from './constants';
-import { SignatureOptions } from "../libs/utils";
+
+type SignatureOptions = {
+    r: BN;
+    s: BN;
+    recoveryParam: number | null | undefined;
+};
 
 export function hashKeyWithIndex(key: string, index: number): BN {
     return new BN(

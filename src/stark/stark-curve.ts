@@ -1,6 +1,6 @@
 import * as encUtils from 'enc-utils';
 import BN from 'bn.js';
-import assert from "assert";
+import assert from 'assert';
 import { ec } from 'elliptic';
 
 export function getIntFromBits(

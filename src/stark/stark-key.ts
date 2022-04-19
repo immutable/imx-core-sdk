@@ -1,11 +1,12 @@
-import {getIntFromBits} from "./stark-curve";
+import { getIntFromBits } from './stark-curve';
 import hashJS from 'hash.js';
 import { grindKey } from '../crypto/crypto';
 import { hdkey } from 'ethereumjs-wallet';
 import { curves, ec as Ec } from 'elliptic';
 import BN from 'bn.js';
-import {constantPointsHex} from "./points";
+import { constantPointsHex } from './points';
 import * as encUtils from 'enc-utils';
+import { ec } from 'elliptic';
 
 const prime = new BN(
     '800000000000011000000000000000000000000000000000000000000000001',
