@@ -17,15 +17,15 @@ const contractAddress = process.env.STARK_CONTRACT_ADDRESS!;
 const testStarkKey = process.env.USER_STARK_KEY!;
 
 export class CoreContract {
-  private contract: Core;
+  private core: Core;
   constructor() {
-    this.contract = Core__factory.connect(contractAddress, wallet);
+    this.core = Core__factory.connect(contractAddress, wallet);
   }
 
   public async isRegisteredOnChain(): Promise<boolean> {
     let ethKey;
     try {
-      ethKey = await this.contract.getEthKey(testStarkKey);
+      ethKey = await this.core.getEthKey(testStarkKey);
     } catch (error) {
       console.log('isRegisteredOnChain', false);
       return false;
