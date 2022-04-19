@@ -1,8 +1,5 @@
 node_modules/
-/client-gen/openapitools/out/go/*
-/client-gen/openapitools/out/kotlin/*
-/client-gen/openapitools/out/html/*
-
+.DS_Store
 .env
 
 # Hardhat
@@ -11,3 +8,4 @@ coverage.json
 typechain
 cache
 artifacts
+
