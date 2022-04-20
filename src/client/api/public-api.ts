@@ -1151,8 +1151,8 @@ export const PublicApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get details a signable trade
-         * @summary Get details a signable trade
+         * Get details a signable trade V3
+         * @summary Get details a signable trade V3
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2939,8 +2939,8 @@ export const PublicApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get details a signable trade
-         * @summary Get details a signable trade
+         * Get details a signable trade V3
+         * @summary Get details a signable trade V3
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3606,8 +3606,8 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getSignableRegistration(getSignableRegistrationRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get details a signable trade
-         * @summary Get details a signable trade
+         * Get details a signable trade V3
+         * @summary Get details a signable trade V3
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4295,8 +4295,8 @@ export class PublicApi extends BaseAPI {
     }
 
     /**
-     * Get details a signable trade
-     * @summary Get details a signable trade
+     * Get details a signable trade V3
+     * @summary Get details a signable trade V3
      * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

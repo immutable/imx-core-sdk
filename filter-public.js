@@ -1,5 +1,6 @@
 // This script is used for filtering public only endpoints.
-// This does not remove unused models yet.
+// To remove unused models use `go-swagger` lib. Run following with go:
+// `swagger flatten input.json --with-flatten=remove-unused --with-flatten=full > output.json` 
 // In the future, this will be done in CI in imx-engine
 
 const paths = spec.paths
