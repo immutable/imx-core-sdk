@@ -542,6 +542,223 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
 };
 
 /**
+ * Request parameters for createTransfer operation in TransfersApi.
+ * @export
+ * @interface TransfersApiCreateTransferRequest
+ */
+export interface TransfersApiCreateTransferRequest {
+    /**
+     * Create transfer
+     * @type {CreateTransferRequest}
+     * @memberof TransfersApiCreateTransfer
+     */
+    readonly createTransferRequestV2: CreateTransferRequest
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof TransfersApiCreateTransfer
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof TransfersApiCreateTransfer
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for createTransferV1 operation in TransfersApi.
+ * @export
+ * @interface TransfersApiCreateTransferV1Request
+ */
+export interface TransfersApiCreateTransferV1Request {
+    /**
+     * Create transfer
+     * @type {CreateTransferRequestV1}
+     * @memberof TransfersApiCreateTransferV1
+     */
+    readonly createTransferRequest: CreateTransferRequestV1
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof TransfersApiCreateTransferV1
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof TransfersApiCreateTransferV1
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for getSignableTransfer operation in TransfersApi.
+ * @export
+ * @interface TransfersApiGetSignableTransferRequest
+ */
+export interface TransfersApiGetSignableTransferRequest {
+    /**
+     * get details of signable transfer
+     * @type {GetSignableTransferRequest}
+     * @memberof TransfersApiGetSignableTransfer
+     */
+    readonly getSignableTransferRequestV2: GetSignableTransferRequest
+}
+
+/**
+ * Request parameters for getSignableTransferV1 operation in TransfersApi.
+ * @export
+ * @interface TransfersApiGetSignableTransferV1Request
+ */
+export interface TransfersApiGetSignableTransferV1Request {
+    /**
+     * get details of signable transfer
+     * @type {GetSignableTransferRequestV1}
+     * @memberof TransfersApiGetSignableTransferV1
+     */
+    readonly getSignableTransferRequest: GetSignableTransferRequestV1
+}
+
+/**
+ * Request parameters for getTransfer operation in TransfersApi.
+ * @export
+ * @interface TransfersApiGetTransferRequest
+ */
+export interface TransfersApiGetTransferRequest {
+    /**
+     * Transfer ID
+     * @type {string}
+     * @memberof TransfersApiGetTransfer
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for listTransfers operation in TransfersApi.
+ * @export
+ * @interface TransfersApiListTransfersRequest
+ */
+export interface TransfersApiListTransfersRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this transfer
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly user?: string
+
+    /**
+     * Status of this transfer
+     * @type {'success' | 'failure'}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly status?: 'success' | 'failure'
+
+    /**
+     * Minimum timestamp for this transfer
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this transfer
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Token type of the transferred asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly tokenType?: string
+
+    /**
+     * ERC721 Token ID of the minted asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly tokenId?: string
+
+    /**
+     * Internal IMX ID of the minted asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly assetId?: string
+
+    /**
+     * Token address of the transferred asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly tokenAddress?: string
+
+    /**
+     * Token name of the transferred asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly tokenName?: string
+
+    /**
+     * Max quantity for the transferred asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly minQuantity?: string
+
+    /**
+     * Max quantity for the transferred asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly maxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the transferred asset
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly metadata?: string
+}
+
+/**
  * TransfersApi - object-oriented interface
  * @export
  * @class TransfersApi
@@ -551,91 +768,72 @@ export class TransfersApi extends BaseAPI {
     /**
      * Create a new transfer request
      * @summary Creates a transfer of multiple tokens between two parties
-     * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {TransfersApiCreateTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransfersApi
      */
-    public createTransfer(createTransferRequestV2: CreateTransferRequest, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).createTransfer(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createTransfer(requestParameters: TransfersApiCreateTransferRequest, options?: AxiosRequestConfig) {
+        return TransfersApiFp(this.configuration).createTransfer(requestParameters.createTransferRequestV2, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a new transfer request
      * @summary Creates a transfer of tokens between two parties
-     * @param {CreateTransferRequestV1} createTransferRequest Create transfer
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {TransfersApiCreateTransferV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransfersApi
      */
-    public createTransferV1(createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).createTransferV1(createTransferRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createTransferV1(requestParameters: TransfersApiCreateTransferV1Request, options?: AxiosRequestConfig) {
+        return TransfersApiFp(this.configuration).createTransferV1(requestParameters.createTransferRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets bulk details of a signable transfer
      * @summary Gets bulk details of a signable transfer
-     * @param {GetSignableTransferRequest} getSignableTransferRequestV2 get details of signable transfer
+     * @param {TransfersApiGetSignableTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransfersApi
      */
-    public getSignableTransfer(getSignableTransferRequestV2: GetSignableTransferRequest, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).getSignableTransfer(getSignableTransferRequestV2, options).then((request) => request(this.axios, this.basePath));
+    public getSignableTransfer(requestParameters: TransfersApiGetSignableTransferRequest, options?: AxiosRequestConfig) {
+        return TransfersApiFp(this.configuration).getSignableTransfer(requestParameters.getSignableTransferRequestV2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of a signable transfer
      * @summary Gets details of a signable transfer
-     * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
+     * @param {TransfersApiGetSignableTransferV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransfersApi
      */
-    public getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequestV1, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).getSignableTransferV1(getSignableTransferRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableTransferV1(requestParameters: TransfersApiGetSignableTransferV1Request, options?: AxiosRequestConfig) {
+        return TransfersApiFp(this.configuration).getSignableTransferV1(requestParameters.getSignableTransferRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a transfer with the given ID
      * @summary Get details of a transfer with the given ID
-     * @param {string} id Transfer ID
+     * @param {TransfersApiGetTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransfersApi
      */
-    public getTransfer(id: string, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).getTransfer(id, options).then((request) => request(this.axios, this.basePath));
+    public getTransfer(requestParameters: TransfersApiGetTransferRequest, options?: AxiosRequestConfig) {
+        return TransfersApiFp(this.configuration).getTransfer(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of transfers
      * @summary Get a list of transfers
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this transfer
-     * @param {'success' | 'failure'} [status] Status of this transfer
-     * @param {string} [minTimestamp] Minimum timestamp for this transfer
-     * @param {string} [maxTimestamp] Maximum timestamp for this transfer
-     * @param {string} [tokenType] Token type of the transferred asset
-     * @param {string} [tokenId] ERC721 Token ID of the minted asset
-     * @param {string} [assetId] Internal IMX ID of the minted asset
-     * @param {string} [tokenAddress] Token address of the transferred asset
-     * @param {string} [tokenName] Token name of the transferred asset
-     * @param {string} [minQuantity] Max quantity for the transferred asset
-     * @param {string} [maxQuantity] Max quantity for the transferred asset
-     * @param {string} [metadata] JSON-encoded metadata filters for the transferred asset
+     * @param {TransfersApiListTransfersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TransfersApi
      */
-    public listTransfers(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).listTransfers(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
+    public listTransfers(requestParameters: TransfersApiListTransfersRequest = {}, options?: AxiosRequestConfig) {
+        return TransfersApiFp(this.configuration).listTransfers(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 }

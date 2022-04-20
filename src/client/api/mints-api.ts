@@ -394,6 +394,174 @@ export const MintsApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
+ * Request parameters for getMint operation in MintsApi.
+ * @export
+ * @interface MintsApiGetMintRequest
+ */
+export interface MintsApiGetMintRequest {
+    /**
+     * Mint ID. This is the transaction_id returned from listMints
+     * @type {string}
+     * @memberof MintsApiGetMint
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMintableTokenDetailsByClientTokenId operation in MintsApi.
+ * @export
+ * @interface MintsApiGetMintableTokenDetailsByClientTokenIdRequest
+ */
+export interface MintsApiGetMintableTokenDetailsByClientTokenIdRequest {
+    /**
+     * Address of the ERC721 contract
+     * @type {string}
+     * @memberof MintsApiGetMintableTokenDetailsByClientTokenId
+     */
+    readonly tokenAddress: string
+
+    /**
+     * ERC721 token ID
+     * @type {string}
+     * @memberof MintsApiGetMintableTokenDetailsByClientTokenId
+     */
+    readonly tokenId: string
+}
+
+/**
+ * Request parameters for listMints operation in MintsApi.
+ * @export
+ * @interface MintsApiListMintsRequest
+ */
+export interface MintsApiListMintsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof MintsApiListMints
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this mint
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly user?: string
+
+    /**
+     * Status of this mint
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly status?: string
+
+    /**
+     * Minimum timestamp for this mint
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this mint
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Token type of the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly tokenType?: string
+
+    /**
+     * ERC721 Token ID of the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly tokenId?: string
+
+    /**
+     * Internal IMX ID of the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly assetId?: string
+
+    /**
+     * Token Name of the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly tokenName?: string
+
+    /**
+     * Token address of the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly tokenAddress?: string
+
+    /**
+     * Min quantity for the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly minQuantity?: string
+
+    /**
+     * Max quantity for the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly maxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the minted asset
+     * @type {string}
+     * @memberof MintsApiListMints
+     */
+    readonly metadata?: string
+}
+
+/**
+ * Request parameters for mintTokens operation in MintsApi.
+ * @export
+ * @interface MintsApiMintTokensRequest
+ */
+export interface MintsApiMintTokensRequest {
+    /**
+     * details of tokens to mint
+     * @type {Array<MintRequest>}
+     * @memberof MintsApiMintTokens
+     */
+    readonly mintTokensRequestV2: Array<MintRequest>
+}
+
+/**
  * MintsApi - object-oriented interface
  * @export
  * @class MintsApi
@@ -403,64 +571,48 @@ export class MintsApi extends BaseAPI {
     /**
      * Get details of a mint with the given ID
      * @summary Get details of a mint with the given ID
-     * @param {string} id Mint ID. This is the transaction_id returned from listMints
+     * @param {MintsApiGetMintRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MintsApi
      */
-    public getMint(id: string, options?: AxiosRequestConfig) {
-        return MintsApiFp(this.configuration).getMint(id, options).then((request) => request(this.axios, this.basePath));
+    public getMint(requestParameters: MintsApiGetMintRequest, options?: AxiosRequestConfig) {
+        return MintsApiFp(this.configuration).getMint(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a mintable token with the given token address and token ID
      * @summary Get details of a mintable token with the given token address and token ID
-     * @param {string} tokenAddress Address of the ERC721 contract
-     * @param {string} tokenId ERC721 token ID
+     * @param {MintsApiGetMintableTokenDetailsByClientTokenIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MintsApi
      */
-    public getMintableTokenDetailsByClientTokenId(tokenAddress: string, tokenId: string, options?: AxiosRequestConfig) {
-        return MintsApiFp(this.configuration).getMintableTokenDetailsByClientTokenId(tokenAddress, tokenId, options).then((request) => request(this.axios, this.basePath));
+    public getMintableTokenDetailsByClientTokenId(requestParameters: MintsApiGetMintableTokenDetailsByClientTokenIdRequest, options?: AxiosRequestConfig) {
+        return MintsApiFp(this.configuration).getMintableTokenDetailsByClientTokenId(requestParameters.tokenAddress, requestParameters.tokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of mints
      * @summary Get a list of mints
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this mint
-     * @param {string} [status] Status of this mint
-     * @param {string} [minTimestamp] Minimum timestamp for this mint
-     * @param {string} [maxTimestamp] Maximum timestamp for this mint
-     * @param {string} [tokenType] Token type of the minted asset
-     * @param {string} [tokenId] ERC721 Token ID of the minted asset
-     * @param {string} [assetId] Internal IMX ID of the minted asset
-     * @param {string} [tokenName] Token Name of the minted asset
-     * @param {string} [tokenAddress] Token address of the minted asset
-     * @param {string} [minQuantity] Min quantity for the minted asset
-     * @param {string} [maxQuantity] Max quantity for the minted asset
-     * @param {string} [metadata] JSON-encoded metadata filters for the minted asset
+     * @param {MintsApiListMintsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MintsApi
      */
-    public listMints(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenName?: string, tokenAddress?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
-        return MintsApiFp(this.configuration).listMints(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenName, tokenAddress, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
+    public listMints(requestParameters: MintsApiListMintsRequest = {}, options?: AxiosRequestConfig) {
+        return MintsApiFp(this.configuration).listMints(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenName, requestParameters.tokenAddress, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Mint tokens in a batch with fees
      * @summary Mint Tokens V2
-     * @param {Array<MintRequest>} mintTokensRequestV2 details of tokens to mint
+     * @param {MintsApiMintTokensRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MintsApi
      */
-    public mintTokens(mintTokensRequestV2: Array<MintRequest>, options?: AxiosRequestConfig) {
-        return MintsApiFp(this.configuration).mintTokens(mintTokensRequestV2, options).then((request) => request(this.axios, this.basePath));
+    public mintTokens(requestParameters: MintsApiMintTokensRequest, options?: AxiosRequestConfig) {
+        return MintsApiFp(this.configuration).mintTokens(requestParameters.mintTokensRequestV2, options).then((request) => request(this.axios, this.basePath));
     }
 }

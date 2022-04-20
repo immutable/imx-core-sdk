@@ -283,6 +283,153 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
+ * Request parameters for getAsset operation in AssetsApi.
+ * @export
+ * @interface AssetsApiGetAssetRequest
+ */
+export interface AssetsApiGetAssetRequest {
+    /**
+     * Address of the ERC721 contract
+     * @type {string}
+     * @memberof AssetsApiGetAsset
+     */
+    readonly tokenAddress: string
+
+    /**
+     * Either ERC721 token ID or internal IMX ID
+     * @type {string}
+     * @memberof AssetsApiGetAsset
+     */
+    readonly tokenId: string
+
+    /**
+     * Set flag to include fees associated with the asset
+     * @type {boolean}
+     * @memberof AssetsApiGetAsset
+     */
+    readonly includeFees?: boolean
+}
+
+/**
+ * Request parameters for listAssets operation in AssetsApi.
+ * @export
+ * @interface AssetsApiListAssetsRequest
+ */
+export interface AssetsApiListAssetsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof AssetsApiListAssets
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {'updated_at' | 'name'}
+     * @memberof AssetsApiListAssets
+     */
+    readonly orderBy?: 'updated_at' | 'name'
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who owns these assets
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly user?: string
+
+    /**
+     * Status of these assets
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly status?: string
+
+    /**
+     * Name of the asset to search
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly name?: string
+
+    /**
+     * JSON-encoded metadata filters for these asset. Example: {
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly metadata?: string
+
+    /**
+     * Set flag to true to fetch an array of sell order details with accepted status associated with the asset
+     * @type {boolean}
+     * @memberof AssetsApiListAssets
+     */
+    readonly sellOrders?: boolean
+
+    /**
+     * Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
+     * @type {boolean}
+     * @memberof AssetsApiListAssets
+     */
+    readonly buyOrders?: boolean
+
+    /**
+     * Set flag to include fees associated with the asset
+     * @type {boolean}
+     * @memberof AssetsApiListAssets
+     */
+    readonly includeFees?: boolean
+
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly collection?: string
+
+    /**
+     * Minimum timestamp for when these assets were last updated
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly updatedMinTimestamp?: string
+
+    /**
+     * Maximum timestamp for when these assets were last updated
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly updatedMaxTimestamp?: string
+
+    /**
+     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly auxiliaryFeePercentages?: string
+
+    /**
+     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @type {string}
+     * @memberof AssetsApiListAssets
+     */
+    readonly auxiliaryFeeRecipients?: string
+}
+
+/**
  * AssetsApi - object-oriented interface
  * @export
  * @class AssetsApi
@@ -292,41 +439,24 @@ export class AssetsApi extends BaseAPI {
     /**
      * Get details of an asset
      * @summary Get details of an asset
-     * @param {string} tokenAddress Address of the ERC721 contract
-     * @param {string} tokenId Either ERC721 token ID or internal IMX ID
-     * @param {boolean} [includeFees] Set flag to include fees associated with the asset
+     * @param {AssetsApiGetAssetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AssetsApi
      */
-    public getAsset(tokenAddress: string, tokenId: string, includeFees?: boolean, options?: AxiosRequestConfig) {
-        return AssetsApiFp(this.configuration).getAsset(tokenAddress, tokenId, includeFees, options).then((request) => request(this.axios, this.basePath));
+    public getAsset(requestParameters: AssetsApiGetAssetRequest, options?: AxiosRequestConfig) {
+        return AssetsApiFp(this.configuration).getAsset(requestParameters.tokenAddress, requestParameters.tokenId, requestParameters.includeFees, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of assets
      * @summary Get a list of assets
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {'updated_at' | 'name'} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who owns these assets
-     * @param {string} [status] Status of these assets
-     * @param {string} [name] Name of the asset to search
-     * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {
-     * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
-     * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
-     * @param {boolean} [includeFees] Set flag to include fees associated with the asset
-     * @param {string} [collection] Collection contract address
-     * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated
-     * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated
-     * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @param {AssetsApiListAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AssetsApi
      */
-    public listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: string, name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig) {
-        return AssetsApiFp(this.configuration).listAssets(pageSize, cursor, orderBy, direction, user, status, name, metadata, sellOrders, buyOrders, includeFees, collection, updatedMinTimestamp, updatedMaxTimestamp, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
+    public listAssets(requestParameters: AssetsApiListAssetsRequest = {}, options?: AxiosRequestConfig) {
+        return AssetsApiFp(this.configuration).listAssets(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.name, requestParameters.metadata, requestParameters.sellOrders, requestParameters.buyOrders, requestParameters.includeFees, requestParameters.collection, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
     }
 }

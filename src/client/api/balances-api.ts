@@ -170,6 +170,41 @@ export const BalancesApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
+ * Request parameters for getBalance operation in BalancesApi.
+ * @export
+ * @interface BalancesApiGetBalanceRequest
+ */
+export interface BalancesApiGetBalanceRequest {
+    /**
+     * Address of the owner/user
+     * @type {string}
+     * @memberof BalancesApiGetBalance
+     */
+    readonly owner: string
+
+    /**
+     * Token address
+     * @type {string}
+     * @memberof BalancesApiGetBalance
+     */
+    readonly address: string
+}
+
+/**
+ * Request parameters for listBalances operation in BalancesApi.
+ * @export
+ * @interface BalancesApiListBalancesRequest
+ */
+export interface BalancesApiListBalancesRequest {
+    /**
+     * Ethereum wallet address for user
+     * @type {string}
+     * @memberof BalancesApiListBalances
+     */
+    readonly owner: string
+}
+
+/**
  * BalancesApi - object-oriented interface
  * @export
  * @class BalancesApi
@@ -179,25 +214,24 @@ export class BalancesApi extends BaseAPI {
     /**
      * Fetches the token balances of the user
      * @summary Fetches the token balances of the user
-     * @param {string} owner Address of the owner/user
-     * @param {string} address Token address
+     * @param {BalancesApiGetBalanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BalancesApi
      */
-    public getBalance(owner: string, address: string, options?: AxiosRequestConfig) {
-        return BalancesApiFp(this.configuration).getBalance(owner, address, options).then((request) => request(this.axios, this.basePath));
+    public getBalance(requestParameters: BalancesApiGetBalanceRequest, options?: AxiosRequestConfig) {
+        return BalancesApiFp(this.configuration).getBalance(requestParameters.owner, requestParameters.address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of balances for given user
      * @summary Get a list of balances for given user
-     * @param {string} owner Ethereum wallet address for user
+     * @param {BalancesApiListBalancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BalancesApi
      */
-    public listBalances(owner: string, options?: AxiosRequestConfig) {
-        return BalancesApiFp(this.configuration).listBalances(owner, options).then((request) => request(this.axios, this.basePath));
+    public listBalances(requestParameters: BalancesApiListBalancesRequest, options?: AxiosRequestConfig) {
+        return BalancesApiFp(this.configuration).listBalances(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
     }
 }

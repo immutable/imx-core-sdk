@@ -331,6 +331,153 @@ export const DepositsApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
+ * Request parameters for getDeposit operation in DepositsApi.
+ * @export
+ * @interface DepositsApiGetDepositRequest
+ */
+export interface DepositsApiGetDepositRequest {
+    /**
+     * Deposit ID
+     * @type {string}
+     * @memberof DepositsApiGetDeposit
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getSignableDeposit operation in DepositsApi.
+ * @export
+ * @interface DepositsApiGetSignableDepositRequest
+ */
+export interface DepositsApiGetSignableDepositRequest {
+    /**
+     * Get details of signable deposit
+     * @type {GetSignableDepositRequest}
+     * @memberof DepositsApiGetSignableDeposit
+     */
+    readonly getSignableDepositRequest: GetSignableDepositRequest
+}
+
+/**
+ * Request parameters for listDeposits operation in DepositsApi.
+ * @export
+ * @interface DepositsApiListDepositsRequest
+ */
+export interface DepositsApiListDepositsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this deposit
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly user?: string
+
+    /**
+     * Status of this deposit
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly status?: string
+
+    /**
+     * Minimum timestamp for this deposit
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this deposit
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Token type of the deposited asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly tokenType?: string
+
+    /**
+     * ERC721 Token ID of the minted asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly tokenId?: string
+
+    /**
+     * Internal IMX ID of the minted asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly assetId?: string
+
+    /**
+     * Token address of the deposited asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly tokenAddress?: string
+
+    /**
+     * Token name of the deposited asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly tokenName?: string
+
+    /**
+     * Min quantity for the deposited asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly minQuantity?: string
+
+    /**
+     * Max quantity for the deposited asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly maxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the deposited asset
+     * @type {string}
+     * @memberof DepositsApiListDeposits
+     */
+    readonly metadata?: string
+}
+
+/**
  * DepositsApi - object-oriented interface
  * @export
  * @class DepositsApi
@@ -340,51 +487,36 @@ export class DepositsApi extends BaseAPI {
     /**
      * Get details of a deposit with the given ID
      * @summary Get details of a deposit with the given ID
-     * @param {string} id Deposit ID
+     * @param {DepositsApiGetDepositRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DepositsApi
      */
-    public getDeposit(id: string, options?: AxiosRequestConfig) {
-        return DepositsApiFp(this.configuration).getDeposit(id, options).then((request) => request(this.axios, this.basePath));
+    public getDeposit(requestParameters: DepositsApiGetDepositRequest, options?: AxiosRequestConfig) {
+        return DepositsApiFp(this.configuration).getDeposit(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of a signable deposit
      * @summary Gets details of a signable deposit
-     * @param {GetSignableDepositRequest} getSignableDepositRequest Get details of signable deposit
+     * @param {DepositsApiGetSignableDepositRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DepositsApi
      */
-    public getSignableDeposit(getSignableDepositRequest: GetSignableDepositRequest, options?: AxiosRequestConfig) {
-        return DepositsApiFp(this.configuration).getSignableDeposit(getSignableDepositRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableDeposit(requestParameters: DepositsApiGetSignableDepositRequest, options?: AxiosRequestConfig) {
+        return DepositsApiFp(this.configuration).getSignableDeposit(requestParameters.getSignableDepositRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of deposits
      * @summary Get a list of deposits
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this deposit
-     * @param {string} [status] Status of this deposit
-     * @param {string} [minTimestamp] Minimum timestamp for this deposit
-     * @param {string} [maxTimestamp] Maximum timestamp for this deposit
-     * @param {string} [tokenType] Token type of the deposited asset
-     * @param {string} [tokenId] ERC721 Token ID of the minted asset
-     * @param {string} [assetId] Internal IMX ID of the minted asset
-     * @param {string} [tokenAddress] Token address of the deposited asset
-     * @param {string} [tokenName] Token name of the deposited asset
-     * @param {string} [minQuantity] Min quantity for the deposited asset
-     * @param {string} [maxQuantity] Max quantity for the deposited asset
-     * @param {string} [metadata] JSON-encoded metadata filters for the deposited asset
+     * @param {DepositsApiListDepositsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DepositsApi
      */
-    public listDeposits(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
-        return DepositsApiFp(this.configuration).listDeposits(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
+    public listDeposits(requestParameters: DepositsApiListDepositsRequest = {}, options?: AxiosRequestConfig) {
+        return DepositsApiFp(this.configuration).listDeposits(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 }
