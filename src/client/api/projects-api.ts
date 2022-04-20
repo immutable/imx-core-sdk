@@ -301,6 +301,111 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
+ * Request parameters for createProject operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiCreateProjectRequest
+ */
+export interface ProjectsApiCreateProjectRequest {
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof ProjectsApiCreateProject
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof ProjectsApiCreateProject
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * create a project
+     * @type {CreateProjectRequest}
+     * @memberof ProjectsApiCreateProject
+     */
+    readonly createProjectRequest: CreateProjectRequest
+}
+
+/**
+ * Request parameters for getProject operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiGetProjectRequest
+ */
+export interface ProjectsApiGetProjectRequest {
+    /**
+     * Project ID
+     * @type {string}
+     * @memberof ProjectsApiGetProject
+     */
+    readonly id: string
+
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof ProjectsApiGetProject
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof ProjectsApiGetProject
+     */
+    readonly iMXTimestamp: string
+}
+
+/**
+ * Request parameters for getProjects operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiGetProjectsRequest
+ */
+export interface ProjectsApiGetProjectsRequest {
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof ProjectsApiGetProjects
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof ProjectsApiGetProjects
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof ProjectsApiGetProjects
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof ProjectsApiGetProjects
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof ProjectsApiGetProjects
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof ProjectsApiGetProjects
+     */
+    readonly direction?: string
+}
+
+/**
  * ProjectsApi - object-oriented interface
  * @export
  * @class ProjectsApi
@@ -310,45 +415,36 @@ export class ProjectsApi extends BaseAPI {
     /**
      * Create a project
      * @summary Create a project
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {CreateProjectRequest} createProjectRequest create a project
+     * @param {ProjectsApiCreateProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public createProject(iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options?: AxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).createProject(iMXSignature, iMXTimestamp, createProjectRequest, options).then((request) => request(this.axios, this.basePath));
+    public createProject(requestParameters: ProjectsApiCreateProjectRequest, options?: AxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).createProject(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.createProjectRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a project
      * @summary Get a project
-     * @param {string} id Project ID
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
+     * @param {ProjectsApiGetProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public getProject(id: string, iMXSignature: string, iMXTimestamp: string, options?: AxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).getProject(id, iMXSignature, iMXTimestamp, options).then((request) => request(this.axios, this.basePath));
+    public getProject(requestParameters: ProjectsApiGetProjectRequest, options?: AxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).getProject(requestParameters.id, requestParameters.iMXSignature, requestParameters.iMXTimestamp, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get projects
      * @summary Get projects
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
+     * @param {ProjectsApiGetProjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
-    public getProjects(iMXSignature: string, iMXTimestamp: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, options?: AxiosRequestConfig) {
-        return ProjectsApiFp(this.configuration).getProjects(iMXSignature, iMXTimestamp, pageSize, cursor, orderBy, direction, options).then((request) => request(this.axios, this.basePath));
+    public getProjects(requestParameters: ProjectsApiGetProjectsRequest, options?: AxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).getProjects(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, options).then((request) => request(this.axios, this.basePath));
     }
 }

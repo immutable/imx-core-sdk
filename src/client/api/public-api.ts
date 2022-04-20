@@ -3978,6 +3978,1805 @@ export const PublicApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
+ * Request parameters for addMetadataSchemaToCollection operation in PublicApi.
+ * @export
+ * @interface PublicApiAddMetadataSchemaToCollectionRequest
+ */
+export interface PublicApiAddMetadataSchemaToCollectionRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof PublicApiAddMetadataSchemaToCollection
+     */
+    readonly address: string
+
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof PublicApiAddMetadataSchemaToCollection
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof PublicApiAddMetadataSchemaToCollection
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * add metadata schema to a collection
+     * @type {AddMetadataSchemaToCollectionRequest}
+     * @memberof PublicApiAddMetadataSchemaToCollection
+     */
+    readonly addMetadataSchemaToCollectionRequest: AddMetadataSchemaToCollectionRequest
+}
+
+/**
+ * Request parameters for cancelOrder operation in PublicApi.
+ * @export
+ * @interface PublicApiCancelOrderRequest
+ */
+export interface PublicApiCancelOrderRequest {
+    /**
+     * Order ID to cancel
+     * @type {string}
+     * @memberof PublicApiCancelOrder
+     */
+    readonly id: string
+
+    /**
+     * cancel an order
+     * @type {CancelOrderRequest}
+     * @memberof PublicApiCancelOrder
+     */
+    readonly cancelOrderRequest: CancelOrderRequest
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof PublicApiCancelOrder
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof PublicApiCancelOrder
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for createCollection operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateCollectionRequest
+ */
+export interface PublicApiCreateCollectionRequest {
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof PublicApiCreateCollection
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof PublicApiCreateCollection
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * create a collection
+     * @type {CreateCollectionRequest}
+     * @memberof PublicApiCreateCollection
+     */
+    readonly createCollectionRequest: CreateCollectionRequest
+}
+
+/**
+ * Request parameters for createOrder operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateOrderRequest
+ */
+export interface PublicApiCreateOrderRequest {
+    /**
+     * create an order
+     * @type {CreateOrderRequest}
+     * @memberof PublicApiCreateOrder
+     */
+    readonly createOrderRequest: CreateOrderRequest
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof PublicApiCreateOrder
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof PublicApiCreateOrder
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for createProject operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateProjectRequest
+ */
+export interface PublicApiCreateProjectRequest {
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof PublicApiCreateProject
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof PublicApiCreateProject
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * create a project
+     * @type {CreateProjectRequest}
+     * @memberof PublicApiCreateProject
+     */
+    readonly createProjectRequest: CreateProjectRequest
+}
+
+/**
+ * Request parameters for createTrade operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateTradeRequest
+ */
+export interface PublicApiCreateTradeRequest {
+    /**
+     * create a trade
+     * @type {CreateTradeRequestV1}
+     * @memberof PublicApiCreateTrade
+     */
+    readonly createTradeRequest: CreateTradeRequestV1
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof PublicApiCreateTrade
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof PublicApiCreateTrade
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for createTransfer operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateTransferRequest
+ */
+export interface PublicApiCreateTransferRequest {
+    /**
+     * Create transfer
+     * @type {CreateTransferRequest}
+     * @memberof PublicApiCreateTransfer
+     */
+    readonly createTransferRequestV2: CreateTransferRequest
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof PublicApiCreateTransfer
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof PublicApiCreateTransfer
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for createTransferV1 operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateTransferV1Request
+ */
+export interface PublicApiCreateTransferV1Request {
+    /**
+     * Create transfer
+     * @type {CreateTransferRequestV1}
+     * @memberof PublicApiCreateTransferV1
+     */
+    readonly createTransferRequest: CreateTransferRequestV1
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof PublicApiCreateTransferV1
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof PublicApiCreateTransferV1
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for createWithdrawal operation in PublicApi.
+ * @export
+ * @interface PublicApiCreateWithdrawalRequest
+ */
+export interface PublicApiCreateWithdrawalRequest {
+    /**
+     * create a withdrawal
+     * @type {CreateWithdrawalRequest}
+     * @memberof PublicApiCreateWithdrawal
+     */
+    readonly createWithdrawalRequest: CreateWithdrawalRequest
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof PublicApiCreateWithdrawal
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof PublicApiCreateWithdrawal
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for getAsset operation in PublicApi.
+ * @export
+ * @interface PublicApiGetAssetRequest
+ */
+export interface PublicApiGetAssetRequest {
+    /**
+     * Address of the ERC721 contract
+     * @type {string}
+     * @memberof PublicApiGetAsset
+     */
+    readonly tokenAddress: string
+
+    /**
+     * Either ERC721 token ID or internal IMX ID
+     * @type {string}
+     * @memberof PublicApiGetAsset
+     */
+    readonly tokenId: string
+
+    /**
+     * Set flag to include fees associated with the asset
+     * @type {boolean}
+     * @memberof PublicApiGetAsset
+     */
+    readonly includeFees?: boolean
+}
+
+/**
+ * Request parameters for getBalance operation in PublicApi.
+ * @export
+ * @interface PublicApiGetBalanceRequest
+ */
+export interface PublicApiGetBalanceRequest {
+    /**
+     * Address of the owner/user
+     * @type {string}
+     * @memberof PublicApiGetBalance
+     */
+    readonly owner: string
+
+    /**
+     * Token address
+     * @type {string}
+     * @memberof PublicApiGetBalance
+     */
+    readonly address: string
+}
+
+/**
+ * Request parameters for getCollection operation in PublicApi.
+ * @export
+ * @interface PublicApiGetCollectionRequest
+ */
+export interface PublicApiGetCollectionRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof PublicApiGetCollection
+     */
+    readonly address: string
+}
+
+/**
+ * Request parameters for getDeposit operation in PublicApi.
+ * @export
+ * @interface PublicApiGetDepositRequest
+ */
+export interface PublicApiGetDepositRequest {
+    /**
+     * Deposit ID
+     * @type {string}
+     * @memberof PublicApiGetDeposit
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMetadataSchema operation in PublicApi.
+ * @export
+ * @interface PublicApiGetMetadataSchemaRequest
+ */
+export interface PublicApiGetMetadataSchemaRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof PublicApiGetMetadataSchema
+     */
+    readonly address: string
+}
+
+/**
+ * Request parameters for getMint operation in PublicApi.
+ * @export
+ * @interface PublicApiGetMintRequest
+ */
+export interface PublicApiGetMintRequest {
+    /**
+     * Mint ID. This is the transaction_id returned from listMints
+     * @type {string}
+     * @memberof PublicApiGetMint
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getMintableTokenDetailsByClientTokenId operation in PublicApi.
+ * @export
+ * @interface PublicApiGetMintableTokenDetailsByClientTokenIdRequest
+ */
+export interface PublicApiGetMintableTokenDetailsByClientTokenIdRequest {
+    /**
+     * Address of the ERC721 contract
+     * @type {string}
+     * @memberof PublicApiGetMintableTokenDetailsByClientTokenId
+     */
+    readonly tokenAddress: string
+
+    /**
+     * ERC721 token ID
+     * @type {string}
+     * @memberof PublicApiGetMintableTokenDetailsByClientTokenId
+     */
+    readonly tokenId: string
+}
+
+/**
+ * Request parameters for getOrder operation in PublicApi.
+ * @export
+ * @interface PublicApiGetOrderRequest
+ */
+export interface PublicApiGetOrderRequest {
+    /**
+     * Order ID
+     * @type {string}
+     * @memberof PublicApiGetOrder
+     */
+    readonly id: string
+
+    /**
+     * Set flag to true to include fee body for the order
+     * @type {boolean}
+     * @memberof PublicApiGetOrder
+     */
+    readonly includeFees?: boolean
+
+    /**
+     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
+     * @type {string}
+     * @memberof PublicApiGetOrder
+     */
+    readonly auxiliaryFeePercentages?: string
+
+    /**
+     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @type {string}
+     * @memberof PublicApiGetOrder
+     */
+    readonly auxiliaryFeeRecipients?: string
+}
+
+/**
+ * Request parameters for getProject operation in PublicApi.
+ * @export
+ * @interface PublicApiGetProjectRequest
+ */
+export interface PublicApiGetProjectRequest {
+    /**
+     * Project ID
+     * @type {string}
+     * @memberof PublicApiGetProject
+     */
+    readonly id: string
+
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof PublicApiGetProject
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof PublicApiGetProject
+     */
+    readonly iMXTimestamp: string
+}
+
+/**
+ * Request parameters for getProjects operation in PublicApi.
+ * @export
+ * @interface PublicApiGetProjectsRequest
+ */
+export interface PublicApiGetProjectsRequest {
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof PublicApiGetProjects
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof PublicApiGetProjects
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiGetProjects
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiGetProjects
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof PublicApiGetProjects
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiGetProjects
+     */
+    readonly direction?: string
+}
+
+/**
+ * Request parameters for getSignableCancelOrder operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableCancelOrderRequest
+ */
+export interface PublicApiGetSignableCancelOrderRequest {
+    /**
+     * get a signable cancel order
+     * @type {GetSignableCancelOrderRequest}
+     * @memberof PublicApiGetSignableCancelOrder
+     */
+    readonly getSignableCancelOrderRequest: GetSignableCancelOrderRequest
+}
+
+/**
+ * Request parameters for getSignableDeposit operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableDepositRequest
+ */
+export interface PublicApiGetSignableDepositRequest {
+    /**
+     * Get details of signable deposit
+     * @type {GetSignableDepositRequest}
+     * @memberof PublicApiGetSignableDeposit
+     */
+    readonly getSignableDepositRequest: GetSignableDepositRequest
+}
+
+/**
+ * Request parameters for getSignableOrder operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableOrderRequest
+ */
+export interface PublicApiGetSignableOrderRequest {
+    /**
+     * get a signable order
+     * @type {GetSignableOrderRequest}
+     * @memberof PublicApiGetSignableOrder
+     */
+    readonly getSignableOrderRequestV3: GetSignableOrderRequest
+}
+
+/**
+ * Request parameters for getSignableRegistration operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableRegistrationRequest
+ */
+export interface PublicApiGetSignableRegistrationRequest {
+    /**
+     * Register User
+     * @type {GetSignableRegistrationRequest}
+     * @memberof PublicApiGetSignableRegistration
+     */
+    readonly getSignableRegistrationRequest: GetSignableRegistrationRequest
+}
+
+/**
+ * Request parameters for getSignableTrade operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableTradeRequest
+ */
+export interface PublicApiGetSignableTradeRequest {
+    /**
+     * get a signable trade
+     * @type {GetSignableTradeRequest}
+     * @memberof PublicApiGetSignableTrade
+     */
+    readonly getSignableTradeRequest: GetSignableTradeRequest
+}
+
+/**
+ * Request parameters for getSignableTransfer operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableTransferRequest
+ */
+export interface PublicApiGetSignableTransferRequest {
+    /**
+     * get details of signable transfer
+     * @type {GetSignableTransferRequest}
+     * @memberof PublicApiGetSignableTransfer
+     */
+    readonly getSignableTransferRequestV2: GetSignableTransferRequest
+}
+
+/**
+ * Request parameters for getSignableTransferV1 operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableTransferV1Request
+ */
+export interface PublicApiGetSignableTransferV1Request {
+    /**
+     * get details of signable transfer
+     * @type {GetSignableTransferRequestV1}
+     * @memberof PublicApiGetSignableTransferV1
+     */
+    readonly getSignableTransferRequest: GetSignableTransferRequestV1
+}
+
+/**
+ * Request parameters for getSignableWithdrawal operation in PublicApi.
+ * @export
+ * @interface PublicApiGetSignableWithdrawalRequest
+ */
+export interface PublicApiGetSignableWithdrawalRequest {
+    /**
+     * get details of signable withdrawal
+     * @type {GetSignableWithdrawalRequest}
+     * @memberof PublicApiGetSignableWithdrawal
+     */
+    readonly getSignableWithdrawalRequest: GetSignableWithdrawalRequest
+}
+
+/**
+ * Request parameters for getToken operation in PublicApi.
+ * @export
+ * @interface PublicApiGetTokenRequest
+ */
+export interface PublicApiGetTokenRequest {
+    /**
+     * Token Contract Address
+     * @type {string}
+     * @memberof PublicApiGetToken
+     */
+    readonly address: string
+}
+
+/**
+ * Request parameters for getTrade operation in PublicApi.
+ * @export
+ * @interface PublicApiGetTradeRequest
+ */
+export interface PublicApiGetTradeRequest {
+    /**
+     * Trade ID
+     * @type {string}
+     * @memberof PublicApiGetTrade
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getTransfer operation in PublicApi.
+ * @export
+ * @interface PublicApiGetTransferRequest
+ */
+export interface PublicApiGetTransferRequest {
+    /**
+     * Transfer ID
+     * @type {string}
+     * @memberof PublicApiGetTransfer
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for getUsers operation in PublicApi.
+ * @export
+ * @interface PublicApiGetUsersRequest
+ */
+export interface PublicApiGetUsersRequest {
+    /**
+     * User
+     * @type {string}
+     * @memberof PublicApiGetUsers
+     */
+    readonly user: string
+}
+
+/**
+ * Request parameters for getWithdrawal operation in PublicApi.
+ * @export
+ * @interface PublicApiGetWithdrawalRequest
+ */
+export interface PublicApiGetWithdrawalRequest {
+    /**
+     * Withdrawal ID
+     * @type {string}
+     * @memberof PublicApiGetWithdrawal
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for listAssets operation in PublicApi.
+ * @export
+ * @interface PublicApiListAssetsRequest
+ */
+export interface PublicApiListAssetsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListAssets
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {'updated_at' | 'name'}
+     * @memberof PublicApiListAssets
+     */
+    readonly orderBy?: 'updated_at' | 'name'
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who owns these assets
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly user?: string
+
+    /**
+     * Status of these assets
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly status?: string
+
+    /**
+     * Name of the asset to search
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly name?: string
+
+    /**
+     * JSON-encoded metadata filters for these asset. Example: {
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly metadata?: string
+
+    /**
+     * Set flag to true to fetch an array of sell order details with accepted status associated with the asset
+     * @type {boolean}
+     * @memberof PublicApiListAssets
+     */
+    readonly sellOrders?: boolean
+
+    /**
+     * Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
+     * @type {boolean}
+     * @memberof PublicApiListAssets
+     */
+    readonly buyOrders?: boolean
+
+    /**
+     * Set flag to include fees associated with the asset
+     * @type {boolean}
+     * @memberof PublicApiListAssets
+     */
+    readonly includeFees?: boolean
+
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly collection?: string
+
+    /**
+     * Minimum timestamp for when these assets were last updated
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly updatedMinTimestamp?: string
+
+    /**
+     * Maximum timestamp for when these assets were last updated
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly updatedMaxTimestamp?: string
+
+    /**
+     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly auxiliaryFeePercentages?: string
+
+    /**
+     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @type {string}
+     * @memberof PublicApiListAssets
+     */
+    readonly auxiliaryFeeRecipients?: string
+}
+
+/**
+ * Request parameters for listBalances operation in PublicApi.
+ * @export
+ * @interface PublicApiListBalancesRequest
+ */
+export interface PublicApiListBalancesRequest {
+    /**
+     * Ethereum wallet address for user
+     * @type {string}
+     * @memberof PublicApiListBalances
+     */
+    readonly owner: string
+}
+
+/**
+ * Request parameters for listCollectionFilters operation in PublicApi.
+ * @export
+ * @interface PublicApiListCollectionFiltersRequest
+ */
+export interface PublicApiListCollectionFiltersRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof PublicApiListCollectionFilters
+     */
+    readonly address: string
+
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListCollectionFilters
+     */
+    readonly pageSize?: number
+
+    /**
+     * Next page token
+     * @type {string}
+     * @memberof PublicApiListCollectionFilters
+     */
+    readonly nextPageToken?: string
+}
+
+/**
+ * Request parameters for listCollections operation in PublicApi.
+ * @export
+ * @interface PublicApiListCollectionsRequest
+ */
+export interface PublicApiListCollectionsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListCollections
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListCollections
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof PublicApiListCollections
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListCollections
+     */
+    readonly direction?: string
+
+    /**
+     * List of collections not to be displayed, separated by commas
+     * @type {string}
+     * @memberof PublicApiListCollections
+     */
+    readonly blacklist?: string
+}
+
+/**
+ * Request parameters for listDeposits operation in PublicApi.
+ * @export
+ * @interface PublicApiListDepositsRequest
+ */
+export interface PublicApiListDepositsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListDeposits
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this deposit
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly user?: string
+
+    /**
+     * Status of this deposit
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly status?: string
+
+    /**
+     * Minimum timestamp for this deposit
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this deposit
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Token type of the deposited asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly tokenType?: string
+
+    /**
+     * ERC721 Token ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly tokenId?: string
+
+    /**
+     * Internal IMX ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly assetId?: string
+
+    /**
+     * Token address of the deposited asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly tokenAddress?: string
+
+    /**
+     * Token name of the deposited asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly tokenName?: string
+
+    /**
+     * Min quantity for the deposited asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly minQuantity?: string
+
+    /**
+     * Max quantity for the deposited asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly maxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the deposited asset
+     * @type {string}
+     * @memberof PublicApiListDeposits
+     */
+    readonly metadata?: string
+}
+
+/**
+ * Request parameters for listMints operation in PublicApi.
+ * @export
+ * @interface PublicApiListMintsRequest
+ */
+export interface PublicApiListMintsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListMints
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this mint
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly user?: string
+
+    /**
+     * Status of this mint
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly status?: string
+
+    /**
+     * Minimum timestamp for this mint
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this mint
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Token type of the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly tokenType?: string
+
+    /**
+     * ERC721 Token ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly tokenId?: string
+
+    /**
+     * Internal IMX ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly assetId?: string
+
+    /**
+     * Token Name of the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly tokenName?: string
+
+    /**
+     * Token address of the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly tokenAddress?: string
+
+    /**
+     * Min quantity for the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly minQuantity?: string
+
+    /**
+     * Max quantity for the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly maxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the minted asset
+     * @type {string}
+     * @memberof PublicApiListMints
+     */
+    readonly metadata?: string
+}
+
+/**
+ * Request parameters for listOrders operation in PublicApi.
+ * @export
+ * @interface PublicApiListOrdersRequest
+ */
+export interface PublicApiListOrdersRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListOrders
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'}
+     * @memberof PublicApiListOrders
+     */
+    readonly orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this order
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly user?: string
+
+    /**
+     * Status of this order
+     * @type {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'}
+     * @memberof PublicApiListOrders
+     */
+    readonly status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'
+
+    /**
+     * Minimum created at timestamp for this order
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum created at timestamp for this order
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Minimum updated at timestamp for this order
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly updatedMinTimestamp?: string
+
+    /**
+     * Maximum updated at timestamp for this order
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly updatedMaxTimestamp?: string
+
+    /**
+     * Token type of the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyTokenType?: string
+
+    /**
+     * ERC721 Token ID of the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyTokenId?: string
+
+    /**
+     * Internal IMX ID of the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyAssetId?: string
+
+    /**
+     * Comma separated string of token addresses of the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyTokenAddress?: string
+
+    /**
+     * Token name of the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyTokenName?: string
+
+    /**
+     * Min quantity for the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyMinQuantity?: string
+
+    /**
+     * Max quantity for the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyMaxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the asset this order buys
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly buyMetadata?: string
+
+    /**
+     * Token type of the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellTokenType?: string
+
+    /**
+     * ERC721 Token ID of the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellTokenId?: string
+
+    /**
+     * Internal IMX ID of the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellAssetId?: string
+
+    /**
+     * Comma separated string of token addresses of the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellTokenAddress?: string
+
+    /**
+     * Token name of the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellTokenName?: string
+
+    /**
+     * Min quantity for the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellMinQuantity?: string
+
+    /**
+     * Max quantity for the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellMaxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the asset this order sells
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly sellMetadata?: string
+
+    /**
+     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly auxiliaryFeePercentages?: string
+
+    /**
+     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @type {string}
+     * @memberof PublicApiListOrders
+     */
+    readonly auxiliaryFeeRecipients?: string
+}
+
+/**
+ * Request parameters for listTokens operation in PublicApi.
+ * @export
+ * @interface PublicApiListTokensRequest
+ */
+export interface PublicApiListTokensRequest {
+    /**
+     * Contract address of the token
+     * @type {string}
+     * @memberof PublicApiListTokens
+     */
+    readonly address?: string
+
+    /**
+     * Token symbols for the token, e.g. ?symbols&#x3D;IMX,ETH
+     * @type {string}
+     * @memberof PublicApiListTokens
+     */
+    readonly symbols?: string
+}
+
+/**
+ * Request parameters for listTrades operation in PublicApi.
+ * @export
+ * @interface PublicApiListTradesRequest
+ */
+export interface PublicApiListTradesRequest {
+    /**
+     * Party A\&#39;s sell token type
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly partyATokenType?: string
+
+    /**
+     * Party A\&#39;s sell token address
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly partyATokenAddress?: string
+
+    /**
+     * Party A\&#39;s sell token id
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly partyATokenId?: string
+
+    /**
+     * Party B\&#39;s sell token type
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly partyBTokenType?: string
+
+    /**
+     * Party B\&#39;s sell token address
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly partyBTokenAddress?: string
+
+    /**
+     * Party B\&#39;s sell token id
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly partyBTokenId?: string
+
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListTrades
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly direction?: string
+
+    /**
+     * Minimum timestamp for this trade
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this trade
+     * @type {string}
+     * @memberof PublicApiListTrades
+     */
+    readonly maxTimestamp?: string
+}
+
+/**
+ * Request parameters for listTransfers operation in PublicApi.
+ * @export
+ * @interface PublicApiListTransfersRequest
+ */
+export interface PublicApiListTransfersRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListTransfers
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this transfer
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly user?: string
+
+    /**
+     * Status of this transfer
+     * @type {'success' | 'failure'}
+     * @memberof PublicApiListTransfers
+     */
+    readonly status?: 'success' | 'failure'
+
+    /**
+     * Minimum timestamp for this transfer
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this transfer
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Token type of the transferred asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly tokenType?: string
+
+    /**
+     * ERC721 Token ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly tokenId?: string
+
+    /**
+     * Internal IMX ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly assetId?: string
+
+    /**
+     * Token address of the transferred asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly tokenAddress?: string
+
+    /**
+     * Token name of the transferred asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly tokenName?: string
+
+    /**
+     * Max quantity for the transferred asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly minQuantity?: string
+
+    /**
+     * Max quantity for the transferred asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly maxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the transferred asset
+     * @type {string}
+     * @memberof PublicApiListTransfers
+     */
+    readonly metadata?: string
+}
+
+/**
+ * Request parameters for listWithdrawals operation in PublicApi.
+ * @export
+ * @interface PublicApiListWithdrawalsRequest
+ */
+export interface PublicApiListWithdrawalsRequest {
+    /**
+     * Withdrawal has been transferred to user\&#39;s Layer 1 wallet
+     * @type {boolean}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly withdrawnToWallet?: boolean
+
+    /**
+     * Status of the on-chain batch confirmation for this withdrawal
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly rollupStatus?: string
+
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly direction?: string
+
+    /**
+     * Ethereum address of the user who submitted this withdrawal
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly user?: string
+
+    /**
+     * Status of this withdrawal
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly status?: string
+
+    /**
+     * Minimum timestamp for this deposit
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this deposit
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly maxTimestamp?: string
+
+    /**
+     * Token type of the withdrawn asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly tokenType?: string
+
+    /**
+     * ERC721 Token ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly tokenId?: string
+
+    /**
+     * Internal IMX ID of the minted asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly assetId?: string
+
+    /**
+     * Token address of the withdrawn asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly tokenAddress?: string
+
+    /**
+     * Token name of the withdrawn asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly tokenName?: string
+
+    /**
+     * Min quantity for the withdrawn asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly minQuantity?: string
+
+    /**
+     * Max quantity for the withdrawn asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly maxQuantity?: string
+
+    /**
+     * JSON-encoded metadata filters for the withdrawn asset
+     * @type {string}
+     * @memberof PublicApiListWithdrawals
+     */
+    readonly metadata?: string
+}
+
+/**
+ * Request parameters for mintTokens operation in PublicApi.
+ * @export
+ * @interface PublicApiMintTokensRequest
+ */
+export interface PublicApiMintTokensRequest {
+    /**
+     * details of tokens to mint
+     * @type {Array<MintRequest>}
+     * @memberof PublicApiMintTokens
+     */
+    readonly mintTokensRequestV2: Array<MintRequest>
+}
+
+/**
+ * Request parameters for registerUser operation in PublicApi.
+ * @export
+ * @interface PublicApiRegisterUserRequest
+ */
+export interface PublicApiRegisterUserRequest {
+    /**
+     * Register User
+     * @type {RegisterUserRequestVerifyEth}
+     * @memberof PublicApiRegisterUser
+     */
+    readonly registerUserRequestVerifyEth: RegisterUserRequestVerifyEth
+}
+
+/**
+ * Request parameters for updateCollection operation in PublicApi.
+ * @export
+ * @interface PublicApiUpdateCollectionRequest
+ */
+export interface PublicApiUpdateCollectionRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof PublicApiUpdateCollection
+     */
+    readonly address: string
+
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof PublicApiUpdateCollection
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof PublicApiUpdateCollection
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * update a collection
+     * @type {UpdateCollectionRequest}
+     * @memberof PublicApiUpdateCollection
+     */
+    readonly updateCollectionRequest: UpdateCollectionRequest
+}
+
+/**
+ * Request parameters for updateMetadataSchemaByName operation in PublicApi.
+ * @export
+ * @interface PublicApiUpdateMetadataSchemaByNameRequest
+ */
+export interface PublicApiUpdateMetadataSchemaByNameRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof PublicApiUpdateMetadataSchemaByName
+     */
+    readonly address: string
+
+    /**
+     * Metadata schema name
+     * @type {string}
+     * @memberof PublicApiUpdateMetadataSchemaByName
+     */
+    readonly name: string
+
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof PublicApiUpdateMetadataSchemaByName
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof PublicApiUpdateMetadataSchemaByName
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * update metadata schema
+     * @type {MetadataSchemaRequest}
+     * @memberof PublicApiUpdateMetadataSchemaByName
+     */
+    readonly metadataSchemaRequest: MetadataSchemaRequest
+}
+
+/**
  * PublicApi - object-oriented interface
  * @export
  * @class PublicApi
@@ -3987,727 +5786,564 @@ export class PublicApi extends BaseAPI {
     /**
      * Add metadata schema to collection
      * @summary Add metadata schema to collection
-     * @param {string} address Collection contract address
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {AddMetadataSchemaToCollectionRequest} addMetadataSchemaToCollectionRequest add metadata schema to a collection
+     * @param {PublicApiAddMetadataSchemaToCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public addMetadataSchemaToCollection(address: string, iMXSignature: string, iMXTimestamp: string, addMetadataSchemaToCollectionRequest: AddMetadataSchemaToCollectionRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).addMetadataSchemaToCollection(address, iMXSignature, iMXTimestamp, addMetadataSchemaToCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public addMetadataSchemaToCollection(requestParameters: PublicApiAddMetadataSchemaToCollectionRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).addMetadataSchemaToCollection(requestParameters.address, requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.addMetadataSchemaToCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Cancel an order
      * @summary cancel an order
-     * @param {string} id Order ID to cancel
-     * @param {CancelOrderRequest} cancelOrderRequest cancel an order
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {PublicApiCancelOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public cancelOrder(id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).cancelOrder(id, cancelOrderRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public cancelOrder(requestParameters: PublicApiCancelOrderRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).cancelOrder(requestParameters.id, requestParameters.cancelOrderRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create collection
      * @summary Create collection
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {CreateCollectionRequest} createCollectionRequest create a collection
+     * @param {PublicApiCreateCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public createCollection(iMXSignature: string, iMXTimestamp: string, createCollectionRequest: CreateCollectionRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).createCollection(iMXSignature, iMXTimestamp, createCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public createCollection(requestParameters: PublicApiCreateCollectionRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createCollection(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.createCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create an order
      * @summary Create an order
-     * @param {CreateOrderRequest} createOrderRequest create an order
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {PublicApiCreateOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public createOrder(createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).createOrder(createOrderRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createOrder(requestParameters: PublicApiCreateOrderRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createOrder(requestParameters.createOrderRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a project
      * @summary Create a project
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {CreateProjectRequest} createProjectRequest create a project
+     * @param {PublicApiCreateProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public createProject(iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).createProject(iMXSignature, iMXTimestamp, createProjectRequest, options).then((request) => request(this.axios, this.basePath));
+    public createProject(requestParameters: PublicApiCreateProjectRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createProject(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.createProjectRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a Trade
      * @summary Create a Trade between two parties
-     * @param {CreateTradeRequestV1} createTradeRequest create a trade
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {PublicApiCreateTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public createTrade(createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).createTrade(createTradeRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createTrade(requestParameters: PublicApiCreateTradeRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createTrade(requestParameters.createTradeRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a new transfer request
      * @summary Creates a transfer of multiple tokens between two parties
-     * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {PublicApiCreateTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public createTransfer(createTransferRequestV2: CreateTransferRequest, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).createTransfer(createTransferRequestV2, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createTransfer(requestParameters: PublicApiCreateTransferRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createTransfer(requestParameters.createTransferRequestV2, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create a new transfer request
      * @summary Creates a transfer of tokens between two parties
-     * @param {CreateTransferRequestV1} createTransferRequest Create transfer
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {PublicApiCreateTransferV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public createTransferV1(createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).createTransferV1(createTransferRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createTransferV1(requestParameters: PublicApiCreateTransferV1Request, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createTransferV1(requestParameters.createTransferRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Creates a withdrawal
      * @summary Creates a withdrawal of a token
-     * @param {CreateWithdrawalRequest} createWithdrawalRequest create a withdrawal
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {PublicApiCreateWithdrawalRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public createWithdrawal(createWithdrawalRequest: CreateWithdrawalRequest, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).createWithdrawal(createWithdrawalRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createWithdrawal(requestParameters: PublicApiCreateWithdrawalRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).createWithdrawal(requestParameters.createWithdrawalRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of an asset
      * @summary Get details of an asset
-     * @param {string} tokenAddress Address of the ERC721 contract
-     * @param {string} tokenId Either ERC721 token ID or internal IMX ID
-     * @param {boolean} [includeFees] Set flag to include fees associated with the asset
+     * @param {PublicApiGetAssetRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getAsset(tokenAddress: string, tokenId: string, includeFees?: boolean, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getAsset(tokenAddress, tokenId, includeFees, options).then((request) => request(this.axios, this.basePath));
+    public getAsset(requestParameters: PublicApiGetAssetRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getAsset(requestParameters.tokenAddress, requestParameters.tokenId, requestParameters.includeFees, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Fetches the token balances of the user
      * @summary Fetches the token balances of the user
-     * @param {string} owner Address of the owner/user
-     * @param {string} address Token address
+     * @param {PublicApiGetBalanceRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getBalance(owner: string, address: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getBalance(owner, address, options).then((request) => request(this.axios, this.basePath));
+    public getBalance(requestParameters: PublicApiGetBalanceRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getBalance(requestParameters.owner, requestParameters.address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a collection at the given address
      * @summary Get details of a collection at the given address
-     * @param {string} address Collection contract address
+     * @param {PublicApiGetCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getCollection(address: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getCollection(address, options).then((request) => request(this.axios, this.basePath));
+    public getCollection(requestParameters: PublicApiGetCollectionRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getCollection(requestParameters.address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a deposit with the given ID
      * @summary Get details of a deposit with the given ID
-     * @param {string} id Deposit ID
+     * @param {PublicApiGetDepositRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getDeposit(id: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getDeposit(id, options).then((request) => request(this.axios, this.basePath));
+    public getDeposit(requestParameters: PublicApiGetDepositRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getDeposit(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get collection metadata schema
      * @summary Get collection metadata schema
-     * @param {string} address Collection contract address
+     * @param {PublicApiGetMetadataSchemaRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getMetadataSchema(address: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getMetadataSchema(address, options).then((request) => request(this.axios, this.basePath));
+    public getMetadataSchema(requestParameters: PublicApiGetMetadataSchemaRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getMetadataSchema(requestParameters.address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a mint with the given ID
      * @summary Get details of a mint with the given ID
-     * @param {string} id Mint ID. This is the transaction_id returned from listMints
+     * @param {PublicApiGetMintRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getMint(id: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getMint(id, options).then((request) => request(this.axios, this.basePath));
+    public getMint(requestParameters: PublicApiGetMintRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getMint(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a mintable token with the given token address and token ID
      * @summary Get details of a mintable token with the given token address and token ID
-     * @param {string} tokenAddress Address of the ERC721 contract
-     * @param {string} tokenId ERC721 token ID
+     * @param {PublicApiGetMintableTokenDetailsByClientTokenIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getMintableTokenDetailsByClientTokenId(tokenAddress: string, tokenId: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getMintableTokenDetailsByClientTokenId(tokenAddress, tokenId, options).then((request) => request(this.axios, this.basePath));
+    public getMintableTokenDetailsByClientTokenId(requestParameters: PublicApiGetMintableTokenDetailsByClientTokenIdRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getMintableTokenDetailsByClientTokenId(requestParameters.tokenAddress, requestParameters.tokenId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of an order with the given ID
      * @summary Get details of an order with the given ID
-     * @param {string} id Order ID
-     * @param {boolean} [includeFees] Set flag to true to include fee body for the order
-     * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @param {PublicApiGetOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getOrder(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getOrder(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
+    public getOrder(requestParameters: PublicApiGetOrderRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getOrder(requestParameters.id, requestParameters.includeFees, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a project
      * @summary Get a project
-     * @param {string} id Project ID
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
+     * @param {PublicApiGetProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getProject(id: string, iMXSignature: string, iMXTimestamp: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getProject(id, iMXSignature, iMXTimestamp, options).then((request) => request(this.axios, this.basePath));
+    public getProject(requestParameters: PublicApiGetProjectRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getProject(requestParameters.id, requestParameters.iMXSignature, requestParameters.iMXTimestamp, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get projects
      * @summary Get projects
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
+     * @param {PublicApiGetProjectsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getProjects(iMXSignature: string, iMXTimestamp: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getProjects(iMXSignature, iMXTimestamp, pageSize, cursor, orderBy, direction, options).then((request) => request(this.axios, this.basePath));
+    public getProjects(requestParameters: PublicApiGetProjectsRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getProjects(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details a signable cancel order
      * @summary Get details a signable cancel order
-     * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
+     * @param {PublicApiGetSignableCancelOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableCancelOrder(getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableCancelOrder(getSignableCancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableCancelOrder(requestParameters: PublicApiGetSignableCancelOrderRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableCancelOrder(requestParameters.getSignableCancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of a signable deposit
      * @summary Gets details of a signable deposit
-     * @param {GetSignableDepositRequest} getSignableDepositRequest Get details of signable deposit
+     * @param {PublicApiGetSignableDepositRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableDeposit(getSignableDepositRequest: GetSignableDepositRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableDeposit(getSignableDepositRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableDeposit(requestParameters: PublicApiGetSignableDepositRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableDeposit(requestParameters.getSignableDepositRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details a signable order V3
      * @summary Get details a signable order V3
-     * @param {GetSignableOrderRequest} getSignableOrderRequestV3 get a signable order
+     * @param {PublicApiGetSignableOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableOrder(getSignableOrderRequestV3: GetSignableOrderRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableOrder(getSignableOrderRequestV3, options).then((request) => request(this.axios, this.basePath));
+    public getSignableOrder(requestParameters: PublicApiGetSignableOrderRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableOrder(requestParameters.getSignableOrderRequestV3, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get operator signature to allow clients to register the user
      * @summary Get operator signature to allow clients to register the user
-     * @param {GetSignableRegistrationRequest} getSignableRegistrationRequest Register User
+     * @param {PublicApiGetSignableRegistrationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableRegistration(getSignableRegistrationRequest: GetSignableRegistrationRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableRegistration(getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableRegistration(requestParameters: PublicApiGetSignableRegistrationRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableRegistration(requestParameters.getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details a signable trade V3
      * @summary Get details a signable trade V3
-     * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
+     * @param {PublicApiGetSignableTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableTrade(getSignableTradeRequest: GetSignableTradeRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableTrade(getSignableTradeRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableTrade(requestParameters: PublicApiGetSignableTradeRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableTrade(requestParameters.getSignableTradeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets bulk details of a signable transfer
      * @summary Gets bulk details of a signable transfer
-     * @param {GetSignableTransferRequest} getSignableTransferRequestV2 get details of signable transfer
+     * @param {PublicApiGetSignableTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableTransfer(getSignableTransferRequestV2: GetSignableTransferRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableTransfer(getSignableTransferRequestV2, options).then((request) => request(this.axios, this.basePath));
+    public getSignableTransfer(requestParameters: PublicApiGetSignableTransferRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableTransfer(requestParameters.getSignableTransferRequestV2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of a signable transfer
      * @summary Gets details of a signable transfer
-     * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
+     * @param {PublicApiGetSignableTransferV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequestV1, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableTransferV1(getSignableTransferRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableTransferV1(requestParameters: PublicApiGetSignableTransferV1Request, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableTransferV1(requestParameters.getSignableTransferRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of a signable withdrawal
      * @summary Gets details of a signable withdrawal
-     * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
+     * @param {PublicApiGetSignableWithdrawalRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getSignableWithdrawal(getSignableWithdrawalRequest: GetSignableWithdrawalRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getSignableWithdrawal(getSignableWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableWithdrawal(requestParameters: PublicApiGetSignableWithdrawalRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getSignableWithdrawal(requestParameters.getSignableWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a token
      * @summary Get details of a token
-     * @param {string} address Token Contract Address
+     * @param {PublicApiGetTokenRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getToken(address: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getToken(address, options).then((request) => request(this.axios, this.basePath));
+    public getToken(requestParameters: PublicApiGetTokenRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getToken(requestParameters.address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a trade with the given ID
      * @summary Get details of a trade with the given ID
-     * @param {string} id Trade ID
+     * @param {PublicApiGetTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getTrade(id: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getTrade(id, options).then((request) => request(this.axios, this.basePath));
+    public getTrade(requestParameters: PublicApiGetTradeRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getTrade(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a transfer with the given ID
      * @summary Get details of a transfer with the given ID
-     * @param {string} id Transfer ID
+     * @param {PublicApiGetTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getTransfer(id: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getTransfer(id, options).then((request) => request(this.axios, this.basePath));
+    public getTransfer(requestParameters: PublicApiGetTransferRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getTransfer(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get stark keys for a registered user
      * @summary Get stark keys for a registered user
-     * @param {string} user User
+     * @param {PublicApiGetUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getUsers(user: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getUsers(user, options).then((request) => request(this.axios, this.basePath));
+    public getUsers(requestParameters: PublicApiGetUsersRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getUsers(requestParameters.user, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of withdrawal with the given ID
      * @summary Gets details of withdrawal with the given ID
-     * @param {string} id Withdrawal ID
+     * @param {PublicApiGetWithdrawalRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public getWithdrawal(id: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).getWithdrawal(id, options).then((request) => request(this.axios, this.basePath));
+    public getWithdrawal(requestParameters: PublicApiGetWithdrawalRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).getWithdrawal(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of assets
      * @summary Get a list of assets
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {'updated_at' | 'name'} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who owns these assets
-     * @param {string} [status] Status of these assets
-     * @param {string} [name] Name of the asset to search
-     * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {
-     * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
-     * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
-     * @param {boolean} [includeFees] Set flag to include fees associated with the asset
-     * @param {string} [collection] Collection contract address
-     * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated
-     * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated
-     * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @param {PublicApiListAssetsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: string, name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listAssets(pageSize, cursor, orderBy, direction, user, status, name, metadata, sellOrders, buyOrders, includeFees, collection, updatedMinTimestamp, updatedMaxTimestamp, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
+    public listAssets(requestParameters: PublicApiListAssetsRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listAssets(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.name, requestParameters.metadata, requestParameters.sellOrders, requestParameters.buyOrders, requestParameters.includeFees, requestParameters.collection, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of balances for given user
      * @summary Get a list of balances for given user
-     * @param {string} owner Ethereum wallet address for user
+     * @param {PublicApiListBalancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listBalances(owner: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listBalances(owner, options).then((request) => request(this.axios, this.basePath));
+    public listBalances(requestParameters: PublicApiListBalancesRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listBalances(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of collection filters
      * @summary Get a list of collection filters
-     * @param {string} address Collection contract address
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [nextPageToken] Next page token
+     * @param {PublicApiListCollectionFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listCollectionFilters(address: string, pageSize?: number, nextPageToken?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listCollectionFilters(address, pageSize, nextPageToken, options).then((request) => request(this.axios, this.basePath));
+    public listCollectionFilters(requestParameters: PublicApiListCollectionFiltersRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listCollectionFilters(requestParameters.address, requestParameters.pageSize, requestParameters.nextPageToken, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of collections
      * @summary Get a list of collections
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [blacklist] List of collections not to be displayed, separated by commas
+     * @param {PublicApiListCollectionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listCollections(pageSize, cursor, orderBy, direction, blacklist, options).then((request) => request(this.axios, this.basePath));
+    public listCollections(requestParameters: PublicApiListCollectionsRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listCollections(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.blacklist, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of deposits
      * @summary Get a list of deposits
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this deposit
-     * @param {string} [status] Status of this deposit
-     * @param {string} [minTimestamp] Minimum timestamp for this deposit
-     * @param {string} [maxTimestamp] Maximum timestamp for this deposit
-     * @param {string} [tokenType] Token type of the deposited asset
-     * @param {string} [tokenId] ERC721 Token ID of the minted asset
-     * @param {string} [assetId] Internal IMX ID of the minted asset
-     * @param {string} [tokenAddress] Token address of the deposited asset
-     * @param {string} [tokenName] Token name of the deposited asset
-     * @param {string} [minQuantity] Min quantity for the deposited asset
-     * @param {string} [maxQuantity] Max quantity for the deposited asset
-     * @param {string} [metadata] JSON-encoded metadata filters for the deposited asset
+     * @param {PublicApiListDepositsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listDeposits(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listDeposits(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
+    public listDeposits(requestParameters: PublicApiListDepositsRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listDeposits(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of mints
      * @summary Get a list of mints
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this mint
-     * @param {string} [status] Status of this mint
-     * @param {string} [minTimestamp] Minimum timestamp for this mint
-     * @param {string} [maxTimestamp] Maximum timestamp for this mint
-     * @param {string} [tokenType] Token type of the minted asset
-     * @param {string} [tokenId] ERC721 Token ID of the minted asset
-     * @param {string} [assetId] Internal IMX ID of the minted asset
-     * @param {string} [tokenName] Token Name of the minted asset
-     * @param {string} [tokenAddress] Token address of the minted asset
-     * @param {string} [minQuantity] Min quantity for the minted asset
-     * @param {string} [maxQuantity] Max quantity for the minted asset
-     * @param {string} [metadata] JSON-encoded metadata filters for the minted asset
+     * @param {PublicApiListMintsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listMints(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenName?: string, tokenAddress?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listMints(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenName, tokenAddress, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
+    public listMints(requestParameters: PublicApiListMintsRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listMints(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenName, requestParameters.tokenAddress, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of orders
      * @summary Get a list of orders
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this order
-     * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-     * @param {string} [minTimestamp] Minimum created at timestamp for this order
-     * @param {string} [maxTimestamp] Maximum created at timestamp for this order
-     * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order
-     * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order
-     * @param {string} [buyTokenType] Token type of the asset this order buys
-     * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
-     * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
-     * @param {string} [buyTokenAddress] Comma separated string of token addresses of the asset this order buys
-     * @param {string} [buyTokenName] Token name of the asset this order buys
-     * @param {string} [buyMinQuantity] Min quantity for the asset this order buys
-     * @param {string} [buyMaxQuantity] Max quantity for the asset this order buys
-     * @param {string} [buyMetadata] JSON-encoded metadata filters for the asset this order buys
-     * @param {string} [sellTokenType] Token type of the asset this order sells
-     * @param {string} [sellTokenId] ERC721 Token ID of the asset this order sells
-     * @param {string} [sellAssetId] Internal IMX ID of the asset this order sells
-     * @param {string} [sellTokenAddress] Comma separated string of token addresses of the asset this order sells
-     * @param {string} [sellTokenName] Token name of the asset this order sells
-     * @param {string} [sellMinQuantity] Min quantity for the asset this order sells
-     * @param {string} [sellMaxQuantity] Max quantity for the asset this order sells
-     * @param {string} [sellMetadata] JSON-encoded metadata filters for the asset this order sells
-     * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @param {PublicApiListOrdersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listOrders(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, updatedMinTimestamp, updatedMaxTimestamp, buyTokenType, buyTokenId, buyAssetId, buyTokenAddress, buyTokenName, buyMinQuantity, buyMaxQuantity, buyMetadata, sellTokenType, sellTokenId, sellAssetId, sellTokenAddress, sellTokenName, sellMinQuantity, sellMaxQuantity, sellMetadata, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
+    public listOrders(requestParameters: PublicApiListOrdersRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listOrders(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.buyTokenType, requestParameters.buyTokenId, requestParameters.buyAssetId, requestParameters.buyTokenAddress, requestParameters.buyTokenName, requestParameters.buyMinQuantity, requestParameters.buyMaxQuantity, requestParameters.buyMetadata, requestParameters.sellTokenType, requestParameters.sellTokenId, requestParameters.sellAssetId, requestParameters.sellTokenAddress, requestParameters.sellTokenName, requestParameters.sellMinQuantity, requestParameters.sellMaxQuantity, requestParameters.sellMetadata, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of tokens
      * @summary Get a list of tokens
-     * @param {string} [address] Contract address of the token
-     * @param {string} [symbols] Token symbols for the token, e.g. ?symbols&#x3D;IMX,ETH
+     * @param {PublicApiListTokensRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listTokens(address?: string, symbols?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listTokens(address, symbols, options).then((request) => request(this.axios, this.basePath));
+    public listTokens(requestParameters: PublicApiListTokensRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listTokens(requestParameters.address, requestParameters.symbols, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of trades
      * @summary Get a list of trades
-     * @param {string} [partyATokenType] Party A\&#39;s sell token type
-     * @param {string} [partyATokenAddress] Party A\&#39;s sell token address
-     * @param {string} [partyATokenId] Party A\&#39;s sell token id
-     * @param {string} [partyBTokenType] Party B\&#39;s sell token type
-     * @param {string} [partyBTokenAddress] Party B\&#39;s sell token address
-     * @param {string} [partyBTokenId] Party B\&#39;s sell token id
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [minTimestamp] Minimum timestamp for this trade
-     * @param {string} [maxTimestamp] Maximum timestamp for this trade
+     * @param {PublicApiListTradesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listTrades(partyATokenType?: string, partyATokenAddress?: string, partyATokenId?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listTrades(partyATokenType, partyATokenAddress, partyATokenId, partyBTokenType, partyBTokenAddress, partyBTokenId, pageSize, cursor, orderBy, direction, minTimestamp, maxTimestamp, options).then((request) => request(this.axios, this.basePath));
+    public listTrades(requestParameters: PublicApiListTradesRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listTrades(requestParameters.partyATokenType, requestParameters.partyATokenAddress, requestParameters.partyATokenId, requestParameters.partyBTokenType, requestParameters.partyBTokenAddress, requestParameters.partyBTokenId, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.minTimestamp, requestParameters.maxTimestamp, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of transfers
      * @summary Get a list of transfers
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this transfer
-     * @param {'success' | 'failure'} [status] Status of this transfer
-     * @param {string} [minTimestamp] Minimum timestamp for this transfer
-     * @param {string} [maxTimestamp] Maximum timestamp for this transfer
-     * @param {string} [tokenType] Token type of the transferred asset
-     * @param {string} [tokenId] ERC721 Token ID of the minted asset
-     * @param {string} [assetId] Internal IMX ID of the minted asset
-     * @param {string} [tokenAddress] Token address of the transferred asset
-     * @param {string} [tokenName] Token name of the transferred asset
-     * @param {string} [minQuantity] Max quantity for the transferred asset
-     * @param {string} [maxQuantity] Max quantity for the transferred asset
-     * @param {string} [metadata] JSON-encoded metadata filters for the transferred asset
+     * @param {PublicApiListTransfersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listTransfers(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listTransfers(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
+    public listTransfers(requestParameters: PublicApiListTransfersRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listTransfers(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of withdrawals
      * @summary Get a list of withdrawals
-     * @param {boolean} [withdrawnToWallet] Withdrawal has been transferred to user\&#39;s Layer 1 wallet
-     * @param {string} [rollupStatus] Status of the on-chain batch confirmation for this withdrawal
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [user] Ethereum address of the user who submitted this withdrawal
-     * @param {string} [status] Status of this withdrawal
-     * @param {string} [minTimestamp] Minimum timestamp for this deposit
-     * @param {string} [maxTimestamp] Maximum timestamp for this deposit
-     * @param {string} [tokenType] Token type of the withdrawn asset
-     * @param {string} [tokenId] ERC721 Token ID of the minted asset
-     * @param {string} [assetId] Internal IMX ID of the minted asset
-     * @param {string} [tokenAddress] Token address of the withdrawn asset
-     * @param {string} [tokenName] Token name of the withdrawn asset
-     * @param {string} [minQuantity] Min quantity for the withdrawn asset
-     * @param {string} [maxQuantity] Max quantity for the withdrawn asset
-     * @param {string} [metadata] JSON-encoded metadata filters for the withdrawn asset
+     * @param {PublicApiListWithdrawalsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public listWithdrawals(withdrawnToWallet?: boolean, rollupStatus?: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).listWithdrawals(withdrawnToWallet, rollupStatus, pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
+    public listWithdrawals(requestParameters: PublicApiListWithdrawalsRequest = {}, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).listWithdrawals(requestParameters.withdrawnToWallet, requestParameters.rollupStatus, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Mint tokens in a batch with fees
      * @summary Mint Tokens V2
-     * @param {Array<MintRequest>} mintTokensRequestV2 details of tokens to mint
+     * @param {PublicApiMintTokensRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public mintTokens(mintTokensRequestV2: Array<MintRequest>, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).mintTokens(mintTokensRequestV2, options).then((request) => request(this.axios, this.basePath));
+    public mintTokens(requestParameters: PublicApiMintTokensRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).mintTokens(requestParameters.mintTokensRequestV2, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a user
      * @summary Registers a user
-     * @param {RegisterUserRequestVerifyEth} registerUserRequestVerifyEth Register User
+     * @param {PublicApiRegisterUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public registerUser(registerUserRequestVerifyEth: RegisterUserRequestVerifyEth, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).registerUser(registerUserRequestVerifyEth, options).then((request) => request(this.axios, this.basePath));
+    public registerUser(requestParameters: PublicApiRegisterUserRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).registerUser(requestParameters.registerUserRequestVerifyEth, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Update collection
      * @summary Update collection
-     * @param {string} address Collection contract address
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {UpdateCollectionRequest} updateCollectionRequest update a collection
+     * @param {PublicApiUpdateCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public updateCollection(address: string, iMXSignature: string, iMXTimestamp: string, updateCollectionRequest: UpdateCollectionRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).updateCollection(address, iMXSignature, iMXTimestamp, updateCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateCollection(requestParameters: PublicApiUpdateCollectionRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).updateCollection(requestParameters.address, requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.updateCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Update metadata schema by name
      * @summary Update metadata schema by name
-     * @param {string} address Collection contract address
-     * @param {string} name Metadata schema name
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {MetadataSchemaRequest} metadataSchemaRequest update metadata schema
+     * @param {PublicApiUpdateMetadataSchemaByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicApi
      */
-    public updateMetadataSchemaByName(address: string, name: string, iMXSignature: string, iMXTimestamp: string, metadataSchemaRequest: MetadataSchemaRequest, options?: AxiosRequestConfig) {
-        return PublicApiFp(this.configuration).updateMetadataSchemaByName(address, name, iMXSignature, iMXTimestamp, metadataSchemaRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateMetadataSchemaByName(requestParameters: PublicApiUpdateMetadataSchemaByNameRequest, options?: AxiosRequestConfig) {
+        return PublicApiFp(this.configuration).updateMetadataSchemaByName(requestParameters.address, requestParameters.name, requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.metadataSchemaRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }

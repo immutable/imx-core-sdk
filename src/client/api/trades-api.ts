@@ -378,6 +378,153 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
+ * Request parameters for createTrade operation in TradesApi.
+ * @export
+ * @interface TradesApiCreateTradeRequest
+ */
+export interface TradesApiCreateTradeRequest {
+    /**
+     * create a trade
+     * @type {CreateTradeRequestV1}
+     * @memberof TradesApiCreateTrade
+     */
+    readonly createTradeRequest: CreateTradeRequestV1
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof TradesApiCreateTrade
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof TradesApiCreateTrade
+     */
+    readonly xImxEthSignature?: string
+}
+
+/**
+ * Request parameters for getSignableTrade operation in TradesApi.
+ * @export
+ * @interface TradesApiGetSignableTradeRequest
+ */
+export interface TradesApiGetSignableTradeRequest {
+    /**
+     * get a signable trade
+     * @type {GetSignableTradeRequest}
+     * @memberof TradesApiGetSignableTrade
+     */
+    readonly getSignableTradeRequest: GetSignableTradeRequest
+}
+
+/**
+ * Request parameters for getTrade operation in TradesApi.
+ * @export
+ * @interface TradesApiGetTradeRequest
+ */
+export interface TradesApiGetTradeRequest {
+    /**
+     * Trade ID
+     * @type {string}
+     * @memberof TradesApiGetTrade
+     */
+    readonly id: string
+}
+
+/**
+ * Request parameters for listTrades operation in TradesApi.
+ * @export
+ * @interface TradesApiListTradesRequest
+ */
+export interface TradesApiListTradesRequest {
+    /**
+     * Party A\&#39;s sell token type
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly partyATokenType?: string
+
+    /**
+     * Party A\&#39;s sell token address
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly partyATokenAddress?: string
+
+    /**
+     * Party A\&#39;s sell token id
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly partyATokenId?: string
+
+    /**
+     * Party B\&#39;s sell token type
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly partyBTokenType?: string
+
+    /**
+     * Party B\&#39;s sell token address
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly partyBTokenAddress?: string
+
+    /**
+     * Party B\&#39;s sell token id
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly partyBTokenId?: string
+
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof TradesApiListTrades
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly direction?: string
+
+    /**
+     * Minimum timestamp for this trade
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly minTimestamp?: string
+
+    /**
+     * Maximum timestamp for this trade
+     * @type {string}
+     * @memberof TradesApiListTrades
+     */
+    readonly maxTimestamp?: string
+}
+
+/**
  * TradesApi - object-oriented interface
  * @export
  * @class TradesApi
@@ -387,61 +534,48 @@ export class TradesApi extends BaseAPI {
     /**
      * Create a Trade
      * @summary Create a Trade between two parties
-     * @param {CreateTradeRequestV1} createTradeRequest create a trade
-     * @param {string} [xImxEthAddress] eth address
-     * @param {string} [xImxEthSignature] eth signature
+     * @param {TradesApiCreateTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradesApi
      */
-    public createTrade(createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig) {
-        return TradesApiFp(this.configuration).createTrade(createTradeRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+    public createTrade(requestParameters: TradesApiCreateTradeRequest, options?: AxiosRequestConfig) {
+        return TradesApiFp(this.configuration).createTrade(requestParameters.createTradeRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details a signable trade V3
      * @summary Get details a signable trade V3
-     * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
+     * @param {TradesApiGetSignableTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradesApi
      */
-    public getSignableTrade(getSignableTradeRequest: GetSignableTradeRequest, options?: AxiosRequestConfig) {
-        return TradesApiFp(this.configuration).getSignableTrade(getSignableTradeRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableTrade(requestParameters: TradesApiGetSignableTradeRequest, options?: AxiosRequestConfig) {
+        return TradesApiFp(this.configuration).getSignableTrade(requestParameters.getSignableTradeRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a trade with the given ID
      * @summary Get details of a trade with the given ID
-     * @param {string} id Trade ID
+     * @param {TradesApiGetTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradesApi
      */
-    public getTrade(id: string, options?: AxiosRequestConfig) {
-        return TradesApiFp(this.configuration).getTrade(id, options).then((request) => request(this.axios, this.basePath));
+    public getTrade(requestParameters: TradesApiGetTradeRequest, options?: AxiosRequestConfig) {
+        return TradesApiFp(this.configuration).getTrade(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of trades
      * @summary Get a list of trades
-     * @param {string} [partyATokenType] Party A\&#39;s sell token type
-     * @param {string} [partyATokenAddress] Party A\&#39;s sell token address
-     * @param {string} [partyATokenId] Party A\&#39;s sell token id
-     * @param {string} [partyBTokenType] Party B\&#39;s sell token type
-     * @param {string} [partyBTokenAddress] Party B\&#39;s sell token address
-     * @param {string} [partyBTokenId] Party B\&#39;s sell token id
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [minTimestamp] Minimum timestamp for this trade
-     * @param {string} [maxTimestamp] Maximum timestamp for this trade
+     * @param {TradesApiListTradesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TradesApi
      */
-    public listTrades(partyATokenType?: string, partyATokenAddress?: string, partyATokenId?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: AxiosRequestConfig) {
-        return TradesApiFp(this.configuration).listTrades(partyATokenType, partyATokenAddress, partyATokenId, partyBTokenType, partyBTokenAddress, partyBTokenId, pageSize, cursor, orderBy, direction, minTimestamp, maxTimestamp, options).then((request) => request(this.axios, this.basePath));
+    public listTrades(requestParameters: TradesApiListTradesRequest = {}, options?: AxiosRequestConfig) {
+        return TradesApiFp(this.configuration).listTrades(requestParameters.partyATokenType, requestParameters.partyATokenAddress, requestParameters.partyATokenId, requestParameters.partyBTokenType, requestParameters.partyBTokenAddress, requestParameters.partyBTokenId, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.minTimestamp, requestParameters.maxTimestamp, options).then((request) => request(this.axios, this.basePath));
     }
 }

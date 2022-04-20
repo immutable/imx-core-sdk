@@ -229,6 +229,48 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
+ * Request parameters for getSignableRegistration operation in UsersApi.
+ * @export
+ * @interface UsersApiGetSignableRegistrationRequest
+ */
+export interface UsersApiGetSignableRegistrationRequest {
+    /**
+     * Register User
+     * @type {GetSignableRegistrationRequest}
+     * @memberof UsersApiGetSignableRegistration
+     */
+    readonly getSignableRegistrationRequest: GetSignableRegistrationRequest
+}
+
+/**
+ * Request parameters for getUsers operation in UsersApi.
+ * @export
+ * @interface UsersApiGetUsersRequest
+ */
+export interface UsersApiGetUsersRequest {
+    /**
+     * User
+     * @type {string}
+     * @memberof UsersApiGetUsers
+     */
+    readonly user: string
+}
+
+/**
+ * Request parameters for registerUser operation in UsersApi.
+ * @export
+ * @interface UsersApiRegisterUserRequest
+ */
+export interface UsersApiRegisterUserRequest {
+    /**
+     * Register User
+     * @type {RegisterUserRequestVerifyEth}
+     * @memberof UsersApiRegisterUser
+     */
+    readonly registerUserRequestVerifyEth: RegisterUserRequestVerifyEth
+}
+
+/**
  * UsersApi - object-oriented interface
  * @export
  * @class UsersApi
@@ -238,36 +280,36 @@ export class UsersApi extends BaseAPI {
     /**
      * Get operator signature to allow clients to register the user
      * @summary Get operator signature to allow clients to register the user
-     * @param {GetSignableRegistrationRequest} getSignableRegistrationRequest Register User
+     * @param {UsersApiGetSignableRegistrationRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getSignableRegistration(getSignableRegistrationRequest: GetSignableRegistrationRequest, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getSignableRegistration(getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableRegistration(requestParameters: UsersApiGetSignableRegistrationRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getSignableRegistration(requestParameters.getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get stark keys for a registered user
      * @summary Get stark keys for a registered user
-     * @param {string} user User
+     * @param {UsersApiGetUsersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getUsers(user: string, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getUsers(user, options).then((request) => request(this.axios, this.basePath));
+    public getUsers(requestParameters: UsersApiGetUsersRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getUsers(requestParameters.user, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a user
      * @summary Registers a user
-     * @param {RegisterUserRequestVerifyEth} registerUserRequestVerifyEth Register User
+     * @param {UsersApiRegisterUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public registerUser(registerUserRequestVerifyEth: RegisterUserRequestVerifyEth, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).registerUser(registerUserRequestVerifyEth, options).then((request) => request(this.axios, this.basePath));
+    public registerUser(requestParameters: UsersApiRegisterUserRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).registerUser(requestParameters.registerUserRequestVerifyEth, options).then((request) => request(this.axios, this.basePath));
     }
 }

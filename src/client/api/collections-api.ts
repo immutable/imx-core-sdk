@@ -424,6 +424,153 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
 };
 
 /**
+ * Request parameters for createCollection operation in CollectionsApi.
+ * @export
+ * @interface CollectionsApiCreateCollectionRequest
+ */
+export interface CollectionsApiCreateCollectionRequest {
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof CollectionsApiCreateCollection
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof CollectionsApiCreateCollection
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * create a collection
+     * @type {CreateCollectionRequest}
+     * @memberof CollectionsApiCreateCollection
+     */
+    readonly createCollectionRequest: CreateCollectionRequest
+}
+
+/**
+ * Request parameters for getCollection operation in CollectionsApi.
+ * @export
+ * @interface CollectionsApiGetCollectionRequest
+ */
+export interface CollectionsApiGetCollectionRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof CollectionsApiGetCollection
+     */
+    readonly address: string
+}
+
+/**
+ * Request parameters for listCollectionFilters operation in CollectionsApi.
+ * @export
+ * @interface CollectionsApiListCollectionFiltersRequest
+ */
+export interface CollectionsApiListCollectionFiltersRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof CollectionsApiListCollectionFilters
+     */
+    readonly address: string
+
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof CollectionsApiListCollectionFilters
+     */
+    readonly pageSize?: number
+
+    /**
+     * Next page token
+     * @type {string}
+     * @memberof CollectionsApiListCollectionFilters
+     */
+    readonly nextPageToken?: string
+}
+
+/**
+ * Request parameters for listCollections operation in CollectionsApi.
+ * @export
+ * @interface CollectionsApiListCollectionsRequest
+ */
+export interface CollectionsApiListCollectionsRequest {
+    /**
+     * Page size of the result
+     * @type {number}
+     * @memberof CollectionsApiListCollections
+     */
+    readonly pageSize?: number
+
+    /**
+     * Cursor
+     * @type {string}
+     * @memberof CollectionsApiListCollections
+     */
+    readonly cursor?: string
+
+    /**
+     * Property to sort by
+     * @type {string}
+     * @memberof CollectionsApiListCollections
+     */
+    readonly orderBy?: string
+
+    /**
+     * Direction to sort (asc/desc)
+     * @type {string}
+     * @memberof CollectionsApiListCollections
+     */
+    readonly direction?: string
+
+    /**
+     * List of collections not to be displayed, separated by commas
+     * @type {string}
+     * @memberof CollectionsApiListCollections
+     */
+    readonly blacklist?: string
+}
+
+/**
+ * Request parameters for updateCollection operation in CollectionsApi.
+ * @export
+ * @interface CollectionsApiUpdateCollectionRequest
+ */
+export interface CollectionsApiUpdateCollectionRequest {
+    /**
+     * Collection contract address
+     * @type {string}
+     * @memberof CollectionsApiUpdateCollection
+     */
+    readonly address: string
+
+    /**
+     * String created by signing wallet address and timestamp
+     * @type {string}
+     * @memberof CollectionsApiUpdateCollection
+     */
+    readonly iMXSignature: string
+
+    /**
+     * Unix Epoc timestamp
+     * @type {string}
+     * @memberof CollectionsApiUpdateCollection
+     */
+    readonly iMXTimestamp: string
+
+    /**
+     * update a collection
+     * @type {UpdateCollectionRequest}
+     * @memberof CollectionsApiUpdateCollection
+     */
+    readonly updateCollectionRequest: UpdateCollectionRequest
+}
+
+/**
  * CollectionsApi - object-oriented interface
  * @export
  * @class CollectionsApi
@@ -433,71 +580,60 @@ export class CollectionsApi extends BaseAPI {
     /**
      * Create collection
      * @summary Create collection
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {CreateCollectionRequest} createCollectionRequest create a collection
+     * @param {CollectionsApiCreateCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
      */
-    public createCollection(iMXSignature: string, iMXTimestamp: string, createCollectionRequest: CreateCollectionRequest, options?: AxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).createCollection(iMXSignature, iMXTimestamp, createCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public createCollection(requestParameters: CollectionsApiCreateCollectionRequest, options?: AxiosRequestConfig) {
+        return CollectionsApiFp(this.configuration).createCollection(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.createCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of a collection at the given address
      * @summary Get details of a collection at the given address
-     * @param {string} address Collection contract address
+     * @param {CollectionsApiGetCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
      */
-    public getCollection(address: string, options?: AxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).getCollection(address, options).then((request) => request(this.axios, this.basePath));
+    public getCollection(requestParameters: CollectionsApiGetCollectionRequest, options?: AxiosRequestConfig) {
+        return CollectionsApiFp(this.configuration).getCollection(requestParameters.address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of collection filters
      * @summary Get a list of collection filters
-     * @param {string} address Collection contract address
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [nextPageToken] Next page token
+     * @param {CollectionsApiListCollectionFiltersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
      */
-    public listCollectionFilters(address: string, pageSize?: number, nextPageToken?: string, options?: AxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).listCollectionFilters(address, pageSize, nextPageToken, options).then((request) => request(this.axios, this.basePath));
+    public listCollectionFilters(requestParameters: CollectionsApiListCollectionFiltersRequest, options?: AxiosRequestConfig) {
+        return CollectionsApiFp(this.configuration).listCollectionFilters(requestParameters.address, requestParameters.pageSize, requestParameters.nextPageToken, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of collections
      * @summary Get a list of collections
-     * @param {number} [pageSize] Page size of the result
-     * @param {string} [cursor] Cursor
-     * @param {string} [orderBy] Property to sort by
-     * @param {string} [direction] Direction to sort (asc/desc)
-     * @param {string} [blacklist] List of collections not to be displayed, separated by commas
+     * @param {CollectionsApiListCollectionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
      */
-    public listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, options?: AxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).listCollections(pageSize, cursor, orderBy, direction, blacklist, options).then((request) => request(this.axios, this.basePath));
+    public listCollections(requestParameters: CollectionsApiListCollectionsRequest = {}, options?: AxiosRequestConfig) {
+        return CollectionsApiFp(this.configuration).listCollections(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.blacklist, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Update collection
      * @summary Update collection
-     * @param {string} address Collection contract address
-     * @param {string} iMXSignature String created by signing wallet address and timestamp
-     * @param {string} iMXTimestamp Unix Epoc timestamp
-     * @param {UpdateCollectionRequest} updateCollectionRequest update a collection
+     * @param {CollectionsApiUpdateCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CollectionsApi
      */
-    public updateCollection(address: string, iMXSignature: string, iMXTimestamp: string, updateCollectionRequest: UpdateCollectionRequest, options?: AxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).updateCollection(address, iMXSignature, iMXTimestamp, updateCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateCollection(requestParameters: CollectionsApiUpdateCollectionRequest, options?: AxiosRequestConfig) {
+        return CollectionsApiFp(this.configuration).updateCollection(requestParameters.address, requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.updateCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
