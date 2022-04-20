@@ -1,6 +1,7 @@
 import BN from 'bn.js';
 import * as encUtils from 'enc-utils';
 import hashJS from 'hash.js';
+import { Signer } from '@ethersproject/abstract-signer';
 import {
     ORDER,
     SECP_ORDER,
@@ -76,11 +77,10 @@ export function deserializeSignature(sig: string, size = 64): SignatureOptions {
     };
 }
 
-// experimental?
-// export async function signAuthHeader(
-//     timestamp: string,
-//     signer: Signer,
-// ): Promise<string> {
-//     const signature = deserializeSignature(await signer.signMessage(timestamp));
-//     return serializeEthSignature(signature);
-// }
+export async function signAuthHeader(
+    timestamp: string,
+    signer: Signer,
+): Promise<string> {
+    const signature = deserializeSignature(await signer.signMessage(timestamp));
+    return serializeEthSignature(signature);
+}
