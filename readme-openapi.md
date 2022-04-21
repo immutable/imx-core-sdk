@@ -10,18 +10,18 @@ https://openapi-generator.tech/
 https://openapi-generator.tech/docs/generators/typescript-axios/
 
 - Mounts PWD to app directory in Docker
-- Generates client and outputs to `src/client` directory
+- Generates client and outputs to `src/api` directory
 
 ```
-rm -rf src/client
-mkdir src/client
+rm -rf src/api
+mkdir src/api
 
 docker run --rm \
     -v $PWD:/app openapitools/openapi-generator-cli generate \
     -i ./app/openapi.json \
     -g typescript-axios \
-    --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true,withSeparateModelsAndApi=true,modelPackage=models,apiPackage=api,useSingleRequestParameter=true \
-    -o /app/src/client
+    --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true,withSeparateModelsAndApi=true,modelPackage=models,apiPackage=domain,useSingleRequestParameter=true \
+    -o /app/src/api
     
 ```
 
