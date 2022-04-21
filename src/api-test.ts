@@ -20,8 +20,3 @@ const getAsset = async () => {
 }
 
 getAsset().then(res => console.log(res))
-
-
-
-
-
