@@ -8,7 +8,8 @@
     "declaration": false,
     "removeComments": false,
     "strict": true,
-    "forceConsistentCasingInFileNames": false
+    "forceConsistentCasingInFileNames": false,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"],
   "files": ["./hardhat.config.ts"]
