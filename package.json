@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "generate-contract-bindings": "hardhat compile",
-    "test-contract-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/core.contract.ts"
+    "test-contract-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/core.contract.ts",
+    "test-api-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/api-test.ts"
   },
   "devDependencies": {
     "@ethersproject/providers": "^5.6.4",
@@ -25,6 +26,7 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
+    "axios": "^0.26.1",
     "dotenv": "^16.0.0"
   }
 }
