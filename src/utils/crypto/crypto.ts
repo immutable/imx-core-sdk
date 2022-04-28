@@ -76,10 +76,23 @@ export function deserializeSignature(sig: string, size = 64): SignatureOptions {
     };
 }
 
-export async function signAuthHeader(
-    timestamp: string,
+export async function signRaw(
+    payload: string,
     signer: Signer,
 ): Promise<string> {
-    const signature = deserializeSignature(await signer.signMessage(timestamp));
+    const signature = deserializeSignature(await signer.signMessage(payload));
     return serializeEthSignature(signature);
+}
+
+export async function signMessage(
+  message: string,
+  signer: Signer
+): Promise<{message: string, ethAddress: string, ethSignature: string}> {
+    const ethAddress = await signer.getAddress()
+    const ethSignature = await signRaw(message, signer)
+    return {
+        message,
+        ethAddress,
+        ethSignature,
+    };
 }
