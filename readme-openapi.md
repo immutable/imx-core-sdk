@@ -18,7 +18,7 @@ mkdir src/api
 
 docker run --rm \
     -v $PWD:/app openapitools/openapi-generator-cli generate \
-    -i ./app/openapi.json \
+    -i ./app/open-api-processed.json \
     -g typescript-axios \
     --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true,withSeparateModelsAndApi=true,modelPackage=models,apiPackage=domain,useSingleRequestParameter=true \
     -o /app/src/api

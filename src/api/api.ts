@@ -22,7 +22,6 @@ export * from './domain/metadata-api';
 export * from './domain/mints-api';
 export * from './domain/orders-api';
 export * from './domain/projects-api';
-export * from './domain/public-api';
 export * from './domain/tokens-api';
 export * from './domain/trades-api';
 export * from './domain/transfers-api';
