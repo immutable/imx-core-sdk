@@ -4,7 +4,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import typescript from 'rollup-plugin-typescript2';
 import json from '@rollup/plugin-json';
-import nodePolyfills from 'rollup-plugin-polyfill-node';
+import { terser } from 'rollup-plugin-terser';
 
 import pkg from "./package.json";
 import tsConfig from './tsconfig.json';
@@ -61,41 +61,7 @@ export default [
                 babelHelpers: 'runtime',
                 exclude: 'node_modules/**',
             }),
+            terser(),
         ],
     },
-    {
-        input: "src/index.ts",
-        output: [
-            {
-                name: 'browser version',
-                file: pkg.browser,
-                format: 'umd',
-                sourcemap: true,
-                sourcemapFile: pkg.main + '.map',
-                banner,
-                exports: "named",
-            }
-        ],
-        plugins: [
-            json(),
-            resolve(),
-            commonjs({
-                namedExports: {
-                    'elliptic': ['ec', 'curves']
-                }
-            }),
-            typescript({
-                include: tsConfig.include,
-                exclude: tsConfig.exclude,
-            }),
-            babel({
-                presets: [],
-                extensions: [...DEFAULT_EXTENSIONS, '.ts'],
-                configFile: path.resolve(__dirname, 'babel.config'),
-                babelHelpers: 'runtime',
-                exclude: 'node_modules/**',
-            }),
-            nodePolyfills()
-        ],
-    }
 ]
