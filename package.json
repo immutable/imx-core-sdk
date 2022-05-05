@@ -9,7 +9,8 @@
     "generate-contract-bindings": "hardhat compile",
     "test-contract-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/core.contract.ts",
     "test-api-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/api-test.ts",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "release": "release-it"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
@@ -22,6 +23,7 @@
     "@babel/runtime": "^7.12.5",
     "@ethersproject/providers": "^5.6.4",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@release-it/keep-a-changelog": "^3.0.0",
     "@typechain/ethers-v5": "^10.0.0",
     "@typechain/hardhat": "^6.0.0",
     "@types/elliptic": "^6.4.14",
@@ -35,6 +37,7 @@
     "ethers": "^5.6.4",
     "hardhat": "^2.9.3",
     "jest": "^27.5.1",
+    "release-it": "^15.0.0",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "typechain": "^8.0.0",
