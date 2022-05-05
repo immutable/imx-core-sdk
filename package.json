@@ -1,6 +1,6 @@
 {
   "name": "imx-core-sdk",
-  "version": "1.0.0",
+  "version": "0.0.1-alpha",
   "description": "Immutable Core SDK",
   "main": "index.js",
   "author": "Immutable",
