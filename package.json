@@ -4,7 +4,6 @@
   "description": "Immutable Core SDK",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
-  "browser": "dist/index.umd.js",
   "author": "Immutable",
   "license": "MIT",
   "scripts": {
