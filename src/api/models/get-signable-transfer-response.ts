@@ -28,6 +28,12 @@ export interface GetSignableTransferResponse {
      */
     'sender_stark_key': string;
     /**
+     * Message to sign with L1 wallet to confirm transfer request
+     * @type {string}
+     * @memberof GetSignableTransferResponse
+     */
+    'signable_message'?: string;
+    /**
      * List of transfer responses without the sender stark key
      * @type {Array<SignableTransferResponseDetails>}
      * @memberof GetSignableTransferResponse

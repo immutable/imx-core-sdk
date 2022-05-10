@@ -9,6 +9,7 @@ domain/assets-api.ts
 domain/balances-api.ts
 domain/collections-api.ts
 domain/deposits-api.ts
+domain/encoding-api.ts
 domain/metadata-api.ts
 domain/mints-api.ts
 domain/orders-api.ts
@@ -21,6 +22,7 @@ domain/withdrawals-api.ts
 git_push.sh
 index.ts
 models/add-metadata-schema-to-collection-request.ts
+models/application.ts
 models/asset-properties.ts
 models/asset.ts
 models/balance.ts
@@ -29,6 +31,9 @@ models/cancel-order-response.ts
 models/collection-details.ts
 models/collection-filter.ts
 models/collection.ts
+models/core-encode-asset-request-token.ts
+models/core-encode-asset-request.ts
+models/core-encode-asset-token-data.ts
 models/create-collection-request.ts
 models/create-order-request.ts
 models/create-order-response.ts
@@ -43,6 +48,7 @@ models/create-transfer-response.ts
 models/create-withdrawal-request.ts
 models/create-withdrawal-response.ts
 models/deposit.ts
+models/encode-asset-response.ts
 models/fee-data.ts
 models/fee-entry.ts
 models/fee-info.ts
@@ -56,6 +62,7 @@ models/get-signable-deposit-request.ts
 models/get-signable-deposit-response.ts
 models/get-signable-order-request.ts
 models/get-signable-order-response.ts
+models/get-signable-registration-offchain-response.ts
 models/get-signable-registration-request.ts
 models/get-signable-registration-response.ts
 models/get-signable-trade-request.ts
@@ -66,6 +73,7 @@ models/get-signable-transfer-response-v1.ts
 models/get-signable-transfer-response.ts
 models/get-signable-withdrawal-request.ts
 models/get-signable-withdrawal-response.ts
+models/get-tlvs-result.ts
 models/get-users-api-response.ts
 models/index.ts
 models/list-assets-response.ts
@@ -81,8 +89,10 @@ models/list-withdrawals-response.ts
 models/metadata-schema-property.ts
 models/metadata-schema-request.ts
 models/mint-fee.ts
+models/mint-request-v1.ts
 models/mint-request.ts
 models/mint-result-details.ts
+models/mint-result-v1.ts
 models/mint-token-data-v2.ts
 models/mint-token-data.ts
 models/mint-tokens-response.ts
@@ -95,11 +105,12 @@ models/order-fee-info.ts
 models/order.ts
 models/project.ts
 models/range.ts
-models/register-user-request-verify-eth.ts
+models/register-user-request.ts
 models/register-user-response.ts
 models/signable-token.ts
 models/signable-transfer-details.ts
 models/signable-transfer-response-details.ts
+models/snapshot-balances-record.ts
 models/success-response.ts
 models/token-data.ts
 models/token-details.ts

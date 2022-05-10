@@ -17,25 +17,19 @@
 /**
  * 
  * @export
- * @interface GetSignableCancelOrderResponse
+ * @interface GetSignableRegistrationOffchainResponse
  */
-export interface GetSignableCancelOrderResponse {
+export interface GetSignableRegistrationOffchainResponse {
     /**
-     * ID of the order to be cancelled
-     * @type {number}
-     * @memberof GetSignableCancelOrderResponse
-     */
-    'order_id'?: number;
-    /**
-     * Hash of the payload to be signed for cancel order
+     * Hash of the payload to be signed for user registration offchain
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof GetSignableRegistrationOffchainResponse
      */
     'payload_hash'?: string;
     /**
-     * Message to sign from wallet to confirm cancel order
+     * Message to sign with L1 wallet to register user offchain
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof GetSignableRegistrationOffchainResponse
      */
     'signable_message'?: string;
 }

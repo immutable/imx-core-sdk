@@ -13,24 +13,19 @@
  */
 
 
+import { CoreEncodeAssetRequestToken } from './core-encode-asset-request-token';
 
 /**
  * 
  * @export
- * @interface GetSignableRegistrationResponse
+ * @interface CoreEncodeAssetRequest
  */
-export interface GetSignableRegistrationResponse {
+export interface CoreEncodeAssetRequest {
     /**
-     * Signature from authorised operator
-     * @type {string}
-     * @memberof GetSignableRegistrationResponse
+     * 
+     * @type {CoreEncodeAssetRequestToken}
+     * @memberof CoreEncodeAssetRequest
      */
-    'operator_signature'?: string;
-    /**
-     * Hash of the payload to be signed for user registration
-     * @type {string}
-     * @memberof GetSignableRegistrationResponse
-     */
-    'payload_hash'?: string;
+    'token': CoreEncodeAssetRequestToken;
 }
 

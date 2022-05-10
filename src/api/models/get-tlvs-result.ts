@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface GetSignableRegistrationResponse
+ * @interface GetTLVsResult
  */
-export interface GetSignableRegistrationResponse {
+export interface GetTLVsResult {
     /**
-     * Signature from authorised operator
+     * 
      * @type {string}
-     * @memberof GetSignableRegistrationResponse
+     * @memberof GetTLVsResult
      */
-    'operator_signature'?: string;
-    /**
-     * Hash of the payload to be signed for user registration
-     * @type {string}
-     * @memberof GetSignableRegistrationResponse
-     */
-    'payload_hash'?: string;
+    'awaiting_cliff'?: string;
 }
 

@@ -13,6 +13,7 @@
  */
 
 
+import { FeeInfo } from './fee-info';
 
 /**
  * 
@@ -51,6 +52,12 @@ export interface GetSignableTradeResponse {
      */
     'expiration_timestamp'?: number;
     /**
+     * 
+     * @type {FeeInfo}
+     * @memberof GetSignableTradeResponse
+     */
+    'fee_info'?: FeeInfo;
+    /**
      * Nonce of the order
      * @type {number}
      * @memberof GetSignableTradeResponse
@@ -62,6 +69,12 @@ export interface GetSignableTradeResponse {
      * @memberof GetSignableTradeResponse
      */
     'payload_hash'?: string;
+    /**
+     * Message to sign with L1 wallet to confirm trade request
+     * @type {string}
+     * @memberof GetSignableTradeResponse
+     */
+    'signable_message'?: string;
     /**
      * Public stark key of the created user
      * @type {string}

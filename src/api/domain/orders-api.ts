@@ -268,7 +268,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
          * @summary Get a list of orders
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'} [orderBy] Property to sort by
+         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this order
          * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
@@ -297,7 +297,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrders: async (pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listOrders: async (pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/orders`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -511,7 +511,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @summary Get a list of orders
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'} [orderBy] Property to sort by
+         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this order
          * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
@@ -540,7 +540,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrdersResponse>> {
+        async listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrdersResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listOrders(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, updatedMinTimestamp, updatedMaxTimestamp, buyTokenType, buyTokenId, buyAssetId, buyTokenAddress, buyTokenName, buyMinQuantity, buyMaxQuantity, buyMetadata, sellTokenType, sellTokenId, sellAssetId, sellTokenAddress, sellTokenName, sellMinQuantity, sellMaxQuantity, sellMetadata, auxiliaryFeePercentages, auxiliaryFeeRecipients, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -617,7 +617,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @summary Get a list of orders
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'} [orderBy] Property to sort by
+         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this order
          * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
@@ -646,7 +646,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<ListOrdersResponse> {
+        listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<ListOrdersResponse> {
             return localVarFp.listOrders(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, updatedMinTimestamp, updatedMaxTimestamp, buyTokenType, buyTokenId, buyAssetId, buyTokenAddress, buyTokenName, buyMinQuantity, buyMaxQuantity, buyMetadata, sellTokenType, sellTokenId, sellAssetId, sellTokenAddress, sellTokenName, sellMinQuantity, sellMaxQuantity, sellMetadata, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
         },
     };
@@ -800,10 +800,10 @@ export interface OrdersApiListOrdersRequest {
 
     /**
      * Property to sort by
-     * @type {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'}
+     * @type {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'}
      * @memberof OrdersApiListOrders
      */
-    readonly orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'updated_at'
+    readonly orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'
 
     /**
      * Direction to sort (asc/desc)

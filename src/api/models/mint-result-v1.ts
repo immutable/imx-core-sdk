@@ -17,20 +17,26 @@
 /**
  * 
  * @export
- * @interface GetSignableRegistrationResponse
+ * @interface MintResultV1
  */
-export interface GetSignableRegistrationResponse {
+export interface MintResultV1 {
     /**
-     * Signature from authorised operator
+     * ID provided by the client for this token
      * @type {string}
-     * @memberof GetSignableRegistrationResponse
+     * @memberof MintResultV1
      */
-    'operator_signature'?: string;
+    'client_token_id'?: string;
     /**
-     * Hash of the payload to be signed for user registration
+     * IMX Id of this token
      * @type {string}
-     * @memberof GetSignableRegistrationResponse
+     * @memberof MintResultV1
      */
-    'payload_hash'?: string;
+    'token_id'?: string;
+    /**
+     * Mint Transaction ID
+     * @type {number}
+     * @memberof MintResultV1
+     */
+    'tx_id'?: number;
 }
 

@@ -17,26 +17,20 @@
 /**
  * 
  * @export
- * @interface GetSignableCancelOrderResponse
+ * @interface EncodeAssetResponse
  */
-export interface GetSignableCancelOrderResponse {
+export interface EncodeAssetResponse {
     /**
-     * ID of the order to be cancelled
-     * @type {number}
-     * @memberof GetSignableCancelOrderResponse
-     */
-    'order_id'?: number;
-    /**
-     * Hash of the payload to be signed for cancel order
+     * 
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof EncodeAssetResponse
      */
-    'payload_hash'?: string;
+    'asset_id'?: string;
     /**
-     * Message to sign from wallet to confirm cancel order
+     * 
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof EncodeAssetResponse
      */
-    'signable_message'?: string;
+    'asset_type'?: string;
 }
 

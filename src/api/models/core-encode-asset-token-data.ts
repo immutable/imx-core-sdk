@@ -17,26 +17,32 @@
 /**
  * 
  * @export
- * @interface GetSignableCancelOrderResponse
+ * @interface CoreEncodeAssetTokenData
  */
-export interface GetSignableCancelOrderResponse {
+export interface CoreEncodeAssetTokenData {
     /**
-     * ID of the order to be cancelled
-     * @type {number}
-     * @memberof GetSignableCancelOrderResponse
-     */
-    'order_id'?: number;
-    /**
-     * Hash of the payload to be signed for cancel order
+     * used if token is mintable
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof CoreEncodeAssetTokenData
      */
-    'payload_hash'?: string;
+    'blueprint'?: string;
     /**
-     * Message to sign from wallet to confirm cancel order
+     * used if token is mintable
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof CoreEncodeAssetTokenData
      */
-    'signable_message'?: string;
+    'id'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CoreEncodeAssetTokenData
+     */
+    'token_address'?: string;
+    /**
+     * used if token is non-mintable
+     * @type {string}
+     * @memberof CoreEncodeAssetTokenData
+     */
+    'token_id'?: string;
 }
 

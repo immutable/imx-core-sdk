@@ -171,11 +171,13 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {string} [cursor] Cursor
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [blacklist] List of collections not to be displayed, separated by commas
+         * @param {string} [blacklist] List of collections not to be included, separated by commas
+         * @param {string} [whitelist] List of collections to be included, separated by commas
+         * @param {string} [keyword] Keyword to search in collection name and description
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listCollections: async (pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listCollections: async (pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/collections`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -206,6 +208,14 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
 
             if (blacklist !== undefined) {
                 localVarQueryParameter['blacklist'] = blacklist;
+            }
+
+            if (whitelist !== undefined) {
+                localVarQueryParameter['whitelist'] = whitelist;
+            }
+
+            if (keyword !== undefined) {
+                localVarQueryParameter['keyword'] = keyword;
             }
 
 
@@ -327,12 +337,14 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
          * @param {string} [cursor] Cursor
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [blacklist] List of collections not to be displayed, separated by commas
+         * @param {string} [blacklist] List of collections not to be included, separated by commas
+         * @param {string} [whitelist] List of collections to be included, separated by commas
+         * @param {string} [keyword] Keyword to search in collection name and description
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListCollectionsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listCollections(pageSize, cursor, orderBy, direction, blacklist, options);
+        async listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListCollectionsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listCollections(pageSize, cursor, orderBy, direction, blacklist, whitelist, keyword, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -400,12 +412,14 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
          * @param {string} [cursor] Cursor
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [blacklist] List of collections not to be displayed, separated by commas
+         * @param {string} [blacklist] List of collections not to be included, separated by commas
+         * @param {string} [whitelist] List of collections to be included, separated by commas
+         * @param {string} [keyword] Keyword to search in collection name and description
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, options?: any): AxiosPromise<ListCollectionsResponse> {
-            return localVarFp.listCollections(pageSize, cursor, orderBy, direction, blacklist, options).then((request) => request(axios, basePath));
+        listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options?: any): AxiosPromise<ListCollectionsResponse> {
+            return localVarFp.listCollections(pageSize, cursor, orderBy, direction, blacklist, whitelist, keyword, options).then((request) => request(axios, basePath));
         },
         /**
          * Update collection
@@ -528,11 +542,25 @@ export interface CollectionsApiListCollectionsRequest {
     readonly direction?: string
 
     /**
-     * List of collections not to be displayed, separated by commas
+     * List of collections not to be included, separated by commas
      * @type {string}
      * @memberof CollectionsApiListCollections
      */
     readonly blacklist?: string
+
+    /**
+     * List of collections to be included, separated by commas
+     * @type {string}
+     * @memberof CollectionsApiListCollections
+     */
+    readonly whitelist?: string
+
+    /**
+     * Keyword to search in collection name and description
+     * @type {string}
+     * @memberof CollectionsApiListCollections
+     */
+    readonly keyword?: string
 }
 
 /**
@@ -622,7 +650,7 @@ export class CollectionsApi extends BaseAPI {
      * @memberof CollectionsApi
      */
     public listCollections(requestParameters: CollectionsApiListCollectionsRequest = {}, options?: AxiosRequestConfig) {
-        return CollectionsApiFp(this.configuration).listCollections(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.blacklist, options).then((request) => request(this.axios, this.basePath));
+        return CollectionsApiFp(this.configuration).listCollections(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.blacklist, requestParameters.whitelist, requestParameters.keyword, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
