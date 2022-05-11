@@ -6,7 +6,7 @@ import {
 } from '../utils';
 import { RegisterUserResponse, UsersApi } from '../api';
 
-export async function registerImxWorkflow(
+export async function registerOffchainWorkflow(
     signer: Signer,
     usersApi: UsersApi
 ): Promise<RegisterUserResponse> {
