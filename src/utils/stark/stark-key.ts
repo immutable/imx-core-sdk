@@ -7,6 +7,16 @@ import BN from 'bn.js';
 import { constantPointsHex } from './points';
 import * as encUtils from 'enc-utils';
 import { ec } from 'elliptic';
+import { splitSignature } from "ethers/lib/utils";
+import { Signer } from "@ethersproject/abstract-signer";
+import {StarkWallet} from "../../types";
+
+const DEFAULT_SIGNATURE_MESSAGE =
+    "Only sign this request if you’ve initiated an action with Immutable X.";
+
+const DEFAULT_ACCOUNT_APPLICATION = 'immutablex'
+const     DEFAULT_ACCOUNT_LAYER = 'starkex'
+const     DEFAULT_ACCOUNT_INDEX = '1'
 
 const prime = new BN(
     '800000000000011000000000000000000000000000000000000000000000001',
@@ -77,4 +87,18 @@ export function getKeyPairFromPrivateKey(privateKey: string): ec.KeyPair {
 export function getXCoordinate(publicKey: string): string {
     const keyPair = getKeyPairFromPublicKey(publicKey);
     return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
+}
+
+export async function generateStarkPublicKey(
+    signer: Signer
+): Promise<StarkWallet> {
+    const ethAddress = (await signer.getAddress()).toLowerCase()
+    const path = getAccountPath(DEFAULT_ACCOUNT_LAYER, DEFAULT_ACCOUNT_APPLICATION, ethAddress, DEFAULT_ACCOUNT_INDEX);
+    const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
+    const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
+    const starkPublic = getStarkPublicKey(keyPair);
+    return {
+        starkPublicKey: encUtils.sanitizeHex(getXCoordinate(starkPublic)),
+        starkKeyPair: keyPair,
+    };
 }
