@@ -15,5 +15,12 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 12,
   },
-  rules: {},
+  rules: {
+    quotes: ['error', 'single', { 'allowTemplateLiterals': true }],
+    'comma-dangle': ['error', 'always-multiline'],
+    indent: ['error', 2],
+    'no-trailing-spaces': ['error', { 'skipBlankLines': true }],
+    'semi-style': ['error', 'last'],
+    'object-curly-spacing': ['error', 'always'],
+  },
 };

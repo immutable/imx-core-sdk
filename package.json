@@ -17,7 +17,9 @@
     "build": "NODE_ENV=production rollup --config rollup.config.js",
     "prebuild": "rm -rf dist",
     "test": "NODE_ENV=test jest",
-    "release": "release-it"
+    "release": "release-it",
+    "lint": "eslint ./src/utils/** ./src/workflows/**",
+    "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",

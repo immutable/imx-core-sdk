@@ -12,7 +12,7 @@ describe('Key derivation', () => {
     const path = getAccountPath(layer, application, ethAddress, index);
     const keyPair = getKeyPairFromPath(seed, path);
     expect(keyPair.getPrivate('hex')).toEqual(
-        '06cf0a8bf113352eb863157a45c5e5567abb34f8d32cddafd2c22aa803f4892c'
+      '06cf0a8bf113352eb863157a45c5e5567abb34f8d32cddafd2c22aa803f4892c',
     );
   });
 });
