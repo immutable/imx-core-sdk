@@ -5,8 +5,12 @@ import { Bytes32 } from 'soltypes';
 import { Core__factory } from '../contracts';
 
 // TODO move to types
+export enum TokenType {
+  ETH = 'ETH',
+}
+
 const ethToken = {
-  type: 'ETH',
+  type: TokenType.ETH,
   data: {
     decimals: 18,
   },
@@ -14,6 +18,9 @@ const ethToken = {
 
 const contractAddress = process.env.STARK_CONTRACT_ADDRESS!;
 
+// TODO registerAndDepositERC20
+// TODO registerAndDepositEth
+// TODO register, depositNft
 export async function depositEthWorkflow(
   signer: Signer,
   amount: string,
