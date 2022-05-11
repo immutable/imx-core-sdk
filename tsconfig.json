@@ -1,26 +1,21 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDirs": [
-      "src"
-    ],
+    "rootDirs": ["src"],
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
     "allowJs": false,
-    "declaration": false,
     "removeComments": false,
     "strict": true,
     "forceConsistentCasingInFileNames": false,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declarationDir": "./dist",
+    "declaration": true
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"],
-  "files": [
-    "./hardhat.config.ts"
-  ]
+  "files": ["./hardhat.config.ts"]
 }

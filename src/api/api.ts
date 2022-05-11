@@ -18,6 +18,7 @@ export * from './domain/assets-api';
 export * from './domain/balances-api';
 export * from './domain/collections-api';
 export * from './domain/deposits-api';
+export * from './domain/encoding-api';
 export * from './domain/metadata-api';
 export * from './domain/mints-api';
 export * from './domain/orders-api';

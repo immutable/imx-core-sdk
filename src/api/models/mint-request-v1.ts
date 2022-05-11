@@ -13,36 +13,37 @@
  */
 
 
+import { MintTokens } from './mint-tokens';
 
 /**
  * 
  * @export
- * @interface RegisterUserRequestVerifyEth
+ * @interface MintRequestV1
  */
-export interface RegisterUserRequestVerifyEth {
+export interface MintRequestV1 {
     /**
-     * Eth signature
+     * Signature from authorised minter
      * @type {string}
-     * @memberof RegisterUserRequestVerifyEth
+     * @memberof MintRequestV1
      */
-    'eth_signature': string;
+    'auth_signature': string;
     /**
-     * The ether key of the user
-     * @type {string}
-     * @memberof RegisterUserRequestVerifyEth
+     * Random nonce - must be unique
+     * @type {number}
+     * @memberof MintRequestV1
      */
-    'ether_key': string;
+    'nonce'?: number;
     /**
-     * Public stark key of the user
-     * @type {string}
-     * @memberof RegisterUserRequestVerifyEth
+     * Tokens to mint
+     * @type {Array<MintTokens>}
+     * @memberof MintRequestV1
      */
-    'stark_key': string;
+    'tokens': Array<MintTokens>;
     /**
-     * Payload signature
+     * Recipient of the assets
      * @type {string}
-     * @memberof RegisterUserRequestVerifyEth
+     * @memberof MintRequestV1
      */
-    'stark_signature': string;
+    'user': string;
 }
 

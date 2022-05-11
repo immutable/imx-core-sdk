@@ -21,13 +21,15 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
+import { GetSignableRegistrationOffchainResponse } from '../models';
+// @ts-ignore
 import { GetSignableRegistrationRequest } from '../models';
 // @ts-ignore
 import { GetSignableRegistrationResponse } from '../models';
 // @ts-ignore
 import { GetUsersApiResponse } from '../models';
 // @ts-ignore
-import { RegisterUserRequestVerifyEth } from '../models';
+import { RegisterUserRequest } from '../models';
 // @ts-ignore
 import { RegisterUserResponse } from '../models';
 /**
@@ -47,6 +49,42 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             // verify required parameter 'getSignableRegistrationRequest' is not null or undefined
             assertParamExists('getSignableRegistration', 'getSignableRegistrationRequest', getSignableRegistrationRequest)
             const localVarPath = `/v1/signable-registration`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getSignableRegistrationRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Get encoded details to allow clients to register the user offchain
+         * @summary Get encoded details to allow clients to register the user offchain
+         * @param {GetSignableRegistrationRequest} getSignableRegistrationRequest Register User Offchain
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSignableRegistrationOffchain: async (getSignableRegistrationRequest: GetSignableRegistrationRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'getSignableRegistrationRequest' is not null or undefined
+            assertParamExists('getSignableRegistrationOffchain', 'getSignableRegistrationRequest', getSignableRegistrationRequest)
+            const localVarPath = `/v1/signable-registration-offchain`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -109,13 +147,13 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Registers a user
          * @summary Registers a user
-         * @param {RegisterUserRequestVerifyEth} registerUserRequestVerifyEth Register User
+         * @param {RegisterUserRequest} registerUserRequest Register User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerUser: async (registerUserRequestVerifyEth: RegisterUserRequestVerifyEth, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'registerUserRequestVerifyEth' is not null or undefined
-            assertParamExists('registerUser', 'registerUserRequestVerifyEth', registerUserRequestVerifyEth)
+        registerUser: async (registerUserRequest: RegisterUserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerUserRequest' is not null or undefined
+            assertParamExists('registerUser', 'registerUserRequest', registerUserRequest)
             const localVarPath = `/v1/users`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -135,7 +173,7 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(registerUserRequestVerifyEth, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(registerUserRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -164,6 +202,17 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Get encoded details to allow clients to register the user offchain
+         * @summary Get encoded details to allow clients to register the user offchain
+         * @param {GetSignableRegistrationRequest} getSignableRegistrationRequest Register User Offchain
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSignableRegistrationOffchain(getSignableRegistrationRequest: GetSignableRegistrationRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableRegistrationOffchainResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableRegistrationOffchain(getSignableRegistrationRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Get stark keys for a registered user
          * @summary Get stark keys for a registered user
          * @param {string} user User
@@ -177,12 +226,12 @@ export const UsersApiFp = function(configuration?: Configuration) {
         /**
          * Registers a user
          * @summary Registers a user
-         * @param {RegisterUserRequestVerifyEth} registerUserRequestVerifyEth Register User
+         * @param {RegisterUserRequest} registerUserRequest Register User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerUser(registerUserRequestVerifyEth: RegisterUserRequestVerifyEth, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterUserResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registerUser(registerUserRequestVerifyEth, options);
+        async registerUser(registerUserRequest: RegisterUserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterUserResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.registerUser(registerUserRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -206,6 +255,16 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getSignableRegistration(getSignableRegistrationRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Get encoded details to allow clients to register the user offchain
+         * @summary Get encoded details to allow clients to register the user offchain
+         * @param {GetSignableRegistrationRequest} getSignableRegistrationRequest Register User Offchain
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSignableRegistrationOffchain(getSignableRegistrationRequest: GetSignableRegistrationRequest, options?: any): AxiosPromise<GetSignableRegistrationOffchainResponse> {
+            return localVarFp.getSignableRegistrationOffchain(getSignableRegistrationRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Get stark keys for a registered user
          * @summary Get stark keys for a registered user
          * @param {string} user User
@@ -218,12 +277,12 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
         /**
          * Registers a user
          * @summary Registers a user
-         * @param {RegisterUserRequestVerifyEth} registerUserRequestVerifyEth Register User
+         * @param {RegisterUserRequest} registerUserRequest Register User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerUser(registerUserRequestVerifyEth: RegisterUserRequestVerifyEth, options?: any): AxiosPromise<RegisterUserResponse> {
-            return localVarFp.registerUser(registerUserRequestVerifyEth, options).then((request) => request(axios, basePath));
+        registerUser(registerUserRequest: RegisterUserRequest, options?: any): AxiosPromise<RegisterUserResponse> {
+            return localVarFp.registerUser(registerUserRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -238,6 +297,20 @@ export interface UsersApiGetSignableRegistrationRequest {
      * Register User
      * @type {GetSignableRegistrationRequest}
      * @memberof UsersApiGetSignableRegistration
+     */
+    readonly getSignableRegistrationRequest: GetSignableRegistrationRequest
+}
+
+/**
+ * Request parameters for getSignableRegistrationOffchain operation in UsersApi.
+ * @export
+ * @interface UsersApiGetSignableRegistrationOffchainRequest
+ */
+export interface UsersApiGetSignableRegistrationOffchainRequest {
+    /**
+     * Register User Offchain
+     * @type {GetSignableRegistrationRequest}
+     * @memberof UsersApiGetSignableRegistrationOffchain
      */
     readonly getSignableRegistrationRequest: GetSignableRegistrationRequest
 }
@@ -264,10 +337,10 @@ export interface UsersApiGetUsersRequest {
 export interface UsersApiRegisterUserRequest {
     /**
      * Register User
-     * @type {RegisterUserRequestVerifyEth}
+     * @type {RegisterUserRequest}
      * @memberof UsersApiRegisterUser
      */
-    readonly registerUserRequestVerifyEth: RegisterUserRequestVerifyEth
+    readonly registerUserRequest: RegisterUserRequest
 }
 
 /**
@@ -287,6 +360,18 @@ export class UsersApi extends BaseAPI {
      */
     public getSignableRegistration(requestParameters: UsersApiGetSignableRegistrationRequest, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).getSignableRegistration(requestParameters.getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Get encoded details to allow clients to register the user offchain
+     * @summary Get encoded details to allow clients to register the user offchain
+     * @param {UsersApiGetSignableRegistrationOffchainRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public getSignableRegistrationOffchain(requestParameters: UsersApiGetSignableRegistrationOffchainRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getSignableRegistrationOffchain(requestParameters.getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -310,6 +395,6 @@ export class UsersApi extends BaseAPI {
      * @memberof UsersApi
      */
     public registerUser(requestParameters: UsersApiRegisterUserRequest, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).registerUser(requestParameters.registerUserRequestVerifyEth, options).then((request) => request(this.axios, this.basePath));
+        return UsersApiFp(this.configuration).registerUser(requestParameters.registerUserRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }

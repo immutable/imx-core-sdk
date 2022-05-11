@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface GetSignableCancelOrderResponse
+ * @interface Application
  */
-export interface GetSignableCancelOrderResponse {
+export interface Application {
     /**
-     * ID of the order to be cancelled
-     * @type {number}
-     * @memberof GetSignableCancelOrderResponse
-     */
-    'order_id'?: number;
-    /**
-     * Hash of the payload to be signed for cancel order
+     * Time this application was created
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof Application
      */
-    'payload_hash'?: string;
+    'created_at'?: string;
     /**
-     * Message to sign from wallet to confirm cancel order
+     * ID of the application
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof Application
      */
-    'signable_message'?: string;
+    'id'?: string;
+    /**
+     * Name of the application
+     * @type {string}
+     * @memberof Application
+     */
+    'name'?: string;
 }
 

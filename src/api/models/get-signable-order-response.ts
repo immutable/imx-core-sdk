@@ -70,6 +70,12 @@ export interface GetSignableOrderResponse {
      */
     'payload_hash'?: string;
     /**
+     * Message to sign with L1 wallet to confirm order request
+     * @type {string}
+     * @memberof GetSignableOrderResponse
+     */
+    'signable_message'?: string;
+    /**
      * Public stark key of the created user
      * @type {string}
      * @memberof GetSignableOrderResponse

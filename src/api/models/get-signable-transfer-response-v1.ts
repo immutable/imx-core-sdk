@@ -74,5 +74,11 @@ export interface GetSignableTransferResponseV1 {
      * @memberof GetSignableTransferResponseV1
      */
     'sender_vault_id'?: number;
+    /**
+     * Message to sign with L1 wallet to confirm transfer request
+     * @type {string}
+     * @memberof GetSignableTransferResponseV1
+     */
+    'signable_message'?: string;
 }
 

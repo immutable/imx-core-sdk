@@ -17,26 +17,20 @@
 /**
  * 
  * @export
- * @interface GetSignableCancelOrderResponse
+ * @interface SnapshotBalancesRecord
  */
-export interface GetSignableCancelOrderResponse {
+export interface SnapshotBalancesRecord {
     /**
-     * ID of the order to be cancelled
-     * @type {number}
-     * @memberof GetSignableCancelOrderResponse
-     */
-    'order_id'?: number;
-    /**
-     * Hash of the payload to be signed for cancel order
+     * User\'s IMX balance on Immutable at a snapshot block
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof SnapshotBalancesRecord
      */
-    'payload_hash'?: string;
+    'balance'?: string;
     /**
-     * Message to sign from wallet to confirm cancel order
+     * User ethereum address
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof SnapshotBalancesRecord
      */
-    'signable_message'?: string;
+    'ether_key'?: string;
 }
 

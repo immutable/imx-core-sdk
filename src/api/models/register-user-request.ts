@@ -17,26 +17,32 @@
 /**
  * 
  * @export
- * @interface GetSignableCancelOrderResponse
+ * @interface RegisterUserRequest
  */
-export interface GetSignableCancelOrderResponse {
+export interface RegisterUserRequest {
     /**
-     * ID of the order to be cancelled
-     * @type {number}
-     * @memberof GetSignableCancelOrderResponse
-     */
-    'order_id'?: number;
-    /**
-     * Hash of the payload to be signed for cancel order
+     * Eth signature
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof RegisterUserRequest
      */
-    'payload_hash'?: string;
+    'eth_signature': string;
     /**
-     * Message to sign from wallet to confirm cancel order
+     * The ether key of the user
      * @type {string}
-     * @memberof GetSignableCancelOrderResponse
+     * @memberof RegisterUserRequest
      */
-    'signable_message'?: string;
+    'ether_key': string;
+    /**
+     * Public stark key of the user
+     * @type {string}
+     * @memberof RegisterUserRequest
+     */
+    'stark_key': string;
+    /**
+     * Payload signature
+     * @type {string}
+     * @memberof RegisterUserRequest
+     */
+    'stark_signature': string;
 }
 
