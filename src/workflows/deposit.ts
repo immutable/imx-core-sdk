@@ -16,6 +16,54 @@ const ethToken = {
   },
 };
 
+// const FlatETHTokenCodec = t.interface({
+//   type: ETHTokenTypeT,
+// });
+
+// const FlatETHTokenWithAmountCodec = t.intersection([
+//   FlatETHTokenCodec,
+//   t.interface({ amount: PositiveNumberStringC }),
+// ]);
+
+// export type FlatETHToken = t.TypeOf<typeof FlatETHTokenCodec>;
+
+// const FlatERC721TokenCodec = t.interface({
+//   type: ERC721TokenTypeT,
+//   tokenId: t.string,
+//   tokenAddress: EthAddress,
+// });
+
+// export type FlatERC721Token = t.TypeOf<typeof FlatERC721TokenCodec>;
+
+// const FlatERC20TokenCodec = t.interface({
+//   type: ERC20TokenTypeT,
+//   tokenAddress: EthAddress,
+//   symbol: t.string,
+// });
+
+// export type FlatERC20Token = t.TypeOf<typeof FlatERC20TokenCodec>;
+
+// const FlatERC20TokenWithAmountCodec = t.intersection([
+//   FlatERC20TokenCodec,
+//   t.interface({ amount: PositiveNumberStringC }),
+// ]);
+
+// export const FlatTokenCodec = t.union([
+//   FlatETHTokenCodec,
+//   FlatERC721TokenCodec,
+//   FlatERC20TokenCodec,
+// ]);
+// export type FlatToken = t.TypeOf<typeof FlatTokenCodec>;
+// export type FlatTokenTS = t.OutputOf<typeof FlatTokenCodec>;
+
+// export const FlatTokenWithAmountCodec = t.union([
+//   FlatETHTokenWithAmountCodec,
+//   FlatERC721TokenCodec,
+//   FlatERC20TokenWithAmountCodec,
+// ]);
+// export type FlatTokenWithAmount = t.TypeOf<typeof FlatTokenWithAmountCodec>;
+// export type FlatTokenWithAmountTS = t.OutputOf<typeof FlatTokenWithAmountCodec>;
+
 const contractAddress = process.env.STARK_CONTRACT_ADDRESS!;
 
 // TODO registerAndDepositERC20
@@ -27,6 +75,7 @@ export async function depositEthWorkflow(
   depositsApi: DepositsApi,
 ): Promise<string> {
   const userAddress = (await signer.getAddress()).toLowerCase();
+
   // Get signable details for offchain registration
   const signableDepositResult = await depositsApi.getSignableDeposit({
     getSignableDepositRequest: {
