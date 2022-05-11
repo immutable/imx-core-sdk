@@ -1,7 +1,8 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import {
-  generateStarkPublicKey,
-  serializeSignature, sign,
+  generateStarkWallet,
+  serializeSignature,
+  sign,
   signRaw,
 } from '../utils';
 import { RegisterUserResponse, UsersApi } from '../api';
@@ -10,10 +11,9 @@ export async function registerOffchainWorkflow(
   signer: Signer,
   usersApi: UsersApi,
 ): Promise<RegisterUserResponse> {
-
   // L2 credentials
   // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkPublicKey(signer);
+  const starkWallet = await generateStarkWallet(signer);
 
   const userAddress = (await signer.getAddress()).toLowerCase();
 
@@ -25,20 +25,20 @@ export async function registerOffchainWorkflow(
     },
   });
 
-  const {
-    signable_message: signableMessage,
-    payload_hash: payloadHash,
-  } = signableResult.data
+  const { signable_message: signableMessage, payload_hash: payloadHash } =
+    signableResult.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('Invalid response from Signable registration offchain')
+    throw new Error('Invalid response from Signable registration offchain');
   }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
+  const starkSignature = serializeSignature(
+    sign(starkWallet.starkKeyPair, payloadHash),
+  );
 
   // Send request for user registratin offchain
   const response = await usersApi.registerUser({
@@ -53,5 +53,4 @@ export async function registerOffchainWorkflow(
   return {
     tx_hash: response.data.tx_hash,
   };
-
 }
