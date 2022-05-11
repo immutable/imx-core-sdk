@@ -7269,6 +7269,14 @@ solc@0.7.3:
     semver "^5.5.0"
     tmp "0.0.33"
 
+soltypes@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/soltypes/-/soltypes-2.0.0.tgz#5d252b54cf308fae9616f949c6227d5c10861cd6"
+  integrity sha512-9HIM9ErTeDs4qoxOXnxbxyoS93I2HjIiPqva5/XJZjlO841Jgh7Szsx0xpdXlZXtuYe+Q1M1s75D2C0kY11ivw==
+  dependencies:
+    "@ethersproject/bignumber" "^5.6.0"
+    js-sha3 "^0.8.0"
+
 source-map-support@^0.5.13, source-map-support@^0.5.6, source-map-support@~0.5.20:
   version "0.5.21"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
