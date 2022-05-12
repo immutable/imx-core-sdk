@@ -20,6 +20,7 @@ import {
   UnsignedBurnRequest,
   DepositableETH,
   DepositableToken,
+  ERC20Deposit,
   ETHDeposit,
   TokenDeposit,
   TokenType,
@@ -110,11 +111,27 @@ export class Workflows {
   public depositEth(signer: Signer, deposit: ETHDeposit) {
     // Get instance of contract
     const coreContract = Core__factory.connect(contractAddress!, signer);
+
     return depositEthWorkflow(
       signer,
       deposit,
       this.depositsApi,
       this.usersApi,
+      this.encodingApi,
+      coreContract,
+    );
+  }
+
+  public depositERC20(signer: Signer, deposit: ERC20Deposit) {
+    // Get instance of contract
+    const coreContract = Core__factory.connect(contractAddress!, signer);
+
+    return depositERC20Workflow(
+      signer,
+      deposit,
+      this.depositsApi,
+      this.usersApi,
+      this.tokensApi,
       this.encodingApi,
       coreContract,
     );
