@@ -136,6 +136,7 @@ async function executeDepositEth(
 
 /**
  * ERC20 deposits
+ * TODO approval step?
  */
 interface ERC20TokenData {
   decimals: number;
@@ -196,6 +197,7 @@ export async function depositERC20Workflow(
   const assetType = encodingResult.data.asset_type!;
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
+  const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
 
   // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChain(signer, contract);
@@ -203,7 +205,7 @@ export async function depositERC20Workflow(
   if (!isRegistered) {
     return executeRegisterAndDepositERC20(
       signer,
-      amount,
+      quantizedAmount,
       assetType,
       starkPublicKey,
       vaultId,
@@ -213,7 +215,7 @@ export async function depositERC20Workflow(
   } else {
     return executeDepositERC20(
       signer,
-      amount,
+      quantizedAmount,
       assetType,
       starkPublicKey,
       vaultId,
@@ -224,7 +226,7 @@ export async function depositERC20Workflow(
 
 async function executeRegisterAndDepositERC20(
   signer: Signer,
-  amount: BigNumber,
+  quantizedAmount: BigNumber,
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
@@ -241,38 +243,39 @@ async function executeRegisterAndDepositERC20(
     },
   });
 
-  const trx = await contract.populateTransaction.registerAndDepositEth(
+  const trx = await contract.populateTransaction.registerAndDepositERC20(
     etherKey,
     starkPublicKey,
     signableRegistrationResponse.data.operator_signature!,
     assetType,
     vaultId,
+    quantizedAmount,
   );
 
-  return signer
-    .sendTransaction({ ...trx, value: amount })
-    .then(res => res.hash);
+  return signer.sendTransaction({ ...trx }).then(res => res.hash);
 }
 
 async function executeDepositERC20(
   signer: Signer,
-  amount: BigNumber,
+  quantizedAmount: BigNumber,
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
   contract: Core,
 ): Promise<string> {
-  const trx = await contract.populateTransaction[
-    'deposit(uint256,uint256,uint256)'
-  ](starkPublicKey, assetType, vaultId);
+  const trx = await contract.populateTransaction.depositERC20(
+    starkPublicKey,
+    assetType,
+    vaultId,
+    quantizedAmount,
+  );
 
-  return signer
-    .sendTransaction({ ...trx, value: amount })
-    .then(res => res.hash);
+  return signer.sendTransaction({ ...trx }).then(res => res.hash);
 }
 
 // /**
 //  * ERC721 deposits
+//  * TODO approval step?
 //  */
 // interface ERC721TokenData {
 //   token_id: string;
