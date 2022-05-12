@@ -11,22 +11,23 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { registerOffchainWorkflow } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
-import { depositWorkflow } from './deposit';
 
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
   UnsignedBatchNftTransferRequest,
-  UnsignedBurnRequest,
-  DepositableETH,
-  DepositableToken,
   ERC20Deposit,
+  ERC721Deposit,
   ETHDeposit,
   TokenDeposit,
   TokenType,
 } from '../types';
 
-import { depositERC20Workflow, depositEthWorkflow } from './deposit';
+import {
+  depositERC20Workflow,
+  depositERC721Workflow,
+  depositEthWorkflow,
+} from './deposit';
 import { Core__factory } from '../contracts';
 
 const contractAddress = process.env.STARK_CONTRACT_ADDRESS;
@@ -86,14 +87,15 @@ export class Workflows {
           this.encodingApi,
           coreContract,
         );
-      // case TokenType.ERC721:
-      //   return depositEthWorkflow(
-      //     signer,
-      //     deposit,
-      //     this.depositsApi,
-      //     this.usersApi,
-      //     coreContract,
-      //   );
+      case TokenType.ERC721:
+        return depositERC721Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          coreContract,
+        );
     }
   }
 
@@ -132,6 +134,20 @@ export class Workflows {
       this.depositsApi,
       this.usersApi,
       this.tokensApi,
+      this.encodingApi,
+      coreContract,
+    );
+  }
+
+  public depositERC721(signer: Signer, deposit: ERC721Deposit) {
+    // Get instance of contract
+    const coreContract = Core__factory.connect(contractAddress!, signer);
+
+    return depositERC721Workflow(
+      signer,
+      deposit,
+      this.depositsApi,
+      this.usersApi,
       this.encodingApi,
       coreContract,
     );
