@@ -9,7 +9,7 @@ import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
   UnsignedBatchNftTransferRequest,
-  UnsignedBurnRequest
+  UnsignedBurnRequest,
 } from '../types';
 
 export class Workflows {
