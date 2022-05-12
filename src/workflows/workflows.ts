@@ -19,6 +19,11 @@ import {
 } from '../types';
 
 import { depositWorkflow } from './deposit';
+import { DepositableToken, TokenType, UnsignedMintRequest } from '../types';
+import { depositEthWorkflow } from './deposit';
+import { Core__factory } from '../contracts';
+
+const contractAddress = process.env.STARK_CONTRACT_ADDRESS!;
 
 export class Workflows {
   private readonly usersApi: UsersApi;
@@ -45,8 +50,33 @@ export class Workflows {
     return transfersWorkflow(signer, request, this.transfersApi);
   }
 
-  public deposit(signer: Signer, amount: string) {
-    return depositWorkflow(signer, amount, this.depositsApi);
+  public deposit(signer: Signer, token: DepositableToken) {
+    // Get instance of contract
+    const coreContract = Core__factory.connect(contractAddress!, signer);
+
+    switch (token.type) {
+      case TokenType.ETH:
+        return depositEthWorkflow(
+          signer,
+          token,
+          this.depositsApi,
+          coreContract,
+        );
+      case TokenType.ERC20:
+        return depositEthWorkflow(
+          signer,
+          token,
+          this.depositsApi,
+          coreContract,
+        );
+      case TokenType.ERC721:
+        return depositEthWorkflow(
+          signer,
+          token,
+          this.depositsApi,
+          coreContract,
+        );
+    }
   }
 
   public burn(signer: Signer, request: UnsignedBurnRequest) {

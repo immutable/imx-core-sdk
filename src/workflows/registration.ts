@@ -6,6 +6,7 @@ import {
   signRaw,
 } from '../utils';
 import { RegisterUserResponse, UsersApi } from '../api';
+import { Core } from '../contracts';
 
 export async function registerOffchainWorkflow(
   signer: Signer,
@@ -53,4 +54,19 @@ export async function registerOffchainWorkflow(
   return {
     tx_hash: response.data.tx_hash,
   };
+}
+
+export async function isRegisteredOnChain(
+  signer: Signer,
+  contract: Core,
+): Promise<boolean> {
+  // Obtain stark key pair associated with this user
+  const starkWallet = await generateStarkWallet(signer);
+  let ethKey;
+  try {
+    ethKey = await contract.getEthKey(starkWallet.starkPublicKey);
+  } catch (error) {
+    return false;
+  }
+  return ethKey !== '';
 }
