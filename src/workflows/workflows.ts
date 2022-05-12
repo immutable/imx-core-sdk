@@ -9,8 +9,8 @@ import {
 import { registerOffchainWorkflow } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
-import { depositEthWorkflow } from './deposit';
-import { burnWorkflow } from './burn';
+import { depositWorkflow } from './deposit';
+
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
@@ -18,12 +18,10 @@ import {
   UnsignedBurnRequest,
 } from '../types';
 
-import { depositWorkflow } from './deposit';
-import { DepositableToken, TokenType, UnsignedMintRequest } from '../types';
 import { depositEthWorkflow } from './deposit';
 import { Core__factory } from '../contracts';
 
-const contractAddress = process.env.STARK_CONTRACT_ADDRESS!;
+const contractAddress = process.env.STARK_CONTRACT_ADDRESS;
 
 export class Workflows {
   private readonly usersApi: UsersApi;
@@ -93,7 +91,15 @@ export class Workflows {
     return batchTransfersWorkflow(signer, request, this.transfersApi);
   }
 
-  public depositEth(signer: Signer, request: string) {
-    return depositEthWorkflow(signer, request, this.depositsApi);
+  public depositEth(signer: Signer, token: DepositableETH) {
+    // Get instance of contract
+    const coreContract = Core__factory.connect(contractAddress!, signer);
+    return depositEthWorkflow(
+      signer,
+      token,
+      this.depositsApi,
+      this.usersApi,
+      coreContract,
+    );
   }
 }

@@ -118,18 +118,18 @@ async function executeDepositEth(
     .then(res => res.hash);
 }
 
-/**
- * ERC20 deposits
- */
-interface ERC20TokenData {
-  decimals: number;
-  token_address: string;
-}
+// /**
+//  * ERC20 deposits
+//  */
+// interface ERC20TokenData {
+//   decimals: number;
+//   token_address: string;
+// }
 
-/**
- * ERC721 deposits
- */
-interface ERC721TokenData {
-  token_id: string;
-  token_address: string;
-}
+// /**
+//  * ERC721 deposits
+//  */
+// interface ERC721TokenData {
+//   token_id: string;
+//   token_address: string;
+// }
