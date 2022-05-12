@@ -1,11 +1,12 @@
-import { Signer } from '@ethersproject/abstract-signer';
 import {
   Configuration,
+  DepositsApi,
   MintsApi,
+  TokensApi,
   UsersApi,
   TransfersApi,
-  DepositsApi,
 } from '../api';
+import { Signer } from '@ethersproject/abstract-signer';
 import { registerOffchainWorkflow } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
@@ -23,7 +24,7 @@ import {
   TokenType,
 } from '../types';
 
-import { depositEthWorkflow } from './deposit';
+import { depositERC20Workflow, depositEthWorkflow } from './deposit';
 import { Core__factory } from '../contracts';
 
 const contractAddress = process.env.STARK_CONTRACT_ADDRESS;
@@ -33,12 +34,16 @@ export class Workflows {
   private readonly mintsApi: MintsApi;
   private readonly transfersApi: TransfersApi;
   private readonly depositsApi: DepositsApi;
+  private readonly tokensApi: TokensApi;
 
   constructor(protected configuration: Configuration) {
     this.usersApi = new UsersApi(configuration);
     this.mintsApi = new MintsApi(configuration);
     this.transfersApi = new TransfersApi(configuration);
+    this.usersApi = new UsersApi(configuration);
+    this.mintsApi = new MintsApi(configuration);
     this.depositsApi = new DepositsApi(configuration);
+    this.tokensApi = new TokensApi(configuration);
   }
 
   public registerOffchain(signer: Signer) {
@@ -67,21 +72,22 @@ export class Workflows {
           coreContract,
         );
       case TokenType.ERC20:
-        return depositEthWorkflow(
+        return depositERC20Workflow(
           signer,
           deposit,
           this.depositsApi,
           this.usersApi,
+          this.tokensApi,
           coreContract,
         );
-      case TokenType.ERC721:
-        return depositEthWorkflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          coreContract,
-        );
+      // case TokenType.ERC721:
+      //   return depositEthWorkflow(
+      //     signer,
+      //     deposit,
+      //     this.depositsApi,
+      //     this.usersApi,
+      //     coreContract,
+      //   );
     }
   }
 
