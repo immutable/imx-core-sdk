@@ -16,6 +16,11 @@ import {
   UnsignedTransferRequest,
   UnsignedBatchNftTransferRequest,
   UnsignedBurnRequest,
+  DepositableETH,
+  DepositableToken,
+  ETHDeposit,
+  TokenDeposit,
+  TokenType,
 } from '../types';
 
 import { depositEthWorkflow } from './deposit';
@@ -48,15 +53,15 @@ export class Workflows {
     return transfersWorkflow(signer, request, this.transfersApi);
   }
 
-  public deposit(signer: Signer, token: DepositableToken) {
+  public deposit(signer: Signer, deposit: TokenDeposit) {
     // Get instance of contract
     const coreContract = Core__factory.connect(contractAddress!, signer);
 
-    switch (token.type) {
+    switch (deposit.type) {
       case TokenType.ETH:
         return depositEthWorkflow(
           signer,
-          token,
+          deposit,
           this.depositsApi,
           this.usersApi,
           coreContract,
@@ -64,7 +69,7 @@ export class Workflows {
       case TokenType.ERC20:
         return depositEthWorkflow(
           signer,
-          token,
+          deposit,
           this.depositsApi,
           this.usersApi,
           coreContract,
@@ -72,7 +77,7 @@ export class Workflows {
       case TokenType.ERC721:
         return depositEthWorkflow(
           signer,
-          token,
+          deposit,
           this.depositsApi,
           this.usersApi,
           coreContract,
@@ -91,12 +96,12 @@ export class Workflows {
     return batchTransfersWorkflow(signer, request, this.transfersApi);
   }
 
-  public depositEth(signer: Signer, token: DepositableETH) {
+  public depositEth(signer: Signer, deposit: ETHDeposit) {
     // Get instance of contract
     const coreContract = Core__factory.connect(contractAddress!, signer);
     return depositEthWorkflow(
       signer,
-      token,
+      deposit,
       this.depositsApi,
       this.usersApi,
       coreContract,

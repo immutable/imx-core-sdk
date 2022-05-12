@@ -4,25 +4,22 @@ export enum TokenType {
   ERC721 = 'ERC721',
 }
 
-export interface DepositableETH {
+export interface ETHDeposit {
   type: TokenType.ETH;
   amount: string;
 }
 
-export interface DepositableERC20 {
+export interface ERC20Deposit {
   type: TokenType.ERC20;
   tokenAddress: string;
   symbol: string;
   amount: string;
 }
 
-export interface DepositableERC721 {
+export interface ERC721Deposit {
   type: TokenType.ERC721;
   tokenId: string;
   tokenAddress: string;
 }
 
-export type DepositableToken =
-  | DepositableETH
-  | DepositableERC20
-  | DepositableERC721;
+export type TokenDeposit = ETHDeposit | ERC20Deposit | ERC721Deposit;
