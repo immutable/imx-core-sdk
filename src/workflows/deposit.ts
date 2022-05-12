@@ -1,5 +1,11 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { DepositsApi, TokensApi, UsersApi } from '../api';
+import {
+  DepositsApi,
+  EncodingApi,
+  TokensApi,
+  UsersApi,
+  CoreEncodeAssetTokenData,
+} from '../api';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
 import { Bytes32 } from 'soltypes';
 import { Core } from '../contracts';
@@ -19,6 +25,7 @@ export async function depositEthWorkflow(
   deposit: ETHDeposit,
   depositsApi: DepositsApi,
   usersApi: UsersApi,
+  encodingApi: EncodingApi,
   contract: Core,
 ): Promise<string> {
   // Signable deposit request
@@ -39,9 +46,17 @@ export async function depositEthWorkflow(
     },
   });
 
-  // TODO get from new encode asset endpoint
-  const assetType = new Bytes32(signableDepositResult.data.asset_id!).toUint()
-    .val;
+  const encodingResult = await encodingApi.encodeAsset({
+    assetType: 'asset',
+    encodeAssetRequest: {
+      token: {
+        type: deposit.type,
+        data: {},
+      },
+    },
+  });
+
+  const assetType = encodingResult.data.asset_type!;
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 

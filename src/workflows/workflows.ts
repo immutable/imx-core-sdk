@@ -1,6 +1,7 @@
 import {
   Configuration,
   DepositsApi,
+  EncodingApi,
   MintsApi,
   TokensApi,
   UsersApi,
@@ -35,6 +36,7 @@ export class Workflows {
   private readonly transfersApi: TransfersApi;
   private readonly depositsApi: DepositsApi;
   private readonly tokensApi: TokensApi;
+  private readonly encodingApi: EncodingApi;
 
   constructor(protected configuration: Configuration) {
     this.usersApi = new UsersApi(configuration);
@@ -44,6 +46,7 @@ export class Workflows {
     this.mintsApi = new MintsApi(configuration);
     this.depositsApi = new DepositsApi(configuration);
     this.tokensApi = new TokensApi(configuration);
+    this.encodingApi = new EncodingApi(configuration);
   }
 
   public registerOffchain(signer: Signer) {
@@ -69,6 +72,7 @@ export class Workflows {
           deposit,
           this.depositsApi,
           this.usersApi,
+          this.encodingApi,
           coreContract,
         );
       case TokenType.ERC20:
@@ -110,6 +114,7 @@ export class Workflows {
       deposit,
       this.depositsApi,
       this.usersApi,
+      this.encodingApi,
       coreContract,
     );
   }
