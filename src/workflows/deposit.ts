@@ -1,5 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { DepositsApi, GetSignableDepositResponse, UsersApi } from '../api';
+import { DepositsApi, UsersApi } from '../api';
 import { parseEther } from 'ethers/lib/utils';
 import { Bytes32 } from 'soltypes';
 import { Core } from '../contracts';
@@ -38,6 +38,12 @@ export async function depositEthWorkflow(
     },
   });
 
+  // TODO get from new encode asset endpoint
+  const assetType = new Bytes32(signableDepositResult.data.asset_id!).toUint()
+    .val;
+  const starkPublicKey = signableDepositResult.data.stark_key!;
+  const vaultId = signableDepositResult.data.vault_id!;
+
   // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChain(signer, contract);
 
@@ -45,7 +51,9 @@ export async function depositEthWorkflow(
     return executeRegisterAndDepositEth(
       signer,
       token,
-      signableDepositResult.data,
+      assetType,
+      starkPublicKey,
+      vaultId,
       contract,
       usersApi,
     );
@@ -53,7 +61,9 @@ export async function depositEthWorkflow(
     return executeDepositEth(
       signer,
       token,
-      signableDepositResult.data,
+      assetType,
+      starkPublicKey,
+      vaultId,
       contract,
     );
   }
@@ -62,15 +72,15 @@ export async function depositEthWorkflow(
 async function executeRegisterAndDepositEth(
   signer: Signer,
   token: DepositableETH,
-  signableDepositResult: GetSignableDepositResponse,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
   contract: Core,
   usersApi: UsersApi,
 ): Promise<string> {
-  const assetType = new Bytes32(signableDepositResult.asset_id!).toUint().val;
-  const starkPublicKey = signableDepositResult.stark_key!;
-  const vaultId = signableDepositResult.vault_id!;
   const etherKey = await signer.getAddress();
 
+  // TODO possibly move to registration workflow?
   const signableRegistrationResponse = await usersApi.getSignableRegistration({
     getSignableRegistrationRequest: {
       ether_key: etherKey,
@@ -94,13 +104,11 @@ async function executeRegisterAndDepositEth(
 async function executeDepositEth(
   signer: Signer,
   token: DepositableETH,
-  signableDepositResult: GetSignableDepositResponse,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
   contract: Core,
 ): Promise<string> {
-  const assetType = new Bytes32(signableDepositResult.asset_id!).toUint().val;
-  const starkPublicKey = signableDepositResult.stark_key!;
-  const vaultId = signableDepositResult.vault_id!;
-
   const trx = await contract.populateTransaction[
     'deposit(uint256,uint256,uint256)'
   ](starkPublicKey, assetType, vaultId);
