@@ -82,6 +82,7 @@ export class Workflows {
           this.depositsApi,
           this.usersApi,
           this.tokensApi,
+          this.encodingApi,
           coreContract,
         );
       // case TokenType.ERC721:

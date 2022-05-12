@@ -148,6 +148,7 @@ export async function depositERC20Workflow(
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   tokensApi: TokensApi,
+  encodingApi: EncodingApi,
   contract: Core,
 ): Promise<string> {
   // Signable deposit request
@@ -180,9 +181,19 @@ export async function depositERC20Workflow(
     },
   });
 
-  // TODO get from new encode asset endpoint
-  const assetType = new Bytes32(signableDepositResult.data.asset_id!).toUint()
-    .val;
+  const encodingResult = await encodingApi.encodeAsset({
+    assetType: 'asset',
+    encodeAssetRequest: {
+      token: {
+        type: deposit.type,
+        data: {
+          token_address: deposit.tokenAddress,
+        },
+      },
+    },
+  });
+
+  const assetType = encodingResult.data.asset_type!;
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 
