@@ -60,6 +60,7 @@ export class Workflows {
           signer,
           token,
           this.depositsApi,
+          this.usersApi,
           coreContract,
         );
       case TokenType.ERC20:
@@ -67,6 +68,7 @@ export class Workflows {
           signer,
           token,
           this.depositsApi,
+          this.usersApi,
           coreContract,
         );
       case TokenType.ERC721:
@@ -74,6 +76,7 @@ export class Workflows {
           signer,
           token,
           this.depositsApi,
+          this.usersApi,
           coreContract,
         );
     }

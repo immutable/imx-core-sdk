@@ -1,5 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { DepositsApi, GetSignableDepositResponse } from '../api';
+import { DepositsApi, GetSignableDepositResponse, UsersApi } from '../api';
 import { parseEther } from 'ethers/lib/utils';
 import { Bytes32 } from 'soltypes';
 import { Core } from '../contracts';
@@ -7,7 +7,7 @@ import { isRegisteredOnChain } from './registration';
 import { DepositableETH } from '../types';
 
 /**
- * ETH
+ * ETH deposits
  */
 interface ETHTokenData {
   decimals: number;
@@ -17,6 +17,7 @@ export async function depositEthWorkflow(
   signer: Signer,
   token: DepositableETH,
   depositsApi: DepositsApi,
+  usersApi: UsersApi,
   contract: Core,
 ): Promise<string> {
   // Signable deposit request
@@ -46,6 +47,7 @@ export async function depositEthWorkflow(
       token,
       signableDepositResult.data,
       contract,
+      usersApi,
     );
   } else {
     return executeDepositEth(
@@ -57,26 +59,39 @@ export async function depositEthWorkflow(
   }
 }
 
-export async function executeRegisterAndDepositEth(
+async function executeRegisterAndDepositEth(
   signer: Signer,
   token: DepositableETH,
   signableDepositResult: GetSignableDepositResponse,
   contract: Core,
+  usersApi: UsersApi,
 ): Promise<string> {
   const assetType = new Bytes32(signableDepositResult.asset_id!).toUint().val;
   const starkPublicKey = signableDepositResult.stark_key!;
   const vaultId = signableDepositResult.vault_id!;
+  const etherKey = await signer.getAddress();
 
-  const trx = await contract.populateTransaction[
-    'deposit(uint256,uint256,uint256)'
-  ](starkPublicKey, assetType, vaultId);
+  const signableRegistrationResponse = await usersApi.getSignableRegistration({
+    getSignableRegistrationRequest: {
+      ether_key: etherKey,
+      stark_key: starkPublicKey,
+    },
+  });
+
+  const trx = await contract.populateTransaction.registerAndDepositEth(
+    etherKey,
+    starkPublicKey,
+    signableRegistrationResponse.data.operator_signature!,
+    assetType,
+    vaultId,
+  );
 
   return signer
     .sendTransaction({ ...trx, value: parseEther(token.amount) })
     .then(res => res.hash);
 }
 
-export async function executeDepositEth(
+async function executeDepositEth(
   signer: Signer,
   token: DepositableETH,
   signableDepositResult: GetSignableDepositResponse,
@@ -96,7 +111,7 @@ export async function executeDepositEth(
 }
 
 /**
- * ERC20
+ * ERC20 deposits
  */
 interface ERC20TokenData {
   decimals: number;
@@ -104,7 +119,7 @@ interface ERC20TokenData {
 }
 
 /**
- * ERC721
+ * ERC721 deposits
  */
 interface ERC721TokenData {
   token_id: string;
