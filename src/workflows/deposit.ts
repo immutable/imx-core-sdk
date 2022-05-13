@@ -1,13 +1,6 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import {
-  DepositsApi,
-  EncodingApi,
-  TokensApi,
-  UsersApi,
-  CoreEncodeAssetTokenData,
-} from '../api';
+import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../api';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
-import { Bytes32 } from 'soltypes';
 import { Core } from '../contracts';
 import { isRegisteredOnChain } from './registration';
 import { ERC20Deposit, ERC721Deposit, ETHDeposit } from '../types';
@@ -151,6 +144,7 @@ export async function depositERC20Workflow(
   encodingApi: EncodingApi,
   contract: Core,
 ): Promise<string> {
+  console.log('\ndepositERC20Workflow\n');
   // Signable deposit request
   const user = (await signer.getAddress()).toLowerCase();
 
@@ -169,17 +163,47 @@ export async function depositERC20Workflow(
   };
 
   const amount = parseUnits(deposit.amount, BigNumber.from(decimals));
+  console.log('\namount');
+  console.log(amount);
+
+  // approveNFTF goes here
+
+  // {
+  //   "user": "0x9c1634bebc88653d2aebf4c14a3031f62092b1d9",
+  //   "token": {
+  //       "type": "ERC20",
+  //       "data": {
+  //           "decimals": 18,
+  //           "token_address": "0x73f99ca65b1a0aef2d4591b1b543d789860851bf"
+  //       }
+  //   },
+  //   "amount": "10000000000000"
+  // }
+  const getSignableDepositRequest = {
+    user,
+    token: {
+      type: deposit.type,
+      data,
+    },
+    amount: amount.toString(),
+  };
+  console.log('\ngetSignableDepositRequest');
+  console.log(JSON.stringify(getSignableDepositRequest, null, 2));
 
   const signableDepositResult = await depositsApi.getSignableDeposit({
-    getSignableDepositRequest: {
-      user,
-      token: {
-        type: deposit.type,
-        data,
-      },
-      amount: amount.toString(),
-    },
+    getSignableDepositRequest,
   });
+
+  console.log('\nsignableDepositResult');
+  console.log(JSON.stringify(signableDepositResult.data, null, 2));
+
+  // {
+  //   "stark_key": "0x024b12ae158aa105c8ceb0e23b2f96f7247271d5e99ffd35986f54ebe27ccef4",
+  //   "vault_id": 1503330602,
+  //   "amount": "100000",
+  //   "asset_id": "0x02f20b13f93e2699d16a6c9c48b6fc2d95eb4d57239b15a85c68a708cb6736a3",
+  //   "nonce": 699883910
+  // }
 
   const encodingResult = await encodingApi.encodeAsset({
     assetType: 'asset',
@@ -193,13 +217,24 @@ export async function depositERC20Workflow(
     },
   });
 
+  console.log('\nencodingResult');
+  console.log(JSON.stringify(encodingResult.data, null, 2));
+
+  console.log('\nassetType');
+  console.log(
+    '1332279144540031131855948241395971881980911221795265712468282980861947098787',
+  );
+
   const assetType = encodingResult.data.asset_type!;
+  // const assetType =
+  //   '1332279144540031131855948241395971881980911221795265712468282980861947098787';
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
 
   // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChain(signer, contract);
+  console.log(`\nisRegistered: ${isRegistered}`);
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC20(
