@@ -51,7 +51,6 @@ export async function depositEthWorkflow(
     encodeAssetRequest: {
       token: {
         type: deposit.type,
-        data: {},
       },
     },
   });
