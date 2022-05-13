@@ -9,17 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-Workflow for Transfer, BatchTransfer, Burn
+- Workflow for Transfer, BatchTransfer, Burn
+
 ```ts
-const workflows = new Workflows(configuration)
-const transferResponse = await workflows.transfer(sender.wallet, getSignableTransferRequest);
-const batchTransferResponse = await workflows.batchNftTransfer(sender.wallet, getSignableTransferRequestV2);
+const workflows = new Workflows(configuration);
+const transferResponse = await workflows.transfer(
+  sender.wallet,
+  getSignableTransferRequest,
+);
+const batchTransferResponse = await workflows.batchNftTransfer(
+  sender.wallet,
+  getSignableTransferRequestV2,
+);
 const burnResponse = await workflows.burn(user.wallet, burnRequest);
 ```
 
-Changelog and changelog management tool (release-it)
+- Changelog and changelog management tool (release-it)
+- Workflows for depositing ERC20 and ERC721 tokens
 
-## [0.0.1] - 2022-05-05
+## [0.0.1-alpha] - 2022-05-05
 
 ### Added
 

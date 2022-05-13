@@ -6,7 +6,7 @@ import {
   TransfersApiGetTransferRequest,
 } from '../api';
 import {
-  generateStarkPublicKey,
+  generateStarkWallet,
   serializeSignature,
   sign,
 } from '../utils';
@@ -18,7 +18,6 @@ export async function burnWorkflow(
   request: GetSignableBurnRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
-
   // Get signable response for transfer
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
@@ -31,22 +30,22 @@ export async function burnWorkflow(
 
   // L2 credentials
   // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkPublicKey(signer);
+  const starkWallet = await generateStarkWallet(signer);
 
-  const {
-    signable_message: signableMessage,
-    payload_hash: payloadHash,
-  } = signableResult.data
+  const { signable_message: signableMessage, payload_hash: payloadHash } =
+    signableResult.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('Invalid response from Signable registration offchain')
+    throw new Error('Invalid response from Signable registration offchain');
   }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
+  const starkSignature = serializeSignature(
+    sign(starkWallet.starkKeyPair, payloadHash),
+  );
 
   // Obtain Ethereum Address from signer
   const ethAddress = (await signer.getAddress()).toLowerCase();
@@ -62,7 +61,7 @@ export async function burnWorkflow(
     nonce: signableResult.data.nonce!,
     expiration_timestamp: signableResult.data.expiration_timestamp!,
     stark_signature: starkSignature,
-  }
+  };
 
   // create transfer
   const response = await transfersApi.createTransferV1({
@@ -83,5 +82,5 @@ export async function getBurnWorkflow(
   request: TransfersApiGetTransferRequest,
   transfersApi: TransfersApi,
 ) {
-  return await transfersApi.getTransfer({id: request.id });
+  return await transfersApi.getTransfer({ id: request.id });
 }
