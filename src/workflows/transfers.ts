@@ -7,18 +7,13 @@ import {
   GetSignableTransferRequest,
   CreateTransferResponse,
 } from '../api';
-import {
-  generateStarkPublicKey,
-  serializeSignature,
-  sign,
-} from '../utils';
+import { generateStarkWallet, serializeSignature, sign } from '../utils';
 
 export async function transfersWorkflow(
   signer: Signer,
   request: GetSignableTransferRequestV1,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
-
   // Get signable response for transfer
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
@@ -31,22 +26,22 @@ export async function transfersWorkflow(
 
   // L2 credentials
   // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkPublicKey(signer);
+  const starkWallet = await generateStarkWallet(signer);
 
-  const {
-    signable_message: signableMessage,
-    payload_hash: payloadHash,
-  } = signableResult.data
+  const { signable_message: signableMessage, payload_hash: payloadHash } =
+    signableResult.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('Invalid response from Signable registration offchain')
+    throw new Error('Invalid response from Signable registration offchain');
   }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
+  const starkSignature = serializeSignature(
+    sign(starkWallet.starkKeyPair, payloadHash),
+  );
 
   // Obtain Ethereum Address from signer
   const ethAddress = (await signer.getAddress()).toLowerCase();
@@ -62,7 +57,7 @@ export async function transfersWorkflow(
     nonce: signableResult.data.nonce!,
     expiration_timestamp: signableResult.data.expiration_timestamp!,
     stark_signature: starkSignature,
-  }
+  };
 
   // create transfer
   const response = await transfersApi.createTransferV1({
@@ -84,7 +79,6 @@ export async function batchTransfersWorkflow(
   request: GetSignableTransferRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponse> {
-
   // Get signable response for transfer
   const signableResult = await transfersApi.getSignableTransfer({
     getSignableTransferRequestV2: {
@@ -95,12 +89,12 @@ export async function batchTransfersWorkflow(
 
   // L2 credentials
   // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkPublicKey(signer);
+  const starkWallet = await generateStarkWallet(signer);
 
-  const signableMessage = signableResult.data.signable_message
+  const signableMessage = signableResult.data.signable_message;
 
   if (signableMessage === undefined) {
-    throw new Error('Invalid response from Signable registration offchain')
+    throw new Error('Invalid response from Signable registration offchain');
   }
 
   // Obtain Ethereum Address from signer
@@ -125,7 +119,7 @@ export async function batchTransfersWorkflow(
         sign(starkWallet.starkKeyPair, resp.payload_hash!),
       ),
     })),
-  }
+  };
 
   // create transfer
   const response = await transfersApi.createTransfer({
@@ -134,7 +128,7 @@ export async function batchTransfersWorkflow(
     xImxEthSignature: ethSignature,
   });
 
-  return  {
+  return {
     transfer_ids: response?.data.transfer_ids,
   };
 }
