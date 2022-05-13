@@ -2,8 +2,8 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { signRaw } from '../utils';
 import {
   TransfersApi,
-  SignableToken,
   CreateTransferResponseV1,
+  TransfersApiGetTransferRequest,
 } from '../api';
 import {
   generateStarkPublicKey,
@@ -77,4 +77,11 @@ export async function burnWorkflow(
     time: response?.data.time,
     transfer_id: response?.data.transfer_id,
   };
+}
+
+export async function getBurnWorkflow(
+  request: TransfersApiGetTransferRequest,
+  transfersApi: TransfersApi,
+) {
+  return await transfersApi.getTransfer({id: request.id });
 }

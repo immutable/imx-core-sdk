@@ -18,7 +18,6 @@ The following headings should be used as appropriate
 - Deprecated
 - Removed
 - Fixed
-- Security
 
 What follows is an example with all the change headings, for real world use only use headings when appropriate.
 This goes at the top of the CHANGELOG.md above the most recent release.
@@ -46,10 +45,6 @@ for now removed features.
 ### Fixed
 
 for any bug fixes.
-
-### Security
-
-in case of vulnerabilities.
 
 ...
 ```

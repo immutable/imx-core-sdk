@@ -1,10 +1,10 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { Configuration, MintsApi, UsersApi, TransfersApi, DepositsApi } from '../api';
+import { Configuration, MintsApi, UsersApi, TransfersApi, DepositsApi, TransfersApiGetTransferRequest } from '../api';
 import { registerOffchainWorkflow } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
 import { depositEthWorkflow } from './deposit'
-import { burnWorkflow } from './burn'
+import { burnWorkflow, getBurnWorkflow } from './burn';
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
@@ -38,6 +38,10 @@ export class Workflows {
 
   public burn(signer: Signer, request: UnsignedBurnRequest) {
     return burnWorkflow(signer, request, this.transfersApi)
+  }
+
+  public getBurn(request: TransfersApiGetTransferRequest) {
+    return getBurnWorkflow(request, this.transfersApi)
   }
 
   public batchNftTransfer(signer: Signer, request: UnsignedBatchNftTransferRequest) {
