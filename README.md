@@ -63,7 +63,7 @@ The package.json will hold the value of the previous release
 
 When PR is ready for review, the submitter should run:
 
-`npm run release`
+`yarn release [patch | major | minor]`
 
 - Choose release type (patch|minor|major)
 - Choose yes to use changelog and package.json
