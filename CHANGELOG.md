@@ -17,6 +17,7 @@ const batchTransferResponse = await workflows.batchNftTransfer(sender.wallet, ge
 const burnResponse = await workflows.burn(user.wallet, burnRequest);
 ```
 
+Changelog and changelog management tool (release-it)
 
 ## [0.0.1] - 2022-05-05
 

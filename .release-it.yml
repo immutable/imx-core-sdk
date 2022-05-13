@@ -4,9 +4,10 @@ npm:
   publish: false
 hooks:
   before:init:
+    - "yarn lint-fix"
     - "yarn test"
-    - "yarn run test-contract-bindings"
-    - "yarn run test-api-bindings"
+    - "yarn test-contract-bindings"
+    - "yarn test-api-bindings"
   after:release:
     - "echo Successfully released ${name} v${version} to ${repo.repository}."
 plugins:
