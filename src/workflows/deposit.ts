@@ -190,9 +190,10 @@ export async function depositERC20Workflow(
     process.env.STARK_CONTRACT_ADDRESS!,
     amount,
   );
-  await waitForTransaction(
-    signer.sendTransaction(approveTrx).then(res => res.hash),
-  );
+  const transactionResponse = await signer.sendTransaction(approveTrx);
+
+  console.log('\ntransactionResponse.hash');
+  console.log(transactionResponse.hash);
 
   // {
   //   "user": "0x9c1634bebc88653d2aebf4c14a3031f62092b1d9",
