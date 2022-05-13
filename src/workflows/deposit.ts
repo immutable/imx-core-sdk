@@ -1,10 +1,11 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../api';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
-import { Core } from '../contracts';
+import { Core, ERC20__factory } from '../contracts';
 import { isRegisteredOnChain } from './registration';
 import { ERC20Deposit, ERC721Deposit, ETHDeposit } from '../types';
 import { BigNumber } from 'ethers';
+import { AlchemyProvider } from '@ethersproject/providers';
 
 /**
  * ETH deposits
@@ -135,6 +136,23 @@ interface ERC20TokenData {
   token_address: string;
 }
 
+const provider = new AlchemyProvider('ropsten', process.env.ALCHEMY_API_KEY);
+
+export const waitForTransaction = async (promise: Promise<string>) => {
+  const txId = await promise;
+  console.log('Waiting for transaction', {
+    txId,
+    etherscanLink: `https://ropsten.etherscan.io/tx/${txId}`,
+    alchemyLink: `https://dashboard.alchemyapi.io/mempool/eth-ropsten/tx/${txId}`,
+  });
+  const receipt = await provider.waitForTransaction(txId);
+  if (receipt.status === 0) {
+    throw new Error(JSON.stringify(receipt));
+  }
+  console.log('Transaction Mined: ' + receipt.blockNumber);
+  return receipt;
+};
+
 export async function depositERC20Workflow(
   signer: Signer,
   deposit: ERC20Deposit,
@@ -166,7 +184,15 @@ export async function depositERC20Workflow(
   console.log('\namount');
   console.log(amount);
 
-  // approveNFTF goes here
+  // Approve whether an amount of token from an account can be spent by a third-party account
+  const tokenContract = ERC20__factory.connect(deposit.tokenAddress, signer);
+  const approveTrx = await tokenContract.populateTransaction.approve(
+    process.env.STARK_CONTRACT_ADDRESS!,
+    amount,
+  );
+  await waitForTransaction(
+    signer.sendTransaction(approveTrx).then(res => res.hash),
+  );
 
   // {
   //   "user": "0x9c1634bebc88653d2aebf4c14a3031f62092b1d9",
