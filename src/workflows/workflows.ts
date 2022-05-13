@@ -63,6 +63,13 @@ export class Workflows {
     return transfersWorkflow(signer, request, this.transfersApi);
   }
 
+  public batchNftTransfer(
+    signer: Signer,
+    request: UnsignedBatchNftTransferRequest,
+  ) {
+    return batchTransfersWorkflow(signer, request, this.transfersApi);
+  }
+
   public deposit(signer: Signer, deposit: TokenDeposit) {
     // Get instance of contract
     const coreContract = Core__factory.connect(contractAddress!, signer);
