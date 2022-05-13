@@ -1,14 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import {
-  DepositsApi,
-  EncodingApi,
-  TokensApi,
-  UsersApi,
-  CoreEncodeAssetTokenData,
-} from '../api';
+import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../api';
 import { parseEther, parseUnits } from 'ethers/lib/utils';
-import { Bytes32 } from 'soltypes';
-import { Core } from '../contracts';
+import { Core, ERC20__factory } from '../contracts';
 import { isRegisteredOnChain } from './registration';
 import { ERC20Deposit, ERC721Deposit, ETHDeposit } from '../types';
 import { BigNumber } from 'ethers';
@@ -135,7 +128,6 @@ async function executeDepositEth(
 
 /**
  * ERC20 deposits
- * TODO approval step?
  */
 interface ERC20TokenData {
   decimals: number;
@@ -170,15 +162,25 @@ export async function depositERC20Workflow(
 
   const amount = parseUnits(deposit.amount, BigNumber.from(decimals));
 
-  const signableDepositResult = await depositsApi.getSignableDeposit({
-    getSignableDepositRequest: {
-      user,
-      token: {
-        type: deposit.type,
-        data,
-      },
-      amount: amount.toString(),
+  // Approve whether an amount of token from an account can be spent by a third-party account
+  const tokenContract = ERC20__factory.connect(deposit.tokenAddress, signer);
+  const approveTrx = await tokenContract.populateTransaction.approve(
+    process.env.STARK_CONTRACT_ADDRESS!,
+    amount,
+  );
+  await signer.sendTransaction(approveTrx);
+
+  const getSignableDepositRequest = {
+    user,
+    token: {
+      type: deposit.type,
+      data,
     },
+    amount: amount.toString(),
+  };
+
+  const signableDepositResult = await depositsApi.getSignableDeposit({
+    getSignableDepositRequest,
   });
 
   const encodingResult = await encodingApi.encodeAsset({
@@ -274,7 +276,6 @@ async function executeDepositERC20(
 
 /**
  * ERC721 deposits
- * TODO approval step?
  */
 interface ERC721TokenData {
   token_id: string;
@@ -298,6 +299,8 @@ export async function depositERC721Workflow(
   };
 
   const amount = '1';
+
+  // TODO approval step
 
   const signableDepositResult = await depositsApi.getSignableDeposit({
     getSignableDepositRequest: {
@@ -326,7 +329,6 @@ export async function depositERC721Workflow(
   const assetType = encodingResult.data.asset_type!;
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
-  // const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
 
   // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChain(signer, contract);
@@ -378,7 +380,7 @@ async function executeRegisterAndDepositERC721(
     starkPublicKey,
     signableRegistrationResponse.data.operator_signature!,
   );
-  await signer.sendTransaction(registerTrx).then(res => res.hash);
+  await signer.sendTransaction(registerTrx);
 
   const trx = await contract.populateTransaction.depositNft(
     starkPublicKey,
