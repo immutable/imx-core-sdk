@@ -21,6 +21,7 @@ import {
   ETHDeposit,
   TokenDeposit,
   TokenType,
+  UnsignedBurnRequest,
 } from '../types';
 
 import {
@@ -29,6 +30,7 @@ import {
   depositEthWorkflow,
 } from './deposit';
 import { Core__factory } from '../contracts';
+import { burnWorkflow } from './burn';
 
 const contractAddress = process.env.STARK_CONTRACT_ADDRESS;
 
@@ -70,6 +72,10 @@ export class Workflows {
     return batchTransfersWorkflow(signer, request, this.transfersApi);
   }
 
+  public burn(signer: Signer, request: UnsignedBurnRequest) {
+    return burnWorkflow(signer, request, this.transfersApi);
+  }
+
   public deposit(signer: Signer, deposit: TokenDeposit) {
     // Get instance of contract
     const coreContract = Core__factory.connect(contractAddress!, signer);
@@ -104,17 +110,6 @@ export class Workflows {
           coreContract,
         );
     }
-  }
-
-  public burn(signer: Signer, request: UnsignedBurnRequest) {
-    return burnWorkflow(signer, request, this.transfersApi);
-  }
-
-  public batchNftTransfer(
-    signer: Signer,
-    request: UnsignedBatchNftTransferRequest,
-  ) {
-    return batchTransfersWorkflow(signer, request, this.transfersApi);
   }
 
   public depositEth(signer: Signer, deposit: ETHDeposit) {
