@@ -28,7 +28,7 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  Network,
+  EthNetwork,
   Environment,
 } from '../types';
 import { Core__factory } from '../contracts';
@@ -46,7 +46,7 @@ export class Workflows {
   private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
 
-  constructor(protected network: Network) {
+  constructor(protected network: EthNetwork) {
     this.environment = this.getEnvironment(network);
     this.configuration = new Configuration({
       basePath: this.environment.publicApiUrl,
@@ -62,17 +62,17 @@ export class Workflows {
     this.encodingApi = new EncodingApi(this.configuration);
   }
 
-  private getEnvironment(network: Network): Environment {
+  private getEnvironment(network: EthNetwork): Environment {
     switch (network) {
       case 'ropsten':
         return {
-          publicApiUrl: process.env.PUBLIC_API_URL!,
-          starkContractAddress: process.env.STARK_CONTRACT_ADDRESS!,
+          publicApiUrl: process.env.ROPSTEN_PUBLIC_API_URL!,
+          starkContractAddress: process.env.ROPSTEN_STARK_CONTRACT_ADDRESS!,
         };
       case 'mainnet':
         return {
-          publicApiUrl: process.env.PUBLIC_API_URL!,
-          starkContractAddress: process.env.STARK_CONTRACT_ADDRESS!,
+          publicApiUrl: process.env.MAINNET_PUBLIC_API_URL!,
+          starkContractAddress: process.env.MAINNET_STARK_CONTRACT_ADDRESS!,
         };
     }
   }

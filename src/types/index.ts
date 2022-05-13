@@ -11,7 +11,7 @@ export interface StarkWallet {
   starkKeyPair: ec.KeyPair;
 }
 
-export type Network = 'ropsten' | 'mainnet';
+export type EthNetwork = 'ropsten' | 'mainnet';
 
 export interface Environment {
   publicApiUrl: string;
