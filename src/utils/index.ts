@@ -1,3 +1,4 @@
+export * from './config';
 export * from './crypto/crypto';
 export * from './crypto/constants';
 export * from './stark/points';

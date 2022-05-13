@@ -3,6 +3,7 @@ import {
   MintRequest,
   GetSignableTransferRequestV1,
   GetSignableTransferRequest,
+  Configuration,
 } from '../api';
 import { GetSignableBurnRequest } from '../workflows/types';
 
@@ -13,8 +14,8 @@ export interface StarkWallet {
 
 export type EthNetwork = 'ropsten' | 'mainnet';
 
-export interface Environment {
-  publicApiUrl: string;
+export interface Config {
+  api: Configuration;
   starkContractAddress: string;
 }
 

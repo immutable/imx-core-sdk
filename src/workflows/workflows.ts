@@ -1,5 +1,4 @@
 import {
-  Configuration,
   DepositsApi,
   EncodingApi,
   MintsApi,
@@ -28,17 +27,11 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  EthNetwork,
-  Environment,
+  Config,
 } from '../types';
 import { Core__factory } from '../contracts';
 
-const contractAddress = process.env.STARK_CONTRACT_ADDRESS;
-
 export class Workflows {
-  private readonly environment: Environment;
-  private readonly configuration: Configuration;
-
   private readonly usersApi: UsersApi;
   private readonly mintsApi: MintsApi;
   private readonly transfersApi: TransfersApi;
@@ -46,35 +39,16 @@ export class Workflows {
   private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
 
-  constructor(protected network: EthNetwork) {
-    this.environment = this.getEnvironment(network);
-    this.configuration = new Configuration({
-      basePath: this.environment.publicApiUrl,
-    });
-
-    this.usersApi = new UsersApi(this.configuration);
-    this.mintsApi = new MintsApi(this.configuration);
-    this.transfersApi = new TransfersApi(this.configuration);
-    this.usersApi = new UsersApi(this.configuration);
-    this.mintsApi = new MintsApi(this.configuration);
-    this.depositsApi = new DepositsApi(this.configuration);
-    this.tokensApi = new TokensApi(this.configuration);
-    this.encodingApi = new EncodingApi(this.configuration);
-  }
-
-  private getEnvironment(network: EthNetwork): Environment {
-    switch (network) {
-      case 'ropsten':
-        return {
-          publicApiUrl: process.env.ROPSTEN_PUBLIC_API_URL!,
-          starkContractAddress: process.env.ROPSTEN_STARK_CONTRACT_ADDRESS!,
-        };
-      case 'mainnet':
-        return {
-          publicApiUrl: process.env.MAINNET_PUBLIC_API_URL!,
-          starkContractAddress: process.env.MAINNET_STARK_CONTRACT_ADDRESS!,
-        };
-    }
+  constructor(protected config: Config) {
+    this.config = config;
+    this.usersApi = new UsersApi(config.api);
+    this.mintsApi = new MintsApi(config.api);
+    this.transfersApi = new TransfersApi(config.api);
+    this.usersApi = new UsersApi(config.api);
+    this.mintsApi = new MintsApi(config.api);
+    this.depositsApi = new DepositsApi(config.api);
+    this.tokensApi = new TokensApi(config.api);
+    this.encodingApi = new EncodingApi(config.api);
   }
 
   public registerOffchain(signer: Signer) {
@@ -102,7 +76,10 @@ export class Workflows {
 
   public deposit(signer: Signer, deposit: TokenDeposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     switch (deposit.type) {
       case TokenType.ETH:
@@ -138,7 +115,10 @@ export class Workflows {
 
   public depositEth(signer: Signer, deposit: ETHDeposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     return depositEthWorkflow(
       signer,
@@ -156,7 +136,10 @@ export class Workflows {
 
   public depositERC20(signer: Signer, deposit: ERC20Deposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     return depositERC20Workflow(
       signer,
@@ -171,7 +154,10 @@ export class Workflows {
 
   public depositERC721(signer: Signer, deposit: ERC721Deposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     return depositERC721Workflow(
       signer,
