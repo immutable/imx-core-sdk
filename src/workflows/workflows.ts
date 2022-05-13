@@ -16,7 +16,7 @@ import {
   depositERC20Workflow,
   depositERC721Workflow,
   depositEthWorkflow,
-} from './deposit'
+} from './deposit';
 import { burnWorkflow, getBurnWorkflow } from './burn';
 import {
   UnsignedMintRequest,
@@ -28,12 +28,17 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
+  Network,
+  Environment,
 } from '../types';
 import { Core__factory } from '../contracts';
 
 const contractAddress = process.env.STARK_CONTRACT_ADDRESS;
 
 export class Workflows {
+  private readonly environment: Environment;
+  private readonly configuration: Configuration;
+
   private readonly usersApi: UsersApi;
   private readonly mintsApi: MintsApi;
   private readonly transfersApi: TransfersApi;
@@ -41,15 +46,35 @@ export class Workflows {
   private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
 
-  constructor(protected configuration: Configuration) {
-    this.usersApi = new UsersApi(configuration);
-    this.mintsApi = new MintsApi(configuration);
-    this.transfersApi = new TransfersApi(configuration);
-    this.usersApi = new UsersApi(configuration);
-    this.mintsApi = new MintsApi(configuration);
-    this.depositsApi = new DepositsApi(configuration);
-    this.tokensApi = new TokensApi(configuration);
-    this.encodingApi = new EncodingApi(configuration);
+  constructor(protected network: Network) {
+    this.environment = this.getEnvironment(network);
+    this.configuration = new Configuration({
+      basePath: this.environment.publicApiUrl,
+    });
+
+    this.usersApi = new UsersApi(this.configuration);
+    this.mintsApi = new MintsApi(this.configuration);
+    this.transfersApi = new TransfersApi(this.configuration);
+    this.usersApi = new UsersApi(this.configuration);
+    this.mintsApi = new MintsApi(this.configuration);
+    this.depositsApi = new DepositsApi(this.configuration);
+    this.tokensApi = new TokensApi(this.configuration);
+    this.encodingApi = new EncodingApi(this.configuration);
+  }
+
+  private getEnvironment(network: Network): Environment {
+    switch (network) {
+      case 'ropsten':
+        return {
+          publicApiUrl: process.env.PUBLIC_API_URL!,
+          starkContractAddress: process.env.STARK_CONTRACT_ADDRESS!,
+        };
+      case 'mainnet':
+        return {
+          publicApiUrl: process.env.PUBLIC_API_URL!,
+          starkContractAddress: process.env.STARK_CONTRACT_ADDRESS!,
+        };
+    }
   }
 
   public registerOffchain(signer: Signer) {
@@ -80,34 +105,34 @@ export class Workflows {
     const coreContract = Core__factory.connect(contractAddress!, signer);
 
     switch (deposit.type) {
-    case TokenType.ETH:
-      return depositEthWorkflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        coreContract,
-      );
-    case TokenType.ERC20:
-      return depositERC20Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.tokensApi,
-        this.encodingApi,
-        coreContract,
-      );
-    case TokenType.ERC721:
-      return depositERC721Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        coreContract,
-      );
+      case TokenType.ETH:
+        return depositEthWorkflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          coreContract,
+        );
+      case TokenType.ERC20:
+        return depositERC20Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.tokensApi,
+          this.encodingApi,
+          coreContract,
+        );
+      case TokenType.ERC721:
+        return depositERC721Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          coreContract,
+        );
     }
   }
 
@@ -126,7 +151,7 @@ export class Workflows {
   }
 
   public getBurn(request: TransfersApiGetTransferRequest) {
-    return getBurnWorkflow(request, this.transfersApi)
+    return getBurnWorkflow(request, this.transfersApi);
   }
 
   public depositERC20(signer: Signer, deposit: ERC20Deposit) {
