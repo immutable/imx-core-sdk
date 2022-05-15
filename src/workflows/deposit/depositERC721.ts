@@ -1,10 +1,8 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
-import { parseEther, parseUnits } from 'ethers/lib/utils';
-import { Core, ERC20__factory } from '../../contracts';
+import { DepositsApi, EncodingApi, UsersApi } from '../../api';
+import { Core, ERC721__factory } from '../../contracts';
 import { isRegisteredOnChain } from '../registration';
-import { ERC20Deposit, ERC721Deposit, ETHDeposit } from '../../types';
-import { BigNumber } from 'ethers';
+import { ERC721Deposit } from '../../types';
 
 interface ERC721TokenData {
   token_id: string;
@@ -19,7 +17,7 @@ export async function depositERC721Workflow(
   encodingApi: EncodingApi,
   contract: Core,
 ): Promise<string> {
-  // Signable deposit request
+  // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
 
   const data: ERC721TokenData = {
@@ -29,19 +27,28 @@ export async function depositERC721Workflow(
 
   const amount = '1';
 
-  // TODO approval step
+  // Approve whether an amount of token from an account can be spent by a third-party account
+  const tokenContract = ERC721__factory.connect(deposit.tokenAddress, signer);
+  const approveTrx = await tokenContract.populateTransaction.approve(
+    process.env.STARK_CONTRACT_ADDRESS!,
+    deposit.tokenId,
+  );
+  await signer.sendTransaction(approveTrx);
 
-  const signableDepositResult = await depositsApi.getSignableDeposit({
-    getSignableDepositRequest: {
-      user,
-      token: {
-        type: deposit.type,
-        data,
-      },
-      amount: amount.toString(),
+  // Get signable deposit details
+  const getSignableDepositRequest = {
+    user,
+    token: {
+      type: deposit.type,
+      data,
     },
+    amount: amount.toString(),
+  };
+  const signableDepositResult = await depositsApi.getSignableDeposit({
+    getSignableDepositRequest,
   });
 
+  // Perform encoding on asset details to get an assetType (required for stark contract request)
   const encodingResult = await encodingApi.encodeAsset({
     assetType: 'asset',
     encodeAssetRequest: {
