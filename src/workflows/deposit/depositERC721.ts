@@ -106,7 +106,7 @@ async function executeRegisterAndDepositERC721(
   // TODO possibly move to registration workflow?
   const signableRegistrationResponse = await usersApi.getSignableRegistration({
     getSignableRegistrationRequest: {
-      ether_key: etherKey,
+      ether_key: etherKey.toLowerCase(),
       stark_key: starkPublicKey,
     },
   });
