@@ -9,6 +9,7 @@ import {
 } from '../api';
 import { Core } from '../contracts';
 import * as encUtils from 'enc-utils';
+import {ERC20Withdrawal, ERC721Withdrawal, MintableERC721Withdrawal, TokenType} from '../types';
 
 const assertIsDefined = <T>(value?: T): T => {
   if (value !== undefined) return value;
@@ -62,23 +63,44 @@ export async function prepareWithdrawalWorkflow(signer: Signer, token: SignableT
   return prepareWithdrawalResponse.data;
 }
 
-
 export async function completeETHWithdrawalWorkflow(signer: Signer, starkPublicKey: string, coreContract: Core, encodingApi: EncodingApi) {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi)
   const populatedTrasaction = await coreContract.populateTransaction.withdraw(starkPublicKey, assetType.asset_type!)
   return signer.sendTransaction(populatedTrasaction)
 }
 
-export async function completeMintableERC721WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: SignableToken, coreContract: Core, encodingApi: EncodingApi) {
-  const assetType = await getEncodeAssetInfo('mintable-asset', 'ERC721', encodingApi, token.data)
+export async function completeMintableERC721WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: MintableERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
+  const assetType = await getEncodeAssetInfo('mintable-asset', TokenType.ERC721, encodingApi, {
+    id: token.data.id,
+    token_address: token.data.tokenAddress,
+    ...(token.data.blueprint && { blueprint: token.data.blueprint }),
+  })
   const mintableBlob = getMintingBlob(token)
 
   const populatedTrasaction = await coreContract.populateTransaction.withdrawAndMint(starkPublicKey, assetType.asset_type!, mintableBlob)
   return signer.sendTransaction({
     ...populatedTrasaction,
-    //gasPrice: 40000000000,
-    //gasLimit: 7000000
+    gasPrice: 40000000000,
+    gasLimit: 7000000,
   })
+}
+
+export async function completeERC721WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: ERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
+  const assetType = await getEncodeAssetInfo('asset', TokenType.ERC721, encodingApi, {
+    token_id: token.data.tokenId,
+    token_address: token.data.tokenAddress,
+  })
+  const populatedTrasaction = await coreContract.populateTransaction.withdrawNft(starkPublicKey, assetType.asset_type!, token.data.tokenId)
+  return signer.sendTransaction(populatedTrasaction)
+}
+
+export async function completeERC20WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: ERC20Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
+  const assetType = await getEncodeAssetInfo('asset', TokenType.ERC20, encodingApi, {
+    token_id: token.data.tokenId,
+    token_address: token.data.tokenAddress,
+  })
+  const populatedTrasaction = await coreContract.populateTransaction.withdraw(starkPublicKey, assetType.asset_type!)
+  return signer.sendTransaction(populatedTrasaction)
 }
 
 async function getEncodeAssetInfo(assetType: string, tokenType: CoreEncodeAssetRequestTokenTypeEnum, encodingApi: EncodingApi, tokenData?: any): Promise<EncodeAssetResponse> {
@@ -94,9 +116,8 @@ async function getEncodeAssetInfo(assetType: string, tokenType: CoreEncodeAssetR
   return result.data;
 }
 
-function getMintingBlob(token: SignableToken): string {
-  const tokenData = token.data || {} as any;
-  const id = tokenData.id || '';
-  const blueprint = tokenData.blueprint || '';
+function getMintingBlob(token: MintableERC721Withdrawal): string {
+  const id = token.data.id;
+  const blueprint = token.data.blueprint || '';
   return encUtils.sanitizeHex(encUtils.utf8ToHex(`{${id}}:{${blueprint}}`));
 }

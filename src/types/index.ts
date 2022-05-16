@@ -25,3 +25,4 @@ export type UnsignedBatchNftTransferRequest = GetSignableTransferRequest;
 export type UnsignedBurnRequest = GetSignableBurnRequest;
 
 export * from './deposit';
+export * from './withdrawal';
