@@ -1,5 +1,4 @@
 import {
-  Configuration,
   DepositsApi,
   EncodingApi,
   MintsApi,
@@ -16,7 +15,7 @@ import {
   depositERC20Workflow,
   depositERC721Workflow,
   depositEthWorkflow,
-} from './deposit'
+} from './deposit';
 import { burnWorkflow, getBurnWorkflow } from './burn';
 import {
   UnsignedMintRequest,
@@ -28,10 +27,9 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
+  Config,
 } from '../types';
 import { Core__factory } from '../contracts';
-
-const contractAddress = process.env.STARK_CONTRACT_ADDRESS;
 
 export class Workflows {
   private readonly usersApi: UsersApi;
@@ -41,15 +39,16 @@ export class Workflows {
   private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
 
-  constructor(protected configuration: Configuration) {
-    this.usersApi = new UsersApi(configuration);
-    this.mintsApi = new MintsApi(configuration);
-    this.transfersApi = new TransfersApi(configuration);
-    this.usersApi = new UsersApi(configuration);
-    this.mintsApi = new MintsApi(configuration);
-    this.depositsApi = new DepositsApi(configuration);
-    this.tokensApi = new TokensApi(configuration);
-    this.encodingApi = new EncodingApi(configuration);
+  constructor(protected config: Config) {
+    this.config = config;
+    this.usersApi = new UsersApi(config.api);
+    this.mintsApi = new MintsApi(config.api);
+    this.transfersApi = new TransfersApi(config.api);
+    this.usersApi = new UsersApi(config.api);
+    this.mintsApi = new MintsApi(config.api);
+    this.depositsApi = new DepositsApi(config.api);
+    this.tokensApi = new TokensApi(config.api);
+    this.encodingApi = new EncodingApi(config.api);
   }
 
   public registerOffchain(signer: Signer) {
@@ -77,43 +76,49 @@ export class Workflows {
 
   public deposit(signer: Signer, deposit: TokenDeposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     switch (deposit.type) {
-    case TokenType.ETH:
-      return depositEthWorkflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        coreContract,
-      );
-    case TokenType.ERC20:
-      return depositERC20Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.tokensApi,
-        this.encodingApi,
-        coreContract,
-      );
-    case TokenType.ERC721:
-      return depositERC721Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        coreContract,
-      );
+      case TokenType.ETH:
+        return depositEthWorkflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          coreContract,
+        );
+      case TokenType.ERC20:
+        return depositERC20Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.tokensApi,
+          this.encodingApi,
+          coreContract,
+        );
+      case TokenType.ERC721:
+        return depositERC721Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          coreContract,
+        );
     }
   }
 
   public depositEth(signer: Signer, deposit: ETHDeposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     return depositEthWorkflow(
       signer,
@@ -126,12 +131,15 @@ export class Workflows {
   }
 
   public getBurn(request: TransfersApiGetTransferRequest) {
-    return getBurnWorkflow(request, this.transfersApi)
+    return getBurnWorkflow(request, this.transfersApi);
   }
 
   public depositERC20(signer: Signer, deposit: ERC20Deposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     return depositERC20Workflow(
       signer,
@@ -146,7 +154,10 @@ export class Workflows {
 
   public depositERC721(signer: Signer, deposit: ERC721Deposit) {
     // Get instance of contract
-    const coreContract = Core__factory.connect(contractAddress!, signer);
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
 
     return depositERC721Workflow(
       signer,
