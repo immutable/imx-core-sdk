@@ -33,7 +33,6 @@ export async function depositERC20Workflow(
     throw new Error('Code 2001 - Token not available in IMX.');
   }
 
-  // Specific to ERC20
   const data: ERC20TokenData = {
     decimals,
     token_address: deposit.tokenAddress,

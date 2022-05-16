@@ -45,6 +45,7 @@ export async function depositERC721Workflow(
     },
     amount: amount.toString(),
   };
+
   const signableDepositResult = await depositsApi.getSignableDeposit({
     getSignableDepositRequest,
   });
@@ -111,7 +112,8 @@ async function executeRegisterAndDepositERC721(
     },
   });
 
-  // No wrapper function for depositing NFTs, do as consecutive transactions
+  // There is no wrapper function for registering and depositing NFTs
+  // Do as consecutive transactions
   const registerTrx = await contract.populateTransaction.registerUser(
     etherKey,
     starkPublicKey,

@@ -18,22 +18,25 @@ export async function depositEthWorkflow(
   encodingApi: EncodingApi,
   contract: Core,
 ): Promise<string> {
-  // Signable deposit request
+  // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
   const data: ETHTokenData = {
     decimals: 18,
   };
   const amount = parseEther(deposit.amount);
 
-  const signableDepositResult = await depositsApi.getSignableDeposit({
-    getSignableDepositRequest: {
-      user,
-      token: {
-        type: deposit.type,
-        data,
-      },
-      amount: amount.toString(),
+  // Get signable deposit details
+  const getSignableDepositRequest = {
+    user,
+    token: {
+      type: deposit.type,
+      data,
     },
+    amount: amount.toString(),
+  };
+
+  const signableDepositResult = await depositsApi.getSignableDeposit({
+    getSignableDepositRequest,
   });
 
   const encodingResult = await encodingApi.encodeAsset({
