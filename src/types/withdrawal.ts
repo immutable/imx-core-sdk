@@ -1,4 +1,4 @@
-import { TokenType } from './deposit';
+import { TokenType } from './token';
 
 export interface ERC721Withdrawal {
   type: TokenType.ERC721;
