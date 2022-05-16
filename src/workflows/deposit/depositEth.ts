@@ -2,7 +2,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { parseEther } from 'ethers/lib/utils';
 import { Core } from '../../contracts';
-import { isRegisteredOnChain } from '../registration';
+import { isRegisteredOnChainWorkflow } from '../registration';
 import { ETHDeposit } from '../../types';
 import { BigNumber } from 'ethers';
 
@@ -50,7 +50,7 @@ export async function depositEthWorkflow(
   const vaultId = signableDepositResult.data.vault_id!;
 
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChain(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
 
   if (!isRegistered) {
     return executeRegisterAndDepositEth(

@@ -1,7 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { Core, ERC721__factory } from '../../contracts';
-import { isRegisteredOnChain } from '../registration';
+import { isRegisteredOnChainWorkflow } from '../registration';
 import { Config, ERC721Deposit } from '../../types';
 
 interface ERC721TokenData {
@@ -68,7 +68,7 @@ export async function depositERC721Workflow(
   const vaultId = signableDepositResult.data.vault_id!;
 
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChain(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC721(

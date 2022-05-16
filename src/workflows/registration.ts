@@ -56,7 +56,7 @@ export async function registerOffchainWorkflow(
   };
 }
 
-export async function isRegisteredOnChain(
+export async function isRegisteredOnChainWorkflow(
   signer: Signer,
   contract: Core,
 ): Promise<boolean> {
