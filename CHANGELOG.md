@@ -27,7 +27,7 @@ const burnResponse = await workflows.burn(user.wallet, burnRequest);
 - Changelog and changelog management tool (release-it)
 - Workflows for depositing ERC20 and ERC721 tokens
 
-## [0.0.1-alpha] - 2022-05-05
+## [0.0.1] - 2022-05-05
 
 ### Added
 
