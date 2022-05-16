@@ -3,7 +3,7 @@ import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
 import { Core, ERC20__factory } from '../../contracts';
 import { isRegisteredOnChain } from '../registration';
-import { ERC20Deposit } from '../../types';
+import { Config, ERC20Deposit } from '../../types';
 import { BigNumber } from 'ethers';
 
 interface ERC20TokenData {
@@ -19,6 +19,7 @@ export async function depositERC20Workflow(
   tokensApi: TokensApi,
   encodingApi: EncodingApi,
   contract: Core,
+  config: Config,
 ): Promise<string> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
@@ -43,7 +44,7 @@ export async function depositERC20Workflow(
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = ERC20__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
-    process.env.STARK_CONTRACT_ADDRESS!,
+    config.starkContractAddress,
     amount,
   );
   await signer.sendTransaction(approveTrx);
