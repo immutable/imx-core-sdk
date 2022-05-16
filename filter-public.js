@@ -9,7 +9,6 @@
  * 4. Use the output file with `go-swagger` to remove any unused models.
  *    - Ensure `go-swagger` is installed
  *      - https://goswagger.io/install.html
- *    - Run `swagger flatten input.json --with-flatten=remove-unused --with-flatten=full > output.json`
  *    - Run `swagger flatten open-api-processed.json --with-flatten=remove-unused --with-flatten=full > open-api-processed-output.json`
  * 5. Save the last file as `open-api-processed.json` and use this file to generate client
  *

@@ -17,31 +17,31 @@
 /**
  * 
  * @export
- * @interface CoreEncodeAssetTokenData
+ * @interface EncodeAssetTokenData
  */
-export interface CoreEncodeAssetTokenData {
+export interface EncodeAssetTokenData {
     /**
-     * used if token is mintable
+     * Blueprint information of the token to be encoded. Used if token is mintable.
      * @type {string}
-     * @memberof CoreEncodeAssetTokenData
+     * @memberof EncodeAssetTokenData
      */
     'blueprint'?: string;
     /**
-     * used if token is mintable
+     * ID of the token to be encoded. Used if token is mintable.
      * @type {string}
-     * @memberof CoreEncodeAssetTokenData
+     * @memberof EncodeAssetTokenData
      */
     'id'?: string;
     /**
-     * 
+     * Contract address of the token to be encoded
      * @type {string}
-     * @memberof CoreEncodeAssetTokenData
+     * @memberof EncodeAssetTokenData
      */
     'token_address'?: string;
     /**
-     * used if token is non-mintable
+     * TokenId of the token to be encoded. Used if token is non-mintable
      * @type {string}
-     * @memberof CoreEncodeAssetTokenData
+     * @memberof EncodeAssetTokenData
      */
     'token_id'?: string;
 }

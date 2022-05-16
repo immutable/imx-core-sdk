@@ -31,9 +31,6 @@ models/cancel-order-response.ts
 models/collection-details.ts
 models/collection-filter.ts
 models/collection.ts
-models/core-encode-asset-request-token.ts
-models/core-encode-asset-request.ts
-models/core-encode-asset-token-data.ts
 models/create-collection-request.ts
 models/create-order-request.ts
 models/create-order-response.ts
@@ -48,13 +45,15 @@ models/create-transfer-response.ts
 models/create-withdrawal-request.ts
 models/create-withdrawal-response.ts
 models/deposit.ts
+models/encode-asset-request-token.ts
+models/encode-asset-request.ts
 models/encode-asset-response.ts
+models/encode-asset-token-data.ts
 models/fee-data.ts
 models/fee-entry.ts
 models/fee-info.ts
 models/fee-token.ts
 models/fee.ts
-models/get-balance-response.ts
 models/get-projects-response.ts
 models/get-signable-cancel-order-request.ts
 models/get-signable-cancel-order-response.ts

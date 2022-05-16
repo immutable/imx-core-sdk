@@ -13,34 +13,34 @@
  */
 
 
-import { CoreEncodeAssetTokenData } from './core-encode-asset-token-data';
+import { EncodeAssetTokenData } from './encode-asset-token-data';
 
 /**
  * 
  * @export
- * @interface CoreEncodeAssetRequestToken
+ * @interface EncodeAssetRequestToken
  */
-export interface CoreEncodeAssetRequestToken {
+export interface EncodeAssetRequestToken {
     /**
      * 
-     * @type {CoreEncodeAssetTokenData}
-     * @memberof CoreEncodeAssetRequestToken
+     * @type {EncodeAssetTokenData}
+     * @memberof EncodeAssetRequestToken
      */
-    'data'?: CoreEncodeAssetTokenData;
+    'data'?: EncodeAssetTokenData;
     /**
-     * 
+     * The type of the token to be encoded
      * @type {string}
-     * @memberof CoreEncodeAssetRequestToken
+     * @memberof EncodeAssetRequestToken
      */
-    'type'?: CoreEncodeAssetRequestTokenTypeEnum;
+    'type'?: EncodeAssetRequestTokenTypeEnum;
 }
 
-export const CoreEncodeAssetRequestTokenTypeEnum = {
+export const EncodeAssetRequestTokenTypeEnum = {
     Eth: 'ETH',
     Erc20: 'ERC20',
     Erc721: 'ERC721'
 } as const;
 
-export type CoreEncodeAssetRequestTokenTypeEnum = typeof CoreEncodeAssetRequestTokenTypeEnum[keyof typeof CoreEncodeAssetRequestTokenTypeEnum];
+export type EncodeAssetRequestTokenTypeEnum = typeof EncodeAssetRequestTokenTypeEnum[keyof typeof EncodeAssetRequestTokenTypeEnum];
 
 

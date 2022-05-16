@@ -754,12 +754,12 @@
             "required": true
           },
           {
-            "description": "Register User",
+            "description": "Encode Asset",
             "name": "EncodeAssetRequest",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/core.EncodeAssetRequest"
+              "$ref": "#/definitions/EncodeAssetRequest"
             }
           }
         ],
@@ -2437,7 +2437,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/GetBalanceResponse"
+              "$ref": "#/definitions/Balance"
             }
           }
         }
@@ -3323,6 +3323,17 @@
         }
       }
     },
+    "EncodeAssetRequest": {
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "$ref": "#/definitions/encodeAssetRequestToken"
+        }
+      }
+    },
     "EncodeAssetResponse": {
       "type": "object",
       "properties": {
@@ -3330,6 +3341,27 @@
           "type": "string"
         },
         "asset_type": {
+          "type": "string"
+        }
+      }
+    },
+    "EncodeAssetTokenData": {
+      "type": "object",
+      "properties": {
+        "blueprint": {
+          "description": "Blueprint information of the token to be encoded. Used if token is mintable.",
+          "type": "string"
+        },
+        "id": {
+          "description": "ID of the token to be encoded. Used if token is mintable.",
+          "type": "string"
+        },
+        "token_address": {
+          "description": "Contract address of the token to be encoded",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "TokenId of the token to be encoded. Used if token is non-mintable",
           "type": "string"
         }
       }
@@ -3417,23 +3449,6 @@
             "ETH",
             "ERC20"
           ]
-        }
-      }
-    },
-    "GetBalanceResponse": {
-      "type": "object",
-      "properties": {
-        "imx": {
-          "description": "Amount which is currently inside the exchange",
-          "type": "string"
-        },
-        "preparing_withdrawal": {
-          "description": "Amount which is currently preparing withdrawal from the exchange",
-          "type": "string"
-        },
-        "withdrawable": {
-          "description": "Amount which is currently withdrawable from the exchange",
-          "type": "string"
         }
       }
     },
@@ -4988,51 +5003,21 @@
         }
       }
     },
-    "core.EncodeAssetRequest": {
-      "type": "object",
-      "required": [
-        "token"
-      ],
-      "properties": {
-        "token": {
-          "$ref": "#/definitions/coreEncodeAssetRequestToken"
-        }
-      }
-    },
-    "core.EncodeAssetTokenData": {
-      "type": "object",
-      "properties": {
-        "blueprint": {
-          "description": "used if token is mintable",
-          "type": "string"
-        },
-        "id": {
-          "description": "used if token is mintable",
-          "type": "string"
-        },
-        "token_address": {
-          "type": "string"
-        },
-        "token_id": {
-          "description": "used if token is non-mintable",
-          "type": "string"
-        }
-      }
-    },
-    "coreEncodeAssetRequestToken": {
+    "encodeAssetRequestToken": {
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/core.EncodeAssetTokenData"
+          "description": "Extra token information to be encoded",
+          "$ref": "#/definitions/EncodeAssetTokenData"
         },
         "type": {
+          "description": "The type of the token to be encoded",
           "type": "string",
           "enum": [
             "ETH",
             "ERC20",
             "ERC721"
-          ],
-          "example": "ETH/ERC20/ERC721"
+          ]
         }
       },
       "x-go-gen-location": "models"

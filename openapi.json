@@ -14,8 +14,12 @@
     "/v1/applications": {
       "get": {
         "description": "Get a list of applications",
-        "produces": ["application/json"],
-        "tags": ["applications"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "applications"
+        ],
         "summary": "Get a list of applications",
         "operationId": "listApplications",
         "parameters": [
@@ -57,9 +61,15 @@
     "/v1/applications/{id}": {
       "get": {
         "description": "Get details of an application with the given ID",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["applications"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "applications"
+        ],
         "summary": "Get details of an application with the given ID",
         "operationId": "getApplication",
         "parameters": [
@@ -84,8 +94,13 @@
     "/v1/assets": {
       "get": {
         "description": "Get a list of assets",
-        "produces": ["application/json"],
-        "tags": ["assets", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets",
+          "public"
+        ],
         "summary": "Get a list of assets",
         "operationId": "listAssets",
         "parameters": [
@@ -102,7 +117,10 @@
             "in": "query"
           },
           {
-            "enum": ["updated_at", "name"],
+            "enum": [
+              "updated_at",
+              "name"
+            ],
             "type": "string",
             "description": "Property to sort by",
             "name": "order_by",
@@ -200,9 +218,16 @@
     "/v1/assets/{token_address}/{token_id}": {
       "get": {
         "description": "Get details of an asset",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["assets", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "assets",
+          "public"
+        ],
         "summary": "Get details of an asset",
         "operationId": "getAsset",
         "parameters": [
@@ -240,9 +265,15 @@
     "/v1/balances/{owner}": {
       "get": {
         "description": "Fetches the WEI balances of the user",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["balances"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "balances"
+        ],
         "summary": "Fetches the WEI balances of the user",
         "operationId": "getBalanceOfUser",
         "deprecated": true,
@@ -268,9 +299,15 @@
     "/v1/claims/{etherKey}/{tokenAddress}": {
       "get": {
         "description": "Get TLV information for a user for a token",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["tlvs"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "tlvs"
+        ],
         "summary": "Get TLV information for a user for a token",
         "operationId": "getTLVs",
         "parameters": [
@@ -302,8 +339,13 @@
     "/v1/collections": {
       "get": {
         "description": "Get a list of collections",
-        "produces": ["application/json"],
-        "tags": ["collections", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "collections",
+          "public"
+        ],
         "summary": "Get a list of collections",
         "operationId": "listCollections",
         "parameters": [
@@ -361,9 +403,16 @@
       },
       "post": {
         "description": "Create collection",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["collections", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "collections",
+          "public"
+        ],
         "summary": "Create collection",
         "operationId": "createCollection",
         "parameters": [
@@ -418,8 +467,13 @@
     "/v1/collections/{address}": {
       "get": {
         "description": "Get details of a collection at the given address",
-        "produces": ["application/json"],
-        "tags": ["collections", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "collections",
+          "public"
+        ],
         "summary": "Get details of a collection at the given address",
         "operationId": "getCollection",
         "parameters": [
@@ -442,9 +496,16 @@
       },
       "patch": {
         "description": "Update collection",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["collections", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "collections",
+          "public"
+        ],
         "summary": "Update collection",
         "operationId": "updateCollection",
         "parameters": [
@@ -492,8 +553,13 @@
     "/v1/collections/{address}/filters": {
       "get": {
         "description": "Get a list of collection filters",
-        "produces": ["application/json"],
-        "tags": ["collections", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "collections",
+          "public"
+        ],
         "summary": "Get a list of collection filters",
         "operationId": "listCollectionFilters",
         "parameters": [
@@ -530,8 +596,13 @@
     "/v1/collections/{address}/metadata-schema": {
       "get": {
         "description": "Get collection metadata schema",
-        "produces": ["application/json"],
-        "tags": ["metadata", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metadata",
+          "public"
+        ],
         "summary": "Get collection metadata schema",
         "operationId": "getMetadataSchema",
         "parameters": [
@@ -557,9 +628,16 @@
       },
       "post": {
         "description": "Add metadata schema to collection",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["metadata", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metadata",
+          "public"
+        ],
         "summary": "Add metadata schema to collection",
         "operationId": "addMetadataSchemaToCollection",
         "parameters": [
@@ -607,9 +685,16 @@
     "/v1/collections/{address}/metadata-schema/{name}": {
       "patch": {
         "description": "Update metadata schema by name",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["metadata", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metadata",
+          "public"
+        ],
         "summary": "Update metadata schema by name",
         "operationId": "updateMetadataSchemaByName",
         "parameters": [
@@ -664,8 +749,13 @@
     "/v1/deposits": {
       "get": {
         "description": "Get a list of deposits",
-        "produces": ["application/json"],
-        "tags": ["deposits", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "deposits",
+          "public"
+        ],
         "summary": "Get a list of deposits",
         "operationId": "listDeposits",
         "parameters": [
@@ -779,8 +869,13 @@
     "/v1/deposits/{id}": {
       "get": {
         "description": "Get details of a deposit with the given ID",
-        "produces": ["application/json"],
-        "tags": ["deposits", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "deposits",
+          "public"
+        ],
         "summary": "Get details of a deposit with the given ID",
         "operationId": "getDeposit",
         "parameters": [
@@ -805,9 +900,16 @@
     "/v1/encode/{assetType}": {
       "post": {
         "description": "Retrieves the Starkex Encoded format for a given asset so that it can be used as parameter for Starkex smart contracts",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["encoding", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "encoding",
+          "public"
+        ],
         "summary": "Retrieves the Starkex Encoded format for a given asset",
         "operationId": "encodeAsset",
         "parameters": [
@@ -819,12 +921,12 @@
             "required": true
           },
           {
-            "description": "Register User",
+            "description": "Encode Asset",
             "name": "EncodeAssetRequest",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/core.EncodeAssetRequest"
+              "$ref": "#/definitions/EncodeAssetRequest"
             }
           }
         ],
@@ -841,8 +943,12 @@
     "/v1/mintable-token/{id}": {
       "get": {
         "description": "Get details of a mintable token with the given IMX token ID",
-        "produces": ["application/json"],
-        "tags": ["mints"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "mints"
+        ],
         "summary": "Get details of a mintable token with the given IMX token ID",
         "operationId": "getMintableTokenDetails",
         "deprecated": true,
@@ -868,8 +974,13 @@
     "/v1/mintable-token/{token_address}/{token_id}": {
       "get": {
         "description": "Get details of a mintable token with the given token address and token ID",
-        "produces": ["application/json"],
-        "tags": ["mints", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "mints",
+          "public"
+        ],
         "summary": "Get details of a mintable token with the given token address and token ID",
         "operationId": "getMintableTokenDetailsByClientTokenId",
         "parameters": [
@@ -901,8 +1012,13 @@
     "/v1/mints": {
       "get": {
         "description": "Get a list of mints",
-        "produces": ["application/json"],
-        "tags": ["mints", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "mints",
+          "public"
+        ],
         "summary": "Get a list of mints",
         "operationId": "listMints",
         "parameters": [
@@ -1014,9 +1130,15 @@
       },
       "post": {
         "description": "Mint tokens in a batch",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["mints"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "mints"
+        ],
         "summary": "Mint tokens",
         "operationId": "mintTokensV1",
         "deprecated": true,
@@ -1058,8 +1180,13 @@
     "/v1/mints/{id}": {
       "get": {
         "description": "Get details of a mint with the given ID",
-        "produces": ["application/json"],
-        "tags": ["mints", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "mints",
+          "public"
+        ],
         "summary": "Get details of a mint with the given ID",
         "operationId": "getMint",
         "parameters": [
@@ -1084,7 +1211,10 @@
     "/v1/orders": {
       "get": {
         "description": "Get a list of orders",
-        "tags": ["orders", "public"],
+        "tags": [
+          "orders",
+          "public"
+        ],
         "summary": "Get a list of orders",
         "operationId": "listOrders",
         "parameters": [
@@ -1127,7 +1257,13 @@
             "in": "query"
           },
           {
-            "enum": ["active", "filled", "cancelled", "expired", "inactive"],
+            "enum": [
+              "active",
+              "filled",
+              "cancelled",
+              "expired",
+              "inactive"
+            ],
             "type": "string",
             "description": "Status of this order",
             "name": "status",
@@ -1277,9 +1413,16 @@
       },
       "post": {
         "description": "Create an order",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders",
+          "public"
+        ],
         "summary": "Create an order",
         "operationId": "createOrder",
         "parameters": [
@@ -1318,9 +1461,16 @@
     "/v1/orders/{id}": {
       "get": {
         "description": "Get details of an order with the given ID",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders",
+          "public"
+        ],
         "summary": "Get details of an order with the given ID",
         "operationId": "getOrder",
         "parameters": [
@@ -1361,9 +1511,16 @@
       },
       "delete": {
         "description": "Cancel an order",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders",
+          "public"
+        ],
         "summary": "cancel an order",
         "operationId": "cancelOrder",
         "parameters": [
@@ -1409,8 +1566,13 @@
     "/v1/projects": {
       "get": {
         "description": "Get projects",
-        "consumes": ["application/json"],
-        "tags": ["projects", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "projects",
+          "public"
+        ],
         "summary": "Get projects",
         "operationId": "getProjects",
         "parameters": [
@@ -1464,8 +1626,13 @@
       },
       "post": {
         "description": "Create a project",
-        "consumes": ["application/json"],
-        "tags": ["projects", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "projects",
+          "public"
+        ],
         "summary": "Create a project",
         "operationId": "createProject",
         "parameters": [
@@ -1506,8 +1673,13 @@
     "/v1/projects/{id}": {
       "get": {
         "description": "Get a project",
-        "consumes": ["application/json"],
-        "tags": ["projects", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "projects",
+          "public"
+        ],
         "summary": "Get a project",
         "operationId": "getProject",
         "parameters": [
@@ -1546,9 +1718,16 @@
     "/v1/signable-cancel-order-details": {
       "post": {
         "description": "Get details a signable cancel order",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders",
+          "public"
+        ],
         "summary": "Get details a signable cancel order",
         "operationId": "getSignableCancelOrder",
         "parameters": [
@@ -1575,8 +1754,13 @@
     "/v1/signable-deposit-details": {
       "post": {
         "description": "Gets details of a signable deposit",
-        "produces": ["application/json"],
-        "tags": ["deposits", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "deposits",
+          "public"
+        ],
         "summary": "Gets details of a signable deposit",
         "operationId": "getSignableDeposit",
         "parameters": [
@@ -1603,9 +1787,15 @@
     "/v1/signable-order-details": {
       "post": {
         "description": "Get details a signable order",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
         "summary": "Get details a signable order",
         "operationId": "getSignableOrderV1",
         "parameters": [
@@ -1632,9 +1822,16 @@
     "/v1/signable-registration": {
       "post": {
         "description": "Get operator signature to allow clients to register the user",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["users", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "users",
+          "public"
+        ],
         "summary": "Get operator signature to allow clients to register the user",
         "operationId": "getSignableRegistration",
         "parameters": [
@@ -1661,9 +1858,16 @@
     "/v1/signable-registration-offchain": {
       "post": {
         "description": "Get encoded details to allow clients to register the user offchain",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["users", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "users",
+          "public"
+        ],
         "summary": "Get encoded details to allow clients to register the user offchain",
         "operationId": "getSignableRegistrationOffchain",
         "parameters": [
@@ -1690,9 +1894,16 @@
     "/v1/signable-transfer-details": {
       "post": {
         "description": "Gets details of a signable transfer",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["transfers", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "transfers",
+          "public"
+        ],
         "summary": "Gets details of a signable transfer",
         "operationId": "getSignableTransferV1",
         "parameters": [
@@ -1719,9 +1930,16 @@
     "/v1/signable-withdrawal-details": {
       "post": {
         "description": "Gets details of a signable withdrawal",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["withdrawals", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "withdrawals",
+          "public"
+        ],
         "summary": "Gets details of a signable withdrawal",
         "operationId": "getSignableWithdrawal",
         "parameters": [
@@ -1748,9 +1966,15 @@
     "/v1/snapshot/balances/{tokenAddress}": {
       "post": {
         "description": "Get a list of snapshot balances",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["snapshot"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "snapshot"
+        ],
         "summary": "Get a snapshot at a specific block",
         "operationId": "listSnapshotBalances",
         "parameters": [
@@ -1796,8 +2020,13 @@
     "/v1/tokens": {
       "get": {
         "description": "Get a list of tokens",
-        "produces": ["application/json"],
-        "tags": ["tokens", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "tokens",
+          "public"
+        ],
         "summary": "Get a list of tokens",
         "operationId": "listTokens",
         "parameters": [
@@ -1827,8 +2056,13 @@
     "/v1/tokens/{address}": {
       "get": {
         "description": "Get details of a token",
-        "produces": ["application/json"],
-        "tags": ["tokens", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "tokens",
+          "public"
+        ],
         "summary": "Get details of a token",
         "operationId": "getToken",
         "parameters": [
@@ -1853,8 +2087,13 @@
     "/v1/trades": {
       "get": {
         "description": "Get a list of trades",
-        "produces": ["application/json"],
-        "tags": ["trades", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "trades",
+          "public"
+        ],
         "summary": "Get a list of trades",
         "operationId": "listTrades",
         "parameters": [
@@ -1942,9 +2181,16 @@
       },
       "post": {
         "description": "Create a Trade",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["trades", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "trades",
+          "public"
+        ],
         "summary": "Create a Trade between two parties",
         "operationId": "createTrade",
         "parameters": [
@@ -1983,8 +2229,13 @@
     "/v1/trades/{id}": {
       "get": {
         "description": "Get details of a trade with the given ID",
-        "produces": ["application/json"],
-        "tags": ["trades", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "trades",
+          "public"
+        ],
         "summary": "Get details of a trade with the given ID",
         "operationId": "getTrade",
         "parameters": [
@@ -2009,8 +2260,13 @@
     "/v1/transfers": {
       "get": {
         "description": "Get a list of transfers",
-        "produces": ["application/json"],
-        "tags": ["transfers", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "transfers",
+          "public"
+        ],
         "summary": "Get a list of transfers",
         "operationId": "listTransfers",
         "parameters": [
@@ -2045,7 +2301,10 @@
             "in": "query"
           },
           {
-            "enum": ["success", "failure"],
+            "enum": [
+              "success",
+              "failure"
+            ],
             "type": "string",
             "description": "Status of this transfer",
             "name": "status",
@@ -2123,9 +2382,16 @@
       },
       "post": {
         "description": "Create a new transfer request",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["transfers", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "transfers",
+          "public"
+        ],
         "summary": "Creates a transfer of tokens between two parties",
         "operationId": "createTransferV1",
         "parameters": [
@@ -2164,9 +2430,16 @@
     "/v1/transfers/{id}": {
       "get": {
         "description": "Get details of a transfer with the given ID",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["transfers", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "transfers",
+          "public"
+        ],
         "summary": "Get details of a transfer with the given ID",
         "operationId": "getTransfer",
         "parameters": [
@@ -2191,9 +2464,16 @@
     "/v1/users": {
       "post": {
         "description": "Registers a user",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["users", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "users",
+          "public"
+        ],
         "summary": "Registers a user",
         "operationId": "registerUser",
         "parameters": [
@@ -2220,9 +2500,16 @@
     "/v1/users/{user}": {
       "get": {
         "description": "Get stark keys for a registered user",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["users", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "users",
+          "public"
+        ],
         "summary": "Get stark keys for a registered user",
         "operationId": "getUsers",
         "parameters": [
@@ -2247,8 +2534,13 @@
     "/v1/withdrawals": {
       "get": {
         "description": "Get a list of withdrawals",
-        "produces": ["application/json"],
-        "tags": ["withdrawals", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "withdrawals",
+          "public"
+        ],
         "summary": "Get a list of withdrawals",
         "operationId": "listWithdrawals",
         "parameters": [
@@ -2372,9 +2664,16 @@
       },
       "post": {
         "description": "Creates a withdrawal",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["withdrawals", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "withdrawals",
+          "public"
+        ],
         "summary": "Creates a withdrawal of a token",
         "operationId": "createWithdrawal",
         "parameters": [
@@ -2413,8 +2712,13 @@
     "/v1/withdrawals/{id}": {
       "get": {
         "description": "Gets details of withdrawal with the given ID",
-        "produces": ["application/json"],
-        "tags": ["withdrawals", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "withdrawals",
+          "public"
+        ],
         "summary": "Gets details of withdrawal with the given ID",
         "operationId": "getWithdrawal",
         "parameters": [
@@ -2439,8 +2743,13 @@
     "/v2/balances/{owner}": {
       "get": {
         "description": "Get a list of balances for given user",
-        "produces": ["application/json"],
-        "tags": ["balances", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "balances",
+          "public"
+        ],
         "summary": "Get a list of balances for given user",
         "operationId": "listBalances",
         "parameters": [
@@ -2465,8 +2774,13 @@
     "/v2/balances/{owner}/{address}": {
       "get": {
         "description": "Fetches the token balances of the user",
-        "produces": ["application/json"],
-        "tags": ["balances", "public"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "balances",
+          "public"
+        ],
         "summary": "Fetches the token balances of the user",
         "operationId": "getBalance",
         "parameters": [
@@ -2489,7 +2803,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/GetBalanceResponse"
+              "$ref": "#/definitions/Balance"
             }
           }
         }
@@ -2498,9 +2812,16 @@
     "/v2/mints": {
       "post": {
         "description": "Mint tokens in a batch with fees",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["mints", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "mints",
+          "public"
+        ],
         "summary": "Mint Tokens V2",
         "operationId": "mintTokens",
         "parameters": [
@@ -2544,9 +2865,16 @@
     "/v2/signable-transfer-details": {
       "post": {
         "description": "Gets bulk details of a signable transfer",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["transfers", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "transfers",
+          "public"
+        ],
         "summary": "Gets bulk details of a signable transfer",
         "operationId": "getSignableTransfer",
         "parameters": [
@@ -2573,9 +2901,16 @@
     "/v2/transfers": {
       "post": {
         "description": "Create a new transfer request",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["transfers", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "transfers",
+          "public"
+        ],
         "summary": "Creates a transfer of multiple tokens between two parties",
         "operationId": "createTransfer",
         "parameters": [
@@ -2614,9 +2949,16 @@
     "/v3/signable-order-details": {
       "post": {
         "description": "Get details a signable order V3",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders",
+          "public"
+        ],
         "summary": "Get details a signable order V3",
         "operationId": "getSignableOrder",
         "parameters": [
@@ -2643,9 +2985,16 @@
     "/v3/signable-trade-details": {
       "post": {
         "description": "Get details a signable trade V3",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["trades", "public"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "trades",
+          "public"
+        ],
         "summary": "Get details a signable trade V3",
         "operationId": "getSignableTrade",
         "parameters": [
@@ -2673,7 +3022,9 @@
   "definitions": {
     "AddMetadataSchemaToCollectionRequest": {
       "type": "object",
-      "required": ["metadata"],
+      "required": [
+        "metadata"
+      ],
       "properties": {
         "contract_address": {
           "description": "Not required from API user",
@@ -2817,7 +3168,10 @@
     },
     "CancelOrderRequest": {
       "type": "object",
-      "required": ["order_id", "stark_signature"],
+      "required": [
+        "order_id",
+        "stark_signature"
+      ],
       "properties": {
         "order_id": {
           "description": "ID of the order",
@@ -2914,7 +3268,11 @@
     },
     "CreateCollectionRequest": {
       "type": "object",
-      "required": ["contract_address", "name", "owner_public_key"],
+      "required": [
+        "contract_address",
+        "name",
+        "owner_public_key"
+      ],
       "properties": {
         "collection_image_url": {
           "description": "URL of the tile image for this collection",
@@ -3033,7 +3391,11 @@
     },
     "CreateProjectRequest": {
       "type": "object",
-      "required": ["company_name", "contact_email", "name"],
+      "required": [
+        "company_name",
+        "contact_email",
+        "name"
+      ],
       "properties": {
         "company_name": {
           "description": "The company name",
@@ -3150,7 +3512,10 @@
     },
     "CreateTransferRequest": {
       "type": "object",
-      "required": ["requests", "sender_stark_key"],
+      "required": [
+        "requests",
+        "sender_stark_key"
+      ],
       "properties": {
         "requests": {
           "description": "List of transfers",
@@ -3329,6 +3694,32 @@
         }
       }
     },
+    "EncodeAssetRequest": {
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "description": "Extra token information to be encoded",
+              "$ref": "#/definitions/EncodeAssetTokenData"
+            },
+            "type": {
+              "description": "The type of the token to be encoded",
+              "type": "string",
+              "enum": [
+                "ETH",
+                "ERC20",
+                "ERC721"
+              ]
+            }
+          }
+        }
+      }
+    },
     "EncodeAssetResponse": {
       "type": "object",
       "properties": {
@@ -3340,9 +3731,34 @@
         }
       }
     },
+    "EncodeAssetTokenData": {
+      "type": "object",
+      "properties": {
+        "blueprint": {
+          "description": "Blueprint information of the token to be encoded. Used if token is mintable.",
+          "type": "string"
+        },
+        "id": {
+          "description": "ID of the token to be encoded. Used if token is mintable.",
+          "type": "string"
+        },
+        "token_address": {
+          "description": "Contract address of the token to be encoded",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "TokenId of the token to be encoded. Used if token is non-mintable",
+          "type": "string"
+        }
+      }
+    },
     "Fee": {
       "type": "object",
-      "required": ["address", "percentage", "type"],
+      "required": [
+        "address",
+        "percentage",
+        "type"
+      ],
       "properties": {
         "address": {
           "description": "Wallet address",
@@ -3385,7 +3801,11 @@
     },
     "FeeInfo": {
       "type": "object",
-      "required": ["asset_id", "fee_limit", "source_vault_id"],
+      "required": [
+        "asset_id",
+        "fee_limit",
+        "source_vault_id"
+      ],
       "properties": {
         "asset_id": {
           "description": "ID of the asset these fees relate to",
@@ -3411,7 +3831,10 @@
         "type": {
           "description": "Fee token type. One of ETH/ERC20",
           "type": "string",
-          "enum": ["ETH", "ERC20"]
+          "enum": [
+            "ETH",
+            "ERC20"
+          ]
         }
       }
     },
@@ -3480,7 +3903,11 @@
     },
     "GetSignableDepositRequest": {
       "type": "object",
-      "required": ["amount", "token", "user"],
+      "required": [
+        "amount",
+        "token",
+        "user"
+      ],
       "properties": {
         "amount": {
           "description": "Amount of the token the user is depositing",
@@ -3727,7 +4154,10 @@
     },
     "GetSignableRegistrationRequest": {
       "type": "object",
-      "required": ["ether_key", "stark_key"],
+      "required": [
+        "ether_key",
+        "stark_key"
+      ],
       "properties": {
         "ether_key": {
           "description": "Ether key of user",
@@ -3850,7 +4280,10 @@
     },
     "GetSignableTransferRequest": {
       "type": "object",
-      "required": ["sender_ether_key", "signable_requests"],
+      "required": [
+        "sender_ether_key",
+        "signable_requests"
+      ],
       "properties": {
         "sender_ether_key": {
           "description": "Ethereum address of the transferring user",
@@ -3867,7 +4300,12 @@
     },
     "GetSignableTransferRequestV1": {
       "type": "object",
-      "required": ["amount", "receiver", "sender", "token"],
+      "required": [
+        "amount",
+        "receiver",
+        "sender",
+        "token"
+      ],
       "properties": {
         "amount": {
           "description": "Amount of the token to transfer",
@@ -3889,7 +4327,9 @@
     },
     "GetSignableTransferResponse": {
       "type": "object",
-      "required": ["sender_stark_key"],
+      "required": [
+        "sender_stark_key"
+      ],
       "properties": {
         "sender_stark_key": {
           "description": "Sender of the transfer",
@@ -3955,7 +4395,11 @@
     },
     "GetSignableWithdrawalRequest": {
       "type": "object",
-      "required": ["amount", "token", "user"],
+      "required": [
+        "amount",
+        "token",
+        "user"
+      ],
       "properties": {
         "amount": {
           "description": "Amount of the token to withdraw",
@@ -4297,7 +4741,9 @@
     },
     "MetadataSchemaRequest": {
       "type": "object",
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
         "filterable": {
           "description": "Sets the metadata as filterable",
@@ -4310,7 +4756,13 @@
         "type": {
           "description": "Type of the metadata. Values: \"enum\", \"text\", \"boolean\", \"continuous\", \"discrete\" | Default: \"text\". Src: https://docs.x.immutable.com/docs/asset-metadata#property-type-mapping",
           "type": "string",
-          "enum": ["enum", "text", "boolean", "continuous", "discrete"]
+          "enum": [
+            "enum",
+            "text",
+            "boolean",
+            "continuous",
+            "discrete"
+          ]
         }
       }
     },
@@ -4348,7 +4800,10 @@
     },
     "MintFee": {
       "type": "object",
-      "required": ["percentage", "recipient"],
+      "required": [
+        "percentage",
+        "recipient"
+      ],
       "properties": {
         "percentage": {
           "description": "Fee percentage",
@@ -4363,7 +4818,11 @@
     },
     "MintRequest": {
       "type": "object",
-      "required": ["auth_signature", "contract_address", "users"],
+      "required": [
+        "auth_signature",
+        "contract_address",
+        "users"
+      ],
       "properties": {
         "auth_signature": {
           "description": "Signature from authorised minter",
@@ -4391,7 +4850,11 @@
     },
     "MintRequestV1": {
       "type": "object",
-      "required": ["auth_signature", "tokens", "user"],
+      "required": [
+        "auth_signature",
+        "tokens",
+        "user"
+      ],
       "properties": {
         "auth_signature": {
           "description": "Signature from authorised minter",
@@ -4450,7 +4913,9 @@
     },
     "MintTokenData": {
       "type": "object",
-      "required": ["id"],
+      "required": [
+        "id"
+      ],
       "properties": {
         "blueprint": {
           "description": "Token metadata blueprint",
@@ -4468,7 +4933,9 @@
     },
     "MintTokenDataV2": {
       "type": "object",
-      "required": ["id"],
+      "required": [
+        "id"
+      ],
       "properties": {
         "blueprint": {
           "description": "Token metadata blueprint",
@@ -4502,7 +4969,9 @@
     },
     "MintTokensRequestV1": {
       "type": "object",
-      "required": ["mints"],
+      "required": [
+        "mints"
+      ],
       "properties": {
         "mints": {
           "description": "Details of requested mints",
@@ -4539,7 +5008,10 @@
     },
     "MintUser": {
       "type": "object",
-      "required": ["tokens", "user"],
+      "required": [
+        "tokens",
+        "user"
+      ],
       "properties": {
         "tokens": {
           "description": "List of Mint tokens",
@@ -4773,7 +5245,11 @@
     },
     "SignableTransferDetails": {
       "type": "object",
-      "required": ["amount", "receiver", "token"],
+      "required": [
+        "amount",
+        "receiver",
+        "token"
+      ],
       "properties": {
         "amount": {
           "description": "Amount of the token to transfer",
@@ -5111,45 +5587,6 @@
         "withdrawn_to_wallet": {
           "description": "Withdrawal has been transferred to user's Layer 1 wallet",
           "type": "boolean"
-        }
-      }
-    },
-    "core.EncodeAssetRequest": {
-      "type": "object",
-      "required": ["token"],
-      "properties": {
-        "token": {
-          "type": "object",
-          "properties": {
-            "data": {
-              "$ref": "#/definitions/core.EncodeAssetTokenData"
-            },
-            "type": {
-              "type": "string",
-              "enum": ["ETH", "ERC20", "ERC721"],
-              "example": "ETH/ERC20/ERC721"
-            }
-          }
-        }
-      }
-    },
-    "core.EncodeAssetTokenData": {
-      "type": "object",
-      "properties": {
-        "blueprint": {
-          "description": "used if token is mintable",
-          "type": "string"
-        },
-        "id": {
-          "description": "used if token is mintable",
-          "type": "string"
-        },
-        "token_address": {
-          "type": "string"
-        },
-        "token_id": {
-          "description": "used if token is non-mintable",
-          "type": "string"
         }
       }
     }
