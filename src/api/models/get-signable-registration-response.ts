@@ -27,7 +27,7 @@ export interface GetSignableRegistrationResponse {
      */
     'operator_signature'?: string;
     /**
-     * 
+     * Hash of the payload to be signed for user registration
      * @type {string}
      * @memberof GetSignableRegistrationResponse
      */

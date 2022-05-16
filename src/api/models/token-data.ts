@@ -46,6 +46,12 @@ export interface TokenData {
      */
     'quantity'?: string;
     /**
+     * Quantity of this asset with the sum of all fees applied to the asset
+     * @type {string}
+     * @memberof TokenData
+     */
+    'quantity_with_fees'?: string;
+    /**
      * Address of ERC721/ERC20 contract
      * @type {string}
      * @memberof TokenData

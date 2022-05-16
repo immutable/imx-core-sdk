@@ -45,6 +45,12 @@ export interface GetSignableWithdrawalResponse {
      */
     'payload_hash'?: string;
     /**
+     * Message to sign with L1 wallet to verity withdrawal request
+     * @type {string}
+     * @memberof GetSignableWithdrawalResponse
+     */
+    'signable_message'?: string;
+    /**
      * Public stark key of this user
      * @type {string}
      * @memberof GetSignableWithdrawalResponse

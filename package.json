@@ -1,9 +1,13 @@
 {
   "name": "@imtbl/core-sdk",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Immutable Core SDK",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
+  "types": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "author": "Immutable",
   "license": "MIT",
   "scripts": {
@@ -12,7 +16,10 @@
     "test-api-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/api-test.ts",
     "build": "NODE_ENV=production rollup --config rollup.config.js",
     "prebuild": "rm -rf dist",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "release": "release-it",
+    "lint": "eslint ./src/utils/** ./src/workflows/**",
+    "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
@@ -25,6 +32,8 @@
     "@babel/runtime": "^7.12.5",
     "@ethersproject/providers": "^5.6.4",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
+    "@openzeppelin/contracts": "^4.6.0",
+    "@release-it/keep-a-changelog": "^3.0.0",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-json": "^4.1.0",
     "@typechain/ethers-v5": "^10.0.0",
@@ -40,6 +49,7 @@
     "ethers": "^5.6.4",
     "hardhat": "^2.9.3",
     "jest": "^27.5.1",
+    "release-it": "^15.0.0",
     "rollup": "^2.71.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
@@ -57,6 +67,7 @@
     "elliptic": "^6.5.4",
     "enc-utils": "^3.0.0",
     "ethereumjs-wallet": "^1.0.2",
-    "hash.js": "^1.1.7"
+    "hash.js": "^1.1.7",
+    "soltypes": "^2.0.0"
   }
 }

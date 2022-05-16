@@ -9,14 +9,13 @@ const configuration = new Configuration({
 const client = new AssetsApi(configuration);
 
 const getAsset = async () => {
-
   const getAssetParams = {
-    tokenAddress: "0x65bd8f5492ebfd0f2947d298e68a79c65e3d4108",
-    tokenId: "7",
-    includeFees: true
-  }
+    tokenAddress: '0x65bd8f5492ebfd0f2947d298e68a79c65e3d4108',
+    tokenId: '7',
+    includeFees: true,
+  };
 
-  return await client.getAsset(getAssetParams)
-}
+  return await client.getAsset(getAssetParams);
+};
 
-getAsset().then(res => console.log(res))
+getAsset().then(res => console.log(res));

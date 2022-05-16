@@ -1,0 +1,15 @@
+git:
+  commitMessage: "Release ${version}"
+npm:
+  publish: false
+hooks:
+  before:init:
+    - "yarn lint-fix"
+    - "yarn test"
+    - "yarn test-contract-bindings"
+    - "yarn test-api-bindings"
+  after:release:
+    - "echo Successfully released ${name} v${version} to ${repo.repository}."
+plugins:
+  "@release-it/keep-a-changelog":
+    filename: "CHANGELOG.md"

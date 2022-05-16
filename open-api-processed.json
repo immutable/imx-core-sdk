@@ -218,8 +218,20 @@
           },
           {
             "type": "string",
-            "description": "List of collections not to be displayed, separated by commas",
+            "description": "List of collections not to be included, separated by commas",
             "name": "blacklist",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "List of collections to be included, separated by commas",
+            "name": "whitelist",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Keyword to search in collection name and description",
+            "name": "keyword",
             "in": "query"
           }
         ],
@@ -719,6 +731,48 @@
         }
       }
     },
+    "/v1/encode/{assetType}": {
+      "post": {
+        "description": "Retrieves the Starkex Encoded format for a given asset so that it can be used as parameter for Starkex smart contracts",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "encoding"
+        ],
+        "summary": "Retrieves the Starkex Encoded format for a given asset",
+        "operationId": "encodeAsset",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Asset type to be encoded. (asset/mintable-asset)",
+            "name": "assetType",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Register User",
+            "name": "EncodeAssetRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/core.EncodeAssetRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EncodeAssetResponse"
+            }
+          }
+        }
+      }
+    },
     "/v1/mintable-token/{token_address}/{token_id}": {
       "get": {
         "description": "Get details of a mintable token with the given token address and token ID",
@@ -932,6 +986,7 @@
               "expired_at",
               "sell_quantity",
               "buy_quantity",
+              "buy_quantity_with_fees",
               "updated_at"
             ],
             "type": "string",
@@ -1506,6 +1561,41 @@
         }
       }
     },
+    "/v1/signable-registration-offchain": {
+      "post": {
+        "description": "Get encoded details to allow clients to register the user offchain",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "users"
+        ],
+        "summary": "Get encoded details to allow clients to register the user offchain",
+        "operationId": "getSignableRegistrationOffchain",
+        "parameters": [
+          {
+            "description": "Register User Offchain",
+            "name": "GetSignableRegistrationRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetSignableRegistrationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetSignableRegistrationOffchainResponse"
+            }
+          }
+        }
+      }
+    },
     "/v1/signable-transfer-details": {
       "post": {
         "description": "Gets details of a signable transfer",
@@ -2029,11 +2119,11 @@
         "parameters": [
           {
             "description": "Register User",
-            "name": "RegisterUserRequestVerifyEth",
+            "name": "RegisterUserRequest",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RegisterUserRequestVerifyEth"
+              "$ref": "#/definitions/RegisterUserRequest"
             }
           }
         ],
@@ -2576,6 +2666,23 @@
           "items": {
             "$ref": "#/definitions/MetadataSchemaRequest"
           }
+        }
+      }
+    },
+    "Application": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "description": "Time this application was created",
+          "type": "string"
+        },
+        "id": {
+          "description": "ID of the application",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the application",
+          "type": "string"
         }
       }
     },
@@ -3216,6 +3323,17 @@
         }
       }
     },
+    "EncodeAssetResponse": {
+      "type": "object",
+      "properties": {
+        "asset_id": {
+          "type": "string"
+        },
+        "asset_type": {
+          "type": "string"
+        }
+      }
+    },
     "Fee": {
       "type": "object",
       "required": [
@@ -3358,6 +3476,10 @@
         "payload_hash": {
           "description": "Hash of the payload to be signed for cancel order",
           "type": "string"
+        },
+        "signable_message": {
+          "description": "Message to sign from wallet to confirm cancel order",
+          "type": "string"
         }
       }
     },
@@ -3486,6 +3608,10 @@
           "description": "Hash of the payload to be signed for signable order",
           "type": "string"
         },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to confirm order request",
+          "type": "string"
+        },
         "stark_key": {
           "description": "Public stark key of the created user",
           "type": "string"
@@ -3497,6 +3623,19 @@
         "vault_id_sell": {
           "description": "ID of the vault to sell from",
           "type": "integer"
+        }
+      }
+    },
+    "GetSignableRegistrationOffchainResponse": {
+      "type": "object",
+      "properties": {
+        "payload_hash": {
+          "description": "Hash of the payload to be signed for user registration offchain",
+          "type": "string"
+        },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to register user offchain",
+          "type": "string"
         }
       }
     },
@@ -3525,6 +3664,7 @@
           "type": "string"
         },
         "payload_hash": {
+          "description": "Hash of the payload to be signed for user registration",
           "type": "string"
         }
       }
@@ -3595,12 +3735,20 @@
           "description": "Expiration timestamp for this order",
           "type": "integer"
         },
+        "fee_info": {
+          "description": "Fee information",
+          "$ref": "#/definitions/FeeInfo"
+        },
         "nonce": {
           "description": "Nonce of the order",
           "type": "integer"
         },
         "payload_hash": {
           "description": "Payload Hash",
+          "type": "string"
+        },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to confirm trade request",
           "type": "string"
         },
         "stark_key": {
@@ -3674,6 +3822,10 @@
           "description": "Sender of the transfer",
           "type": "string"
         },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to confirm transfer request",
+          "type": "string"
+        },
         "signable_responses": {
           "description": "List of transfer responses without the sender stark key",
           "type": "array",
@@ -3721,6 +3873,10 @@
         "sender_vault_id": {
           "description": "ID of the vault being transferred from",
           "type": "integer"
+        },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to confirm transfer request",
+          "type": "string"
         }
       }
     },
@@ -3765,6 +3921,10 @@
           "description": "Encoded payload hash",
           "type": "string"
         },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to verity withdrawal request",
+          "type": "string"
+        },
         "stark_key": {
           "description": "Public stark key of this user",
           "type": "string"
@@ -3772,6 +3932,14 @@
         "vault_id": {
           "description": "ID of the vault we are withdrawing from",
           "type": "integer"
+        }
+      }
+    },
+    "GetTLVsResult": {
+      "type": "object",
+      "properties": {
+        "awaiting_cliff": {
+          "type": "string"
         }
       }
     },
@@ -4105,11 +4273,57 @@
         }
       }
     },
+    "MintRequestV1": {
+      "type": "object",
+      "required": [
+        "auth_signature",
+        "tokens",
+        "user"
+      ],
+      "properties": {
+        "auth_signature": {
+          "description": "Signature from authorised minter",
+          "type": "string"
+        },
+        "nonce": {
+          "description": "Random nonce - must be unique",
+          "type": "integer"
+        },
+        "tokens": {
+          "description": "Tokens to mint",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MintTokens"
+          }
+        },
+        "user": {
+          "description": "Recipient of the assets",
+          "type": "string"
+        }
+      }
+    },
     "MintResultDetails": {
       "type": "object",
       "properties": {
         "contract_address": {
           "description": "Contract address of this token",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "IMX Id of this token",
+          "type": "string"
+        },
+        "tx_id": {
+          "description": "Mint Transaction ID",
+          "type": "integer"
+        }
+      }
+    },
+    "MintResultV1": {
+      "type": "object",
+      "properties": {
+        "client_token_id": {
+          "description": "ID provided by the client for this token",
           "type": "string"
         },
         "token_id": {
@@ -4378,7 +4592,7 @@
         }
       }
     },
-    "RegisterUserRequestVerifyEth": {
+    "RegisterUserRequest": {
       "type": "object",
       "required": [
         "eth_signature",
@@ -4490,6 +4704,19 @@
         }
       }
     },
+    "SnapshotBalancesRecord": {
+      "type": "object",
+      "properties": {
+        "balance": {
+          "description": "User's IMX balance on Immutable at a snapshot block",
+          "type": "string"
+        },
+        "ether_key": {
+          "description": "User ethereum address",
+          "type": "string"
+        }
+      }
+    },
     "SuccessResponse": {
       "type": "object",
       "properties": {
@@ -4528,6 +4755,10 @@
         },
         "quantity": {
           "description": "Quantity of this asset",
+          "type": "string"
+        },
+        "quantity_with_fees": {
+          "description": "Quantity of this asset with the sum of all fees applied to the asset",
           "type": "string"
         },
         "token_address": {
@@ -4756,6 +4987,55 @@
           "type": "boolean"
         }
       }
+    },
+    "core.EncodeAssetRequest": {
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "$ref": "#/definitions/coreEncodeAssetRequestToken"
+        }
+      }
+    },
+    "core.EncodeAssetTokenData": {
+      "type": "object",
+      "properties": {
+        "blueprint": {
+          "description": "used if token is mintable",
+          "type": "string"
+        },
+        "id": {
+          "description": "used if token is mintable",
+          "type": "string"
+        },
+        "token_address": {
+          "type": "string"
+        },
+        "token_id": {
+          "description": "used if token is non-mintable",
+          "type": "string"
+        }
+      }
+    },
+    "coreEncodeAssetRequestToken": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/core.EncodeAssetTokenData"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "ETH",
+            "ERC20",
+            "ERC721"
+          ],
+          "example": "ETH/ERC20/ERC721"
+        }
+      },
+      "x-go-gen-location": "models"
     }
   }
 }
