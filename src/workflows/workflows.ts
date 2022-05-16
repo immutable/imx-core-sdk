@@ -8,7 +8,10 @@ import {
   TransfersApiGetTransferRequest,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
-import { registerOffchainWorkflow } from './registration';
+import {
+  isRegisteredOnChainWorkflow,
+  registerOffchainWorkflow,
+} from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
 import {
@@ -53,6 +56,16 @@ export class Workflows {
 
   public registerOffchain(signer: Signer) {
     return registerOffchainWorkflow(signer, this.usersApi);
+  }
+
+  public isRegisteredOnchain(signer: Signer) {
+    // Get instance of contract
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+
+    return isRegisteredOnChainWorkflow(signer, coreContract);
   }
 
   public mint(signer: Signer, request: UnsignedMintRequest) {

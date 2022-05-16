@@ -1,7 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { Core, ERC721__factory } from '../../contracts';
-import { isRegisteredOnChain } from '../registration';
+import { isRegisteredOnChainWorkflow } from '../registration';
 import { Config, ERC721Deposit } from '../../types';
 
 interface ERC721TokenData {
@@ -68,7 +68,7 @@ export async function depositERC721Workflow(
   const vaultId = signableDepositResult.data.vault_id!;
 
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChain(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC721(
@@ -106,7 +106,7 @@ async function executeRegisterAndDepositERC721(
   // TODO possibly move to registration workflow?
   const signableRegistrationResponse = await usersApi.getSignableRegistration({
     getSignableRegistrationRequest: {
-      ether_key: etherKey,
+      ether_key: etherKey.toLowerCase(),
       stark_key: starkPublicKey,
     },
   });
@@ -118,6 +118,8 @@ async function executeRegisterAndDepositERC721(
     signableRegistrationResponse.data.operator_signature!,
   );
   await signer.sendTransaction(registerTrx);
+
+  // TODO wait for the above contract transaction to be added, otherwise the below transaction will fail
 
   const trx = await contract.populateTransaction.depositNft(
     starkPublicKey,
