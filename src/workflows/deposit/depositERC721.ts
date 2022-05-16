@@ -2,7 +2,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { Core, ERC721__factory } from '../../contracts';
 import { isRegisteredOnChain } from '../registration';
-import { ERC721Deposit } from '../../types';
+import { Config, ERC721Deposit } from '../../types';
 
 interface ERC721TokenData {
   token_id: string;
@@ -16,6 +16,7 @@ export async function depositERC721Workflow(
   usersApi: UsersApi,
   encodingApi: EncodingApi,
   contract: Core,
+  config: Config,
 ): Promise<string> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
@@ -30,7 +31,7 @@ export async function depositERC721Workflow(
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = ERC721__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
-    process.env.STARK_CONTRACT_ADDRESS!,
+    config.starkContractAddress,
     deposit.tokenId,
   );
   await signer.sendTransaction(approveTrx);

@@ -100,6 +100,7 @@ export class Workflows {
           this.tokensApi,
           this.encodingApi,
           coreContract,
+          this.config,
         );
       case TokenType.ERC721:
         return depositERC721Workflow(
@@ -109,6 +110,7 @@ export class Workflows {
           this.usersApi,
           this.encodingApi,
           coreContract,
+          this.config,
         );
     }
   }
@@ -149,6 +151,7 @@ export class Workflows {
       this.tokensApi,
       this.encodingApi,
       coreContract,
+      this.config,
     );
   }
 
@@ -166,6 +169,7 @@ export class Workflows {
       this.usersApi,
       this.encodingApi,
       coreContract,
+      this.config,
     );
   }
 }
