@@ -63,13 +63,13 @@ export async function prepareWithdrawalWorkflow(signer: Signer, token: SignableT
 }
 
 
-export async function completeETHWithdrawal(signer: Signer, starkPublicKey: string, coreContract: Core, encodingApi: EncodingApi) {
+export async function completeETHWithdrawalWorkflow(signer: Signer, starkPublicKey: string, coreContract: Core, encodingApi: EncodingApi) {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi)
   const populatedTrasaction = await coreContract.populateTransaction.withdraw(starkPublicKey, assetType.asset_type!)
   return signer.sendTransaction(populatedTrasaction)
 }
 
-async function completeMintableERC721Withdrawal(signer: Signer, starkPublicKey: string, token: SignableToken, coreContract: Core, encodingApi: EncodingApi) {
+export async function completeMintableERC721WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: SignableToken, coreContract: Core, encodingApi: EncodingApi) {
   const assetType = await getEncodeAssetInfo('mintable-asset', 'ERC721', encodingApi, token.data)
   const mintableBlob = getMintingBlob(token)
 

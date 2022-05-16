@@ -5,7 +5,7 @@ import {
   TokensApi,
   UsersApi,
   TransfersApi,
-  TransfersApiGetTransferRequest,
+  TransfersApiGetTransferRequest, WithdrawalsApi, SignableToken,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
 import { registerOffchainWorkflow } from './registration';
@@ -30,6 +30,11 @@ import {
   Config,
 } from '../types';
 import { Core__factory } from '../contracts';
+import {
+  completeETHWithdrawalWorkflow,
+  completeMintableERC721WithdrawalWorfklow,
+  prepareWithdrawalWorkflow,
+} from './withdrawals';
 
 export class Workflows {
   private readonly usersApi: UsersApi;
@@ -38,6 +43,7 @@ export class Workflows {
   private readonly depositsApi: DepositsApi;
   private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
+  private readonly withdrawalsAPI: WithdrawalsApi;
 
   constructor(protected config: Config) {
     this.config = config;
@@ -49,6 +55,7 @@ export class Workflows {
     this.depositsApi = new DepositsApi(config.api);
     this.tokensApi = new TokensApi(config.api);
     this.encodingApi = new EncodingApi(config.api);
+    this.withdrawalsAPI = new WithdrawalsApi(config.api);
   }
 
   public registerOffchain(signer: Signer) {
@@ -167,5 +174,25 @@ export class Workflows {
       this.encodingApi,
       coreContract,
     );
+  }
+
+  public prepareWithdrawal(signer: Signer, token: SignableToken, quantity: string) {
+    return prepareWithdrawalWorkflow(signer, token, quantity, this.withdrawalsAPI);
+  }
+
+  public completeETHWithdrawal(signer: Signer, starkPublicKey: string) {
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+    return completeETHWithdrawalWorkflow(signer, starkPublicKey, coreContract, this.encodingApi);
+  }
+
+  public completeMintableERC721Withdrawal(signer: Signer, starkPublicKey: string, token: SignableToken) {
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+    return completeMintableERC721WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
   }
 }
