@@ -69,6 +69,7 @@ export async function depositERC721Workflow(
 
   // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
+  console.log('\nisRegistered', isRegistered);
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC721(
@@ -101,6 +102,7 @@ async function executeRegisterAndDepositERC721(
   contract: Core,
   usersApi: UsersApi,
 ): Promise<string> {
+  console.log('\nexecuteRegisterAndDepositERC721');
   const etherKey = await signer.getAddress();
 
   // TODO possibly move to registration workflow?
