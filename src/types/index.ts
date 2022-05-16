@@ -12,7 +12,7 @@ export interface StarkWallet {
   starkKeyPair: ec.KeyPair;
 }
 
-export type EthNetwork = 'ropsten' | 'mainnet';
+export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
 
 export interface Config {
   api: Configuration;
