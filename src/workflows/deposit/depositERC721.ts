@@ -1,7 +1,10 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { Core, ERC721__factory } from '../../contracts';
-import { isRegisteredOnChainWorkflow } from '../registration';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
 import { Config, ERC721Deposit } from '../../types';
 
 interface ERC721TokenData {
@@ -104,20 +107,18 @@ async function executeRegisterAndDepositERC721(
 ): Promise<string> {
   const etherKey = await signer.getAddress();
 
-  // TODO possibly move to registration workflow?
-  const signableRegistrationResponse = await usersApi.getSignableRegistration({
-    getSignableRegistrationRequest: {
-      ether_key: etherKey.toLowerCase(),
-      stark_key: starkPublicKey,
-    },
-  });
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
 
   // There is no wrapper function for registering and depositing NFTs
   // Do as consecutive transactions
   const registerTrx = await contract.populateTransaction.registerUser(
     etherKey,
     starkPublicKey,
-    signableRegistrationResponse.data.operator_signature!,
+    signableResult.operator_signature!,
   );
   await signer.sendTransaction(registerTrx);
 

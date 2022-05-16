@@ -2,7 +2,10 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
 import { Core, ERC20__factory } from '../../contracts';
-import { isRegisteredOnChainWorkflow } from '../registration';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
 import { Config, ERC20Deposit } from '../../types';
 import { BigNumber } from 'ethers';
 
@@ -116,18 +119,16 @@ async function executeRegisterAndDepositERC20(
 ): Promise<string> {
   const etherKey = await signer.getAddress();
 
-  // TODO possibly move to registration workflow?
-  const signableRegistrationResponse = await usersApi.getSignableRegistration({
-    getSignableRegistrationRequest: {
-      ether_key: etherKey.toLowerCase(),
-      stark_key: starkPublicKey,
-    },
-  });
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
 
   const trx = await contract.populateTransaction.registerAndDepositERC20(
     etherKey,
     starkPublicKey,
-    signableRegistrationResponse.data.operator_signature!,
+    signableResult.operator_signature!,
     assetType,
     vaultId,
     quantizedAmount,
