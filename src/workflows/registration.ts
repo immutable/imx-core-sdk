@@ -11,6 +11,7 @@ import {
   UsersApi,
 } from '../api';
 import { Core } from '../contracts';
+import { Errors } from './errors';
 
 export async function registerOffchainWorkflow(
   signer: Signer,
@@ -34,7 +35,7 @@ export async function registerOffchainWorkflow(
     signableResult.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('Invalid response from Signable registration offchain');
+    throw new Error(Errors.SignableRegistrationOffchainInvalidResponse);
   }
 
   // Sign message with L1 credentials

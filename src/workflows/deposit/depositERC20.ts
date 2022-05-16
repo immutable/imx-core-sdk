@@ -8,6 +8,7 @@ import {
 } from '../registration';
 import { Config, ERC20Deposit } from '../../types';
 import { BigNumber } from 'ethers';
+import { Errors } from '../errors';
 
 interface ERC20TokenData {
   decimals: number;
@@ -33,7 +34,7 @@ export async function depositERC20Workflow(
     const token = await tokensApi.getToken({ address: deposit.tokenAddress });
     decimals = parseInt(token.data.decimals!);
   } catch (error) {
-    throw new Error('Code 2001 - Token not available in IMX.');
+    throw new Error(Errors.DepositERC20TokenNotAvailable);
   }
 
   const data: ERC20TokenData = {
