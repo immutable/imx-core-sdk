@@ -5,7 +5,11 @@ import {
   sign,
   signRaw,
 } from '../utils';
-import { RegisterUserResponse, UsersApi } from '../api';
+import {
+  GetSignableRegistrationResponse,
+  RegisterUserResponse,
+  UsersApi,
+} from '../api';
 import { Core } from '../contracts';
 
 export async function registerOffchainWorkflow(
@@ -69,4 +73,21 @@ export async function isRegisteredOnChainWorkflow(
     return false;
   }
   return ethKey !== '';
+}
+
+export async function getSignableRegistrationOnchain(
+  etherKey: string,
+  starkPublicKey: string,
+  usersApi: UsersApi,
+): Promise<GetSignableRegistrationResponse> {
+  const response = await usersApi.getSignableRegistration({
+    getSignableRegistrationRequest: {
+      ether_key: etherKey.toLowerCase(),
+      stark_key: starkPublicKey,
+    },
+  });
+  return {
+    operator_signature: response.data.operator_signature,
+    payload_hash: response.data.payload_hash,
+  };
 }

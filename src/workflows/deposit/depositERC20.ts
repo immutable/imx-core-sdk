@@ -2,7 +2,10 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
 import { Core, ERC20__factory } from '../../contracts';
-import { isRegisteredOnChainWorkflow } from '../registration';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
 import { Config, ERC20Deposit } from '../../types';
 import { BigNumber } from 'ethers';
 
@@ -33,7 +36,6 @@ export async function depositERC20Workflow(
     throw new Error('Code 2001 - Token not available in IMX.');
   }
 
-  // Specific to ERC20
   const data: ERC20TokenData = {
     decimals,
     token_address: deposit.tokenAddress,
@@ -117,18 +119,16 @@ async function executeRegisterAndDepositERC20(
 ): Promise<string> {
   const etherKey = await signer.getAddress();
 
-  // TODO possibly move to registration workflow?
-  const signableRegistrationResponse = await usersApi.getSignableRegistration({
-    getSignableRegistrationRequest: {
-      ether_key: etherKey.toLowerCase(),
-      stark_key: starkPublicKey,
-    },
-  });
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
 
   const trx = await contract.populateTransaction.registerAndDepositERC20(
     etherKey,
     starkPublicKey,
-    signableRegistrationResponse.data.operator_signature!,
+    signableResult.operator_signature!,
     assetType,
     vaultId,
     quantizedAmount,

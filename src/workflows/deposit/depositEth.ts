@@ -2,7 +2,10 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { parseEther } from 'ethers/lib/utils';
 import { Core } from '../../contracts';
-import { isRegisteredOnChainWorkflow } from '../registration';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
 import { ETHDeposit } from '../../types';
 import { BigNumber } from 'ethers';
 
@@ -18,22 +21,25 @@ export async function depositEthWorkflow(
   encodingApi: EncodingApi,
   contract: Core,
 ): Promise<string> {
-  // Signable deposit request
+  // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
   const data: ETHTokenData = {
     decimals: 18,
   };
   const amount = parseEther(deposit.amount);
 
-  const signableDepositResult = await depositsApi.getSignableDeposit({
-    getSignableDepositRequest: {
-      user,
-      token: {
-        type: deposit.type,
-        data,
-      },
-      amount: amount.toString(),
+  // Get signable deposit details
+  const getSignableDepositRequest = {
+    user,
+    token: {
+      type: deposit.type,
+      data,
     },
+    amount: amount.toString(),
+  };
+
+  const signableDepositResult = await depositsApi.getSignableDeposit({
+    getSignableDepositRequest,
   });
 
   const encodingResult = await encodingApi.encodeAsset({
@@ -85,18 +91,16 @@ async function executeRegisterAndDepositEth(
 ): Promise<string> {
   const etherKey = await signer.getAddress();
 
-  // TODO possibly move to registration workflow?
-  const signableRegistrationResponse = await usersApi.getSignableRegistration({
-    getSignableRegistrationRequest: {
-      ether_key: etherKey.toLowerCase(),
-      stark_key: starkPublicKey,
-    },
-  });
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
 
   const trx = await contract.populateTransaction.registerAndDepositEth(
     etherKey,
     starkPublicKey,
-    signableRegistrationResponse.data.operator_signature!,
+    signableResult.operator_signature!,
     assetType,
     vaultId,
   );
