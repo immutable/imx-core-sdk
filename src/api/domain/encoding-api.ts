@@ -21,7 +21,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { CoreEncodeAssetRequest } from '../models';
+import { EncodeAssetRequest } from '../models';
 // @ts-ignore
 import { EncodeAssetResponse } from '../models';
 /**
@@ -34,11 +34,11 @@ export const EncodingApiAxiosParamCreator = function (configuration?: Configurat
          * Retrieves the Starkex Encoded format for a given asset so that it can be used as parameter for Starkex smart contracts
          * @summary Retrieves the Starkex Encoded format for a given asset
          * @param {string} assetType Asset type to be encoded. (asset/mintable-asset)
-         * @param {CoreEncodeAssetRequest} encodeAssetRequest Register User
+         * @param {EncodeAssetRequest} encodeAssetRequest Encode Asset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        encodeAsset: async (assetType: string, encodeAssetRequest: CoreEncodeAssetRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        encodeAsset: async (assetType: string, encodeAssetRequest: EncodeAssetRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'assetType' is not null or undefined
             assertParamExists('encodeAsset', 'assetType', assetType)
             // verify required parameter 'encodeAssetRequest' is not null or undefined
@@ -84,11 +84,11 @@ export const EncodingApiFp = function(configuration?: Configuration) {
          * Retrieves the Starkex Encoded format for a given asset so that it can be used as parameter for Starkex smart contracts
          * @summary Retrieves the Starkex Encoded format for a given asset
          * @param {string} assetType Asset type to be encoded. (asset/mintable-asset)
-         * @param {CoreEncodeAssetRequest} encodeAssetRequest Register User
+         * @param {EncodeAssetRequest} encodeAssetRequest Encode Asset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async encodeAsset(assetType: string, encodeAssetRequest: CoreEncodeAssetRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EncodeAssetResponse>> {
+        async encodeAsset(assetType: string, encodeAssetRequest: EncodeAssetRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<EncodeAssetResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.encodeAsset(assetType, encodeAssetRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -106,11 +106,11 @@ export const EncodingApiFactory = function (configuration?: Configuration, baseP
          * Retrieves the Starkex Encoded format for a given asset so that it can be used as parameter for Starkex smart contracts
          * @summary Retrieves the Starkex Encoded format for a given asset
          * @param {string} assetType Asset type to be encoded. (asset/mintable-asset)
-         * @param {CoreEncodeAssetRequest} encodeAssetRequest Register User
+         * @param {EncodeAssetRequest} encodeAssetRequest Encode Asset
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        encodeAsset(assetType: string, encodeAssetRequest: CoreEncodeAssetRequest, options?: any): AxiosPromise<EncodeAssetResponse> {
+        encodeAsset(assetType: string, encodeAssetRequest: EncodeAssetRequest, options?: any): AxiosPromise<EncodeAssetResponse> {
             return localVarFp.encodeAsset(assetType, encodeAssetRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -130,11 +130,11 @@ export interface EncodingApiEncodeAssetRequest {
     readonly assetType: string
 
     /**
-     * Register User
-     * @type {CoreEncodeAssetRequest}
+     * Encode Asset
+     * @type {EncodeAssetRequest}
      * @memberof EncodingApiEncodeAsset
      */
-    readonly encodeAssetRequest: CoreEncodeAssetRequest
+    readonly encodeAssetRequest: EncodeAssetRequest
 }
 
 /**

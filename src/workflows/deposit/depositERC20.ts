@@ -2,8 +2,11 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
 import { Core, ERC20__factory } from '../../contracts';
-import { isRegisteredOnChain } from '../registration';
-import { ERC20Deposit } from '../../types';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
+import { Config, ERC20Deposit } from '../../types';
 import { BigNumber } from 'ethers';
 
 interface ERC20TokenData {
@@ -19,6 +22,7 @@ export async function depositERC20Workflow(
   tokensApi: TokensApi,
   encodingApi: EncodingApi,
   contract: Core,
+  config: Config,
 ): Promise<string> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
@@ -32,7 +36,6 @@ export async function depositERC20Workflow(
     throw new Error('Code 2001 - Token not available in IMX.');
   }
 
-  // Specific to ERC20
   const data: ERC20TokenData = {
     decimals,
     token_address: deposit.tokenAddress,
@@ -43,7 +46,7 @@ export async function depositERC20Workflow(
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = ERC20__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
-    process.env.STARK_CONTRACT_ADDRESS!,
+    config.starkContractAddress,
     amount,
   );
   await signer.sendTransaction(approveTrx);
@@ -81,7 +84,7 @@ export async function depositERC20Workflow(
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
 
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChain(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC20(
@@ -116,18 +119,16 @@ async function executeRegisterAndDepositERC20(
 ): Promise<string> {
   const etherKey = await signer.getAddress();
 
-  // TODO possibly move to registration workflow?
-  const signableRegistrationResponse = await usersApi.getSignableRegistration({
-    getSignableRegistrationRequest: {
-      ether_key: etherKey,
-      stark_key: starkPublicKey,
-    },
-  });
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
 
   const trx = await contract.populateTransaction.registerAndDepositERC20(
     etherKey,
     starkPublicKey,
-    signableRegistrationResponse.data.operator_signature!,
+    signableResult.operator_signature!,
     assetType,
     vaultId,
     quantizedAmount,

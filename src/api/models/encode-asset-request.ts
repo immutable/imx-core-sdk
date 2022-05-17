@@ -13,19 +13,19 @@
  */
 
 
-import { CoreEncodeAssetRequestToken } from './core-encode-asset-request-token';
+import { EncodeAssetRequestToken } from './encode-asset-request-token';
 
 /**
  * 
  * @export
- * @interface CoreEncodeAssetRequest
+ * @interface EncodeAssetRequest
  */
-export interface CoreEncodeAssetRequest {
+export interface EncodeAssetRequest {
     /**
      * 
-     * @type {CoreEncodeAssetRequestToken}
-     * @memberof CoreEncodeAssetRequest
+     * @type {EncodeAssetRequestToken}
+     * @memberof EncodeAssetRequest
      */
-    'token': CoreEncodeAssetRequestToken;
+    'token': EncodeAssetRequestToken;
 }
 

@@ -21,7 +21,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
-import { GetBalanceResponse } from '../models';
+import { Balance } from '../models';
 // @ts-ignore
 import { ListBalancesResponse } from '../models';
 /**
@@ -120,7 +120,7 @@ export const BalancesApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getBalance(owner: string, address: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetBalanceResponse>> {
+        async getBalance(owner: string, address: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Balance>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getBalance(owner, address, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -153,7 +153,7 @@ export const BalancesApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBalance(owner: string, address: string, options?: any): AxiosPromise<GetBalanceResponse> {
+        getBalance(owner: string, address: string, options?: any): AxiosPromise<Balance> {
             return localVarFp.getBalance(owner, address, options).then((request) => request(axios, basePath));
         },
         /**

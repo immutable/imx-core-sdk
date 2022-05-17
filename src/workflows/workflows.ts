@@ -8,7 +8,10 @@ import {
   TransfersApiGetTransferRequest, WithdrawalsApi, SignableToken,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
-import { registerOffchainWorkflow } from './registration';
+import {
+  isRegisteredOnChainWorkflow,
+  registerOffchainWorkflow,
+} from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
 import {
@@ -64,6 +67,16 @@ export class Workflows {
     return registerOffchainWorkflow(signer, this.usersApi);
   }
 
+  public isRegisteredOnchain(signer: Signer) {
+    // Get instance of contract
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+
+    return isRegisteredOnChainWorkflow(signer, coreContract);
+  }
+
   public mint(signer: Signer, request: UnsignedMintRequest) {
     return mintingWorkflow(signer, request, this.mintsApi);
   }
@@ -91,34 +104,36 @@ export class Workflows {
     );
 
     switch (deposit.type) {
-    case TokenType.ETH:
-      return depositEthWorkflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        coreContract,
-      );
-    case TokenType.ERC20:
-      return depositERC20Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.tokensApi,
-        this.encodingApi,
-        coreContract,
-      );
-    case TokenType.ERC721:
-      return depositERC721Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        coreContract,
-      );
+      case TokenType.ETH:
+        return depositEthWorkflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          coreContract,
+        );
+      case TokenType.ERC20:
+        return depositERC20Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.tokensApi,
+          this.encodingApi,
+          coreContract,
+          this.config,
+        );
+      case TokenType.ERC721:
+        return depositERC721Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          coreContract,
+          this.config,
+        );
     }
   }
 
@@ -158,6 +173,7 @@ export class Workflows {
       this.tokensApi,
       this.encodingApi,
       coreContract,
+      this.config,
     );
   }
 
@@ -175,6 +191,7 @@ export class Workflows {
       this.usersApi,
       this.encodingApi,
       coreContract,
+      this.config,
     );
   }
 

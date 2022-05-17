@@ -1,8 +1,11 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { Core, ERC721__factory } from '../../contracts';
-import { isRegisteredOnChain } from '../registration';
-import { ERC721Deposit } from '../../types';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
+import { Config, ERC721Deposit } from '../../types';
 
 interface ERC721TokenData {
   token_id: string;
@@ -16,6 +19,7 @@ export async function depositERC721Workflow(
   usersApi: UsersApi,
   encodingApi: EncodingApi,
   contract: Core,
+  config: Config,
 ): Promise<string> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
@@ -30,7 +34,7 @@ export async function depositERC721Workflow(
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = ERC721__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
-    process.env.STARK_CONTRACT_ADDRESS!,
+    config.starkContractAddress,
     deposit.tokenId,
   );
   await signer.sendTransaction(approveTrx);
@@ -44,6 +48,7 @@ export async function depositERC721Workflow(
     },
     amount: amount.toString(),
   };
+
   const signableDepositResult = await depositsApi.getSignableDeposit({
     getSignableDepositRequest,
   });
@@ -67,7 +72,7 @@ export async function depositERC721Workflow(
   const vaultId = signableDepositResult.data.vault_id!;
 
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChain(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC721(
@@ -102,21 +107,22 @@ async function executeRegisterAndDepositERC721(
 ): Promise<string> {
   const etherKey = await signer.getAddress();
 
-  // TODO possibly move to registration workflow?
-  const signableRegistrationResponse = await usersApi.getSignableRegistration({
-    getSignableRegistrationRequest: {
-      ether_key: etherKey,
-      stark_key: starkPublicKey,
-    },
-  });
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
 
-  // No wrapper function for depositing NFTs, do as consecutive transactions
+  // There is no wrapper function for registering and depositing NFTs
+  // Do as consecutive transactions
   const registerTrx = await contract.populateTransaction.registerUser(
     etherKey,
     starkPublicKey,
-    signableRegistrationResponse.data.operator_signature!,
+    signableResult.operator_signature!,
   );
   await signer.sendTransaction(registerTrx);
+
+  // TODO wait for the above contract transaction to be added, otherwise the below transaction will fail
 
   const trx = await contract.populateTransaction.depositNft(
     starkPublicKey,
