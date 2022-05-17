@@ -19,6 +19,16 @@ yarn add @imtbl/core-sdk
 
 ## Usage
 
+### Configuration
+
+A configuration object is required to be passed into Core SDK requets. This can be obtained by using the function `getConfig` available within the Core SDK. You are required to select the Ethereum network. The Immutable X platform currently supports `ropsten` for testing and `mainnet` for production.
+
+```
+import { getConfig } from "@imtbl/core-sdk";
+
+const config = getConfig("ropsten")
+```
+
 ### Standard API requests
 
 ```
@@ -35,9 +45,11 @@ const response = await assetsApi.getAsset({
 });
 ```
 
-TODO link to generated swagger api doc
+[View a full list of API requests available in the Core SDK TODO:update](https://docs.x.immutable.com/reference)
 
 ### Authenticated API requests
+
+Certain API endpoints requre
 
 #### Project authorisation
 
