@@ -23,15 +23,22 @@ yarn add @imtbl/core-sdk
 
 A configuration object is required to be passed into Core SDK requets. This can be obtained by using the function `getConfig` available within the Core SDK. You are required to select the Ethereum network. The Immutable X platform currently supports `ropsten` for testing and `mainnet` for production.
 
-```
-import { getConfig } from "@imtbl/core-sdk";
+```ts
+import { AlchemyProvider } from '@ethersproject/providers';
+import { getConfig } from '@imtbl/core-sdk';
 
-const config = getConfig("ropsten")
+const ethNetwork = 'ropsten';
+
+const config = getConfig(ethNetwork);
+
+const privateKey = YOUR_PRIVATE_KEY;
+const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
+const signer = new Wallet(privateKey).connect(provider);
 ```
 
 ### Standard API requests
 
-```
+```ts
 import { getConfig, AssetsApi } from "@imtbl/core-sdk";
 
 ...
