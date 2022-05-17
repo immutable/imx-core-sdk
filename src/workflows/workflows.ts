@@ -204,7 +204,7 @@ export class Workflows {
       this.config.starkContractAddress,
       signer,
     );
-    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then(() => true).catch(() => false);
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
     if(isRegisteredStark) {
       return completeETHWithdrawalWorkflow(signer, starkPublicKey, coreContract, this.encodingApi);
     } else {
@@ -217,7 +217,7 @@ export class Workflows {
       this.config.starkContractAddress,
       signer,
     );
-    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then(() => true).catch(() => false);
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
     if(isRegisteredStark) {
       return completeERC20WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
     } else {
@@ -230,7 +230,7 @@ export class Workflows {
       this.config.starkContractAddress,
       signer,
     );
-    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then(() => true).catch(() => false);
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
     if(isRegisteredStark) {
       return completeMintableERC721WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
     } else {
@@ -243,7 +243,7 @@ export class Workflows {
       this.config.starkContractAddress,
       signer,
     );
-    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then(() => true).catch(() => false);
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
     if(isRegisteredStark) {
       return completeERC721WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
     } else {

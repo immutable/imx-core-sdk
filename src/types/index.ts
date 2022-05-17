@@ -26,3 +26,4 @@ export type UnsignedBurnRequest = GetSignableBurnRequest;
 
 export * from './deposit';
 export * from './withdrawal';
+export * from './token';

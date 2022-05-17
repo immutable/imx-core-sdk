@@ -1,8 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { generateStarkWallet, serializeSignature, sign } from '../utils';
 import {
-  CoreEncodeAssetRequestTokenTypeEnum,
-  CreateWithdrawalResponse,
+  CreateWithdrawalResponse, EncodeAssetRequestTokenTypeEnum,
   EncodeAssetResponse, EncodingApi,
   SignableToken,
   WithdrawalsApi,
@@ -78,11 +77,7 @@ export async function completeMintableERC721WithdrawalWorfklow(signer: Signer, s
   const mintableBlob = getMintingBlob(token)
 
   const populatedTrasaction = await coreContract.populateTransaction.withdrawAndMint(starkPublicKey, assetType.asset_type!, mintableBlob)
-  return signer.sendTransaction({
-    ...populatedTrasaction,
-    gasPrice: 40000000000,
-    gasLimit: 7000000,
-  })
+  return signer.sendTransaction(populatedTrasaction)
 }
 
 export async function completeERC721WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: ERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
@@ -103,7 +98,7 @@ export async function completeERC20WithdrawalWorfklow(signer: Signer, starkPubli
   return signer.sendTransaction(populatedTrasaction)
 }
 
-async function getEncodeAssetInfo(assetType: string, tokenType: CoreEncodeAssetRequestTokenTypeEnum, encodingApi: EncodingApi, tokenData?: any): Promise<EncodeAssetResponse> {
+async function getEncodeAssetInfo(assetType: string, tokenType: EncodeAssetRequestTokenTypeEnum, encodingApi: EncodingApi, tokenData?: any): Promise<EncodeAssetResponse> {
   const result = await encodingApi.encodeAsset({
     assetType,
     encodeAssetRequest: {
