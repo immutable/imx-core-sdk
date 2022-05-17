@@ -21,7 +21,20 @@ yarn add @imtbl/core-sdk
 
 ### Standard API requests
 
-TODO Insert example of how to use a
+```
+import { getConfig, AssetsApi } from "@imtbl/core-sdk";
+
+...
+
+const config = getConfig("ropsten")
+const assetsApi = new AssetsApi(config.api);
+
+const response = await assetsApi.getAsset({
+  tokenAddress: TOKEN_ADDRESS,
+  tokenId: TOKEN_ID,
+});
+```
+
 TODO link to generated swagger api doc
 
 ### Authenticated API requests
