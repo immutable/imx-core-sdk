@@ -14,7 +14,5 @@ export type { IERC165 } from "./@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from "./factories/@openzeppelin/contracts/utils/introspection/IERC165__factory";
 export type { Core } from "./contracts/Core";
 export { Core__factory } from "./factories/contracts/Core__factory";
-export type { ERC20 } from "./contracts/ERC20";
-export { ERC20__factory } from "./factories/contracts/ERC20__factory";
-export type { ERC721 } from "./contracts/ERC721";
-export { ERC721__factory } from "./factories/contracts/ERC721__factory";
+export type { Registration } from "./contracts/Registration";
+export { Registration__factory } from "./factories/contracts/Registration__factory";
