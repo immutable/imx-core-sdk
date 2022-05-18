@@ -5,7 +5,7 @@ import {
   TokensApi,
   UsersApi,
   TransfersApi,
-  TransfersApiGetTransferRequest,
+  TransfersApiGetTransferRequest, WithdrawalsApi, SignableToken,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
 import {
@@ -30,9 +30,16 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  Config,
+  Config, MintableERC721Withdrawal, ERC721Withdrawal, ERC20Withdrawal,
 } from '../types';
 import { Core__factory } from '../contracts';
+import {
+  completeERC20WithdrawalWorfklow,
+  completeERC721WithdrawalWorfklow,
+  completeETHWithdrawalWorkflow,
+  completeMintableERC721WithdrawalWorfklow,
+  prepareWithdrawalWorkflow,
+} from './withdrawals';
 
 export class Workflows {
   private readonly usersApi: UsersApi;
@@ -41,6 +48,7 @@ export class Workflows {
   private readonly depositsApi: DepositsApi;
   private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
+  private readonly withdrawalsApi: WithdrawalsApi;
 
   constructor(protected config: Config) {
     this.config = config;
@@ -52,6 +60,7 @@ export class Workflows {
     this.depositsApi = new DepositsApi(config.api);
     this.tokensApi = new TokensApi(config.api);
     this.encodingApi = new EncodingApi(config.api);
+    this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
   public registerOffchain(signer: Signer) {
@@ -184,5 +193,61 @@ export class Workflows {
       coreContract,
       this.config,
     );
+  }
+
+  public prepareWithdrawal(signer: Signer, token: SignableToken, quantity: string) {
+    return prepareWithdrawalWorkflow(signer, token, quantity, this.withdrawalsApi);
+  }
+
+  public async completeETHWithdrawal(signer: Signer, starkPublicKey: string) {
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
+    if(isRegisteredStark) {
+      return completeETHWithdrawalWorkflow(signer, starkPublicKey, coreContract, this.encodingApi);
+    } else {
+      throw new Error('user is not registered. Workflow not yet implemented')
+    }
+  }
+
+  public async completeERC20Withdrawal(signer: Signer, starkPublicKey: string, token: ERC20Withdrawal) {
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
+    if(isRegisteredStark) {
+      return completeERC20WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
+    } else {
+      throw new Error('user is not registered. Workflow not yet implemented')
+    }
+  }
+
+  public async completeMintableERC721Withdrawal(signer: Signer, starkPublicKey: string, token: MintableERC721Withdrawal) {
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
+    if(isRegisteredStark) {
+      return completeMintableERC721WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
+    } else {
+      throw new Error('user is not registered. Workflow not yet implemented')
+    }
+  }
+
+  public async completeERC721Withdrawal(signer: Signer, starkPublicKey: string, token: ERC721Withdrawal) {
+    const coreContract = Core__factory.connect(
+      this.config.starkContractAddress,
+      signer,
+    );
+    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
+    if(isRegisteredStark) {
+      return completeERC721WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
+    } else {
+      throw new Error('user is not registered. Workflow not yet implemented')
+    }
   }
 }
