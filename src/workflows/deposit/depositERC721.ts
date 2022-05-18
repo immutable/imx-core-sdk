@@ -120,9 +120,11 @@ async function executeRegisterAndDepositERC721(
     starkPublicKey,
     signableResult.operator_signature!,
   );
-  await signer.sendTransaction(registerTrx);
 
-  // TODO wait for the above contract transaction to be added, otherwise the below transaction will fail
+  const registerTransactionResponse = await signer.sendTransaction(registerTrx);
+
+  // Wait for the register transaction to be mined, otherwise the below transaction will fail
+  await registerTransactionResponse.wait();
 
   const trx = await contract.populateTransaction.depositNft(
     starkPublicKey,
