@@ -12,6 +12,7 @@ import {
 import { Core } from '../contracts';
 import * as encUtils from 'enc-utils';
 import { ERC20Withdrawal, ERC721Withdrawal, TokenType } from '../types';
+import { Errors } from './errors';
 
 interface MintableERC721Withdrawal {
   type: TokenType.ERC721;
@@ -56,9 +57,7 @@ export async function prepareWithdrawalWorkflow(
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableWithdrawalResult.data;
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(
-      'payload_hash or signable_message missing from SignableWithdrawal response',
-    );
+    throw new Error(Errors.SignableWithdrawalInvalidResponse);
   }
 
   // Sign hash with L2 credentials
