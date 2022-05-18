@@ -1,4 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
+import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
 import { Core, ERC20__factory } from '../../contracts';
@@ -8,7 +9,6 @@ import {
 } from '../registration';
 import { Config, ERC20Deposit } from '../../types';
 import { BigNumber } from 'ethers';
-import { Errors } from '../errors';
 
 interface ERC20TokenData {
   decimals: number;
@@ -24,7 +24,7 @@ export async function depositERC20Workflow(
   encodingApi: EncodingApi,
   contract: Core,
   config: Config,
-): Promise<string> {
+): Promise<TransactionResponse> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
 
@@ -112,7 +112,7 @@ async function executeRegisterAndDepositERC20(
   vaultId: number,
   contract: Core,
   usersApi: UsersApi,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -130,7 +130,7 @@ async function executeRegisterAndDepositERC20(
     quantizedAmount,
   );
 
-  return signer.sendTransaction(trx).then(res => res.hash);
+  return signer.sendTransaction(trx);
 }
 
 async function executeDepositERC20(
@@ -140,7 +140,7 @@ async function executeDepositERC20(
   starkPublicKey: string,
   vaultId: number,
   contract: Core,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const trx = await contract.populateTransaction.depositERC20(
     starkPublicKey,
     assetType,
@@ -148,5 +148,5 @@ async function executeDepositERC20(
     quantizedAmount,
   );
 
-  return signer.sendTransaction(trx).then(res => res.hash);
+  return signer.sendTransaction(trx);
 }

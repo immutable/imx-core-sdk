@@ -1,4 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
+import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { Core, ERC721__factory } from '../../contracts';
 import {
@@ -20,7 +21,7 @@ export async function depositERC721Workflow(
   encodingApi: EncodingApi,
   contract: Core,
   config: Config,
-): Promise<string> {
+): Promise<TransactionResponse> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
 
@@ -104,7 +105,7 @@ async function executeRegisterAndDepositERC721(
   vaultId: number,
   contract: Core,
   usersApi: UsersApi,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -133,7 +134,7 @@ async function executeRegisterAndDepositERC721(
     tokenId,
   );
 
-  return signer.sendTransaction(trx).then(res => res.hash);
+  return signer.sendTransaction(trx);
 }
 
 async function executeDepositERC721(
@@ -143,7 +144,7 @@ async function executeDepositERC721(
   starkPublicKey: string,
   vaultId: number,
   contract: Core,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const trx = await contract.populateTransaction.depositNft(
     starkPublicKey,
     assetType,
@@ -151,5 +152,5 @@ async function executeDepositERC721(
     tokenId,
   );
 
-  return signer.sendTransaction(trx).then(res => res.hash);
+  return signer.sendTransaction(trx);
 }
