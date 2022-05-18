@@ -202,7 +202,7 @@ export class Workflows {
     );
   }
 
-  public async completeETHWithdrawal(signer: Signer, starkPublicKey: string) {
+  public async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
     const coreContract = Core__factory.connect(
       this.config.starkContractAddress,
       signer,
@@ -280,7 +280,7 @@ export class Workflows {
   ) {
     switch (token.type) {
       case TokenType.ETH:
-        return this.completeETHWithdrawal(signer, starkPublicKey);
+        return this.completeEthWithdrawal(signer, starkPublicKey);
       case TokenType.ERC721:
         return this.completeERC721Withdrawal(signer, starkPublicKey, token);
       case TokenType.ERC20:
