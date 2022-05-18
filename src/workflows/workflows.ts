@@ -38,7 +38,7 @@ import {
   TokenWithdrawal,
   StarkWallet,
 } from '../types';
-import { Core__factory, Registration__factory } from '../contracts';
+import { Registration__factory } from '../contracts';
 import {
   completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
@@ -227,30 +227,20 @@ export class Workflows {
     );
   }
 
-  public async completeERC721Withdrawal(
+  public completeERC721Withdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: ERC721Withdrawal,
   ) {
-    const coreContract = Core__factory.connect(
-      this.config.starkContractAddress,
+    return completeERC721WithdrawalWorkflow(
       signer,
+      starkPublicKey,
+      token,
+      this.encodingApi,
+      this.mintsApi,
+      this.usersApi,
+      this.config,
     );
-    const isRegisteredStark = await coreContract
-      .getEthKey(starkPublicKey)
-      .then(result => result !== '');
-    if (isRegisteredStark) {
-      return completeERC721WithdrawalWorkflow(
-        signer,
-        starkPublicKey,
-        token,
-        coreContract,
-        this.encodingApi,
-        this.mintsApi,
-      );
-    } else {
-      throw new Error('user is not registered. Workflow not yet implemented');
-    }
   }
 
   public completeWithdrawal(
