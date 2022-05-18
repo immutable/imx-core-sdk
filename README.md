@@ -1,10 +1,14 @@
-<div align="center" style="padding: 50px 0">
+<div align="center" style="padding: 50px 0; background-color: #111111">
+  <br>
   <br>
   <a  href="https://docs.x.immutable.com/docs">
     <img src="images/imx-logo-main-p-500.png">
   </a>
   <br>
+  <br>
 </div>
+
+---
 
 # Immutable Core SDK
 
