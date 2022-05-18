@@ -56,7 +56,7 @@ export async function depositEthWorkflow(
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 
-  // Get instance of contract
+  // Get instance of core contract
   const coreContract = Core__factory.connect(
     config.starkContractAddress,
     signer,

@@ -2,7 +2,12 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
-import { Core, IERC20__factory, Registration__factory } from '../../contracts';
+import {
+  Core,
+  Core__factory,
+  IERC20__factory,
+  Registration__factory,
+} from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -22,7 +27,6 @@ export async function depositERC20Workflow(
   usersApi: UsersApi,
   tokensApi: TokensApi,
   encodingApi: EncodingApi,
-  contract: Core,
   config: Config,
 ): Promise<TransactionResponse> {
   // Configure request parameters
@@ -79,6 +83,12 @@ export async function depositERC20Workflow(
   const vaultId = signableDepositResult.data.vault_id!;
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
 
+  // Get instance of core contract
+  const coreContract = Core__factory.connect(
+    config.starkContractAddress,
+    signer,
+  );
+
   // Get instance of registration contract
   const registrationContract = Registration__factory.connect(
     config.registrationContractAddress,
@@ -98,7 +108,7 @@ export async function depositERC20Workflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
       usersApi,
     );
   } else {
@@ -108,7 +118,7 @@ export async function depositERC20Workflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
     );
   }
 }
