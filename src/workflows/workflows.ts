@@ -202,24 +202,14 @@ export class Workflows {
     );
   }
 
-  public async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
-    const coreContract = Core__factory.connect(
-      this.config.starkContractAddress,
+  public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+    return completeEthWithdrawalWorkflow(
       signer,
+      starkPublicKey,
+      this.encodingApi,
+      this.usersApi,
+      this.config,
     );
-    const isRegisteredStark = await coreContract
-      .getEthKey(starkPublicKey)
-      .then(result => result !== '');
-    if (isRegisteredStark) {
-      return completeEthWithdrawalWorkflow(
-        signer,
-        starkPublicKey,
-        coreContract,
-        this.encodingApi,
-      );
-    } else {
-      throw new Error('user is not registered. Workflow not yet implemented');
-    }
   }
 
   public async completeERC20Withdrawal(
