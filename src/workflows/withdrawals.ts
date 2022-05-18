@@ -8,7 +8,7 @@ import {
 } from '../api';
 import { Core } from '../contracts';
 import * as encUtils from 'enc-utils';
-import {ERC20Withdrawal, ERC721Withdrawal, MintableERC721Withdrawal, TokenType} from '../types';
+import { ERC20Withdrawal, ERC721Withdrawal, MintableERC721Withdrawal, TokenType } from '../types';
 
 const assertIsDefined = <T>(value?: T): T => {
   if (value !== undefined) return value;
@@ -39,10 +39,6 @@ export async function prepareWithdrawalWorkflow(signer: Signer, token: SignableT
   if (signableMessage === undefined || payloadHash === undefined) {
     throw new Error('payload_hash or signable_message missing from SignableWithdrawal response')
   }
-
-  // Sign message with L1 credentials
-  //used in headers
-  //const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
   const starkWallet = await generateStarkWallet(signer);
