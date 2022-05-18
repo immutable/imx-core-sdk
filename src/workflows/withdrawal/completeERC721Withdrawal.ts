@@ -18,6 +18,53 @@ interface MintableERC721Withdrawal {
   };
 }
 
+export async function completeERC721WithdrawalWorkflow(
+  signer: Signer,
+  starkPublicKey: string,
+  token: ERC721Withdrawal,
+  coreContract: Core,
+  encodingApi: EncodingApi,
+  mintsApi: MintsApi,
+) {
+  const tokenAddress = token.data.tokenAddress;
+  const tokenId = token.data.tokenId;
+  return await mintsApi
+    .getMintableTokenDetailsByClientTokenId({
+      tokenAddress,
+      tokenId,
+    })
+    .then(mintableToken =>
+      completeMintableERC721Withdrawal(
+        signer,
+        starkPublicKey,
+        {
+          type: TokenType.ERC721,
+          data: {
+            id: tokenId,
+            tokenAddress: tokenAddress,
+            blueprint: mintableToken.data.blueprint,
+          },
+        },
+        coreContract,
+        encodingApi,
+      ),
+    )
+    .catch(error => {
+      if (error.response.status === 404) {
+        // token is already minted on L1
+        console.log(error.response);
+        return completeERC721Withdrawal(
+          signer,
+          starkPublicKey,
+          token,
+          coreContract,
+          encodingApi,
+        );
+      }
+      throw error; // unable to recover from any other kind of error
+    });
+}
+
 async function completeMintableERC721Withdrawal(
   signer: Signer,
   starkPublicKey: string,
@@ -69,53 +116,6 @@ async function completeERC721Withdrawal(
       token.data.tokenId,
     );
   return signer.sendTransaction(populatedTrasaction);
-}
-
-export async function completeERC721WithdrawalWorkflow(
-  signer: Signer,
-  starkPublicKey: string,
-  token: ERC721Withdrawal,
-  coreContract: Core,
-  encodingApi: EncodingApi,
-  mintsApi: MintsApi,
-) {
-  const tokenAddress = token.data.tokenAddress;
-  const tokenId = token.data.tokenId;
-  return await mintsApi
-    .getMintableTokenDetailsByClientTokenId({
-      tokenAddress,
-      tokenId,
-    })
-    .then(mintableToken =>
-      completeMintableERC721Withdrawal(
-        signer,
-        starkPublicKey,
-        {
-          type: TokenType.ERC721,
-          data: {
-            id: tokenId,
-            tokenAddress: tokenAddress,
-            blueprint: mintableToken.data.blueprint,
-          },
-        },
-        coreContract,
-        encodingApi,
-      ),
-    )
-    .catch(error => {
-      if (error.response.status === 404) {
-        //token is already minted on L1
-        console.log(error.response);
-        return completeERC721Withdrawal(
-          signer,
-          starkPublicKey,
-          token,
-          coreContract,
-          encodingApi,
-        );
-      }
-      throw error; //unable to recover from any other kind of error
-    });
 }
 
 async function getEncodeAssetInfo(
