@@ -2,7 +2,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { parseEther } from 'ethers/lib/utils';
-import { Core, Registration__factory } from '../../contracts';
+import { Core, Core__factory, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -20,7 +20,6 @@ export async function depositEthWorkflow(
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   encodingApi: EncodingApi,
-  contract: Core,
   config: Config,
 ): Promise<TransactionResponse> {
   // Configure request parameters
@@ -57,6 +56,12 @@ export async function depositEthWorkflow(
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 
+  // Get instance of contract
+  const coreContract = Core__factory.connect(
+    config.starkContractAddress,
+    signer,
+  );
+
   // Get instance of registration contract
   const registrationContract = Registration__factory.connect(
     config.registrationContractAddress,
@@ -76,7 +81,7 @@ export async function depositEthWorkflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
       usersApi,
     );
   } else {
@@ -86,7 +91,7 @@ export async function depositEthWorkflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
     );
   }
 }
