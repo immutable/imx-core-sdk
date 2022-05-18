@@ -5,6 +5,7 @@ import {
   Core,
   Core__factory,
   IERC721__factory,
+  Registration,
   Registration__factory,
 } from '../../contracts';
 import {
@@ -101,7 +102,7 @@ export async function depositERC721Workflow(
       assetType,
       starkPublicKey,
       vaultId,
-      coreContract,
+      registrationContract,
       usersApi,
     );
   } else {
@@ -122,7 +123,7 @@ async function executeRegisterAndDepositERC721(
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
-  contract: Core,
+  contract: Registration,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
@@ -133,21 +134,11 @@ async function executeRegisterAndDepositERC721(
     usersApi,
   );
 
-  // There is no wrapper function for registering and depositing NFTs
-  // Do as consecutive transactions
-  const registerTrx = await contract.populateTransaction.registerUser(
+  // Use proxy registration contract for wrapping register and depositi NFTs
+  const trx = await contract.populateTransaction.registerAndDepositNft(
     etherKey,
     starkPublicKey,
     signableResult.operator_signature!,
-  );
-
-  const registerTransactionResponse = await signer.sendTransaction(registerTrx);
-
-  // Wait for the register transaction to be mined, otherwise the below transaction will fail
-  await registerTransactionResponse.wait();
-
-  const trx = await contract.populateTransaction.depositNft(
-    starkPublicKey,
     assetType,
     vaultId,
     tokenId,
