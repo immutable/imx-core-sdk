@@ -1,18 +1,13 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { generateStarkWallet, serializeSignature, sign } from '../utils';
 import {
-  CreateWithdrawalResponse,
   EncodeAssetRequestTokenTypeEnum,
   EncodeAssetResponse,
   EncodingApi,
   MintsApi,
-  SignableToken,
-  WithdrawalsApi,
-} from '../api';
-import { Core } from '../contracts';
+} from '../../api';
+import { Core } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import { ERC20Withdrawal, ERC721Withdrawal, TokenType } from '../types';
-import { Errors } from './errors';
+import { ERC721Withdrawal, TokenType } from '../../types';
 
 interface MintableERC721Withdrawal {
   type: TokenType.ERC721;
@@ -21,77 +16,6 @@ interface MintableERC721Withdrawal {
     blueprint?: string;
     tokenAddress: string;
   };
-}
-
-const assertIsDefined = <T>(value?: T): T => {
-  if (value !== undefined) return value;
-  throw new Error('undefined field exception');
-};
-
-const buildTokenForWithdrawalRequest = (
-  token: SignableToken,
-): SignableToken => {
-  if (token.type === 'MINTABLE_ERC721') {
-    return {
-      ...token,
-      type: 'ERC721',
-    };
-  }
-  return token;
-};
-
-export async function prepareWithdrawalWorkflow(
-  signer: Signer,
-  token: SignableToken,
-  quantity: string,
-  withdrawalsApi: WithdrawalsApi,
-): Promise<CreateWithdrawalResponse> {
-  const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
-    getSignableWithdrawalRequest: {
-      user: await signer.getAddress(),
-      token: buildTokenForWithdrawalRequest(token),
-      amount: quantity.toString(),
-    },
-  });
-
-  const { signable_message: signableMessage, payload_hash: payloadHash } =
-    signableWithdrawalResult.data;
-  if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableWithdrawalInvalidResponse);
-  }
-
-  // Sign hash with L2 credentials
-  const starkWallet = await generateStarkWallet(signer);
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
-
-  const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
-    createWithdrawalRequest: {
-      stark_key: assertIsDefined(signableWithdrawalResult.data.stark_key),
-      amount: quantity.toString(),
-      asset_id: assertIsDefined(signableWithdrawalResult.data.asset_id),
-      vault_id: assertIsDefined(signableWithdrawalResult.data.vault_id),
-      nonce: assertIsDefined(signableWithdrawalResult.data.nonce),
-      stark_signature: starkSignature,
-    },
-  });
-
-  return prepareWithdrawalResponse.data;
-}
-
-export async function completeETHWithdrawalWorkflow(
-  signer: Signer,
-  starkPublicKey: string,
-  coreContract: Core,
-  encodingApi: EncodingApi,
-) {
-  const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
-  const populatedTrasaction = await coreContract.populateTransaction.withdraw(
-    starkPublicKey,
-    assetType.asset_type!,
-  );
-  return signer.sendTransaction(populatedTrasaction);
 }
 
 async function completeMintableERC721Withdrawal(
@@ -192,29 +116,6 @@ export async function completeERC721WithdrawalWorkflow(
       }
       throw error; //unable to recover from any other kind of error
     });
-}
-
-export async function completeERC20WithdrawalWorfklow(
-  signer: Signer,
-  starkPublicKey: string,
-  token: ERC20Withdrawal,
-  coreContract: Core,
-  encodingApi: EncodingApi,
-) {
-  const assetType = await getEncodeAssetInfo(
-    'asset',
-    TokenType.ERC20,
-    encodingApi,
-    {
-      token_id: token.data.tokenId,
-      token_address: token.data.tokenAddress,
-    },
-  );
-  const populatedTrasaction = await coreContract.populateTransaction.withdraw(
-    starkPublicKey,
-    assetType.asset_type!,
-  );
-  return signer.sendTransaction(populatedTrasaction);
 }
 
 async function getEncodeAssetInfo(

@@ -42,9 +42,9 @@ import { Core__factory, Registration__factory } from '../contracts';
 import {
   completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
-  completeETHWithdrawalWorkflow,
+  completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
-} from './withdrawals';
+} from './withdrawal';
 
 export class Workflows {
   private readonly usersApi: UsersApi;
@@ -211,7 +211,7 @@ export class Workflows {
       .getEthKey(starkPublicKey)
       .then(result => result !== '');
     if (isRegisteredStark) {
-      return completeETHWithdrawalWorkflow(
+      return completeEthWithdrawalWorkflow(
         signer,
         starkPublicKey,
         coreContract,
