@@ -2,7 +2,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
-import { Core, IERC20__factory } from '../../contracts';
+import { Core, IERC20__factory, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -79,8 +79,17 @@ export async function depositERC20Workflow(
   const vaultId = signableDepositResult.data.vault_id!;
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
 
+  // Get instance of registration contract
+  const registrationContract = Registration__factory.connect(
+    config.registrationContractAddress,
+    signer,
+  );
+
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC20(

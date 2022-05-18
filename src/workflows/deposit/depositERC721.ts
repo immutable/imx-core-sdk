@@ -1,7 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
-import { Core, IERC721__factory } from '../../contracts';
+import { Core, IERC721__factory, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -72,8 +72,17 @@ export async function depositERC721Workflow(
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 
+  // Get instance of registration contract
+  const registrationContract = Registration__factory.connect(
+    config.registrationContractAddress,
+    signer,
+  );
+
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC721(

@@ -36,8 +36,9 @@ import {
   ERC721Withdrawal,
   ERC20Withdrawal,
   TokenWithdrawal,
+  StarkWallet,
 } from '../types';
-import { Core__factory } from '../contracts';
+import { Core__factory, Registration__factory } from '../contracts';
 import {
   completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
@@ -71,14 +72,17 @@ export class Workflows {
     return registerOffchainWorkflow(signer, this.usersApi);
   }
 
-  public isRegisteredOnchain(signer: Signer) {
-    // Get instance of contract
-    const coreContract = Core__factory.connect(
-      this.config.starkContractAddress,
+  public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
+    // Get instance of registration contract
+    const registrationContract = Registration__factory.connect(
+      this.config.registrationContractAddress,
       signer,
     );
 
-    return isRegisteredOnChainWorkflow(signer, coreContract);
+    return isRegisteredOnChainWorkflow(
+      starkWallet.starkPublicKey,
+      registrationContract,
+    );
   }
 
   public mint(signer: Signer, request: UnsignedMintRequest) {
@@ -130,6 +134,7 @@ export class Workflows {
           this.usersApi,
           this.encodingApi,
           coreContract,
+          this.config,
         );
       case TokenType.ERC20:
         return depositERC20Workflow(
@@ -169,6 +174,7 @@ export class Workflows {
       this.usersApi,
       this.encodingApi,
       coreContract,
+      this.config,
     );
   }
 

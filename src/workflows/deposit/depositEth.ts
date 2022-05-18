@@ -2,12 +2,12 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { parseEther } from 'ethers/lib/utils';
-import { Core } from '../../contracts';
+import { Core, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ETHDeposit } from '../../types';
+import { Config, ETHDeposit } from '../../types';
 import { BigNumber } from 'ethers';
 
 interface ETHTokenData {
@@ -21,6 +21,7 @@ export async function depositEthWorkflow(
   usersApi: UsersApi,
   encodingApi: EncodingApi,
   contract: Core,
+  config: Config,
 ): Promise<TransactionResponse> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
@@ -56,8 +57,17 @@ export async function depositEthWorkflow(
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 
+  // Get instance of registration contract
+  const registrationContract = Registration__factory.connect(
+    config.registrationContractAddress,
+    signer,
+  );
+
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
 
   if (!isRegistered) {
     return executeRegisterAndDepositEth(

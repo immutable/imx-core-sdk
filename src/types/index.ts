@@ -17,6 +17,7 @@ export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
 export interface Config {
   api: Configuration;
   starkContractAddress: string;
+  registrationContractAddress: string;
 }
 
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;
