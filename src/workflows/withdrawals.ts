@@ -2,13 +2,22 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { generateStarkWallet, serializeSignature, sign } from '../utils';
 import {
   CreateWithdrawalResponse, EncodeAssetRequestTokenTypeEnum,
-  EncodeAssetResponse, EncodingApi,
+  EncodeAssetResponse, EncodingApi, MintsApi,
   SignableToken,
   WithdrawalsApi,
 } from '../api';
 import { Core } from '../contracts';
 import * as encUtils from 'enc-utils';
-import { ERC20Withdrawal, ERC721Withdrawal, MintableERC721Withdrawal, TokenType } from '../types';
+import { ERC20Withdrawal, ERC721Withdrawal, TokenType } from '../types';
+
+interface MintableERC721Withdrawal {
+  type: TokenType.ERC721;
+  data: {
+    id: string,
+    blueprint?: string,
+    tokenAddress: string,
+  };
+}
 
 const assertIsDefined = <T>(value?: T): T => {
   if (value !== undefined) return value;
@@ -64,7 +73,7 @@ export async function completeETHWithdrawalWorkflow(signer: Signer, starkPublicK
   return signer.sendTransaction(populatedTrasaction)
 }
 
-export async function completeMintableERC721WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: MintableERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
+async function completeMintableERC721Withdrawal(signer: Signer, starkPublicKey: string, token: MintableERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
   const assetType = await getEncodeAssetInfo('mintable-asset', TokenType.ERC721, encodingApi, {
     id: token.data.id,
     token_address: token.data.tokenAddress,
@@ -76,13 +85,38 @@ export async function completeMintableERC721WithdrawalWorfklow(signer: Signer, s
   return signer.sendTransaction(populatedTrasaction)
 }
 
-export async function completeERC721WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: ERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
+async function completeERC721Withdrawal(signer: Signer, starkPublicKey: string, token: ERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi) {
   const assetType = await getEncodeAssetInfo('asset', TokenType.ERC721, encodingApi, {
     token_id: token.data.tokenId,
     token_address: token.data.tokenAddress,
   })
   const populatedTrasaction = await coreContract.populateTransaction.withdrawNft(starkPublicKey, assetType.asset_type!, token.data.tokenId)
   return signer.sendTransaction(populatedTrasaction)
+}
+
+export async function completeERC721WithdrawalWorkflow(signer: Signer, starkPublicKey: string, token: ERC721Withdrawal, coreContract: Core, encodingApi: EncodingApi, mintsApi: MintsApi) {
+  const tokenAddress = token.data.tokenAddress;
+  const tokenId = token.data.tokenId;
+  return await mintsApi.getMintableTokenDetailsByClientTokenId({
+    tokenAddress,
+    tokenId,
+  }).then(mintableToken =>
+    completeMintableERC721Withdrawal(signer, starkPublicKey, {
+      type: TokenType.ERC721,
+      data: {
+        id: tokenId,
+        tokenAddress: tokenAddress,
+        blueprint: mintableToken.data.blueprint,
+      },
+    }, coreContract, encodingApi),
+  )
+    .catch(error => {
+      if(error.response.status === 404) { //token is already minted on L1
+        console.log(error.response)
+        return completeERC721Withdrawal(signer, starkPublicKey, token, coreContract, encodingApi)
+      }
+      throw error; //unable to recover from any other kind of error
+    })
 }
 
 export async function completeERC20WithdrawalWorfklow(signer: Signer, starkPublicKey: string, token: ERC20Withdrawal, coreContract: Core, encodingApi: EncodingApi) {

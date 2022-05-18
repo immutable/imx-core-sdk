@@ -15,12 +15,3 @@ export interface ERC20Withdrawal {
     tokenAddress: string;
   };
 }
-
-export interface MintableERC721Withdrawal {
-  type: TokenType.ERC721;
-  data: {
-    id: string,
-    blueprint?: string,
-    tokenAddress: string,
-  };
-}
