@@ -30,14 +30,12 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  Config, MintableERC721Withdrawal, ERC721Withdrawal, ERC20Withdrawal,
+  Config, ERC721Withdrawal, ERC20Withdrawal, TokenWithdrawal,
 } from '../types';
 import { Core__factory } from '../contracts';
 import {
-  completeERC20WithdrawalWorfklow,
-  completeERC721WithdrawalWorfklow,
+  completeERC20WithdrawalWorfklow, completeERC721WithdrawalWorkflow,
   completeETHWithdrawalWorkflow,
-  completeMintableERC721WithdrawalWorfklow,
   prepareWithdrawalWorkflow,
 } from './withdrawals';
 
@@ -225,19 +223,6 @@ export class Workflows {
     }
   }
 
-  public async completeMintableERC721Withdrawal(signer: Signer, starkPublicKey: string, token: MintableERC721Withdrawal) {
-    const coreContract = Core__factory.connect(
-      this.config.starkContractAddress,
-      signer,
-    );
-    const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
-    if(isRegisteredStark) {
-      return completeMintableERC721WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
-    } else {
-      throw new Error('user is not registered. Workflow not yet implemented')
-    }
-  }
-
   public async completeERC721Withdrawal(signer: Signer, starkPublicKey: string, token: ERC721Withdrawal) {
     const coreContract = Core__factory.connect(
       this.config.starkContractAddress,
@@ -245,9 +230,18 @@ export class Workflows {
     );
     const isRegisteredStark = await coreContract.getEthKey(starkPublicKey).then((result) => result !== '');
     if(isRegisteredStark) {
-      return completeERC721WithdrawalWorfklow(signer, starkPublicKey, token, coreContract, this.encodingApi);
+      return completeERC721WithdrawalWorkflow(signer, starkPublicKey, token, coreContract, this.encodingApi, this.mintsApi);
     } else {
       throw new Error('user is not registered. Workflow not yet implemented')
     }
   }
+
+  public async completeWithdrawal(signer: Signer, starkPublicKey: string, token: TokenWithdrawal) {
+    switch (token.type) {
+    case TokenType.ETH: return this.completeETHWithdrawal(signer, starkPublicKey);
+    case TokenType.ERC721: return this.completeERC721Withdrawal(signer, starkPublicKey, token);
+    case TokenType.ERC20: return this.completeERC20Withdrawal(signer, starkPublicKey, token);
+    }
+  }
+
 }

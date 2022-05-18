@@ -1,5 +1,9 @@
 import { TokenType } from './token';
 
+export interface ETHWithdrawal {
+  type: TokenType.ETH;
+}
+
 export interface ERC721Withdrawal {
   type: TokenType.ERC721;
   data: {
@@ -16,11 +20,5 @@ export interface ERC20Withdrawal {
   };
 }
 
-export interface MintableERC721Withdrawal {
-  type: TokenType.ERC721;
-  data: {
-    id: string,
-    blueprint?: string,
-    tokenAddress: string,
-  };
-}
+export type TokenWithdrawal = ETHWithdrawal | ERC20Withdrawal | ERC721Withdrawal;
+
