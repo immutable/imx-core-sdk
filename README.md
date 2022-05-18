@@ -1,8 +1,8 @@
-<div align="center" style="padding: 50px 0; background-color: #111111">
+<div align="center">
   <br>
   <br>
   <a  href="https://docs.x.immutable.com/docs">
-    <img src="images/imx-logo-main-p-500.png">
+    <img src="images/imx-logo.png">
   </a>
   <br>
   <br>
