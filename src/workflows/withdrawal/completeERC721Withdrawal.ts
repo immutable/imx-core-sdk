@@ -1,13 +1,9 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import {
-  EncodeAssetRequestTokenTypeEnum,
-  EncodeAssetResponse,
-  EncodingApi,
-  MintsApi,
-} from '../../api';
+import { EncodingApi, MintsApi } from '../../api';
 import { Core } from '../../contracts';
 import * as encUtils from 'enc-utils';
 import { ERC721Withdrawal, TokenType } from '../../types';
+import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 
 interface MintableERC721Withdrawal {
   type: TokenType.ERC721;
@@ -116,24 +112,6 @@ async function completeERC721Withdrawal(
       token.data.tokenId,
     );
   return signer.sendTransaction(populatedTrasaction);
-}
-
-async function getEncodeAssetInfo(
-  assetType: string,
-  tokenType: EncodeAssetRequestTokenTypeEnum,
-  encodingApi: EncodingApi,
-  tokenData?: any,
-): Promise<EncodeAssetResponse> {
-  const result = await encodingApi.encodeAsset({
-    assetType,
-    encodeAssetRequest: {
-      token: {
-        type: tokenType,
-        ...(tokenData && { data: tokenData }),
-      },
-    },
-  });
-  return result.data;
 }
 
 function getMintingBlob(token: MintableERC721Withdrawal): string {

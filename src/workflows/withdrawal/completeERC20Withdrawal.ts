@@ -1,11 +1,6 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
-import {
-  EncodeAssetRequestTokenTypeEnum,
-  EncodeAssetResponse,
-  EncodingApi,
-  UsersApi,
-} from '../../api';
+import { EncodingApi, UsersApi } from '../../api';
 import {
   Core,
   Core__factory,
@@ -17,6 +12,7 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
+import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 
 export async function completeERC20WithdrawalWorfklow(
   signer: Signer,
@@ -109,22 +105,4 @@ async function executeWithdrawERC20(
     assetType,
   );
   return signer.sendTransaction(populatedTrasaction);
-}
-
-async function getEncodeAssetInfo(
-  assetType: string,
-  tokenType: EncodeAssetRequestTokenTypeEnum,
-  encodingApi: EncodingApi,
-  tokenData?: any,
-): Promise<EncodeAssetResponse> {
-  const result = await encodingApi.encodeAsset({
-    assetType,
-    encodeAssetRequest: {
-      token: {
-        type: tokenType,
-        ...(tokenData && { data: tokenData }),
-      },
-    },
-  });
-  return result.data;
 }
