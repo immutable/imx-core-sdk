@@ -33,6 +33,8 @@ export async function completeERC721WithdrawalWorkflow(
   usersApi: UsersApi,
   config: Config,
 ) {
+  // TODO remove log once UAT passes
+  console.log('completeERC721WithdrawalWorkflow');
   const tokenAddress = token.data.tokenAddress;
   const tokenId = token.data.tokenId;
   return await mintsApi
@@ -82,6 +84,8 @@ async function completeMintableERC721Withdrawal(
   usersApi: UsersApi,
   config: Config,
 ) {
+  // TODO remove log once UAT passes
+  console.log('completeMintableERC721Withdrawal');
   const assetType = await getEncodeAssetInfo(
     'mintable-asset',
     TokenType.ERC721,
@@ -111,6 +115,8 @@ async function completeMintableERC721Withdrawal(
     starkPublicKey,
     registrationContract,
   );
+  // TODO remove log once UAT passes
+  console.log('isRegistered', isRegistered);
 
   if (!isRegistered) {
     return executeRegisterAndWithdrawMintableERC721(
@@ -140,6 +146,8 @@ async function executeRegisterAndWithdrawMintableERC721(
   contract: Registration,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
+  // TODO remove log once UAT passes
+  console.log('executeRegisterAndWithdrawMintableERC721');
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -167,6 +175,8 @@ async function executeWithdrawMintableERC721(
   mintingBlob: string,
   contract: Core,
 ): Promise<TransactionResponse> {
+  // TODO remove log once UAT passes
+  console.log('executeWithdrawMintableERC721');
   const populatedTrasaction =
     await contract.populateTransaction.withdrawAndMint(
       starkPublicKey,
@@ -184,6 +194,8 @@ async function completeERC721Withdrawal(
   usersApi: UsersApi,
   config: Config,
 ) {
+  // TODO remove log once UAT passes
+  console.log('completeERC721Withdrawal');
   const assetType = await getEncodeAssetInfo(
     'asset',
     TokenType.ERC721,
@@ -211,6 +223,8 @@ async function completeERC721Withdrawal(
     starkPublicKey,
     registrationContract,
   );
+  // TODO remove log once UAT passes
+  console.log('isRegistered', isRegistered);
 
   if (!isRegistered) {
     return executeRegisterAndWithdrawERC721(
@@ -240,6 +254,8 @@ async function executeRegisterAndWithdrawERC721(
   contract: Registration,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
+  // TODO remove log once UAT passes
+  console.log('executeRegisterAndWithdrawERC721');
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -267,6 +283,8 @@ async function executeWithdrawERC721(
   tokenId: string,
   contract: Core,
 ): Promise<TransactionResponse> {
+  // TODO remove log once UAT passes
+  console.log('executeWithdrawERC721');
   const populatedTrasaction = await contract.populateTransaction.withdrawNft(
     starkPublicKey,
     assetType,
