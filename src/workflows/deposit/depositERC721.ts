@@ -1,7 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
-import { Core, ERC721__factory } from '../../contracts';
+import { Core, IERC721__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -33,7 +33,7 @@ export async function depositERC721Workflow(
   const amount = '1';
 
   // Approve whether an amount of token from an account can be spent by a third-party account
-  const tokenContract = ERC721__factory.connect(deposit.tokenAddress, signer);
+  const tokenContract = IERC721__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
     config.starkContractAddress,
     deposit.tokenId,

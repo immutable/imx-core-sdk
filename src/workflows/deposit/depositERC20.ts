@@ -2,7 +2,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
-import { Core, ERC20__factory } from '../../contracts';
+import { Core, IERC20__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -40,7 +40,7 @@ export async function depositERC20Workflow(
   const amount = parseUnits(deposit.amount, BigNumber.from(decimals));
 
   // Approve whether an amount of token from an account can be spent by a third-party account
-  const tokenContract = ERC20__factory.connect(deposit.tokenAddress, signer);
+  const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
     config.starkContractAddress,
     amount,
