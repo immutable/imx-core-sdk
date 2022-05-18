@@ -28,14 +28,9 @@ export async function depositERC20Workflow(
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
 
-  // Get decimals
-  let decimals;
-  try {
-    const token = await tokensApi.getToken({ address: deposit.tokenAddress });
-    decimals = parseInt(token.data.decimals!);
-  } catch (error) {
-    throw new Error(Errors.DepositERC20TokenNotAvailable);
-  }
+  // Get decimals for this specific ERC20
+  const token = await tokensApi.getToken({ address: deposit.tokenAddress });
+  const decimals = parseInt(token.data.decimals!);
 
   const data: ERC20TokenData = {
     decimals,
