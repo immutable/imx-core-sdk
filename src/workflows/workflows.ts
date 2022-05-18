@@ -48,7 +48,7 @@ export class Workflows {
   private readonly depositsApi: DepositsApi;
   private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
-  private readonly withdrawalsAPI: WithdrawalsApi;
+  private readonly withdrawalsApi: WithdrawalsApi;
 
   constructor(protected config: Config) {
     this.config = config;
@@ -60,7 +60,7 @@ export class Workflows {
     this.depositsApi = new DepositsApi(config.api);
     this.tokensApi = new TokensApi(config.api);
     this.encodingApi = new EncodingApi(config.api);
-    this.withdrawalsAPI = new WithdrawalsApi(config.api);
+    this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
   public registerOffchain(signer: Signer) {
@@ -196,7 +196,7 @@ export class Workflows {
   }
 
   public prepareWithdrawal(signer: Signer, token: SignableToken, quantity: string) {
-    return prepareWithdrawalWorkflow(signer, token, quantity, this.withdrawalsAPI);
+    return prepareWithdrawalWorkflow(signer, token, quantity, this.withdrawalsApi);
   }
 
   public async completeETHWithdrawal(signer: Signer, starkPublicKey: string) {
