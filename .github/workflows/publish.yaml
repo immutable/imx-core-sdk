@@ -52,7 +52,7 @@ jobs:
         run: echo "Version - ${{inputs.version}}"
 
       - name: Update package.json version for alpha releases
-        if: ${{ contains(inputs.version, "alpha") }}
+        if: ${{ contains(inputs.version, 'alpha') }}
         run: jq '.version = "${{inputs.version}}"' ./package.json
 
       - name: Publish package
