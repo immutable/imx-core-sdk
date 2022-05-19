@@ -7,7 +7,6 @@ import {
   TransfersApi,
   TransfersApiGetTransferRequest,
   WithdrawalsApi,
-  SignableToken,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
 import {
@@ -32,6 +31,7 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
+  TokenPrepareWithdrawal,
   Config,
   ERC721Withdrawal,
   ERC20Withdrawal,
@@ -191,14 +191,17 @@ export class Workflows {
 
   public prepareWithdrawal(
     signer: Signer,
-    token: SignableToken,
-    quantity: string,
+    starkWallet: StarkWallet,
+    token: TokenPrepareWithdrawal,
+    quantity: string
   ) {
     return prepareWithdrawalWorkflow(
       signer,
+      starkWallet,
       token,
       quantity,
       this.withdrawalsApi,
+      this.mintsApi,
     );
   }
 
