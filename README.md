@@ -126,7 +126,22 @@ The Core SDK provides interfaces for all smart contracts required to interact wi
 (See all smart contract available in the Core SDK)[#smart-contract-autogeneration]
 
 ```ts
+import { Core__factory } from '@imtbl/core-sdk';
 
+// Get instance of core contract
+const contract = Core__factory.connect(config.starkContractAddress, signer);
+
+// Obtain necessary parameters...
+
+// Populate and send transaction
+const populatedTransaction = await contract.populateTransaction.depositNft(
+  starkPublicKey,
+  assetType,
+  vaultId,
+  tokenId,
+);
+
+const transactionResponse = await signer.sendTransaction(populatedTransaction);
 ```
 
 ### Workflows
