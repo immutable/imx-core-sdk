@@ -195,7 +195,8 @@ export class Workflows {
     token: TokenPrepareWithdrawal,
     quantity: string
   ) {
-    return prepareWithdrawalWorkflow(signer,
+    return prepareWithdrawalWorkflow(
+      signer,
       starkWallet,
       token,
       quantity,
