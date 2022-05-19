@@ -123,7 +123,7 @@ Immutable X is built as a ZK-rollup in partnership with StarkWare. We chose the 
 
 The Core SDK provides interfaces for all smart contracts required to interact with the Immutable X platform.
 
-(See all smart contract available in the Core SDK)[#smart-contract-autogeneration]
+[See all smart contract available in the Core SDK](#smart-contract-autogeneration)
 
 ```ts
 import { Core__factory } from '@imtbl/core-sdk';
@@ -203,6 +203,28 @@ The OpenAPI spec is retrieved from https://api.x.immutable.com/openapi and also 
 ### Smart contract autogeneration
 
 The Immutable solidity contracts can be found under `contracts` folder. Contract bindings in typescript is generated using [hardhat](https://hardhat.org/guides/compile-contracts.html).
+
+#### Core
+
+The Core contract is Immutable's main interface with the Ethereum blockchain, based on [StarkEx](https://docs.starkware.co/starkex-v4).
+
+[View contract](contracts/Core.sol)
+
+#### Registration
+
+The Registration contract is a proxy smart contract for the Core contract that combines transactions related to onchain registration, deposits and withdrawals. When a user who is not registered onchain attempts to perform a deposit or a withdrawal, the Registration combines requests to the Core contract in order to register the user first. - users who are not registered onchain are not able to perform a deposit or withdrawal.
+
+Fore example, instead of making subsequent transaction requests to the Core contract, i.e. `registerUser` and `depositNft`, a single transaction request can be made to the proxy Registration contract - `registerAndWithdrawNft`.
+
+[View contract](contracts/Registration.sol)
+
+#### IERC20
+
+Standard interface for interacting with ERC20 contracts, taken from [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#IERC20).
+
+#### IER721
+
+Standard interface for interacting with ERC721 contracts, taken from [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721).
 
 ## Changelog Management
 
