@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - 'DXP-794-package-building'
 
   pull_request:
 

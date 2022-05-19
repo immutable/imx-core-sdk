@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - main
-      - 'DXP-794-package-building'
   pull_request:
-    branches:
-      - main
 
 jobs:
   build:
@@ -18,9 +15,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-
-      - name: Check NPM Package Lock File Version
-        uses: mansona/npm-lockfile-version@v1
 
       - name: Use Node.js 16
         uses: actions/setup-node@v1
