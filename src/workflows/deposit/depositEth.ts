@@ -1,12 +1,13 @@
 import { Signer } from '@ethersproject/abstract-signer';
+import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { parseEther } from 'ethers/lib/utils';
-import { Core } from '../../contracts';
+import { Core, Core__factory, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ETHDeposit } from '../../types';
+import { Config, ETHDeposit } from '../../types';
 import { BigNumber } from 'ethers';
 
 interface ETHTokenData {
@@ -19,8 +20,8 @@ export async function depositEthWorkflow(
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   encodingApi: EncodingApi,
-  contract: Core,
-): Promise<string> {
+  config: Config,
+): Promise<TransactionResponse> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
   const data: ETHTokenData = {
@@ -55,8 +56,23 @@ export async function depositEthWorkflow(
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 
+  // Get instance of core contract
+  const coreContract = Core__factory.connect(
+    config.starkContractAddress,
+    signer,
+  );
+
+  // Get instance of registration contract
+  const registrationContract = Registration__factory.connect(
+    config.registrationContractAddress,
+    signer,
+  );
+
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
 
   if (!isRegistered) {
     return executeRegisterAndDepositEth(
@@ -65,7 +81,7 @@ export async function depositEthWorkflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
       usersApi,
     );
   } else {
@@ -75,7 +91,7 @@ export async function depositEthWorkflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
     );
   }
 }
@@ -88,7 +104,7 @@ async function executeRegisterAndDepositEth(
   vaultId: number,
   contract: Core,
   usersApi: UsersApi,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -105,9 +121,7 @@ async function executeRegisterAndDepositEth(
     vaultId,
   );
 
-  return signer
-    .sendTransaction({ ...trx, value: amount })
-    .then(res => res.hash);
+  return signer.sendTransaction({ ...trx, value: amount });
 }
 
 async function executeDepositEth(
@@ -117,12 +131,10 @@ async function executeDepositEth(
   starkPublicKey: string,
   vaultId: number,
   contract: Core,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const trx = await contract.populateTransaction[
     'deposit(uint256,uint256,uint256)'
   ](starkPublicKey, assetType, vaultId);
 
-  return signer
-    .sendTransaction({ ...trx, value: amount })
-    .then(res => res.hash);
+  return signer.sendTransaction({ ...trx, value: amount });
 }

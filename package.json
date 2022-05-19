@@ -15,8 +15,6 @@
   },
   "scripts": {
     "generate-contract-bindings": "hardhat compile",
-    "test-contract-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/core.contract.ts",
-    "test-api-bindings": "node_modules/ts-node/dist/bin.js --transpile-only src/api-test.ts",
     "build": "NODE_ENV=production rollup --config rollup.config.js",
     "prebuild": "rm -rf dist",
     "test": "NODE_ENV=test jest",

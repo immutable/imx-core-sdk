@@ -1,8 +1,4 @@
-export enum TokenType {
-  ETH = 'ETH',
-  ERC20 = 'ERC20',
-  ERC721 = 'ERC721',
-}
+import { TokenType } from './token';
 
 export interface ETHDeposit {
   type: TokenType.ETH;

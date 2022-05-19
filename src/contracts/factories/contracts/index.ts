@@ -2,5 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Core__factory } from "./Core__factory";
-export { ERC20__factory } from "./ERC20__factory";
-export { ERC721__factory } from "./ERC721__factory";
+export { Registration__factory } from "./Registration__factory";

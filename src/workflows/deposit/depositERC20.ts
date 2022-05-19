@@ -1,7 +1,13 @@
 import { Signer } from '@ethersproject/abstract-signer';
+import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from 'ethers/lib/utils';
-import { Core, ERC20__factory } from '../../contracts';
+import {
+  Core,
+  Core__factory,
+  IERC20__factory,
+  Registration__factory,
+} from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -21,20 +27,14 @@ export async function depositERC20Workflow(
   usersApi: UsersApi,
   tokensApi: TokensApi,
   encodingApi: EncodingApi,
-  contract: Core,
   config: Config,
-): Promise<string> {
+): Promise<TransactionResponse> {
   // Configure request parameters
   const user = (await signer.getAddress()).toLowerCase();
 
-  // Get decimals
-  let decimals;
-  try {
-    const token = await tokensApi.getToken({ address: deposit.tokenAddress });
-    decimals = parseInt(token.data.decimals!);
-  } catch (error) {
-    throw new Error('Code 2001 - Token not available in IMX.');
-  }
+  // Get decimals for this specific ERC20
+  const token = await tokensApi.getToken({ address: deposit.tokenAddress });
+  const decimals = parseInt(token.data.decimals!);
 
   const data: ERC20TokenData = {
     decimals,
@@ -44,7 +44,7 @@ export async function depositERC20Workflow(
   const amount = parseUnits(deposit.amount, BigNumber.from(decimals));
 
   // Approve whether an amount of token from an account can be spent by a third-party account
-  const tokenContract = ERC20__factory.connect(deposit.tokenAddress, signer);
+  const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
     config.starkContractAddress,
     amount,
@@ -83,8 +83,23 @@ export async function depositERC20Workflow(
   const vaultId = signableDepositResult.data.vault_id!;
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
 
+  // Get instance of core contract
+  const coreContract = Core__factory.connect(
+    config.starkContractAddress,
+    signer,
+  );
+
+  // Get instance of registration contract
+  const registrationContract = Registration__factory.connect(
+    config.registrationContractAddress,
+    signer,
+  );
+
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC20(
@@ -93,7 +108,7 @@ export async function depositERC20Workflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
       usersApi,
     );
   } else {
@@ -103,7 +118,7 @@ export async function depositERC20Workflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
     );
   }
 }
@@ -116,7 +131,7 @@ async function executeRegisterAndDepositERC20(
   vaultId: number,
   contract: Core,
   usersApi: UsersApi,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -134,7 +149,7 @@ async function executeRegisterAndDepositERC20(
     quantizedAmount,
   );
 
-  return signer.sendTransaction(trx).then(res => res.hash);
+  return signer.sendTransaction(trx);
 }
 
 async function executeDepositERC20(
@@ -144,7 +159,7 @@ async function executeDepositERC20(
   starkPublicKey: string,
   vaultId: number,
   contract: Core,
-): Promise<string> {
+): Promise<TransactionResponse> {
   const trx = await contract.populateTransaction.depositERC20(
     starkPublicKey,
     assetType,
@@ -152,5 +167,5 @@ async function executeDepositERC20(
     quantizedAmount,
   );
 
-  return signer.sendTransaction(trx).then(res => res.hash);
+  return signer.sendTransaction(trx);
 }

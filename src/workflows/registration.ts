@@ -10,7 +10,8 @@ import {
   RegisterUserResponse,
   UsersApi,
 } from '../api';
-import { Core } from '../contracts';
+import { Registration } from '../contracts';
+import { Errors } from './errors';
 
 export async function registerOffchainWorkflow(
   signer: Signer,
@@ -34,7 +35,7 @@ export async function registerOffchainWorkflow(
     signableResult.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('Invalid response from Signable registration offchain');
+    throw new Error(Errors.SignableRegistrationOffchainInvalidResponse);
   }
 
   // Sign message with L1 credentials
@@ -61,18 +62,10 @@ export async function registerOffchainWorkflow(
 }
 
 export async function isRegisteredOnChainWorkflow(
-  signer: Signer,
-  contract: Core,
+  starkPublicKey: string,
+  contract: Registration,
 ): Promise<boolean> {
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
-  let ethKey;
-  try {
-    ethKey = await contract.getEthKey(starkWallet.starkPublicKey);
-  } catch (error) {
-    return false;
-  }
-  return ethKey !== '';
+  return await contract.isRegistered(starkPublicKey);
 }
 
 export async function getSignableRegistrationOnchain(
