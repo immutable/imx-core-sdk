@@ -87,7 +87,11 @@ On project and collection methods that require authorsation, this signed timesta
 const getAuthenticationHeader = async () => {
   const timestamp = Math.floor(Date.now() / 1000).toString();
   const signature = await signRaw(timestamp, signer);
-  return signature;
+  
+  return { 
+    timestamp,
+    signature
+  };
 };
 ```
 
@@ -112,9 +116,9 @@ The following methods require authorisation:
 
 ### Contract Requests
 
-[TODO] add description about how imx is built on starkex
+Immutable X is built as a ZK-rollup in partnership with StarkWare. We chose the ZK-rollups because it is the only solution capable of scale without compromise. This means whenever you mint or trade an NFT on Immutable X, you pay zero gas, and the validity of all transactions are directly enforced by Ethereum’s security using zero-knowledge proofs -- the first “layer 2” for NFTs on Ethereum.
 
-[TODO] add example of a singular contract call
+[TODO - add example of a singular contract call]
 
 ### Workflows
 
@@ -174,7 +178,7 @@ The OpenAPI spec is retrieved from https://api.x.immutable.com/openapi and also 
 
 ### Smart contract autogeneration
 
-[TODO - Allan?]
+The Immutable solidity contracts can be found under `contracts` folder. Contract bindings in typescript is generated using hardhat.
 
 ## Libraries
 
