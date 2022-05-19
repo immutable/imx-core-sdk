@@ -30,7 +30,7 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  Config, ERC721Withdrawal, ERC20Withdrawal, TokenWithdrawal,
+  Config, ERC721Withdrawal, ERC20Withdrawal, TokenWithdrawal, StarkWallet, TokenPrepareWithdrawal,
 } from '../types';
 import { Core__factory } from '../contracts';
 import {
@@ -193,8 +193,8 @@ export class Workflows {
     );
   }
 
-  public prepareWithdrawal(signer: Signer, token: SignableToken, quantity: string) {
-    return prepareWithdrawalWorkflow(signer, token, quantity, this.withdrawalsApi);
+  public prepareWithdrawal(signer: Signer, starkWallet: StarkWallet, token: TokenPrepareWithdrawal, quantity: string) {
+    return prepareWithdrawalWorkflow(signer, starkWallet, token, quantity, this.withdrawalsApi, this.mintsApi);
   }
 
   public async completeETHWithdrawal(signer: Signer, starkPublicKey: string) {

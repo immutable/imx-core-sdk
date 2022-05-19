@@ -1,14 +1,23 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { generateStarkWallet, serializeSignature, sign } from '../utils';
+import { serializeSignature, sign } from '../utils';
 import {
-  CreateWithdrawalResponse, EncodeAssetRequestTokenTypeEnum,
-  EncodeAssetResponse, EncodingApi, MintsApi,
-  SignableToken,
+  CreateWithdrawalResponse,
+  EncodeAssetRequestTokenTypeEnum,
+  EncodeAssetResponse,
+  EncodingApi,
+  MintsApi,
   WithdrawalsApi,
 } from '../api';
 import { Core } from '../contracts';
 import * as encUtils from 'enc-utils';
-import { ERC20Withdrawal, ERC721Withdrawal, TokenType } from '../types';
+import {
+  ERC20Withdrawal,
+  ERC721Withdrawal,
+  StarkWallet,
+  TokenPrepareWithdrawal,
+  TokenType,
+} from '../types';
+import { keccak256 as solidityKeccak256 } from '@ethersproject/solidity';
 
 interface MintableERC721Withdrawal {
   type: TokenType.ERC721;
@@ -24,22 +33,36 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception')
 }
 
-const buildTokenForWithdrawalRequest = (token: SignableToken): SignableToken => {
-  if (token.type === 'MINTABLE_ERC721') {
-    return {
-      ...token,
-      type: 'ERC721',
-    }
-  }
-  return token;
-}
+export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: StarkWallet, token: TokenPrepareWithdrawal, quantity: string, withdrawalsApi: WithdrawalsApi, mintsApi: MintsApi): Promise<CreateWithdrawalResponse> {
 
-export async function prepareWithdrawalWorkflow(signer: Signer, token: SignableToken, quantity: string, withdrawalsApi: WithdrawalsApi): Promise<CreateWithdrawalResponse> {
+  let signableToken;
+
+  if (token.type === TokenType.ERC721) {
+    const tokenAddress = token.data.tokenAddress;
+    const tokenId = token.data.tokenId;
+    signableToken = await mintsApi.getMintableTokenDetailsByClientTokenId({
+      tokenAddress,
+      tokenId,
+    }).then(mintableToken => ({
+      type: TokenType.ERC721,
+      data: {
+        token_id: getMintingBlobHash(tokenId, mintableToken.data.blueprint),
+        token_address: tokenAddress,
+      },
+    })).catch(error => {
+      if (error.response.status === 404) { //token is already minted on L1
+        return token;
+      }
+      throw error; //unable to recover from any other kind of error
+    })
+  } else {
+    signableToken = token
+  }
 
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await signer.getAddress(),
-      token: buildTokenForWithdrawalRequest(token),
+      token: signableToken,
       amount: quantity.toString(),
     },
   })
@@ -50,7 +73,6 @@ export async function prepareWithdrawalWorkflow(signer: Signer, token: SignableT
   }
 
   // Sign hash with L2 credentials
-  const starkWallet = await generateStarkWallet(signer);
   const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
 
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
@@ -145,4 +167,13 @@ function getMintingBlob(token: MintableERC721Withdrawal): string {
   const id = token.data.id;
   const blueprint = token.data.blueprint || '';
   return encUtils.sanitizeHex(encUtils.utf8ToHex(`{${id}}:{${blueprint}}`));
+}
+
+function getMintingBlobHash(id: string, blueprint = ''): string {
+  return encUtils.sanitizeHex(
+    solidityKeccak256(
+      ['bytes'],
+      [encUtils.utf8ToArray(`{${id}}:{${blueprint}}`)],
+    ),
+  );
 }
