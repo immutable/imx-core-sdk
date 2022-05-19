@@ -1,10 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { serializeSignature, sign } from '../../utils';
-import {
-  CreateWithdrawalResponse, MintsApi,
-  WithdrawalsApi,
-} from '../../api';
-import { StarkWallet, TokenPrepareWithdrawal, TokenType } from '../../types';
+import { CreateWithdrawalResponse, MintsApi, WithdrawalsApi } from '../../api';
+import { ERC721Withdrawal, StarkWallet, TokenPrepareWithdrawal, TokenType } from '../../types';
 import * as encUtils from 'enc-utils';
 import { keccak256 as solidityKeccak256 } from '@ethersproject/solidity';
 import { Errors } from '../errors';
@@ -16,7 +13,7 @@ const assertIsDefined = <T>(value?: T): T => {
 
 export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: StarkWallet, token: TokenPrepareWithdrawal, quantity: string, withdrawalsApi: WithdrawalsApi, mintsApi: MintsApi): Promise<CreateWithdrawalResponse> {
 
-  let signableToken;
+  let signableToken: TokenPrepareWithdrawal;
 
   if (token.type === TokenType.ERC721) {
     const tokenAddress = token.data.tokenAddress;
@@ -27,10 +24,10 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
     }).then(mintableToken => ({
       type: TokenType.ERC721,
       data: {
-        token_id: getMintingBlobHash(tokenId, mintableToken.data.blueprint),
-        token_address: tokenAddress,
+        tokenId: getMintingBlobHash(tokenId, mintableToken.data.blueprint),
+        tokenAddress: tokenAddress,
       },
-    })).catch(error => {
+    }) as ERC721Withdrawal ).catch(error => {
       if (error.response.status === 404) { //token is already minted on L1
         return token;
       }
@@ -40,10 +37,11 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
     signableToken = token
   }
 
+
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await signer.getAddress(),
-      token: signableToken,
+      token: moldTokenIntoSignableRequestFormat(signableToken),
       amount: quantity.toString(),
     },
   })
@@ -78,3 +76,51 @@ function getMintingBlobHash(id: string, blueprint = ''): string {
     ),
   );
 }
+
+function moldTokenIntoSignableRequestFormat(token: TokenPrepareWithdrawal): SignableWithdrawalToken {
+  if (token.type === TokenType.ERC721) {
+    return {
+      type: TokenType.ERC721,
+      data: {
+        token_id: token.data.tokenId,
+        token_address: token.data.tokenAddress,
+      },
+    }
+  }
+  if (token.type === TokenType.ERC20) {
+    return {
+      type: TokenType.ERC20,
+      data: {
+        decimals: token.data.decimals,
+        token_address: token.data.tokenAddress,
+      },
+    }
+  }
+  return token;
+}
+
+
+interface SignableWithdrawalERC20 {
+  type: TokenType.ERC20;
+  data: {
+    token_address: string;
+    decimals: number,
+  };
+}
+
+interface SignableWithdrawalERC721 {
+  type: TokenType.ERC721;
+  data: {
+    token_id: string,
+    token_address: string;
+  };
+}
+
+type SignableWithdrawalEth = {
+  type: TokenType.ETH,
+  data: {
+    decimals: number,
+  }
+}
+
+type SignableWithdrawalToken = SignableWithdrawalEth | SignableWithdrawalERC721 | SignableWithdrawalERC20
