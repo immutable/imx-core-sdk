@@ -47,6 +47,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Check Inputs
+        run: echo "Version: ${{inputs.version}}"
+
       - name: Highjack package-json version
         if: ${{ contains(inputs.version, "alpha") }}
         run: jq '.version = "{{inputs.version}}" ./package.json'
