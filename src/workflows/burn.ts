@@ -6,15 +6,16 @@ import {
   TransfersApiGetTransferRequest,
 } from '../api';
 import {
-  generateStarkWallet,
   serializeSignature,
   sign,
 } from '../utils';
 import { BurnAddress } from './constants';
 import { GetSignableBurnRequest } from './types';
+import { StarkWallet } from '../types';
 
 export async function burnWorkflow(
   signer: Signer,
+  starkWallet: StarkWallet,
   request: GetSignableBurnRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
@@ -27,10 +28,6 @@ export async function burnWorkflow(
       receiver: BurnAddress.BurnEthAddress,
     },
   });
-
-  // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
