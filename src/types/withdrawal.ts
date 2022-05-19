@@ -11,7 +11,7 @@ interface ETHPrepareWithdrawal {
   }
 }
 
-export const ETH_PREPARE_WITHDRAWAL_TOKEN: ETHPrepareWithdrawal = {
+export const ETH_PREPARE_WITHDRAWAL_DATA: ETHPrepareWithdrawal = {
   type: TokenType.ETH,
   data: {
     decimals: 18,

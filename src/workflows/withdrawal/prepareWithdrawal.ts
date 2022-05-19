@@ -7,6 +7,7 @@ import {
 import { StarkWallet, TokenPrepareWithdrawal, TokenType } from '../../types';
 import * as encUtils from 'enc-utils';
 import { keccak256 as solidityKeccak256 } from '@ethersproject/solidity';
+import { Errors } from '../errors';
 
 const assertIsDefined = <T>(value?: T): T => {
   if (value !== undefined) return value;
@@ -49,7 +50,7 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
 
   const { signable_message: signableMessage, payload_hash: payloadHash } = signableWithdrawalResult.data
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('payload_hash or signable_message missing from SignableWithdrawal response')
+    throw new Error(Errors.SignableWithdrawalInvalidResponse);
   }
 
   // Sign hash with L2 credentials
