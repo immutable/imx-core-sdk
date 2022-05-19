@@ -48,7 +48,7 @@ jobs:
         run: yarn build
 
       - name: Highjack package-json version
-        if: ${{ inputs.version != "" }}
+        if: ${{ contains(inputs.version, "alpha") }}
         run: jq '.version = "{{inputs.version}}" ./package.json'
 
       - name: Publish package
