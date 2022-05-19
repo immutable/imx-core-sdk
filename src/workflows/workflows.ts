@@ -95,36 +95,36 @@ export class Workflows {
     );
 
     switch (deposit.type) {
-      case TokenType.ETH:
-        return depositEthWorkflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.encodingApi,
-          coreContract,
-        );
-      case TokenType.ERC20:
-        return depositERC20Workflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.tokensApi,
-          this.encodingApi,
-          coreContract,
-          this.config,
-        );
-      case TokenType.ERC721:
-        return depositERC721Workflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.encodingApi,
-          coreContract,
-          this.config,
-        );
+    case TokenType.ETH:
+      return depositEthWorkflow(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.usersApi,
+        this.encodingApi,
+        coreContract,
+      );
+    case TokenType.ERC20:
+      return depositERC20Workflow(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.usersApi,
+        this.tokensApi,
+        this.encodingApi,
+        coreContract,
+        this.config,
+      );
+    case TokenType.ERC721:
+      return depositERC721Workflow(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.usersApi,
+        this.encodingApi,
+        coreContract,
+        this.config,
+      );
     }
   }
 
