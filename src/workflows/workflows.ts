@@ -189,8 +189,19 @@ export class Workflows {
     );
   }
 
-  public prepareWithdrawal(signer: Signer, starkWallet: StarkWallet, token: TokenPrepareWithdrawal, quantity: string) {
-    return prepareWithdrawalWorkflow(signer, starkWallet, token, quantity, this.withdrawalsApi, this.mintsApi);
+  public prepareWithdrawal(
+    signer: Signer,
+    starkWallet: StarkWallet,
+    token: TokenPrepareWithdrawal,
+    quantity: string
+  ) {
+    return prepareWithdrawalWorkflow(signer,
+      starkWallet,
+      token,
+      quantity,
+      this.withdrawalsApi,
+      this.mintsApi,
+    );
   }
 
   public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
