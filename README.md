@@ -121,7 +121,13 @@ The following methods require authorisation:
 
 Immutable X is built as a ZK-rollup in partnership with StarkWare. We chose the ZK-rollups because it is the only solution capable of scale without compromise. This means whenever you mint or trade an NFT on Immutable X, you pay zero gas, and the validity of all transactions are directly enforced by Ethereum’s security using zero-knowledge proofs -- the first “layer 2” for NFTs on Ethereum.
 
-[TODO - add example of a singular contract call]
+The Core SDK provides interfaces for all smart contracts required to interact with the Immutable X platform.
+
+(See all smart contract available in the Core SDK)[#smart-contract-autogeneration]
+
+```ts
+
+```
 
 ### Workflows
 
@@ -182,11 +188,6 @@ The OpenAPI spec is retrieved from https://api.x.immutable.com/openapi and also 
 ### Smart contract autogeneration
 
 The Immutable solidity contracts can be found under `contracts` folder. Contract bindings in typescript is generated using [hardhat](https://hardhat.org/guides/compile-contracts.html).
-
-## Libraries
-
-- https://hardhat.org/guides/compile-contracts.html
-- https://www.npmjs.com/package/@typechain/hardhat
 
 ## Changelog Management
 
