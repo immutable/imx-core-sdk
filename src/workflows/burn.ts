@@ -14,8 +14,8 @@ import { GetSignableBurnRequest } from './types';
 import { StarkWallet } from '../types';
 
 export async function burnWorkflow(
-  starkWallet: StarkWallet,
   signer: Signer,
+  starkWallet: StarkWallet,
   request: GetSignableBurnRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {

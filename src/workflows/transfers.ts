@@ -11,8 +11,8 @@ import { serializeSignature, sign } from '../utils';
 import { StarkWallet } from '../types';
 
 export async function transfersWorkflow(
-  starkWallet: StarkWallet,
   signer: Signer,
+  starkWallet: StarkWallet,
   request: GetSignableTransferRequestV1,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
@@ -73,8 +73,8 @@ export async function transfersWorkflow(
 }
 
 export async function batchTransfersWorkflow(
-  starkWallet: StarkWallet,
   signer: Signer,
+  starkWallet: StarkWallet,
   request: GetSignableTransferRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponse> {

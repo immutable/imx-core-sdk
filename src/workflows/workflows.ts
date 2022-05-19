@@ -30,7 +30,7 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  Config, ERC721Withdrawal, ERC20Withdrawal, TokenWithdrawal,
+  Config, ERC721Withdrawal, ERC20Withdrawal, TokenWithdrawal, StarkWallet,
 } from '../types';
 import { Core__factory } from '../contracts';
 import {
@@ -79,19 +79,20 @@ export class Workflows {
     return mintingWorkflow(signer, request, this.mintsApi);
   }
 
-  public transfer(signer: Signer, request: UnsignedTransferRequest) {
-    return transfersWorkflow(signer, request, this.transfersApi);
+  public transfer(signer: Signer, starkWallet: StarkWallet, request: UnsignedTransferRequest) {
+    return transfersWorkflow(signer, starkWallet, request, this.transfersApi);
   }
 
   public batchNftTransfer(
     signer: Signer,
+    starkWallet: StarkWallet,
     request: UnsignedBatchNftTransferRequest,
   ) {
-    return batchTransfersWorkflow(signer, request, this.transfersApi);
+    return batchTransfersWorkflow(signer, starkWallet, request, this.transfersApi);
   }
 
-  public burn(signer: Signer, request: UnsignedBurnRequest) {
-    return burnWorkflow(signer, request, this.transfersApi);
+  public burn(signer: Signer, starkWallet: StarkWallet, request: UnsignedBurnRequest) {
+    return burnWorkflow(signer, starkWallet, request, this.transfersApi);
   }
 
   public deposit(signer: Signer, deposit: TokenDeposit) {
