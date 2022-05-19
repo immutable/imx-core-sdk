@@ -45,11 +45,11 @@ export async function depositERC20Workflow(
 
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
-  const approveTrx = await tokenContract.populateTransaction.approve(
+  const approveTransaction = await tokenContract.populateTransaction.approve(
     config.starkContractAddress,
     amount,
   );
-  await signer.sendTransaction(approveTrx);
+  await signer.sendTransaction(approveTransaction);
 
   // Get signable deposit details
   const getSignableDepositRequest = {
@@ -140,16 +140,17 @@ async function executeRegisterAndDepositERC20(
     usersApi,
   );
 
-  const trx = await contract.populateTransaction.registerAndDepositERC20(
-    etherKey,
-    starkPublicKey,
-    signableResult.operator_signature!,
-    assetType,
-    vaultId,
-    quantizedAmount,
-  );
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositERC20(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature!,
+      assetType,
+      vaultId,
+      quantizedAmount,
+    );
 
-  return signer.sendTransaction(trx);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function executeDepositERC20(
@@ -160,12 +161,12 @@ async function executeDepositERC20(
   vaultId: number,
   contract: Core,
 ): Promise<TransactionResponse> {
-  const trx = await contract.populateTransaction.depositERC20(
+  const populatedTransaction = await contract.populateTransaction.depositERC20(
     starkPublicKey,
     assetType,
     vaultId,
     quantizedAmount,
   );
 
-  return signer.sendTransaction(trx);
+  return signer.sendTransaction(populatedTransaction);
 }

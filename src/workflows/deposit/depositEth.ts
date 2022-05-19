@@ -113,15 +113,16 @@ async function executeRegisterAndDepositEth(
     usersApi,
   );
 
-  const trx = await contract.populateTransaction.registerAndDepositEth(
-    etherKey,
-    starkPublicKey,
-    signableResult.operator_signature!,
-    assetType,
-    vaultId,
-  );
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositEth(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature!,
+      assetType,
+      vaultId,
+    );
 
-  return signer.sendTransaction({ ...trx, value: amount });
+  return signer.sendTransaction({ ...populatedTransaction, value: amount });
 }
 
 async function executeDepositEth(
@@ -132,9 +133,9 @@ async function executeDepositEth(
   vaultId: number,
   contract: Core,
 ): Promise<TransactionResponse> {
-  const trx = await contract.populateTransaction[
+  const populatedTransaction = await contract.populateTransaction[
     'deposit(uint256,uint256,uint256)'
   ](starkPublicKey, assetType, vaultId);
 
-  return signer.sendTransaction({ ...trx, value: amount });
+  return signer.sendTransaction({ ...populatedTransaction, value: amount });
 }
