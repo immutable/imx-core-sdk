@@ -53,7 +53,9 @@ jobs:
 
       - name: Update package.json version for alpha releases
         if: ${{ contains(github.event.inputs.tag, 'alpha') }}
-        run: jq '.version = "${{github.event.inputs.tag}}"' ./package.json
+        run: |
+          tmp=$(mktemp)
+          jq '.version = "${{github.event.inputs.tag}}"' ./package.json > "$tmp" && mv "$tmp" ./package.json
 
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1
