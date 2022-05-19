@@ -1,4 +1,5 @@
 name: Publish to NPM
+
 on:
   push:
     tags:
@@ -47,11 +48,15 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Highjack package-json version
-        if: ${{ inputs.version }}
-        run: jq '.version = "{{inputs.version}}" ./package.json'
+      - name: Check Inputs
+        run: echo "Version - ${{inputs.version}}"
+
+      - name: Update package.json version for alpha releases
+        if: ${{ contains(inputs.version, "alpha") }}
+        run: jq '.version = "${{inputs.version}}"' ./package.json
 
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.PLATFORM_SA_NPM_TOKEN }}
+          access: public
