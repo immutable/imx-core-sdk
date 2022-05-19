@@ -5,16 +5,15 @@ import {
   CreateTransferResponseV1,
   TransfersApiGetTransferRequest,
 } from '../api';
-import {
-  generateStarkWallet,
-  serializeSignature,
-  sign,
-} from '../utils';
+import { serializeSignature, sign } from '../utils';
 import { BurnAddress } from './constants';
 import { GetSignableBurnRequest } from './types';
+import { Errors } from './errors';
+import { StarkWallet } from '../types';
 
 export async function burnWorkflow(
   signer: Signer,
+  starkWallet: StarkWallet,
   request: GetSignableBurnRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
@@ -28,15 +27,11 @@ export async function burnWorkflow(
     },
   });
 
-  // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
-
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('Invalid response from Signable registration offchain');
+    throw new Error(Errors.SignableTransferV1InvalidResponse);
   }
 
   // Sign message with L1 credentials

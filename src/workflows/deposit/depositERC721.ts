@@ -1,7 +1,13 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
-import { Core, ERC721__factory } from '../../contracts';
+import {
+  Core,
+  Core__factory,
+  IERC721__factory,
+  Registration,
+  Registration__factory,
+} from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -19,7 +25,6 @@ export async function depositERC721Workflow(
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   encodingApi: EncodingApi,
-  contract: Core,
   config: Config,
 ): Promise<TransactionResponse> {
   // Configure request parameters
@@ -33,7 +38,7 @@ export async function depositERC721Workflow(
   const amount = '1';
 
   // Approve whether an amount of token from an account can be spent by a third-party account
-  const tokenContract = ERC721__factory.connect(deposit.tokenAddress, signer);
+  const tokenContract = IERC721__factory.connect(deposit.tokenAddress, signer);
   const approveTrx = await tokenContract.populateTransaction.approve(
     config.starkContractAddress,
     deposit.tokenId,
@@ -72,8 +77,23 @@ export async function depositERC721Workflow(
   const starkPublicKey = signableDepositResult.data.stark_key!;
   const vaultId = signableDepositResult.data.vault_id!;
 
+  // Get instance of core contract
+  const coreContract = Core__factory.connect(
+    config.starkContractAddress,
+    signer,
+  );
+
+  // Get instance of registration contract
+  const registrationContract = Registration__factory.connect(
+    config.registrationContractAddress,
+    signer,
+  );
+
   // Check if user is registered onchain
-  const isRegistered = await isRegisteredOnChainWorkflow(signer, contract);
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC721(
@@ -82,7 +102,7 @@ export async function depositERC721Workflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      registrationContract,
       usersApi,
     );
   } else {
@@ -92,7 +112,7 @@ export async function depositERC721Workflow(
       assetType,
       starkPublicKey,
       vaultId,
-      contract,
+      coreContract,
     );
   }
 }
@@ -103,7 +123,7 @@ async function executeRegisterAndDepositERC721(
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
-  contract: Core,
+  contract: Registration,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
@@ -114,21 +134,11 @@ async function executeRegisterAndDepositERC721(
     usersApi,
   );
 
-  // There is no wrapper function for registering and depositing NFTs
-  // Do as consecutive transactions
-  const registerTrx = await contract.populateTransaction.registerUser(
+  // Use proxy registration contract for wrapping register and depositi NFTs
+  const trx = await contract.populateTransaction.registerAndDepositNft(
     etherKey,
     starkPublicKey,
     signableResult.operator_signature!,
-  );
-
-  const registerTransactionResponse = await signer.sendTransaction(registerTrx);
-
-  // Wait for the register transaction to be mined, otherwise the below transaction will fail
-  await registerTransactionResponse.wait();
-
-  const trx = await contract.populateTransaction.depositNft(
-    starkPublicKey,
     assetType,
     vaultId,
     tokenId,

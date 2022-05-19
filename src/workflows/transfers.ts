@@ -7,10 +7,13 @@ import {
   GetSignableTransferRequest,
   CreateTransferResponse,
 } from '../api';
-import { generateStarkWallet, serializeSignature, sign } from '../utils';
+import { serializeSignature, sign } from '../utils';
+import { StarkWallet } from '../types';
+import { Errors } from './errors';
 
 export async function transfersWorkflow(
   signer: Signer,
+  starkWallet: StarkWallet,
   request: GetSignableTransferRequestV1,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
@@ -24,15 +27,11 @@ export async function transfersWorkflow(
     },
   });
 
-  // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
-
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error('Invalid response from Signable registration offchain');
+    throw new Error(Errors.SignableTransferV1InvalidResponse);
   }
 
   // Sign message with L1 credentials
@@ -76,6 +75,7 @@ export async function transfersWorkflow(
 
 export async function batchTransfersWorkflow(
   signer: Signer,
+  starkWallet: StarkWallet,
   request: GetSignableTransferRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponse> {
@@ -86,10 +86,6 @@ export async function batchTransfersWorkflow(
       signable_requests: request.signable_requests,
     },
   });
-
-  // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
 
   const signableMessage = signableResult.data.signable_message;
 
