@@ -11,3 +11,5 @@ cache
 artifacts
 
 dist
+
+.vscode/
