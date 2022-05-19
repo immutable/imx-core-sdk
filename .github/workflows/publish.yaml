@@ -2,7 +2,13 @@ name: Publish to NPM
 on:
   push:
     tags:
-      - 'v*'
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish'
+        required: true
+        type: string
 
 jobs:
   packages:
@@ -40,6 +46,10 @@ jobs:
 
       - name: Build
         run: yarn build
+
+      - name: Highjack package-json version
+        if: ${{ inputs.version }}
+        run: jq '.version = "{{inputs.version}}" ./package.json'
 
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1
