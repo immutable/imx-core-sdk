@@ -19,7 +19,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 1
+          fetch-depth: 0
+
+      - name: Check Input
+        run: echo "Version - ${{github.event.inputs.tag}}"
 
       - name: Use Node.js 16
         uses: actions/setup-node@v1
@@ -48,12 +51,9 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Check Inputs
-        run: echo "Version - ${{inputs.tag}}"
-
       - name: Update package.json version for alpha releases
-        if: ${{ contains(inputs.tag, 'alpha') }}
-        run: jq '.version = "${{inputs.tag}}"' ./package.json
+        if: ${{ contains(github.event.inputs.tag, 'alpha') }}
+        run: jq '.version = "${{github.event.inputs.tag}}"' ./package.json
 
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1
