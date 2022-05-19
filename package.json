@@ -1,6 +1,6 @@
 {
   "name": "@imtbl/core-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Immutable Core SDK",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
@@ -10,6 +10,9 @@
   ],
   "author": "Immutable",
   "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "generate-contract-bindings": "hardhat compile",
     "build": "NODE_ENV=production rollup --config rollup.config.js",
