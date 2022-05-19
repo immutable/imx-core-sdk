@@ -55,3 +55,4 @@ jobs:
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.PLATFORM_SA_NPM_TOKEN }}
+          access: public

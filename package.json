@@ -67,8 +67,5 @@
     "ethereumjs-wallet": "^1.0.2",
     "hash.js": "^1.1.7",
     "soltypes": "^2.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
