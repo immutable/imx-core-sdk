@@ -1,4 +1,5 @@
 name: Publish to NPM
+
 on:
   push:
     tags:
@@ -48,7 +49,7 @@ jobs:
         run: yarn build
 
       - name: Check Inputs
-        run: echo "Version: ${{inputs.version}}"
+        run: echo "Version:: ${{inputs.version}}"
 
       - name: Highjack package-json version
         if: ${{ contains(inputs.version, "alpha") }}
