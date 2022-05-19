@@ -42,12 +42,10 @@ import { getConfig } from '@imtbl/core-sdk';
 
 const ethNetwork = 'ropsten'; // or mainnet;
 
-/**
- * use the helper function to get the config
- */
+// Use the helper function to get the config
 const config = getConfig(ethNetwork);
 
-// setup a provider and signer
+// Setup a provider and signer
 const privateKey = YOUR_PRIVATE_KEY;
 const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
 const signer = new Wallet(privateKey).connect(provider);
@@ -58,7 +56,7 @@ const signer = new Wallet(privateKey).connect(provider);
 The Core SDK includes classes that interact with the Immutable X APIs.
 
 ```ts
-// standard API request example usage
+// Standard API request example usage
 import { getConfig, AssetsApi } from "@imtbl/core-sdk";
 
 const getYourAsset = await (tokenAddress: string, tokenId: string) => {
@@ -83,7 +81,7 @@ Some methods require authorisation, which is a Unix epoch timestamp signed with 
 On project and collection methods that require authorsation, this signed timestamp string can typically be passed as the `iMXSignature` parameter.
 
 ```ts
-// example method to generate a signed Unix timestamp
+// Example method to generate a signed Unix timestamp
 const getAuthenticationHeader = async () => {
   const timestamp = Math.floor(Date.now() / 1000).toString();
   const signature = await signRaw(timestamp, signer);
@@ -149,9 +147,7 @@ const transactionResponse = await signer.sendTransaction(populatedTransaction);
 A workflow is a combination of API and contract calls required for more complicated functionality.
 
 ```ts
-/**
- * User registration workflow example
- */
+// User registration workflow example
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { getConfig, Workflows } from '@imtbl/core-sdk';
@@ -159,11 +155,11 @@ import { getConfig, Workflows } from '@imtbl/core-sdk';
 const alchemyApiKey = YOUR_ALCHEMY_API_KEY;
 const ethNetwork = 'ropsten';
 
-// setup provider and signer
+// Setup provider and signer
 const provider = new AlchemyProvider(ethNetwork, alchemyApiKey);
 const signer = new Wallet(privateKey).connect(provider);
 
-// configure Core SDK Workflow class
+// Configure Core SDK Workflow class
 const config = getConfig(ethNetwork);
 const workflows = new Workflows(config);
 
