@@ -49,11 +49,11 @@ jobs:
         run: yarn build
 
       - name: Check Inputs
-        run: echo "Version:: ${{inputs.version}}"
+        run: echo "Version - ${{inputs.version}}"
 
-      - name: Highjack package-json version
+      - name: Update package.json version for alpha releases
         if: ${{ contains(inputs.version, "alpha") }}
-        run: jq '.version = "{{inputs.version}}" ./package.json'
+        run: jq '.version = "${{inputs.version}}"' ./package.json
 
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1

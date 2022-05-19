@@ -1,6 +1,6 @@
 # Immutable Core SDK
 
-The Immutable Core SDK provides convenient access to the Immutable API's and Ethereum contract methods for applications written on the Immutable X platform.
+The Immutable Core SDK provides convenient access to the Immutable API's and Ethereum contract methods for applications written on the Immutable X platform. 
 
 ## Documentation
 
