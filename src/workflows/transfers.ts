@@ -7,9 +7,11 @@ import {
   GetSignableTransferRequest,
   CreateTransferResponse,
 } from '../api';
-import { generateStarkWallet, serializeSignature, sign } from '../utils';
+import { serializeSignature, sign } from '../utils';
+import { StarkWallet } from '../types';
 
 export async function transfersWorkflow(
+  starkWallet: StarkWallet,
   signer: Signer,
   request: GetSignableTransferRequestV1,
   transfersApi: TransfersApi,
@@ -23,10 +25,6 @@ export async function transfersWorkflow(
       receiver: request.receiver,
     },
   });
-
-  // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
@@ -75,6 +73,7 @@ export async function transfersWorkflow(
 }
 
 export async function batchTransfersWorkflow(
+  starkWallet: StarkWallet,
   signer: Signer,
   request: GetSignableTransferRequest,
   transfersApi: TransfersApi,
@@ -86,10 +85,6 @@ export async function batchTransfersWorkflow(
       signable_requests: request.signable_requests,
     },
   });
-
-  // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
 
   const signableMessage = signableResult.data.signable_message;
 
