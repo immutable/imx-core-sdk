@@ -39,11 +39,11 @@ export async function depositERC721Workflow(
 
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC721__factory.connect(deposit.tokenAddress, signer);
-  const approveTrx = await tokenContract.populateTransaction.approve(
+  const approveTransaction = await tokenContract.populateTransaction.approve(
     config.starkContractAddress,
     deposit.tokenId,
   );
-  await signer.sendTransaction(approveTrx);
+  await signer.sendTransaction(approveTransaction);
 
   // Get signable deposit details
   const getSignableDepositRequest = {
@@ -135,16 +135,17 @@ async function executeRegisterAndDepositERC721(
   );
 
   // Use proxy registration contract for wrapping register and depositi NFTs
-  const trx = await contract.populateTransaction.registerAndDepositNft(
-    etherKey,
-    starkPublicKey,
-    signableResult.operator_signature!,
-    assetType,
-    vaultId,
-    tokenId,
-  );
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositNft(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature!,
+      assetType,
+      vaultId,
+      tokenId,
+    );
 
-  return signer.sendTransaction(trx);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function executeDepositERC721(
@@ -155,12 +156,12 @@ async function executeDepositERC721(
   vaultId: number,
   contract: Core,
 ): Promise<TransactionResponse> {
-  const trx = await contract.populateTransaction.depositNft(
+  const populatedTransaction = await contract.populateTransaction.depositNft(
     starkPublicKey,
     assetType,
     vaultId,
     tokenId,
   );
 
-  return signer.sendTransaction(trx);
+  return signer.sendTransaction(populatedTransaction);
 }
