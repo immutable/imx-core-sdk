@@ -68,8 +68,8 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
-  public registerOffchain(signer: Signer) {
-    return registerOffchainWorkflow(signer, this.usersApi);
+  public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
+    return registerOffchainWorkflow(signer, starkWallet, this.usersApi);
   }
 
   public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
