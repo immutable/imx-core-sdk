@@ -1,6 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import {
-  generateStarkWallet,
   serializeSignature,
   sign,
   signRaw,
@@ -12,14 +11,13 @@ import {
 } from '../api';
 import { Registration } from '../contracts';
 import { Errors } from './errors';
+import { StarkWallet } from '../types';
 
 export async function registerOffchainWorkflow(
   signer: Signer,
   usersApi: UsersApi,
+  starkWallet: StarkWallet,
 ): Promise<RegisterUserResponse> {
-  // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(signer);
 
   const userAddress = (await signer.getAddress()).toLowerCase();
 
