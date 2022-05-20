@@ -12,7 +12,7 @@
 
 # Immutable Core SDK
 
-The Immutable Core SDK provides convenient access to the Immutable API's and Ethereum contract methods for applications written on the Immutable X platform. 
+The Immutable Core SDK provides convenient access to the Immutable API's and Ethereum contract methods for applications written on the Immutable X platform.
 
 ## Documentation
 
@@ -57,10 +57,10 @@ The Core SDK includes classes that interact with the Immutable X APIs.
 
 ```ts
 // Standard API request example usage
-import { getConfig, AssetsApi } from "@imtbl/core-sdk";
+import { getConfig, AssetsApi } from '@imtbl/core-sdk';
 
-const getYourAsset = await (tokenAddress: string, tokenId: string) => {
-  const config = getConfig("ropsten");
+const getYourAsset = async (tokenAddress: string, tokenId: string) => {
+  const config = getConfig('ropsten');
   const assetsApi = new AssetsApi(config.api);
 
   const response = await assetsApi.getAsset({
@@ -74,15 +74,15 @@ const getYourAsset = await (tokenAddress: string, tokenId: string) => {
 
 View the [OpenAPI spec](openapi.json) for a full list of API requests available in the Core SDK.
 
-### Authenticated API Requests
+### Authorised project owner requests
 
-Some methods require authorisation, which is a Unix epoch timestamp signed with your ETH key and included in the request header.
+Some methods require authorisation by the project owner, which consists of a Unix epoch timestamp signed with your ETH key and included in the request header.
 
-On project and collection methods that require authorsation, this signed timestamp string can typically be passed as the `iMXSignature` parameter.
+On project and collection methods that require authorisation, this signed timestamp string can typically be passed as the `iMXSignature` and `iMXTimestamp` parameters.
 
 ```ts
-// Example method to generate a signed Unix timestamp
-const getAuthenticationHeader = async () => {
+// Example method to generate authorisation headers
+const getProjectOwnerAuthorisationHeaders = async (signer: Signer) => {
   const timestamp = Math.floor(Date.now() / 1000).toString();
   const signature = await signRaw(timestamp, signer);
 
@@ -91,9 +91,29 @@ const getAuthenticationHeader = async () => {
     signature,
   };
 };
+
+// Using generated authorisation headers
+const createProject = async (
+  name: string,
+  company_name: string,
+  contact_email: string,
+) => {
+  const api = new ProjectsApi(this.config.api);
+  const { timestamp, signature } = getProjectOwnerAuthorisationHeaders(signer);
+
+  return await api.createProject({
+    createProjectRequest: {
+      name,
+      company_name,
+      contact_email,
+    },
+    iMXSignature: signature,
+    iMXTimestamp: timestamp,
+  });
+};
 ```
 
-The following methods require authorisation:
+The following methods require project owner authorisation:
 
 **Projects**
 
