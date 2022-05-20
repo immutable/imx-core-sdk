@@ -175,7 +175,7 @@ The workflow can be found in the [workflows directory](src/workflows/).
 
 The current workflow methods exposed from the `Workflow` class.
 
-- batchNftTranser
+- batchNftTransfer
 - burn
 - deposit
 - depositERC20
@@ -218,7 +218,7 @@ Fore example, instead of making subsequent transaction requests to the Core cont
 
 Standard interface for interacting with ERC20 contracts, taken from [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#IERC20).
 
-#### IER721
+#### IERC721
 
 Standard interface for interacting with ERC721 contracts, taken from [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721).
 

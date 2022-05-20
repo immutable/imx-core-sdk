@@ -34,6 +34,15 @@ export interface ERC20Withdrawal {
   };
 }
 
+export interface ERC20PrepareWithdrawal {
+  type: TokenType.ERC20;
+  data: {
+    tokenAddress: string,
+    decimals: number,
+  };
+}
+
+
 export type TokenWithdrawal = ETHWithdrawal | ERC20Withdrawal | ERC721Withdrawal;
-export type TokenPrepareWithdrawal = ETHPrepareWithdrawal | ERC20Withdrawal | ERC721Withdrawal;
+export type TokenPrepareWithdrawal = ETHPrepareWithdrawal | ERC20PrepareWithdrawal | ERC721Withdrawal;
 
