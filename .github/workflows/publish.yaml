@@ -49,15 +49,15 @@ jobs:
         run: yarn build
 
       - name: Check Inputs
-        run: echo "Version - ${{inputs.version}}"
+        run: echo "Version - ${{github.event.inputs.version}}"
 
       - name: Update package.json version for alpha releases
-        if: ${{ contains(inputs.version, 'alpha') }}
-        run: jq '.version = "${{inputs.version}}"' ./package.json
+        if: ${{ contains(github.event.inputs.version, 'alpha') }}
+        run: jq '.version = "${{github.event.inputs.version}}"' ./package.json
 
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1
         with:
           token: ${{ secrets.PLATFORM_SA_NPM_TOKEN }}
           access: public
-          tag: ${{ contains(github.event.inputs.tag, 'alpha') && 'alpha' || 'latest' }}
+          tag: ${{ contains(github.event.inputs.version, 'alpha') && 'alpha' || 'latest' }}
