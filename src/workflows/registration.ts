@@ -15,8 +15,8 @@ import { StarkWallet } from '../types';
 
 export async function registerOffchainWorkflow(
   signer: Signer,
-  usersApi: UsersApi,
   starkWallet: StarkWallet,
+  usersApi: UsersApi,
 ): Promise<RegisterUserResponse> {
 
   const userAddress = (await signer.getAddress()).toLowerCase();
