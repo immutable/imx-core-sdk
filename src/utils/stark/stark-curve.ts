@@ -1,7 +1,7 @@
 import * as encUtils from 'enc-utils';
 import BN from 'bn.js';
-import assert from 'assert';
 import { ec } from 'elliptic';
+import { Errors } from '../../workflows/errors';
 
 export function getIntFromBits(
   hex: string,
@@ -23,7 +23,9 @@ export function fixMessage(msg: string) {
     // so delta < 0 (see _truncateToN).
     return msg;
   }
-  assert(msg.length === 63);
+  if (msg.length !== 63) {
+    throw new Error(Errors.StarkCurveInvalidMessageLength);
+  }
   // In this case delta will be 4 so we perform a shift-left of 4 bits by adding a ZERO_BN.
   return `${msg}0`;
 }
