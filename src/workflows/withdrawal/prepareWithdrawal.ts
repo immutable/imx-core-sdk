@@ -1,12 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { serializeSignature, sign } from '../../utils';
-import {
-  CreateWithdrawalResponse, MintsApi,
-  WithdrawalsApi,
-} from '../../api';
-import { StarkWallet, TokenPrepareWithdrawal, TokenType } from '../../types';
-import * as encUtils from 'enc-utils';
-import { keccak256 as solidityKeccak256 } from '@ethersproject/solidity';
+import { CreateWithdrawalResponse, WithdrawalsApi } from '../../api';
+import { convertToSignableRequestFormat, StarkWallet, TokenPrepareWithdrawal } from '../../types';
 import { Errors } from '../errors';
 
 const assertIsDefined = <T>(value?: T): T => {
@@ -14,36 +9,12 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception');
 };
 
-export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: StarkWallet, token: TokenPrepareWithdrawal, quantity: string, withdrawalsApi: WithdrawalsApi, mintsApi: MintsApi): Promise<CreateWithdrawalResponse> {
-
-  let signableToken;
-
-  if (token.type === TokenType.ERC721) {
-    const tokenAddress = token.data.tokenAddress;
-    const tokenId = token.data.tokenId;
-    signableToken = await mintsApi.getMintableTokenDetailsByClientTokenId({
-      tokenAddress,
-      tokenId,
-    }).then(mintableToken => ({
-      type: TokenType.ERC721,
-      data: {
-        token_id: getMintingBlobHash(tokenId, mintableToken.data.blueprint),
-        token_address: tokenAddress,
-      },
-    })).catch(error => {
-      if (error.response.status === 404) { //token is already minted on L1
-        return token;
-      }
-      throw error; //unable to recover from any other kind of error
-    })
-  } else {
-    signableToken = token
-  }
+export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: StarkWallet, token: TokenPrepareWithdrawal, quantity: string, withdrawalsApi: WithdrawalsApi): Promise<CreateWithdrawalResponse> {
 
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await signer.getAddress(),
-      token: signableToken,
+      token: convertToSignableRequestFormat(token),
       amount: quantity.toString(),
     },
   })
@@ -68,13 +39,4 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
   })
 
   return prepareWithdrawalResponse.data;
-}
-
-function getMintingBlobHash(id: string, blueprint = ''): string {
-  return encUtils.sanitizeHex(
-    solidityKeccak256(
-      ['bytes'],
-      [encUtils.utf8ToArray(`{${id}}:{${blueprint}}`)],
-    ),
-  );
 }

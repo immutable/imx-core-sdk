@@ -201,7 +201,6 @@ export class Workflows {
       token,
       quantity,
       this.withdrawalsApi,
-      this.mintsApi,
     );
   }
 
