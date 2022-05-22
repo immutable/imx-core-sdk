@@ -6,8 +6,8 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version to publish'
+      tag:
+        description: 'Tag to publish'
         required: true
         type: string
 
@@ -19,7 +19,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 1
+          fetch-depth: 0
+
+      - name: Check Input
+        run: echo "Version - ${{github.event.inputs.tag}}"
 
       - name: Use Node.js 16
         uses: actions/setup-node@v1
@@ -48,12 +51,11 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Check Inputs
-        run: echo "Version - ${{inputs.version}}"
-
       - name: Update package.json version for alpha releases
-        if: ${{ contains(inputs.version, "alpha") }}
-        run: jq '.version = "${{inputs.version}}"' ./package.json
+        if: ${{ contains(github.event.inputs.tag, 'alpha') }}
+        run: |
+          tmp=$(mktemp)
+          jq '.version = "${{github.event.inputs.tag}}"' ./package.json > "$tmp" && mv "$tmp" ./package.json
 
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1
