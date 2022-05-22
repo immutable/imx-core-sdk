@@ -1,5 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import {serializeSignature, sign, signMessage} from '../../utils';
+import { serializeSignature, sign, signMessage } from '../../utils';
 import { CreateWithdrawalResponse, WithdrawalsApi } from '../../api';
 import { convertToSignableRequestFormat, StarkWallet, TokenPrepareWithdrawal } from '../../types';
 import { Errors } from '../errors';
@@ -28,6 +28,7 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
   const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
 
   const { ethAddress, ethSignature } = await signMessage(signableMessage, signer);
+
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
     createWithdrawalRequest: {
       stark_key: assertIsDefined(signableWithdrawalResult.data.stark_key),
