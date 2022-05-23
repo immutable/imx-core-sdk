@@ -23,7 +23,7 @@ export async function cancelOrderWorkflow(
     getSignableCancelOrderResponse.data;
 
   if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableTransferV1InvalidResponse);
+    throw new Error(Errors.SignableCancelOrderInvalidResponse);
   }
 
   // Sign message with L1 credentials
