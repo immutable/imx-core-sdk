@@ -2,11 +2,13 @@ import {
   DepositsApi,
   EncodingApi,
   MintsApi,
+  OrdersApi,
   TokensApi,
   UsersApi,
   TransfersApi,
   TransfersApiGetTransferRequest,
   WithdrawalsApi,
+  GetSignableCancelOrderRequest,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
 import {
@@ -21,6 +23,13 @@ import {
   depositEthWorkflow,
 } from './deposit';
 import { burnWorkflow, getBurnWorkflow } from './burn';
+import {
+  completeERC20WithdrawalWorfklow,
+  completeERC721WithdrawalWorkflow,
+  completeEthWithdrawalWorkflow,
+  prepareWithdrawalWorkflow,
+} from './withdrawal';
+import { cancelOrderWorkflow } from './orders'
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
@@ -39,32 +48,26 @@ import {
   StarkWallet,
 } from '../types';
 import { Registration__factory } from '../contracts';
-import {
-  completeERC20WithdrawalWorfklow,
-  completeERC721WithdrawalWorkflow,
-  completeEthWithdrawalWorkflow,
-  prepareWithdrawalWorkflow,
-} from './withdrawal';
 
 export class Workflows {
-  private readonly usersApi: UsersApi;
-  private readonly mintsApi: MintsApi;
-  private readonly transfersApi: TransfersApi;
   private readonly depositsApi: DepositsApi;
-  private readonly tokensApi: TokensApi;
   private readonly encodingApi: EncodingApi;
+  private readonly mintsApi: MintsApi;
+  private readonly ordersApi: OrdersApi;
+  private readonly tokensApi: TokensApi;
+  private readonly transfersApi: TransfersApi;
+  private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
 
   constructor(protected config: Config) {
     this.config = config;
-    this.usersApi = new UsersApi(config.api);
+    this.depositsApi = new DepositsApi(config.api);
+    this.encodingApi = new EncodingApi(config.api);
     this.mintsApi = new MintsApi(config.api);
+    this.ordersApi = new OrdersApi(config.api);
+    this.tokensApi = new TokensApi(config.api);
     this.transfersApi = new TransfersApi(config.api);
     this.usersApi = new UsersApi(config.api);
-    this.mintsApi = new MintsApi(config.api);
-    this.depositsApi = new DepositsApi(config.api);
-    this.tokensApi = new TokensApi(config.api);
-    this.encodingApi = new EncodingApi(config.api);
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
@@ -258,5 +261,13 @@ export class Workflows {
     case TokenType.ERC20:
       return this.completeERC20Withdrawal(signer, starkPublicKey, token);
     }
+  }
+
+  public cancelOrder(
+    signer: Signer,
+    starkWallet: StarkWallet,
+    request: GetSignableCancelOrderRequest,
+  ) {
+    return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 }

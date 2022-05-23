@@ -1,11 +1,10 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { signRaw } from '../utils';
 import {
   TransfersApi,
   CreateTransferResponseV1,
   TransfersApiGetTransferRequest,
 } from '../api';
-import { serializeSignature, sign } from '../utils';
+import { serializeSignature, sign, signRaw } from '../utils';
 import { BurnAddress } from './constants';
 import { GetSignableBurnRequest } from './types';
 import { Errors } from './errors';
