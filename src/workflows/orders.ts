@@ -35,7 +35,7 @@ export async function cancelOrderWorkflow(
   );
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress()).toLowerCase();
+  const ethAddress = await signer.getAddress();
 
   const cancelOrderResponse = await ordersApi.cancelOrder({
     id: request.order_id!.toString(),
