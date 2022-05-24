@@ -38,7 +38,7 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
       nonce: assertIsDefined(signableWithdrawalResult.data.nonce),
       stark_signature: starkSignature,
     },
-    xImxEthAddress: ethAddress.toLowerCase(),
+    xImxEthAddress: ethAddress,
     xImxEthSignature: ethSignature,
   })
 
