@@ -1,5 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { serializeSignature, sign } from '../../utils';
+import { serializeSignature, sign, signMessage } from '../../utils';
 import { CreateWithdrawalResponse, WithdrawalsApi } from '../../api';
 import { convertToSignableRequestFormat, StarkWallet, TokenPrepareWithdrawal } from '../../types';
 import { Errors } from '../errors';
@@ -27,6 +27,8 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
   // Sign hash with L2 credentials
   const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
 
+  const { ethAddress, ethSignature } = await signMessage(signableMessage, signer);
+
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
     createWithdrawalRequest: {
       stark_key: assertIsDefined(signableWithdrawalResult.data.stark_key),
@@ -36,6 +38,8 @@ export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: Sta
       nonce: assertIsDefined(signableWithdrawalResult.data.nonce),
       stark_signature: starkSignature,
     },
+    xImxEthAddress: ethAddress,
+    xImxEthSignature: ethSignature,
   })
 
   return prepareWithdrawalResponse.data;
