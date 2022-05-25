@@ -268,7 +268,6 @@ export class Workflows {
     signer: Signer,
     starkWallet: StarkWallet,
     request: GetSignableOrderRequest,
-    ordersApi: OrdersApi
   ) {
     return createOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }

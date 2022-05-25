@@ -48,10 +48,10 @@ export async function createOrderWorkflow(
       stark_key: resp.stark_key!,
       stark_signature: starkSignature,
       vault_id_buy: resp.vault_id_buy!,
-      vault_id_sell: resp.vault_id_sell!
+      vault_id_sell: resp.vault_id_sell!,
     },
     xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature
+    xImxEthSignature: ethSignature,
   };
 
   const createOrderResponse = await ordersApi.createOrder(orderParams);
@@ -59,7 +59,7 @@ export async function createOrderWorkflow(
 
   return {
     // order_id, status, time
-    ...createOrderResponse.data
+    ...createOrderResponse.data,
   };
 }
 
