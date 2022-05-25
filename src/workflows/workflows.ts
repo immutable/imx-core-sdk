@@ -8,6 +8,7 @@ import {
   TransfersApi,
   TransfersApiGetTransferRequest,
   WithdrawalsApi,
+  GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
@@ -29,7 +30,7 @@ import {
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
-import { cancelOrderWorkflow } from './orders'
+import { createOrderWorkflow, cancelOrderWorkflow } from './orders';
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
@@ -261,6 +262,15 @@ export class Workflows {
     case TokenType.ERC20:
       return this.completeERC20Withdrawal(signer, starkPublicKey, token);
     }
+  }
+
+  public createOrder(
+    signer: Signer,
+    starkWallet: StarkWallet,
+    request: GetSignableOrderRequest,
+    ordersApi: OrdersApi
+  ) {
+    return createOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 
   public cancelOrder(
