@@ -10,6 +10,8 @@ import {
   WithdrawalsApi,
   GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
+  GetSignableTradeRequest,
+  TradesApi,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
 import {
@@ -49,6 +51,7 @@ import {
   StarkWallet,
 } from '../types';
 import { Registration__factory } from '../contracts';
+import { createTradeWorkflow } from './trades';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -59,6 +62,7 @@ export class Workflows {
   private readonly transfersApi: TransfersApi;
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
+  private readonly tradesApi: TradesApi;
 
   constructor(protected config: Config) {
     this.config = config;
@@ -70,6 +74,7 @@ export class Workflows {
     this.transfersApi = new TransfersApi(config.api);
     this.usersApi = new UsersApi(config.api);
     this.withdrawalsApi = new WithdrawalsApi(config.api);
+    this.tradesApi = new TradesApi(config.api);
   }
 
   public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
@@ -128,34 +133,34 @@ export class Workflows {
 
   public deposit(signer: Signer, deposit: TokenDeposit) {
     switch (deposit.type) {
-    case TokenType.ETH:
-      return depositEthWorkflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        this.config,
-      );
-    case TokenType.ERC20:
-      return depositERC20Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.tokensApi,
-        this.encodingApi,
-        this.config,
-      );
-    case TokenType.ERC721:
-      return depositERC721Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        this.config,
-      );
+      case TokenType.ETH:
+        return depositEthWorkflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          this.config,
+        );
+      case TokenType.ERC20:
+        return depositERC20Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.tokensApi,
+          this.encodingApi,
+          this.config,
+        );
+      case TokenType.ERC721:
+        return depositERC721Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          this.config,
+        );
     }
   }
 
@@ -255,12 +260,12 @@ export class Workflows {
     token: TokenWithdrawal,
   ) {
     switch (token.type) {
-    case TokenType.ETH:
-      return this.completeEthWithdrawal(signer, starkPublicKey);
-    case TokenType.ERC721:
-      return this.completeERC721Withdrawal(signer, starkPublicKey, token);
-    case TokenType.ERC20:
-      return this.completeERC20Withdrawal(signer, starkPublicKey, token);
+      case TokenType.ETH:
+        return this.completeEthWithdrawal(signer, starkPublicKey);
+      case TokenType.ERC721:
+        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
+      case TokenType.ERC20:
+        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
     }
   }
 
@@ -278,5 +283,13 @@ export class Workflows {
     request: GetSignableCancelOrderRequest,
   ) {
     return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
+  }
+
+  public createTrade(
+    signer: Signer,
+    starkWallet: StarkWallet,
+    request: GetSignableTradeRequest,
+  ) {
+    return createTradeWorkflow(signer, starkWallet, request, this.tradesApi);
   }
 }
