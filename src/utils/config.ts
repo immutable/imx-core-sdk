@@ -1,5 +1,8 @@
 import { Configuration } from '../api';
 import { Config, EthNetwork } from '../types';
+import { version } from '../../package.json'
+
+const headers = { 'x-sdk-version': `imx-core-sdk-ts-${version}` }
 
 export const getConfig = (network: EthNetwork = 'ropsten'): Config => {
   switch (network) {
@@ -7,6 +10,7 @@ export const getConfig = (network: EthNetwork = 'ropsten'): Config => {
     return {
       api: new Configuration({
         basePath: 'https://api.dev.x.immutable.com',
+        baseOptions: { headers },
       }),
       starkContractAddress: '0xd05323731807A35599BF9798a1DE15e89d6D6eF1',
       registrationContractAddress:
@@ -16,6 +20,7 @@ export const getConfig = (network: EthNetwork = 'ropsten'): Config => {
     return {
       api: new Configuration({
         basePath: 'https://api.ropsten.x.immutable.com',
+        baseOptions: { headers },
       }),
       starkContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
       registrationContractAddress:
@@ -25,6 +30,7 @@ export const getConfig = (network: EthNetwork = 'ropsten'): Config => {
     return {
       api: new Configuration({
         basePath: 'https://api.x.immutable.com',
+        baseOptions: { headers },
       }),
       starkContractAddress: '0x5FDCCA53617f4d2b9134B29090C87D01058e27e9',
       registrationContractAddress:
