@@ -22,15 +22,15 @@
 export interface OrderDetails {
     /**
      * Buy orders for this asset
-     * @type {Array<Array<number>>}
+     * @type {Array<object>}
      * @memberof OrderDetails
      */
-    'buy_orders'?: Array<Array<number>>;
+    'buy_orders'?: Array<object>;
     /**
      * Sell orders for this asset
-     * @type {Array<Array<number>>}
+     * @type {Array<object>}
      * @memberof OrderDetails
      */
-    'sell_orders'?: Array<Array<number>>;
+    'sell_orders'?: Array<object>;
 }
 

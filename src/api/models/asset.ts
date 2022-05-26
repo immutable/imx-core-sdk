@@ -61,10 +61,10 @@ export interface Asset {
     'image_url'?: string;
     /**
      * Metadata of this asset
-     * @type {Array<number>}
+     * @type {object}
      * @memberof Asset
      */
-    'metadata'?: Array<number>;
+    'metadata'?: object;
     /**
      * Name of this asset
      * @type {string}

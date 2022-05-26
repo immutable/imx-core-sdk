@@ -83,7 +83,7 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [user] Ethereum address of the user who owns these assets
          * @param {string} [status] Status of these assets
          * @param {string} [name] Name of the asset to search
-         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {
+         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
          * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
@@ -216,7 +216,7 @@ export const AssetsApiFp = function(configuration?: Configuration) {
          * @param {string} [user] Ethereum address of the user who owns these assets
          * @param {string} [status] Status of these assets
          * @param {string} [name] Name of the asset to search
-         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {
+         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
          * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
@@ -264,7 +264,7 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
          * @param {string} [user] Ethereum address of the user who owns these assets
          * @param {string} [status] Status of these assets
          * @param {string} [name] Name of the asset to search
-         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {
+         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
          * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
@@ -366,7 +366,7 @@ export interface AssetsApiListAssetsRequest {
     readonly name?: string
 
     /**
-     * JSON-encoded metadata filters for these asset. Example: {
+     * JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
      * @type {string}
      * @memberof AssetsApiListAssets
      */

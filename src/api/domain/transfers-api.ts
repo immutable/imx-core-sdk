@@ -252,6 +252,7 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this transfer
+         * @param {string} [receiver] Ethereum address of the user who received this transfer
          * @param {'success' | 'failure'} [status] Status of this transfer
          * @param {string} [minTimestamp] Minimum timestamp for this transfer
          * @param {string} [maxTimestamp] Maximum timestamp for this transfer
@@ -266,7 +267,7 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTransfers: async (pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listTransfers: async (pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/transfers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -297,6 +298,10 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
 
             if (user !== undefined) {
                 localVarQueryParameter['user'] = user;
+            }
+
+            if (receiver !== undefined) {
+                localVarQueryParameter['receiver'] = receiver;
             }
 
             if (status !== undefined) {
@@ -431,6 +436,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this transfer
+         * @param {string} [receiver] Ethereum address of the user who received this transfer
          * @param {'success' | 'failure'} [status] Status of this transfer
          * @param {string} [minTimestamp] Minimum timestamp for this transfer
          * @param {string} [maxTimestamp] Maximum timestamp for this transfer
@@ -445,8 +451,8 @@ export const TransfersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listTransfers(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTransfersResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listTransfers(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options);
+        async listTransfers(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTransfersResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listTransfers(pageSize, cursor, orderBy, direction, user, receiver, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -521,6 +527,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this transfer
+         * @param {string} [receiver] Ethereum address of the user who received this transfer
          * @param {'success' | 'failure'} [status] Status of this transfer
          * @param {string} [minTimestamp] Minimum timestamp for this transfer
          * @param {string} [maxTimestamp] Maximum timestamp for this transfer
@@ -535,8 +542,8 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTransfers(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: any): AxiosPromise<ListTransfersResponse> {
-            return localVarFp.listTransfers(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(axios, basePath));
+        listTransfers(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: any): AxiosPromise<ListTransfersResponse> {
+            return localVarFp.listTransfers(pageSize, cursor, orderBy, direction, user, receiver, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -679,6 +686,13 @@ export interface TransfersApiListTransfersRequest {
      * @memberof TransfersApiListTransfers
      */
     readonly user?: string
+
+    /**
+     * Ethereum address of the user who received this transfer
+     * @type {string}
+     * @memberof TransfersApiListTransfers
+     */
+    readonly receiver?: string
 
     /**
      * Status of this transfer
@@ -834,6 +848,6 @@ export class TransfersApi extends BaseAPI {
      * @memberof TransfersApi
      */
     public listTransfers(requestParameters: TransfersApiListTransfersRequest = {}, options?: AxiosRequestConfig) {
-        return TransfersApiFp(this.configuration).listTransfers(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
+        return TransfersApiFp(this.configuration).listTransfers(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.receiver, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 }
