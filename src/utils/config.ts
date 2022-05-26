@@ -19,6 +19,7 @@ export const getConfig = (
       registrationContractAddress:
           '0x7EB840223a3b1E0e8D54bF8A6cd83df5AFfC88B2',
     };
+
   case 'ropsten':
     return {
       api: new Configuration(
@@ -31,6 +32,7 @@ export const getConfig = (
       registrationContractAddress:
           '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
     };
+
   case 'mainnet':
     return {
       api: new Configuration(
@@ -44,6 +46,7 @@ export const getConfig = (
 };
 
 const headers = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
+
 const mergeApiProperties = (
   basePath: string,
   apiConfigOptions: ConfigurationParameters,
