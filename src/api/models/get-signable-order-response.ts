@@ -22,7 +22,7 @@ import { FeeInfo } from './fee-info';
  */
 export interface GetSignableOrderResponse {
     /**
-     * Amount to buy
+     * Fee-exclusive amount to buy
      * @type {string}
      * @memberof GetSignableOrderResponse
      */

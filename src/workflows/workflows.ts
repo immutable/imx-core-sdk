@@ -10,6 +10,8 @@ import {
   WithdrawalsApi,
   GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
+  GetSignableTradeRequest,
+  TradesApi,
 } from '../api';
 import { Signer } from '@ethersproject/abstract-signer';
 import {
@@ -49,6 +51,7 @@ import {
   StarkWallet,
 } from '../types';
 import { Registration__factory } from '../contracts';
+import { createTradeWorkflow } from './trades';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -59,6 +62,7 @@ export class Workflows {
   private readonly transfersApi: TransfersApi;
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
+  private readonly tradesApi: TradesApi;
 
   constructor(protected config: Config) {
     this.config = config;
@@ -70,6 +74,7 @@ export class Workflows {
     this.transfersApi = new TransfersApi(config.api);
     this.usersApi = new UsersApi(config.api);
     this.withdrawalsApi = new WithdrawalsApi(config.api);
+    this.tradesApi = new TradesApi(config.api);
   }
 
   public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
@@ -278,5 +283,13 @@ export class Workflows {
     request: GetSignableCancelOrderRequest,
   ) {
     return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
+  }
+
+  public createTrade(
+    signer: Signer,
+    starkWallet: StarkWallet,
+    request: GetSignableTradeRequest,
+  ) {
+    return createTradeWorkflow(signer, starkWallet, request, this.tradesApi);
   }
 }

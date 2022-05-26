@@ -14,7 +14,6 @@
 
 
 import { FeeEntry } from './fee-entry';
-import { SignableToken } from './signable-token';
 
 /**
  * 
@@ -22,18 +21,6 @@ import { SignableToken } from './signable-token';
  * @interface GetSignableTradeRequest
  */
 export interface GetSignableTradeRequest {
-    /**
-     * Amount to buy
-     * @type {string}
-     * @memberof GetSignableTradeRequest
-     */
-    'amount_buy': string;
-    /**
-     * Amount to sell
-     * @type {string}
-     * @memberof GetSignableTradeRequest
-     */
-    'amount_sell': string;
     /**
      * ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour
      * @type {number}
@@ -47,17 +34,11 @@ export interface GetSignableTradeRequest {
      */
     'fees'?: Array<FeeEntry>;
     /**
-     * 
-     * @type {SignableToken}
+     * The ID of the maker order involved
+     * @type {number}
      * @memberof GetSignableTradeRequest
      */
-    'token_buy': SignableToken;
-    /**
-     * 
-     * @type {SignableToken}
-     * @memberof GetSignableTradeRequest
-     */
-    'token_sell': SignableToken;
+    'order_id'?: number;
     /**
      * Ethereum address of the submitting user
      * @type {string}

@@ -1,3 +1,6 @@
+.PHONY: generate-openapi
+generate-openapi: get-openapi generate-api
+
 .PHONY: get-openapi
 get-openapi:
 	curl -H "Accept: application/json+v3" \
