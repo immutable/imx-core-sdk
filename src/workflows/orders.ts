@@ -30,10 +30,12 @@ export async function createOrderWorkflow(
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign has with L2 credentials
-  const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
+  const starkSignature = serializeSignature(
+    sign(starkWallet.starkKeyPair, payloadHash),
+  );
 
   // Obtain Eth address from signer
-  const ethAddress = await signer.getAddress();
+  const ethAddress = (await signer.getAddress()).toLowerCase();
 
   const resp = getSignableOrderResponse.data;
 
@@ -44,6 +46,8 @@ export async function createOrderWorkflow(
       asset_id_buy: resp.asset_id_buy!,
       asset_id_sell: resp.asset_id_sell!,
       expiration_timestamp: resp.expiration_timestamp!,
+      include_fees: true,
+      fees: request.fees,
       nonce: resp.nonce!,
       stark_key: resp.stark_key!,
       stark_signature: starkSignature,
@@ -55,7 +59,6 @@ export async function createOrderWorkflow(
   };
 
   const createOrderResponse = await ordersApi.createOrder(orderParams);
-  console.log('workflow::createOrderResponse', createOrderResponse);
 
   return {
     // order_id, status, time
@@ -69,11 +72,13 @@ export async function cancelOrderWorkflow(
   request: GetSignableCancelOrderRequest,
   ordersApi: OrdersApi,
 ) {
-  const getSignableCancelOrderResponse = await ordersApi.getSignableCancelOrder({
-    getSignableCancelOrderRequest: {
-      order_id: request.order_id,
+  const getSignableCancelOrderResponse = await ordersApi.getSignableCancelOrder(
+    {
+      getSignableCancelOrderRequest: {
+        order_id: request.order_id,
+      },
     },
-  })
+  );
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableCancelOrderResponse.data;
@@ -101,10 +106,10 @@ export async function cancelOrderWorkflow(
     },
     xImxEthAddress: ethAddress,
     xImxEthSignature: ethSignature,
-  })
+  });
 
   return {
     order_id: cancelOrderResponse.data.order_id,
     status: cancelOrderResponse.data.status,
-  }
+  };
 }
