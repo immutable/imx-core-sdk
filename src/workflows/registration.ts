@@ -18,7 +18,7 @@ export async function registerOffchainWorkflow(
   usersApi: UsersApi,
 ): Promise<RegisterUserResponse> {
 
-  const userAddress = (await signer.getAddress()).toLowerCase();
+  const userAddress = (await signer.getAddress());
 
   // Get signable details for offchain registration
   const signableResult = await usersApi.getSignableRegistrationOffchain({
@@ -68,7 +68,7 @@ export async function getSignableRegistrationOnchain(
 ): Promise<GetSignableRegistrationResponse> {
   const response = await usersApi.getSignableRegistration({
     getSignableRegistrationRequest: {
-      ether_key: etherKey.toLowerCase(),
+      ether_key: etherKey,
       stark_key: starkPublicKey,
     },
   });

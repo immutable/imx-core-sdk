@@ -37,7 +37,7 @@ export async function burnWorkflow(
   );
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress()).toLowerCase();
+  const ethAddress = (await signer.getAddress());
 
   // Assemble transfer params
   const transferSigningParams = {
