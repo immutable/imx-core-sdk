@@ -7,7 +7,6 @@ import {
 import { serializeSignature, sign, signRaw } from '../utils';
 import { BurnAddress } from './constants';
 import { GetSignableBurnRequest } from './types';
-import { Errors } from './errors';
 import { StarkWallet } from '../types';
 
 export async function burnWorkflow(
@@ -28,10 +27,6 @@ export async function burnWorkflow(
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
-
-  if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableTransferV1InvalidResponse);
-  }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);

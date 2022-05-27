@@ -6,7 +6,6 @@ import {
   OrdersApi,
   OrdersApiCreateOrderRequest,
 } from '../api';
-import { Errors } from './errors';
 import { serializeSignature, sign, signRaw } from '../utils';
 
 export async function createOrderWorkflow(
@@ -21,10 +20,6 @@ export async function createOrderWorkflow(
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableOrderResponse.data;
-
-  if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableOrderInvalidResponse);
-  }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);
@@ -82,10 +77,6 @@ export async function cancelOrderWorkflow(
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableCancelOrderResponse.data;
-
-  if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableCancelOrderInvalidResponse);
-  }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);

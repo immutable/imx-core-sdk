@@ -10,7 +10,6 @@ import {
   UsersApi,
 } from '../api';
 import { Registration } from '../contracts';
-import { Errors } from './errors';
 import { StarkWallet } from '../types';
 
 export async function registerOffchainWorkflow(
@@ -31,10 +30,6 @@ export async function registerOffchainWorkflow(
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
-
-  if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableRegistrationOffchainInvalidResponse);
-  }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);

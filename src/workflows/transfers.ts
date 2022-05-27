@@ -9,7 +9,6 @@ import {
 } from '../api';
 import { serializeSignature, sign } from '../utils';
 import { StarkWallet } from '../types';
-import { Errors } from './errors';
 
 export async function transfersWorkflow(
   signer: Signer,
@@ -29,10 +28,6 @@ export async function transfersWorkflow(
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
-
-  if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableTransferV1InvalidResponse);
-  }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);

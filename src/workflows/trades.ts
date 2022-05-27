@@ -1,7 +1,6 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { StarkWallet } from '../types';
 import { GetSignableTradeRequest, TradesApi } from '../api';
-import { Errors } from './errors';
 import { serializeSignature, sign, signRaw } from '../utils';
 
 export async function createTradeWorkflow(
@@ -23,10 +22,6 @@ export async function createTradeWorkflow(
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
-
-  if (signableMessage === undefined || payloadHash === undefined) {
-    throw new Error(Errors.SignableTradeInvalidResponse);
-  }
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);
