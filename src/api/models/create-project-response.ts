@@ -25,6 +25,6 @@ export interface CreateProjectResponse {
      * @type {number}
      * @memberof CreateProjectResponse
      */
-    'id'?: number;
+    'id': number;
 }
 

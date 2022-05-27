@@ -26,18 +26,18 @@ export interface ListTransfersResponse {
      * @type {string}
      * @memberof ListTransfersResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListTransfersResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Transfers matching query parameters
      * @type {Array<Transfer>}
      * @memberof ListTransfersResponse
      */
-    'result'?: Array<Transfer>;
+    'result': Array<Transfer>;
 }
 

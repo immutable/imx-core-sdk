@@ -22,7 +22,6 @@ domain/withdrawals-api.ts
 git_push.sh
 index.ts
 models/add-metadata-schema-to-collection-request.ts
-models/application.ts
 models/asset-properties.ts
 models/asset.ts
 models/balance.ts
@@ -72,7 +71,6 @@ models/get-signable-transfer-response-v1.ts
 models/get-signable-transfer-response.ts
 models/get-signable-withdrawal-request.ts
 models/get-signable-withdrawal-response.ts
-models/get-tlvs-result.ts
 models/get-users-api-response.ts
 models/index.ts
 models/list-assets-response.ts
@@ -88,14 +86,10 @@ models/list-withdrawals-response.ts
 models/metadata-schema-property.ts
 models/metadata-schema-request.ts
 models/mint-fee.ts
-models/mint-request-v1.ts
 models/mint-request.ts
 models/mint-result-details.ts
-models/mint-result-v1.ts
 models/mint-token-data-v2.ts
-models/mint-token-data.ts
 models/mint-tokens-response.ts
-models/mint-tokens.ts
 models/mint-user.ts
 models/mint.ts
 models/mintable-token-details.ts
@@ -109,7 +103,6 @@ models/register-user-response.ts
 models/signable-token.ts
 models/signable-transfer-details.ts
 models/signable-transfer-response-details.ts
-models/snapshot-balances-record.ts
 models/success-response.ts
 models/token-data.ts
 models/token-details.ts

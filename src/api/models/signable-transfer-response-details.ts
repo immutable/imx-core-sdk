@@ -26,54 +26,54 @@ export interface SignableTransferResponseDetails {
      * @type {string}
      * @memberof SignableTransferResponseDetails
      */
-    'amount'?: string;
+    'amount': string;
     /**
      * ID of the asset being transferred
      * @type {string}
      * @memberof SignableTransferResponseDetails
      */
-    'asset_id'?: string;
+    'asset_id': string;
     /**
      * Timestamp when this transfer will expire
      * @type {number}
      * @memberof SignableTransferResponseDetails
      */
-    'expiration_timestamp'?: number;
+    'expiration_timestamp': number;
     /**
      * Nonce of the transfer
      * @type {number}
      * @memberof SignableTransferResponseDetails
      */
-    'nonce'?: number;
+    'nonce': number;
     /**
      * Hash of the payload to be signed for transfer
      * @type {string}
      * @memberof SignableTransferResponseDetails
      */
-    'payload_hash'?: string;
+    'payload_hash': string;
     /**
      * Receiver of the transfer
      * @type {string}
      * @memberof SignableTransferResponseDetails
      */
-    'receiver_stark_key'?: string;
+    'receiver_stark_key': string;
     /**
      * ID of the vault being transferred to
      * @type {number}
      * @memberof SignableTransferResponseDetails
      */
-    'receiver_vault_id'?: number;
+    'receiver_vault_id': number;
     /**
      * ID of the vault being transferred from
      * @type {number}
      * @memberof SignableTransferResponseDetails
      */
-    'sender_vault_id'?: number;
+    'sender_vault_id': number;
     /**
      * 
      * @type {SignableToken}
      * @memberof SignableTransferResponseDetails
      */
-    'token'?: SignableToken;
+    'token': SignableToken;
 }
 

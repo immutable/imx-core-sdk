@@ -25,6 +25,6 @@ export interface SuccessResponse {
      * @type {string}
      * @memberof SuccessResponse
      */
-    'result'?: string;
+    'result': string;
 }
 

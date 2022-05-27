@@ -33,30 +33,30 @@ export interface Mint {
      * @type {string}
      * @memberof Mint
      */
-    'status'?: string;
+    'status': string;
     /**
      * Timestamp this mint was initiated
      * @type {string}
      * @memberof Mint
      */
-    'timestamp'?: string;
+    'timestamp': string;
     /**
      * 
      * @type {Token}
      * @memberof Mint
      */
-    'token'?: Token;
+    'token': Token;
     /**
      * Sequential ID of transaction in Immutable X
      * @type {number}
      * @memberof Mint
      */
-    'transaction_id'?: number;
+    'transaction_id': number;
     /**
      * Ethereum address of the user to whom the asset has been minted
      * @type {string}
      * @memberof Mint
      */
-    'user'?: string;
+    'user': string;
 }
 

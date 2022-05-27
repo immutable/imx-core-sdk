@@ -25,18 +25,18 @@ export interface MetadataSchemaProperty {
      * @type {boolean}
      * @memberof MetadataSchemaProperty
      */
-    'filterable'?: boolean;
+    'filterable': boolean;
     /**
      * Name of the metadata key
      * @type {string}
      * @memberof MetadataSchemaProperty
      */
-    'name'?: string;
+    'name': string;
     /**
      * Type of the metadata. Values: \"enum\", \"text\", \"boolean\", \"continuous\", \"discrete\" | Default: \"text\". Src: https://docs.x.immutable.com/docs/asset-metadata#property-type-mapping
      * @type {string}
      * @memberof MetadataSchemaProperty
      */
-    'type'?: string;
+    'type': string;
 }
 

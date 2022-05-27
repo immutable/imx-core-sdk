@@ -25,12 +25,12 @@ export interface GetSignableRegistrationResponse {
      * @type {string}
      * @memberof GetSignableRegistrationResponse
      */
-    'operator_signature'?: string;
+    'operator_signature': string;
     /**
      * Hash of the payload to be signed for user registration
      * @type {string}
      * @memberof GetSignableRegistrationResponse
      */
-    'payload_hash'?: string;
+    'payload_hash': string;
 }
 

@@ -26,31 +26,31 @@ export interface GetSignableOrderResponse {
      * @type {string}
      * @memberof GetSignableOrderResponse
      */
-    'amount_buy'?: string;
+    'amount_buy': string;
     /**
      * Amount to sell
      * @type {string}
      * @memberof GetSignableOrderResponse
      */
-    'amount_sell'?: string;
+    'amount_sell': string;
     /**
      * ID of the asset to buy
      * @type {string}
      * @memberof GetSignableOrderResponse
      */
-    'asset_id_buy'?: string;
+    'asset_id_buy': string;
     /**
      * ID of the asset to sell
      * @type {string}
      * @memberof GetSignableOrderResponse
      */
-    'asset_id_sell'?: string;
+    'asset_id_sell': string;
     /**
      * Expiration timestamp for this order
      * @type {number}
      * @memberof GetSignableOrderResponse
      */
-    'expiration_timestamp'?: number;
+    'expiration_timestamp': number;
     /**
      * 
      * @type {FeeInfo}
@@ -62,36 +62,36 @@ export interface GetSignableOrderResponse {
      * @type {number}
      * @memberof GetSignableOrderResponse
      */
-    'nonce'?: number;
+    'nonce': number;
     /**
      * Hash of the payload to be signed for signable order
      * @type {string}
      * @memberof GetSignableOrderResponse
      */
-    'payload_hash'?: string;
+    'payload_hash': string;
     /**
      * Message to sign with L1 wallet to confirm order request
      * @type {string}
      * @memberof GetSignableOrderResponse
      */
-    'signable_message'?: string;
+    'signable_message': string;
     /**
      * Public stark key of the created user
      * @type {string}
      * @memberof GetSignableOrderResponse
      */
-    'stark_key'?: string;
+    'stark_key': string;
     /**
      * ID of the vault into which the bought asset will be placed
      * @type {number}
      * @memberof GetSignableOrderResponse
      */
-    'vault_id_buy'?: number;
+    'vault_id_buy': number;
     /**
      * ID of the vault to sell from
      * @type {number}
      * @memberof GetSignableOrderResponse
      */
-    'vault_id_sell'?: number;
+    'vault_id_sell': number;
 }
 

@@ -25,43 +25,43 @@ export interface GetSignableTransferResponseV1 {
      * @type {string}
      * @memberof GetSignableTransferResponseV1
      */
-    'amount'?: string;
+    'amount': string;
     /**
      * ID of the asset being transferred
      * @type {string}
      * @memberof GetSignableTransferResponseV1
      */
-    'asset_id'?: string;
+    'asset_id': string;
     /**
      * Token in request to match in SDK implementation
      * @type {number}
      * @memberof GetSignableTransferResponseV1
      */
-    'expiration_timestamp'?: number;
+    'expiration_timestamp': number;
     /**
      * Nonce of the transfer
      * @type {number}
      * @memberof GetSignableTransferResponseV1
      */
-    'nonce'?: number;
+    'nonce': number;
     /**
      * Hash of the payload
      * @type {string}
      * @memberof GetSignableTransferResponseV1
      */
-    'payload_hash'?: string;
+    'payload_hash': string;
     /**
      * Receiver of the transfer
      * @type {string}
      * @memberof GetSignableTransferResponseV1
      */
-    'receiver_stark_key'?: string;
+    'receiver_stark_key': string;
     /**
      * ID of the vault being transferred to
      * @type {number}
      * @memberof GetSignableTransferResponseV1
      */
-    'receiver_vault_id'?: number;
+    'receiver_vault_id': number;
     /**
      * Sender of the transfer
      * @type {string}
@@ -73,12 +73,12 @@ export interface GetSignableTransferResponseV1 {
      * @type {number}
      * @memberof GetSignableTransferResponseV1
      */
-    'sender_vault_id'?: number;
+    'sender_vault_id': number;
     /**
      * Message to sign with L1 wallet to confirm transfer request
      * @type {string}
      * @memberof GetSignableTransferResponseV1
      */
-    'signable_message'?: string;
+    'signable_message': string;
 }
 

@@ -25,18 +25,18 @@ export interface MintResultDetails {
      * @type {string}
      * @memberof MintResultDetails
      */
-    'contract_address'?: string;
+    'contract_address': string;
     /**
-     * IMX Id of this token
+     * IMX ID of this token
      * @type {string}
      * @memberof MintResultDetails
      */
-    'token_id'?: string;
+    'token_id': string;
     /**
      * Mint Transaction ID
      * @type {number}
      * @memberof MintResultDetails
      */
-    'tx_id'?: number;
+    'tx_id': number;
 }
 

@@ -25,42 +25,42 @@ export interface GetSignableWithdrawalResponse {
      * @type {string}
      * @memberof GetSignableWithdrawalResponse
      */
-    'amount'?: string;
+    'amount': string;
     /**
      * ID of the asset to be withdrawn
      * @type {string}
      * @memberof GetSignableWithdrawalResponse
      */
-    'asset_id'?: string;
+    'asset_id': string;
     /**
      * Nonce of this transaction
      * @type {number}
      * @memberof GetSignableWithdrawalResponse
      */
-    'nonce'?: number;
+    'nonce': number;
     /**
      * Encoded payload hash
      * @type {string}
      * @memberof GetSignableWithdrawalResponse
      */
-    'payload_hash'?: string;
+    'payload_hash': string;
     /**
      * Message to sign with L1 wallet to verity withdrawal request
      * @type {string}
      * @memberof GetSignableWithdrawalResponse
      */
-    'signable_message'?: string;
+    'signable_message': string;
     /**
      * Public stark key of this user
      * @type {string}
      * @memberof GetSignableWithdrawalResponse
      */
-    'stark_key'?: string;
+    'stark_key': string;
     /**
      * ID of the vault we are withdrawing from
      * @type {number}
      * @memberof GetSignableWithdrawalResponse
      */
-    'vault_id'?: number;
+    'vault_id': number;
 }
 

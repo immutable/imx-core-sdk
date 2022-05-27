@@ -25,18 +25,18 @@ export interface MintableTokenDetails {
      * @type {string}
      * @memberof MintableTokenDetails
      */
-    'blueprint'?: string;
+    'blueprint': string;
     /**
      * ID provided by the client for this token
      * @type {string}
      * @memberof MintableTokenDetails
      */
-    'client_token_id'?: string;
+    'client_token_id': string;
     /**
      * IMX Id of this token
      * @type {string}
      * @memberof MintableTokenDetails
      */
-    'token_id'?: string;
+    'token_id': string;
 }
 

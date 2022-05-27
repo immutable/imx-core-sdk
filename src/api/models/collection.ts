@@ -25,42 +25,42 @@ export interface Collection {
      * @type {string}
      * @memberof Collection
      */
-    'address'?: string;
+    'address': string;
     /**
      * URL of the tile image for this collection
      * @type {string}
      * @memberof Collection
      */
-    'collection_image_url'?: string;
+    'collection_image_url': string | null;
     /**
      * Description of the collection
      * @type {string}
      * @memberof Collection
      */
-    'description'?: string;
+    'description': string | null;
     /**
      * URL of the icon for this collection
      * @type {string}
      * @memberof Collection
      */
-    'icon_url'?: string;
+    'icon_url': string | null;
     /**
      * URL of the metadata for this collection
      * @type {string}
      * @memberof Collection
      */
-    'metadata_api_url'?: string;
+    'metadata_api_url': string | null;
     /**
      * Name of the collection
      * @type {string}
      * @memberof Collection
      */
-    'name'?: string;
+    'name': string;
     /**
      * The collection\'s project ID
      * @type {number}
      * @memberof Collection
      */
-    'project_id'?: number;
+    'project_id': number;
 }
 

@@ -25,12 +25,12 @@ export interface CollectionDetails {
      * @type {string}
      * @memberof CollectionDetails
      */
-    'icon_url'?: string;
+    'icon_url': string | null;
     /**
      * Name of the collection
      * @type {string}
      * @memberof CollectionDetails
      */
-    'name'?: string;
+    'name': string;
 }
 

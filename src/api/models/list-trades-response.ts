@@ -26,18 +26,18 @@ export interface ListTradesResponse {
      * @type {string}
      * @memberof ListTradesResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListTradesResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Trades matching query parameters
      * @type {Array<Trade>}
      * @memberof ListTradesResponse
      */
-    'result'?: Array<Trade>;
+    'result': Array<Trade>;
 }
 

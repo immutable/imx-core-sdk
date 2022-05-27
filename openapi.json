@@ -2675,25 +2675,22 @@
         }
       }
     },
-    "Application": {
-      "type": "object",
-      "properties": {
-        "created_at": {
-          "description": "Time this application was created",
-          "type": "string"
-        },
-        "id": {
-          "description": "ID of the application",
-          "type": "string"
-        },
-        "name": {
-          "description": "Name of the application",
-          "type": "string"
-        }
-      }
-    },
     "Asset": {
       "type": "object",
+      "required": [
+        "collection",
+        "created_at",
+        "description",
+        "image_url",
+        "metadata",
+        "name",
+        "status",
+        "token_address",
+        "token_id",
+        "updated_at",
+        "uri",
+        "user"
+      ],
       "properties": {
         "collection": {
           "description": "Information about the collection to which this asset belongs",
@@ -2701,11 +2698,13 @@
         },
         "created_at": {
           "description": "Timestamp of when the asset was created",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "description": {
           "description": "Description of this asset",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "fees": {
           "description": "Royalties to pay on this asset operations",
@@ -2720,15 +2719,18 @@
         },
         "image_url": {
           "description": "URL of the image which should be used for this asset",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "metadata": {
           "description": "Metadata of this asset",
-          "type": "object"
+          "type": "object",
+          "x-nullable": true
         },
         "name": {
           "description": "Name of this asset",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "orders": {
           "description": "Open orders for this asset",
@@ -2748,11 +2750,13 @@
         },
         "updated_at": {
           "description": "Timestamp of when the asset was updated",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "uri": {
           "description": "URI to access this asset externally to Immutable X",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "user": {
           "description": "Ethereum address of the user who owns this asset",
@@ -2769,16 +2773,24 @@
         },
         "image_url": {
           "description": "Image URL of this asset",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "name": {
           "description": "Name of this asset",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         }
       }
     },
     "Balance": {
       "type": "object",
+      "required": [
+        "balance",
+        "preparing_withdrawal",
+        "symbol",
+        "withdrawable"
+      ],
       "properties": {
         "balance": {
           "description": "Amount which is currently inside the exchange",
@@ -2817,6 +2829,10 @@
     },
     "CancelOrderResponse": {
       "type": "object",
+      "required": [
+        "order_id",
+        "status"
+      ],
       "properties": {
         "order_id": {
           "description": "ID of the cancelled order",
@@ -2830,6 +2846,15 @@
     },
     "Collection": {
       "type": "object",
+      "required": [
+        "address",
+        "collection_image_url",
+        "description",
+        "icon_url",
+        "metadata_api_url",
+        "name",
+        "project_id"
+      ],
       "properties": {
         "address": {
           "description": "Ethereum address of the ERC721 contract",
@@ -2837,19 +2862,23 @@
         },
         "collection_image_url": {
           "description": "URL of the tile image for this collection",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "description": {
           "description": "Description of the collection",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "icon_url": {
           "description": "URL of the icon for this collection",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "metadata_api_url": {
           "description": "URL of the metadata for this collection",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "name": {
           "description": "Name of the collection",
@@ -2863,10 +2892,15 @@
     },
     "CollectionDetails": {
       "type": "object",
+      "required": [
+        "icon_url",
+        "name"
+      ],
       "properties": {
         "icon_url": {
           "description": "URL of the icon of the collection",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "name": {
           "description": "Name of the collection",
@@ -3006,6 +3040,11 @@
     },
     "CreateOrderResponse": {
       "type": "object",
+      "required": [
+        "order_id",
+        "status",
+        "time"
+      ],
       "properties": {
         "order_id": {
           "description": "ID of the created order",
@@ -3045,6 +3084,9 @@
     },
     "CreateProjectResponse": {
       "type": "object",
+      "required": [
+        "id"
+      ],
       "properties": {
         "id": {
           "description": "The project ID",
@@ -3131,6 +3173,10 @@
     },
     "CreateTradeResponse": {
       "type": "object",
+      "required": [
+        "status",
+        "trade_id"
+      ],
       "properties": {
         "status": {
           "description": "Current status of trade",
@@ -3216,6 +3262,9 @@
     },
     "CreateTransferResponse": {
       "type": "object",
+      "required": [
+        "transfer_ids"
+      ],
       "properties": {
         "transfer_ids": {
           "description": "List of transfer IDs",
@@ -3228,6 +3277,12 @@
     },
     "CreateTransferResponseV1": {
       "type": "object",
+      "required": [
+        "sent_signature",
+        "status",
+        "time",
+        "transfer_id"
+      ],
       "properties": {
         "sent_signature": {
           "description": "[deprecated] Sent signature",
@@ -3286,6 +3341,11 @@
     },
     "CreateWithdrawalResponse": {
       "type": "object",
+      "required": [
+        "status",
+        "time",
+        "withdrawal_id"
+      ],
       "properties": {
         "status": {
           "description": "Status of the withdrawal",
@@ -3303,6 +3363,13 @@
     },
     "Deposit": {
       "type": "object",
+      "required": [
+        "status",
+        "timestamp",
+        "token",
+        "transaction_id",
+        "user"
+      ],
       "properties": {
         "status": {
           "description": "Status of this deposit in Immutable X",
@@ -3339,11 +3406,17 @@
     },
     "EncodeAssetResponse": {
       "type": "object",
+      "required": [
+        "asset_id",
+        "asset_type"
+      ],
       "properties": {
         "asset_id": {
+          "description": "Stark encoded asset id",
           "type": "string"
         },
         "asset_type": {
+          "description": "Stark encoded asset type",
           "type": "string"
         }
       }
@@ -3457,6 +3530,11 @@
     },
     "GetProjectsResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -3486,6 +3564,11 @@
     },
     "GetSignableCancelOrderResponse": {
       "type": "object",
+      "required": [
+        "order_id",
+        "payload_hash",
+        "signable_message"
+      ],
       "properties": {
         "order_id": {
           "description": "ID of the order to be cancelled",
@@ -3525,6 +3608,13 @@
     },
     "GetSignableDepositResponse": {
       "type": "object",
+      "required": [
+        "amount",
+        "asset_id",
+        "nonce",
+        "stark_key",
+        "vault_id"
+      ],
       "properties": {
         "amount": {
           "description": "Amount this user is depositing",
@@ -3593,6 +3683,19 @@
     },
     "GetSignableOrderResponse": {
       "type": "object",
+      "required": [
+        "amount_buy",
+        "amount_sell",
+        "asset_id_buy",
+        "asset_id_sell",
+        "expiration_timestamp",
+        "nonce",
+        "payload_hash",
+        "signable_message",
+        "stark_key",
+        "vault_id_buy",
+        "vault_id_sell"
+      ],
       "properties": {
         "amount_buy": {
           "description": "Fee-exclusive amount to buy",
@@ -3646,6 +3749,10 @@
     },
     "GetSignableRegistrationOffchainResponse": {
       "type": "object",
+      "required": [
+        "payload_hash",
+        "signable_message"
+      ],
       "properties": {
         "payload_hash": {
           "description": "Hash of the payload to be signed for user registration offchain",
@@ -3676,6 +3783,10 @@
     },
     "GetSignableRegistrationResponse": {
       "type": "object",
+      "required": [
+        "operator_signature",
+        "payload_hash"
+      ],
       "properties": {
         "operator_signature": {
           "description": "Signature from authorised operator",
@@ -3716,6 +3827,19 @@
     },
     "GetSignableTradeResponse": {
       "type": "object",
+      "required": [
+        "amount_buy",
+        "amount_sell",
+        "asset_id_buy",
+        "asset_id_sell",
+        "expiration_timestamp",
+        "nonce",
+        "payload_hash",
+        "signable_message",
+        "stark_key",
+        "vault_id_buy",
+        "vault_id_sell"
+      ],
       "properties": {
         "amount_buy": {
           "description": "Amount to buy",
@@ -3817,7 +3941,9 @@
     "GetSignableTransferResponse": {
       "type": "object",
       "required": [
-        "sender_stark_key"
+        "sender_stark_key",
+        "signable_message",
+        "signable_responses"
       ],
       "properties": {
         "sender_stark_key": {
@@ -3839,6 +3965,17 @@
     },
     "GetSignableTransferResponseV1": {
       "type": "object",
+      "required": [
+        "amount",
+        "asset_id",
+        "expiration_timestamp",
+        "nonce",
+        "payload_hash",
+        "receiver_stark_key",
+        "receiver_vault_id",
+        "sender_vault_id",
+        "signable_message"
+      ],
       "properties": {
         "amount": {
           "description": "Amount of the asset being transferred",
@@ -3906,6 +4043,15 @@
     },
     "GetSignableWithdrawalResponse": {
       "type": "object",
+      "required": [
+        "amount",
+        "asset_id",
+        "nonce",
+        "payload_hash",
+        "signable_message",
+        "stark_key",
+        "vault_id"
+      ],
       "properties": {
         "amount": {
           "description": "Amount of the token we are withdrawing",
@@ -3937,16 +4083,11 @@
         }
       }
     },
-    "GetTLVsResult": {
-      "type": "object",
-      "properties": {
-        "awaiting_cliff": {
-          "type": "string"
-        }
-      }
-    },
     "GetUsersApiResponse": {
       "type": "object",
+      "required": [
+        "accounts"
+      ],
       "properties": {
         "accounts": {
           "description": "Accounts",
@@ -3959,6 +4100,11 @@
     },
     "ListAssetsResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -3979,6 +4125,10 @@
     },
     "ListBalancesResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -3995,6 +4145,11 @@
     },
     "ListCollectionsResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4015,6 +4170,11 @@
     },
     "ListDepositsResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4035,6 +4195,11 @@
     },
     "ListMintsResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4055,6 +4220,11 @@
     },
     "ListOrdersResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4075,6 +4245,10 @@
     },
     "ListTokensResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4091,6 +4265,11 @@
     },
     "ListTradesResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4111,6 +4290,11 @@
     },
     "ListTransfersResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4131,6 +4315,11 @@
     },
     "ListWithdrawalsResponse": {
       "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -4151,6 +4340,11 @@
     },
     "MetadataSchemaProperty": {
       "type": "object",
+      "required": [
+        "filterable",
+        "name",
+        "type"
+      ],
       "properties": {
         "filterable": {
           "description": "Sets the metadata as filterable",
@@ -4195,6 +4389,13 @@
     },
     "Mint": {
       "type": "object",
+      "required": [
+        "status",
+        "timestamp",
+        "token",
+        "transaction_id",
+        "user"
+      ],
       "properties": {
         "fees": {
           "description": "Fee details",
@@ -4275,86 +4476,25 @@
         }
       }
     },
-    "MintRequestV1": {
-      "type": "object",
-      "required": [
-        "auth_signature",
-        "tokens",
-        "user"
-      ],
-      "properties": {
-        "auth_signature": {
-          "description": "Signature from authorised minter",
-          "type": "string"
-        },
-        "nonce": {
-          "description": "Random nonce - must be unique",
-          "type": "integer"
-        },
-        "tokens": {
-          "description": "Tokens to mint",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/MintTokens"
-          }
-        },
-        "user": {
-          "description": "Recipient of the assets",
-          "type": "string"
-        }
-      }
-    },
     "MintResultDetails": {
       "type": "object",
+      "required": [
+        "contract_address",
+        "token_id",
+        "tx_id"
+      ],
       "properties": {
         "contract_address": {
           "description": "Contract address of this token",
           "type": "string"
         },
         "token_id": {
-          "description": "IMX Id of this token",
+          "description": "IMX ID of this token",
           "type": "string"
         },
         "tx_id": {
           "description": "Mint Transaction ID",
           "type": "integer"
-        }
-      }
-    },
-    "MintResultV1": {
-      "type": "object",
-      "properties": {
-        "client_token_id": {
-          "description": "ID provided by the client for this token",
-          "type": "string"
-        },
-        "token_id": {
-          "description": "IMX Id of this token",
-          "type": "string"
-        },
-        "tx_id": {
-          "description": "Mint Transaction ID",
-          "type": "integer"
-        }
-      }
-    },
-    "MintTokenData": {
-      "type": "object",
-      "required": [
-        "id"
-      ],
-      "properties": {
-        "blueprint": {
-          "description": "Token metadata blueprint",
-          "type": "string"
-        },
-        "id": {
-          "description": "Token ID",
-          "type": "string"
-        },
-        "token_address": {
-          "description": "Token contract address",
-          "type": "string"
         }
       }
     },
@@ -4381,21 +4521,11 @@
         }
       }
     },
-    "MintTokens": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "description": "Mint token data",
-          "$ref": "#/definitions/MintTokenData"
-        },
-        "type": {
-          "description": "Token type one of ETH/ERC20/ERC721",
-          "type": "string"
-        }
-      }
-    },
     "MintTokensResponse": {
       "type": "object",
+      "required": [
+        "results"
+      ],
       "properties": {
         "results": {
           "description": "List of mint result details",
@@ -4428,6 +4558,11 @@
     },
     "MintableTokenDetails": {
       "type": "object",
+      "required": [
+        "blueprint",
+        "client_token_id",
+        "token_id"
+      ],
       "properties": {
         "blueprint": {
           "description": "Blueprint of this token",
@@ -4445,10 +4580,22 @@
     },
     "Order": {
       "type": "object",
+      "required": [
+        "amount_sold",
+        "buy",
+        "expiration_timestamp",
+        "order_id",
+        "sell",
+        "status",
+        "timestamp",
+        "updated_timestamp",
+        "user"
+      ],
       "properties": {
         "amount_sold": {
           "description": "Amount of the asset already sold by this order",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "buy": {
           "description": "Details of the asset being bought",
@@ -4456,7 +4603,8 @@
         },
         "expiration_timestamp": {
           "description": "Expiration timestamp of this order",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "fees": {
           "description": "Fee information for the order",
@@ -4479,11 +4627,13 @@
         },
         "timestamp": {
           "description": "Timestamp this order was created",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "updated_timestamp": {
           "description": "Updated timestamp of this order",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "user": {
           "description": "Ethereum address of the user who submitted the order",
@@ -4530,6 +4680,18 @@
     },
     "Project": {
       "type": "object",
+      "required": [
+        "collection_limit_expires_at",
+        "collection_monthly_limit",
+        "collection_remaining",
+        "company_name",
+        "contact_email",
+        "id",
+        "mint_limit_expires_at",
+        "mint_monthly_limit",
+        "mint_remaining",
+        "name"
+      ],
       "properties": {
         "collection_limit_expires_at": {
           "description": "The current period expiry date for collection limit",
@@ -4615,6 +4777,9 @@
     },
     "RegisterUserResponse": {
       "type": "object",
+      "required": [
+        "tx_hash"
+      ],
       "properties": {
         "tx_hash": {
           "description": "Immutable signature authorising registration",
@@ -4659,6 +4824,17 @@
     },
     "SignableTransferResponseDetails": {
       "type": "object",
+      "required": [
+        "amount",
+        "asset_id",
+        "expiration_timestamp",
+        "nonce",
+        "payload_hash",
+        "receiver_stark_key",
+        "receiver_vault_id",
+        "sender_vault_id",
+        "token"
+      ],
       "properties": {
         "amount": {
           "description": "Amount of the asset being transferred",
@@ -4698,21 +4874,11 @@
         }
       }
     },
-    "SnapshotBalancesRecord": {
-      "type": "object",
-      "properties": {
-        "balance": {
-          "description": "User's IMX balance on Immutable at a snapshot block",
-          "type": "string"
-        },
-        "ether_key": {
-          "description": "User ethereum address",
-          "type": "string"
-        }
-      }
-    },
     "SuccessResponse": {
       "type": "object",
+      "required": [
+        "result"
+      ],
       "properties": {
         "result": {
           "type": "string"
@@ -4721,6 +4887,10 @@
     },
     "Token": {
       "type": "object",
+      "required": [
+        "data",
+        "type"
+      ],
       "properties": {
         "data": {
           "description": "Token details of this asset",
@@ -4734,6 +4904,10 @@
     },
     "TokenData": {
       "type": "object",
+      "required": [
+        "quantity",
+        "quantity_with_fees"
+      ],
       "properties": {
         "decimals": {
           "description": "Number of decimals supported by this asset",
@@ -4767,6 +4941,14 @@
     },
     "TokenDetails": {
       "type": "object",
+      "required": [
+        "decimals",
+        "image_url",
+        "name",
+        "quantum",
+        "symbol",
+        "token_address"
+      ],
       "properties": {
         "decimals": {
           "description": "Number of decimals for token",
@@ -4796,6 +4978,13 @@
     },
     "Trade": {
       "type": "object",
+      "required": [
+        "a",
+        "b",
+        "status",
+        "timestamp",
+        "transaction_id"
+      ],
       "properties": {
         "a": {
           "description": "Side A of this trade",
@@ -4811,7 +5000,8 @@
         },
         "timestamp": {
           "description": "Time this trade occurred",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "transaction_id": {
           "description": "Sequential ID of this trade within Immutable X",
@@ -4821,6 +5011,11 @@
     },
     "TradeSide": {
       "type": "object",
+      "required": [
+        "order_id",
+        "sold",
+        "token_type"
+      ],
       "properties": {
         "order_id": {
           "description": "The ID of the order involved in the trade",
@@ -4846,6 +5041,15 @@
     },
     "Transfer": {
       "type": "object",
+      "required": [
+        "data",
+        "receiver",
+        "status",
+        "timestamp",
+        "transaction_id",
+        "type",
+        "user"
+      ],
       "properties": {
         "data": {
           "description": "Token details of this asset",
@@ -4861,7 +5065,8 @@
         },
         "timestamp": {
           "description": "Timestamp of the transfer",
-          "type": "string"
+          "type": "string",
+          "x-nullable": true
         },
         "transaction_id": {
           "description": "Sequential transaction ID",
@@ -4951,6 +5156,15 @@
     },
     "Withdrawal": {
       "type": "object",
+      "required": [
+        "rollup_status",
+        "sender",
+        "status",
+        "timestamp",
+        "token",
+        "transaction_id",
+        "withdrawn_to_wallet"
+      ],
       "properties": {
         "rollup_status": {
           "description": "Status of the on-chain batch confirmation for this withdrawal",

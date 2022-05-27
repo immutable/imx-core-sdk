@@ -26,18 +26,18 @@ export interface ListCollectionsResponse {
      * @type {string}
      * @memberof ListCollectionsResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListCollectionsResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Collections matching query parameters
      * @type {Array<Collection>}
      * @memberof ListCollectionsResponse
      */
-    'result'?: Array<Collection>;
+    'result': Array<Collection>;
 }
 

@@ -26,18 +26,18 @@ export interface GetProjectsResponse {
      * @type {string}
      * @memberof GetProjectsResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof GetProjectsResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Projects matching query parameters
      * @type {Array<Project>}
      * @memberof GetProjectsResponse
      */
-    'result'?: Array<Project>;
+    'result': Array<Project>;
 }
 

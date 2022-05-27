@@ -26,18 +26,18 @@ export interface ListAssetsResponse {
      * @type {string}
      * @memberof ListAssetsResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListAssetsResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Assets matching query parameters
      * @type {Array<Asset>}
      * @memberof ListAssetsResponse
      */
-    'result'?: Array<Asset>;
+    'result': Array<Asset>;
 }
 

@@ -2,7 +2,7 @@
 generate-openapi: get-openapi generate-api
 
 .PHONY: get-openapi
-get-openapi:
+get-openapi-prod:
 	curl -H "Accept: application/json+v3" \
     https://api.x.immutable.com/openapi \
     -o openapi.json

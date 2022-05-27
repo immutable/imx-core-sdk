@@ -26,12 +26,12 @@ export interface ListTokensResponse {
      * @type {string}
      * @memberof ListTokensResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Tokens matching query parameters
      * @type {Array<TokenDetails>}
      * @memberof ListTokensResponse
      */
-    'result'?: Array<TokenDetails>;
+    'result': Array<TokenDetails>;
 }
 

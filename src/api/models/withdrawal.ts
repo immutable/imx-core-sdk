@@ -26,42 +26,42 @@ export interface Withdrawal {
      * @type {string}
      * @memberof Withdrawal
      */
-    'rollup_status'?: string;
+    'rollup_status': string;
     /**
      * Ethereum address of the user who requested this withdrawal
      * @type {string}
      * @memberof Withdrawal
      */
-    'sender'?: string;
+    'sender': string;
     /**
      * Status of this withdrawal
      * @type {string}
      * @memberof Withdrawal
      */
-    'status'?: string;
+    'status': string;
     /**
      * Time when this withdrawal was initiated
      * @type {string}
      * @memberof Withdrawal
      */
-    'timestamp'?: string;
+    'timestamp': string;
     /**
      * 
      * @type {Token}
      * @memberof Withdrawal
      */
-    'token'?: Token;
+    'token': Token;
     /**
      * Sequential ID of this transaction
      * @type {number}
      * @memberof Withdrawal
      */
-    'transaction_id'?: number;
+    'transaction_id': number;
     /**
      * Withdrawal has been transferred to user\'s Layer 1 wallet
      * @type {boolean}
      * @memberof Withdrawal
      */
-    'withdrawn_to_wallet'?: boolean;
+    'withdrawn_to_wallet': boolean;
 }
 

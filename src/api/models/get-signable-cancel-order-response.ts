@@ -25,18 +25,18 @@ export interface GetSignableCancelOrderResponse {
      * @type {number}
      * @memberof GetSignableCancelOrderResponse
      */
-    'order_id'?: number;
+    'order_id': number;
     /**
      * Hash of the payload to be signed for cancel order
      * @type {string}
      * @memberof GetSignableCancelOrderResponse
      */
-    'payload_hash'?: string;
+    'payload_hash': string;
     /**
      * Message to sign from wallet to confirm cancel order
      * @type {string}
      * @memberof GetSignableCancelOrderResponse
      */
-    'signable_message'?: string;
+    'signable_message': string;
 }
 
