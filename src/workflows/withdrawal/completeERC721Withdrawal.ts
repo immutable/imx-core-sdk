@@ -115,7 +115,7 @@ async function completeMintableERC721Withdrawal(
   if (!isRegistered) {
     return executeRegisterAndWithdrawMintableERC721(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       mintingBlob,
       registrationContract,
@@ -124,7 +124,7 @@ async function completeMintableERC721Withdrawal(
   } else {
     return executeWithdrawMintableERC721(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       mintingBlob,
       coreContract,
@@ -152,7 +152,7 @@ async function executeRegisterAndWithdrawMintableERC721(
     await contract.populateTransaction.regsiterAndWithdrawAndMint(
       etherKey,
       starkPublicKey,
-      signableResult.operator_signature!,
+      signableResult.operator_signature,
       assetType,
       mintingBlob,
     );
@@ -215,7 +215,7 @@ async function completeERC721Withdrawal(
   if (!isRegistered) {
     return executeRegisterAndWithdrawERC721(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       token.data.tokenId,
       registrationContract,
@@ -224,7 +224,7 @@ async function completeERC721Withdrawal(
   } else {
     return executeWithdrawERC721(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       token.data.tokenId,
       coreContract,
@@ -252,7 +252,7 @@ async function executeRegisterAndWithdrawERC721(
     await contract.populateTransaction.registerAndWithdrawNft(
       etherKey,
       starkPublicKey,
-      signableResult.operator_signature!,
+      signableResult.operator_signature,
       assetType,
       tokenId,
     );

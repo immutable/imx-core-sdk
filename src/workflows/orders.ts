@@ -41,18 +41,18 @@ export async function createOrderWorkflow(
 
   const orderParams: OrdersApiCreateOrderRequest = {
     createOrderRequest: {
-      amount_buy: resp.amount_buy!,
-      amount_sell: resp.amount_sell!,
-      asset_id_buy: resp.asset_id_buy!,
-      asset_id_sell: resp.asset_id_sell!,
-      expiration_timestamp: resp.expiration_timestamp!,
+      amount_buy: resp.amount_buy,
+      amount_sell: resp.amount_sell,
+      asset_id_buy: resp.asset_id_buy,
+      asset_id_sell: resp.asset_id_sell,
+      expiration_timestamp: resp.expiration_timestamp,
       include_fees: true,
       fees: request.fees,
-      nonce: resp.nonce!,
-      stark_key: resp.stark_key!,
+      nonce: resp.nonce,
+      stark_key: resp.stark_key,
       stark_signature: starkSignature,
-      vault_id_buy: resp.vault_id_buy!,
-      vault_id_sell: resp.vault_id_sell!,
+      vault_id_buy: resp.vault_id_buy,
+      vault_id_sell: resp.vault_id_sell,
     },
     xImxEthAddress: ethAddress,
     xImxEthSignature: ethSignature,
@@ -99,9 +99,9 @@ export async function cancelOrderWorkflow(
   const ethAddress = await signer.getAddress();
 
   const cancelOrderResponse = await ordersApi.cancelOrder({
-    id: request.order_id!.toString(),
+    id: request.order_id.toString(),
     cancelOrderRequest: {
-      order_id: request.order_id!,
+      order_id: request.order_id,
       stark_signature: starkSignature,
     },
     xImxEthAddress: ethAddress,

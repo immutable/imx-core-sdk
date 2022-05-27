@@ -44,7 +44,7 @@ export async function completeEthWithdrawalWorkflow(
   if (!isRegistered) {
     return executeRegisterAndWithdrawEth(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       registrationContract,
       usersApi,
@@ -52,7 +52,7 @@ export async function completeEthWithdrawalWorkflow(
   } else {
     return executeWithdrawEth(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       coreContract,
     );
@@ -78,7 +78,7 @@ async function executeRegisterAndWithdrawEth(
     await contract.populateTransaction.registerAndWithdraw(
       etherKey,
       starkPublicKey,
-      signableResult.operator_signature!,
+      signableResult.operator_signature,
       assetType,
     );
 

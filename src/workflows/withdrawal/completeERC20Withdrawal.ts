@@ -53,7 +53,7 @@ export async function completeERC20WithdrawalWorfklow(
   if (!isRegistered) {
     return executeRegisterAndWithdrawERC20(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       registrationContract,
       usersApi,
@@ -61,7 +61,7 @@ export async function completeERC20WithdrawalWorfklow(
   } else {
     return executeWithdrawERC20(
       signer,
-      assetType.asset_type!,
+      assetType.asset_type,
       starkPublicKey,
       coreContract,
     );
@@ -87,7 +87,7 @@ async function executeRegisterAndWithdrawERC20(
     await contract.populateTransaction.registerAndWithdraw(
       etherKey,
       starkPublicKey,
-      signableResult.operator_signature!,
+      signableResult.operator_signature,
       assetType,
     );
 

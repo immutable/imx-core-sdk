@@ -52,9 +52,9 @@ export async function depositEthWorkflow(
     },
   });
 
-  const assetType = encodingResult.data.asset_type!;
-  const starkPublicKey = signableDepositResult.data.stark_key!;
-  const vaultId = signableDepositResult.data.vault_id!;
+  const assetType = encodingResult.data.asset_type;
+  const starkPublicKey = signableDepositResult.data.stark_key;
+  const vaultId = signableDepositResult.data.vault_id;
 
   // Get instance of core contract
   const coreContract = Core__factory.connect(
@@ -117,7 +117,7 @@ async function executeRegisterAndDepositEth(
     await contract.populateTransaction.registerAndDepositEth(
       etherKey,
       starkPublicKey,
-      signableResult.operator_signature!,
+      signableResult.operator_signature,
       assetType,
       vaultId,
     );

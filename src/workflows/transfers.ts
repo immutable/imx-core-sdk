@@ -47,14 +47,14 @@ export async function transfersWorkflow(
 
   // Assemble transfer params
   const transferSigningParams = {
-    sender_stark_key: signableResult.data.sender_stark_key!,
-    sender_vault_id: signableResult.data.sender_vault_id!,
-    receiver_stark_key: signableResult.data.receiver_stark_key!,
-    receiver_vault_id: signableResult.data.receiver_vault_id!,
-    asset_id: signableResult.data.asset_id!,
-    amount: signableResult.data.amount!,
-    nonce: signableResult.data.nonce!,
-    expiration_timestamp: signableResult.data.expiration_timestamp!,
+    sender_stark_key: signableResult.data.sender_stark_key,
+    sender_vault_id: signableResult.data.sender_vault_id,
+    receiver_stark_key: signableResult.data.receiver_stark_key,
+    receiver_vault_id: signableResult.data.receiver_vault_id,
+    asset_id: signableResult.data.asset_id,
+    amount: signableResult.data.amount,
+    nonce: signableResult.data.nonce,
+    expiration_timestamp: signableResult.data.expiration_timestamp,
     stark_signature: starkSignature,
   };
 
@@ -103,16 +103,16 @@ export async function batchTransfersWorkflow(
   // Assemble transfer params and sign payload hash
   const transferSigningParams = {
     sender_stark_key: signableResult.data.sender_stark_key,
-    requests: signableResult.data.signable_responses!.map(resp => ({
-      sender_vault_id: resp.sender_vault_id!,
-      receiver_stark_key: resp.receiver_stark_key!,
-      receiver_vault_id: resp.receiver_vault_id!,
-      asset_id: resp.asset_id!,
-      amount: resp.amount!,
-      nonce: resp.nonce!,
-      expiration_timestamp: resp.expiration_timestamp!,
+    requests: signableResult.data.signable_responses.map(resp => ({
+      sender_vault_id: resp.sender_vault_id,
+      receiver_stark_key: resp.receiver_stark_key,
+      receiver_vault_id: resp.receiver_vault_id,
+      asset_id: resp.asset_id,
+      amount: resp.amount,
+      nonce: resp.nonce,
+      expiration_timestamp: resp.expiration_timestamp,
       stark_signature: serializeSignature(
-        sign(starkWallet.starkKeyPair, resp.payload_hash!),
+        sign(starkWallet.starkKeyPair, resp.payload_hash),
       ),
     })),
   };
