@@ -21,8 +21,6 @@ export async function completeEthWithdrawalWorkflow(
   usersApi: UsersApi,
   config: Config,
 ) {
-  // TODO remove log once UAT passes
-  console.log('completeEthWithdrawalWorkflow');
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   // Get instance of core contract
@@ -42,8 +40,6 @@ export async function completeEthWithdrawalWorkflow(
     starkPublicKey,
     registrationContract,
   );
-  // TODO remove log once UAT passes
-  console.log('isRegistered', isRegistered);
 
   if (!isRegistered) {
     return executeRegisterAndWithdrawEth(
@@ -70,8 +66,6 @@ async function executeRegisterAndWithdrawEth(
   contract: Registration,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
-  // TODO remove log once UAT passes
-  console.log('executeRegisterAndWithdrawEth');
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -97,11 +91,10 @@ async function executeWithdrawEth(
   starkPublicKey: string,
   contract: Core,
 ): Promise<TransactionResponse> {
-  // TODO remove log once UAT passes
-  console.log('executeWithdrawEth');
   const populatedTrasaction = await contract.populateTransaction.withdraw(
     starkPublicKey,
     assetType,
   );
+
   return signer.sendTransaction(populatedTrasaction);
 }

@@ -22,8 +22,6 @@ export async function completeERC20WithdrawalWorfklow(
   usersApi: UsersApi,
   config: Config,
 ) {
-  // TODO remove log once UAT passes
-  console.log('completeERC20WithdrawalWorfklow');
   const assetType = await getEncodeAssetInfo(
     'asset',
     TokenType.ERC20,
@@ -51,8 +49,6 @@ export async function completeERC20WithdrawalWorfklow(
     starkPublicKey,
     registrationContract,
   );
-  // TODO remove log once UAT passes
-  console.log('isRegistered', isRegistered);
 
   if (!isRegistered) {
     return executeRegisterAndWithdrawERC20(
@@ -79,8 +75,6 @@ async function executeRegisterAndWithdrawERC20(
   contract: Registration,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
-  // TODO remove log once UAT passes
-  console.log('executeRegisterAndWithdrawERC20');
   const etherKey = await signer.getAddress();
 
   const signableResult = await getSignableRegistrationOnchain(
@@ -106,11 +100,10 @@ async function executeWithdrawERC20(
   starkPublicKey: string,
   contract: Core,
 ): Promise<TransactionResponse> {
-  // TODO remove log once UAT passes
-  console.log('executeWithdrawERC20');
   const populatedTrasaction = await contract.populateTransaction.withdraw(
     starkPublicKey,
     assetType,
   );
+
   return signer.sendTransaction(populatedTrasaction);
 }
