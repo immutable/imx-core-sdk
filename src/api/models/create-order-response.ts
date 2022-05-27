@@ -25,18 +25,18 @@ export interface CreateOrderResponse {
      * @type {number}
      * @memberof CreateOrderResponse
      */
-    'order_id'?: number;
+    'order_id': number;
     /**
      * Status of the created order
      * @type {string}
      * @memberof CreateOrderResponse
      */
-    'status'?: string;
+    'status': string;
     /**
      * Timestamp of the created order
      * @type {number}
      * @memberof CreateOrderResponse
      */
-    'time'?: number;
+    'time': number;
 }
 

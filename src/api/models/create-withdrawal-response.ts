@@ -25,18 +25,18 @@ export interface CreateWithdrawalResponse {
      * @type {string}
      * @memberof CreateWithdrawalResponse
      */
-    'status'?: string;
+    'status': string;
     /**
      * Time of the withdrawal
      * @type {number}
      * @memberof CreateWithdrawalResponse
      */
-    'time'?: number;
+    'time': number;
     /**
      * ID of the withdrawal
      * @type {number}
      * @memberof CreateWithdrawalResponse
      */
-    'withdrawal_id'?: number;
+    'withdrawal_id': number;
 }
 

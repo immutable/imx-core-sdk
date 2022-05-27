@@ -26,12 +26,12 @@ export interface ListBalancesResponse {
      * @type {string}
      * @memberof ListBalancesResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Dictionary of tokens
      * @type {Array<Balance>}
      * @memberof ListBalancesResponse
      */
-    'result'?: Array<Balance>;
+    'result': Array<Balance>;
 }
 

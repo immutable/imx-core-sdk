@@ -25,12 +25,12 @@ export interface CancelOrderResponse {
      * @type {number}
      * @memberof CancelOrderResponse
      */
-    'order_id'?: number;
+    'order_id': number;
     /**
      * New status of the order
      * @type {string}
      * @memberof CancelOrderResponse
      */
-    'status'?: string;
+    'status': string;
 }
 

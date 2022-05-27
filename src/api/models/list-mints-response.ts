@@ -26,18 +26,18 @@ export interface ListMintsResponse {
      * @type {string}
      * @memberof ListMintsResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListMintsResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Mints matching query parameters
      * @type {Array<Mint>}
      * @memberof ListMintsResponse
      */
-    'result'?: Array<Mint>;
+    'result': Array<Mint>;
 }
 

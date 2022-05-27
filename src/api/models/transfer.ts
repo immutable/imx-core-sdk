@@ -26,42 +26,42 @@ export interface Transfer {
      * @type {TokenData}
      * @memberof Transfer
      */
-    'data'?: TokenData;
+    'data': TokenData;
     /**
      * Ethereum address of the user who received this transfer
      * @type {string}
      * @memberof Transfer
      */
-    'receiver'?: string;
+    'receiver': string;
     /**
      * Status of the transaction
      * @type {string}
      * @memberof Transfer
      */
-    'status'?: string;
+    'status': string;
     /**
      * Timestamp of the transfer
      * @type {string}
      * @memberof Transfer
      */
-    'timestamp'?: string;
+    'timestamp': string | null;
     /**
      * Sequential transaction ID
      * @type {number}
      * @memberof Transfer
      */
-    'transaction_id'?: number;
+    'transaction_id': number;
     /**
      * Type of this asset (ETH/ERC20/ERC721)
      * @type {string}
      * @memberof Transfer
      */
-    'type'?: string;
+    'type': string;
     /**
      * Ethereum address of the user  who submitted this transfer
      * @type {string}
      * @memberof Transfer
      */
-    'user'?: string;
+    'user': string;
 }
 

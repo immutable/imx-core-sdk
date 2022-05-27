@@ -21,16 +21,16 @@
  */
 export interface EncodeAssetResponse {
     /**
-     * 
+     * Stark encoded asset id
      * @type {string}
      * @memberof EncodeAssetResponse
      */
-    'asset_id'?: string;
+    'asset_id': string;
     /**
-     * 
+     * Stark encoded asset type
      * @type {string}
      * @memberof EncodeAssetResponse
      */
-    'asset_type'?: string;
+    'asset_type': string;
 }
 

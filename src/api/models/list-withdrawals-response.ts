@@ -26,18 +26,18 @@ export interface ListWithdrawalsResponse {
      * @type {string}
      * @memberof ListWithdrawalsResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListWithdrawalsResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Withdrawals matching query parameters
      * @type {Array<Withdrawal>}
      * @memberof ListWithdrawalsResponse
      */
-    'result'?: Array<Withdrawal>;
+    'result': Array<Withdrawal>;
 }
 

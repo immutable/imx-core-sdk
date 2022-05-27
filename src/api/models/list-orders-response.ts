@@ -26,18 +26,18 @@ export interface ListOrdersResponse {
      * @type {string}
      * @memberof ListOrdersResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListOrdersResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Orders matching query parameters
      * @type {Array<Order>}
      * @memberof ListOrdersResponse
      */
-    'result'?: Array<Order>;
+    'result': Array<Order>;
 }
 

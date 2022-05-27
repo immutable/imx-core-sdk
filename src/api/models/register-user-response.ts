@@ -25,6 +25,6 @@ export interface RegisterUserResponse {
      * @type {string}
      * @memberof RegisterUserResponse
      */
-    'tx_hash'?: string;
+    'tx_hash': string;
 }
 

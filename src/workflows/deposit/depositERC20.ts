@@ -34,7 +34,7 @@ export async function depositERC20Workflow(
 
   // Get decimals for this specific ERC20
   const token = await tokensApi.getToken({ address: deposit.tokenAddress });
-  const decimals = parseInt(token.data.decimals!);
+  const decimals = parseInt(token.data.decimals);
 
   const data: ERC20TokenData = {
     decimals,
@@ -78,10 +78,10 @@ export async function depositERC20Workflow(
     },
   });
 
-  const assetType = encodingResult.data.asset_type!;
-  const starkPublicKey = signableDepositResult.data.stark_key!;
-  const vaultId = signableDepositResult.data.vault_id!;
-  const quantizedAmount = BigNumber.from(signableDepositResult.data.amount!);
+  const assetType = encodingResult.data.asset_type;
+  const starkPublicKey = signableDepositResult.data.stark_key;
+  const vaultId = signableDepositResult.data.vault_id;
+  const quantizedAmount = BigNumber.from(signableDepositResult.data.amount);
 
   // Get instance of core contract
   const coreContract = Core__factory.connect(
@@ -144,7 +144,7 @@ async function executeRegisterAndDepositERC20(
     await contract.populateTransaction.registerAndDepositERC20(
       etherKey,
       starkPublicKey,
-      signableResult.operator_signature!,
+      signableResult.operator_signature,
       assetType,
       vaultId,
       quantizedAmount,

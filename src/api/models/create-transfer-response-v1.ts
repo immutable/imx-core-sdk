@@ -25,24 +25,24 @@ export interface CreateTransferResponseV1 {
      * @type {string}
      * @memberof CreateTransferResponseV1
      */
-    'sent_signature'?: string;
+    'sent_signature': string;
     /**
      * [deprecated] The status of transfer
      * @type {string}
      * @memberof CreateTransferResponseV1
      */
-    'status'?: string;
+    'status': string;
     /**
      * [deprecated] Time of the transfer
      * @type {number}
      * @memberof CreateTransferResponseV1
      */
-    'time'?: number;
+    'time': number;
     /**
      * ID of the transfer
      * @type {number}
      * @memberof CreateTransferResponseV1
      */
-    'transfer_id'?: number;
+    'transfer_id': number;
 }
 

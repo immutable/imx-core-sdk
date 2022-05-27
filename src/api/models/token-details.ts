@@ -25,36 +25,36 @@ export interface TokenDetails {
      * @type {string}
      * @memberof TokenDetails
      */
-    'decimals'?: string;
+    'decimals': string;
     /**
      * Url for the icon of the token
      * @type {string}
      * @memberof TokenDetails
      */
-    'image_url'?: string;
+    'image_url': string;
     /**
      * Full name of the token (e.g. Ether)
      * @type {string}
      * @memberof TokenDetails
      */
-    'name'?: string;
+    'name': string;
     /**
      * Quantum for token
      * @type {string}
      * @memberof TokenDetails
      */
-    'quantum'?: string;
+    'quantum': string;
     /**
      * Ticker symbol for token (e.g. ETH/USDC/IMX)
      * @type {string}
      * @memberof TokenDetails
      */
-    'symbol'?: string;
+    'symbol': string;
     /**
      * Address of the ERC721 contract
      * @type {string}
      * @memberof TokenDetails
      */
-    'token_address'?: string;
+    'token_address': string;
 }
 

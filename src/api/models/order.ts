@@ -27,19 +27,19 @@ export interface Order {
      * @type {string}
      * @memberof Order
      */
-    'amount_sold'?: string;
+    'amount_sold': string | null;
     /**
      * 
      * @type {Token}
      * @memberof Order
      */
-    'buy'?: Token;
+    'buy': Token;
     /**
      * Expiration timestamp of this order
      * @type {string}
      * @memberof Order
      */
-    'expiration_timestamp'?: string;
+    'expiration_timestamp': string | null;
     /**
      * Fee information for the order
      * @type {Array<OrderFeeInfo>}
@@ -51,36 +51,36 @@ export interface Order {
      * @type {number}
      * @memberof Order
      */
-    'order_id'?: number;
+    'order_id': number;
     /**
      * 
      * @type {Token}
      * @memberof Order
      */
-    'sell'?: Token;
+    'sell': Token;
     /**
      * Status of the order
      * @type {string}
      * @memberof Order
      */
-    'status'?: string;
+    'status': string;
     /**
      * Timestamp this order was created
      * @type {string}
      * @memberof Order
      */
-    'timestamp'?: string;
+    'timestamp': string | null;
     /**
      * Updated timestamp of this order
      * @type {string}
      * @memberof Order
      */
-    'updated_timestamp'?: string;
+    'updated_timestamp': string | null;
     /**
      * Ethereum address of the user who submitted the order
      * @type {string}
      * @memberof Order
      */
-    'user'?: string;
+    'user': string;
 }
 

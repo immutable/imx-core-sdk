@@ -25,24 +25,24 @@ export interface Balance {
      * @type {string}
      * @memberof Balance
      */
-    'balance'?: string;
+    'balance': string;
     /**
      * Amount which is currently preparing withdrawal from the exchange
      * @type {string}
      * @memberof Balance
      */
-    'preparing_withdrawal'?: string;
+    'preparing_withdrawal': string;
     /**
      * Symbol of the token (e.g. ETH, IMX)
      * @type {string}
      * @memberof Balance
      */
-    'symbol'?: string;
+    'symbol': string;
     /**
      * Amount which is currently withdrawable from the exchange
      * @type {string}
      * @memberof Balance
      */
-    'withdrawable'?: string;
+    'withdrawable': string;
 }
 

@@ -25,6 +25,6 @@ export interface CreateTransferResponse {
      * @type {Array<number>}
      * @memberof CreateTransferResponse
      */
-    'transfer_ids'?: Array<number>;
+    'transfer_ids': Array<number>;
 }
 

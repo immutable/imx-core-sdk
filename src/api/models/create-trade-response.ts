@@ -25,12 +25,12 @@ export interface CreateTradeResponse {
      * @type {string}
      * @memberof CreateTradeResponse
      */
-    'status'?: string;
+    'status': string;
     /**
      * ID of trade within Immutable X
      * @type {number}
      * @memberof CreateTradeResponse
      */
-    'trade_id'?: number;
+    'trade_id': number;
 }
 

@@ -26,12 +26,12 @@ export interface Token {
      * @type {TokenData}
      * @memberof Token
      */
-    'data'?: TokenData;
+    'data': TokenData;
     /**
      * Type of this asset (ETH/ERC20/ERC721)
      * @type {string}
      * @memberof Token
      */
-    'type'?: string;
+    'type': string;
 }
 

@@ -26,30 +26,30 @@ export interface Deposit {
      * @type {string}
      * @memberof Deposit
      */
-    'status'?: string;
+    'status': string;
     /**
      * Timestamp of the deposit
      * @type {string}
      * @memberof Deposit
      */
-    'timestamp'?: string;
+    'timestamp': string;
     /**
      * 
      * @type {Token}
      * @memberof Deposit
      */
-    'token'?: Token;
+    'token': Token;
     /**
      * Sequential ID of this transaction within Immutable X
      * @type {number}
      * @memberof Deposit
      */
-    'transaction_id'?: number;
+    'transaction_id': number;
     /**
      * Ethereum address of the user making this deposit
      * @type {string}
      * @memberof Deposit
      */
-    'user'?: string;
+    'user': string;
 }
 

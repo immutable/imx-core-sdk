@@ -25,13 +25,13 @@ export interface TradeSide {
      * @type {number}
      * @memberof TradeSide
      */
-    'order_id'?: number;
+    'order_id': number;
     /**
      * The amount of that order\'s asset this trade sold
      * @type {string}
      * @memberof TradeSide
      */
-    'sold'?: string;
+    'sold': string;
     /**
      * The contract address of the token that this trade sold
      * @type {string}
@@ -49,6 +49,6 @@ export interface TradeSide {
      * @type {string}
      * @memberof TradeSide
      */
-    'token_type'?: string;
+    'token_type': string;
 }
 

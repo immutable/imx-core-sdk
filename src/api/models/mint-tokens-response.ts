@@ -26,6 +26,6 @@ export interface MintTokensResponse {
      * @type {Array<MintResultDetails>}
      * @memberof MintTokensResponse
      */
-    'results'?: Array<MintResultDetails>;
+    'results': Array<MintResultDetails>;
 }
 

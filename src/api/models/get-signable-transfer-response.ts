@@ -32,12 +32,12 @@ export interface GetSignableTransferResponse {
      * @type {string}
      * @memberof GetSignableTransferResponse
      */
-    'signable_message'?: string;
+    'signable_message': string;
     /**
      * List of transfer responses without the sender stark key
      * @type {Array<SignableTransferResponseDetails>}
      * @memberof GetSignableTransferResponse
      */
-    'signable_responses'?: Array<SignableTransferResponseDetails>;
+    'signable_responses': Array<SignableTransferResponseDetails>;
 }
 

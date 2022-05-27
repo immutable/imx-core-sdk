@@ -25,30 +25,30 @@ export interface GetSignableDepositResponse {
      * @type {string}
      * @memberof GetSignableDepositResponse
      */
-    'amount'?: string;
+    'amount': string;
     /**
      * ID of the asset this user is depositing
      * @type {string}
      * @memberof GetSignableDepositResponse
      */
-    'asset_id'?: string;
+    'asset_id': string;
     /**
      * Nonce of the deposit
      * @type {number}
      * @memberof GetSignableDepositResponse
      */
-    'nonce'?: number;
+    'nonce': number;
     /**
      * Public stark key of the depositing user
      * @type {string}
      * @memberof GetSignableDepositResponse
      */
-    'stark_key'?: string;
+    'stark_key': string;
     /**
      * ID of the vault this user is depositing to
      * @type {number}
      * @memberof GetSignableDepositResponse
      */
-    'vault_id'?: number;
+    'vault_id': number;
 }
 

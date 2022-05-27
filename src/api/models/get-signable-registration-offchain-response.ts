@@ -25,12 +25,12 @@ export interface GetSignableRegistrationOffchainResponse {
      * @type {string}
      * @memberof GetSignableRegistrationOffchainResponse
      */
-    'payload_hash'?: string;
+    'payload_hash': string;
     /**
      * Message to sign with L1 wallet to register user offchain
      * @type {string}
      * @memberof GetSignableRegistrationOffchainResponse
      */
-    'signable_message'?: string;
+    'signable_message': string;
 }
 

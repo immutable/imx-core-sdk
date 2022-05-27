@@ -28,19 +28,19 @@ export interface Asset {
      * @type {CollectionDetails}
      * @memberof Asset
      */
-    'collection'?: CollectionDetails;
+    'collection': CollectionDetails;
     /**
      * Timestamp of when the asset was created
      * @type {string}
      * @memberof Asset
      */
-    'created_at'?: string;
+    'created_at': string | null;
     /**
      * Description of this asset
      * @type {string}
      * @memberof Asset
      */
-    'description'?: string;
+    'description': string | null;
     /**
      * Royalties to pay on this asset operations
      * @type {Array<Fee>}
@@ -58,19 +58,19 @@ export interface Asset {
      * @type {string}
      * @memberof Asset
      */
-    'image_url'?: string;
+    'image_url': string | null;
     /**
      * Metadata of this asset
      * @type {object}
      * @memberof Asset
      */
-    'metadata'?: object;
+    'metadata': object | null;
     /**
      * Name of this asset
      * @type {string}
      * @memberof Asset
      */
-    'name'?: string;
+    'name': string | null;
     /**
      * 
      * @type {OrderDetails}
@@ -82,36 +82,36 @@ export interface Asset {
      * @type {string}
      * @memberof Asset
      */
-    'status'?: string;
+    'status': string;
     /**
      * Address of the ERC721 contract
      * @type {string}
      * @memberof Asset
      */
-    'token_address'?: string;
+    'token_address': string;
     /**
      * ERC721 Token ID of this asset
      * @type {string}
      * @memberof Asset
      */
-    'token_id'?: string;
+    'token_id': string;
     /**
      * Timestamp of when the asset was updated
      * @type {string}
      * @memberof Asset
      */
-    'updated_at'?: string;
+    'updated_at': string | null;
     /**
      * URI to access this asset externally to Immutable X
      * @type {string}
      * @memberof Asset
      */
-    'uri'?: string;
+    'uri': string | null;
     /**
      * Ethereum address of the user who owns this asset
      * @type {string}
      * @memberof Asset
      */
-    'user'?: string;
+    'user': string;
 }
 

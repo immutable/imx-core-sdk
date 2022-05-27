@@ -26,18 +26,18 @@ export interface ListDepositsResponse {
      * @type {string}
      * @memberof ListDepositsResponse
      */
-    'cursor'?: string;
+    'cursor': string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
      * @memberof ListDepositsResponse
      */
-    'remaining'?: number;
+    'remaining': number;
     /**
      * Deposits matching query parameters
      * @type {Array<Deposit>}
      * @memberof ListDepositsResponse
      */
-    'result'?: Array<Deposit>;
+    'result': Array<Deposit>;
 }
 

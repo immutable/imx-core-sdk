@@ -26,30 +26,30 @@ export interface Trade {
      * @type {TradeSide}
      * @memberof Trade
      */
-    'a'?: TradeSide;
+    'a': TradeSide;
     /**
      * 
      * @type {TradeSide}
      * @memberof Trade
      */
-    'b'?: TradeSide;
+    'b': TradeSide;
     /**
      * Status of this trade
      * @type {string}
      * @memberof Trade
      */
-    'status'?: string;
+    'status': string;
     /**
      * Time this trade occurred
      * @type {string}
      * @memberof Trade
      */
-    'timestamp'?: string;
+    'timestamp': string | null;
     /**
      * Sequential ID of this trade within Immutable X
      * @type {number}
      * @memberof Trade
      */
-    'transaction_id'?: number;
+    'transaction_id': number;
 }
 

@@ -73,9 +73,9 @@ export async function depositERC721Workflow(
     },
   });
 
-  const assetType = encodingResult.data.asset_type!;
-  const starkPublicKey = signableDepositResult.data.stark_key!;
-  const vaultId = signableDepositResult.data.vault_id!;
+  const assetType = encodingResult.data.asset_type;
+  const starkPublicKey = signableDepositResult.data.stark_key;
+  const vaultId = signableDepositResult.data.vault_id;
 
   // Get instance of core contract
   const coreContract = Core__factory.connect(
@@ -139,7 +139,7 @@ async function executeRegisterAndDepositERC721(
     await contract.populateTransaction.registerAndDepositNft(
       etherKey,
       starkPublicKey,
-      signableResult.operator_signature!,
+      signableResult.operator_signature,
       assetType,
       vaultId,
       tokenId,

@@ -25,6 +25,6 @@ export interface GetUsersApiResponse {
      * @type {Array<string>}
      * @memberof GetUsersApiResponse
      */
-    'accounts'?: Array<string>;
+    'accounts': Array<string>;
 }
 
