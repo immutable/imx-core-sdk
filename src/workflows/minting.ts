@@ -15,12 +15,12 @@ export async function mintingWorkflow(signer: Signer,
   //TODO: improve this object key rearrangement.
   //object keys should respect this order, but the logic can be improved
   const users = request.users.map(user => ({
-    ether_key: user.user.toLowerCase(),
+    ether_key: user.user,
     tokens: user.tokens.map(token => ({
       id: token.id,
       ...(token.blueprint && { blueprint: token.blueprint }),
       ...(token.royalties && token.royalties.length > 0 && { royalties: token.royalties.map(royalty => ( {
-        recipient: royalty.recipient.toLowerCase(),
+        recipient: royalty.recipient,
         percentage: royalty.percentage,
       })) }),
     })),
@@ -31,7 +31,7 @@ export async function mintingWorkflow(signer: Signer,
     contract_address: request.contract_address,
     ...(royalties && royalties.length > 0 && {
       royalties: royalties.map(fee => ({
-        recipient: fee.recipient.toLowerCase(),
+        recipient: fee.recipient,
         percentage: fee.percentage,
       })),
     }),

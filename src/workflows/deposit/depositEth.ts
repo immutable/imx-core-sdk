@@ -23,7 +23,7 @@ export async function depositEthWorkflow(
   config: Config,
 ): Promise<TransactionResponse> {
   // Configure request parameters
-  const user = (await signer.getAddress()).toLowerCase();
+  const user = (await signer.getAddress());
   const data: ETHTokenData = {
     decimals: 18,
   };

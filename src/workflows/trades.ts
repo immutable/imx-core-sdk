@@ -10,7 +10,7 @@ export async function createTradeWorkflow(
   tradesApi: TradesApi,
 ) {
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress()).toLowerCase();
+  const ethAddress = (await signer.getAddress());
 
   const signableResult = await tradesApi.getSignableTrade({
     getSignableTradeRequest: {

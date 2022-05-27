@@ -38,7 +38,7 @@ export async function transfersWorkflow(
   );
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress()).toLowerCase();
+  const ethAddress = (await signer.getAddress());
 
   // Assemble transfer params
   const transferSigningParams = {
@@ -89,7 +89,7 @@ export async function batchTransfersWorkflow(
   }
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress()).toLowerCase();
+  const ethAddress = (await signer.getAddress());
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);
