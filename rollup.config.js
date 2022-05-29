@@ -2,12 +2,11 @@ import { DEFAULT_EXTENSIONS } from '@babel/core';
 import babel from '@rollup/plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import typescript from 'rollup-plugin-typescript2';
+import typescript from '@rollup/plugin-typescript';
 import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
-import tsConfig from './tsconfig.json';
 import path from 'path';
 
 const moduleName = pkg.name.replace(/^@.*\//, '');
@@ -49,24 +48,21 @@ export default [
     plugins: [
       json(),
       resolve(),
+      typescript({
+        tsconfig: './tsconfig.json',
+      }),
       commonjs({
         namedExports: {
           elliptic: ['ec', 'curves'],
         },
       }),
-      typescript({
-        include: tsConfig.include,
-        exclude: tsConfig.exclude,
-        useTsconfigDeclarationDir: true,
-      }),
-      //   typescript({ tsconfig: './tsconfig.json' }),
-      babel({
-        presets: [],
-        extensions: [...DEFAULT_EXTENSIONS, '.ts'],
-        configFile: path.resolve(__dirname, 'babel.config'),
-        babelHelpers: 'runtime',
-        exclude: 'node_modules/**',
-      }),
+      // babel({
+      //   presets: [],
+      //   extensions: [...DEFAULT_EXTENSIONS, '.ts'],
+      //   configFile: path.resolve(__dirname, 'babel.config'),
+      //   babelHelpers: 'runtime',
+      //   exclude: 'node_modules/**',
+      // }),
       terser(),
     ],
   },

@@ -6,6 +6,7 @@ hooks:
   before:init:
     - "yarn lint-fix"
     - "yarn test"
+    - "yarn build"
   after:release:
     - "echo Successfully released ${name} v${version} to ${repo.repository}."
 plugins:
