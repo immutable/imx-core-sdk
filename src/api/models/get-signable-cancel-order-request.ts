@@ -25,6 +25,6 @@ export interface GetSignableCancelOrderRequest {
      * @type {number}
      * @memberof GetSignableCancelOrderRequest
      */
-    'order_id'?: number;
+    'order_id': number;
 }
 

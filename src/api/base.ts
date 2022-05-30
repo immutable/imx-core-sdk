@@ -18,7 +18,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 
-export const BASE_PATH = "http://api.ropsten.x.immutable.com".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.ropsten.x.immutable.com".replace(/\/+$/, "");
 
 /**
  *
