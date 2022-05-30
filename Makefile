@@ -1,8 +1,19 @@
-.PHONY: generate-openapi
-generate-openapi: get-openapi generate-api
+.PHONY: generate-openapi-prod
+generate-openapi-prod: get-openapi-prod generate-api
 
-.PHONY: get-openapi
+.PHONY: generate-openapi-ropsten
+generate-openapi-ropsten: get-openapi-ropsten generate-api
+
+.PHONY: get-openapi-prod
 get-openapi-prod:
+	rm openapi.json && touch openapi.json && \
+	curl -H "Accept: application/json+v3" \
+    https://api.x.immutable.com/openapi \
+    -o openapi.json
+
+.PHONY: get-openapi-ropsten
+get-openapi-ropsten:
+	rm openapi.json && touch openapi.json && \
 	curl -H "Accept: application/json+v3" \
     https://api.x.immutable.com/openapi \
     -o openapi.json
