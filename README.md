@@ -321,14 +321,24 @@ The package.json will hold the value of the previous release
 
 ```
 
-When PR is ready for review, the submitter should run:
+## Release Process
 
-`yarn release [patch | major | minor]`
+### Main Release
 
-- Choose release type (patch|minor|major)
-- Choose yes to use changelog and package.json
-- Add a tag if required - this step can be skipped by replying `no`
-- Push to remote by using yes
+1. Merge your changes
+2. Check and update your local main branch
+3. Run `yarn release`
+   - Choose release type (patch|minor|major)
+   - Choose `yes` to use changelog and `package.json`
+   - Add a tag if required - this step can be skipped by replying `no`
+   - Push to remote by using `yes`
+
+### Alpha Release
+
+1. Go to https://github.com/immutable/imx-core-sdk/actions/workflows/publish.yaml and find the "Run workflow" button on the left.
+2. Click the button and select the branch from dropdown. 
+3. Add a tag that is greater than last published main tag and append with `-alpha.x`. The `x` is the version for this particular alpha release. For example, if the last published is `1.2.0`, use `1.2.1-alpha.1` or `1.3.0-alpha.1` depending on type of your changes. 
+4. Click "run workflow" button. This will trigger a "NPM Publish" action for alpha release 🎉
 
 ## Getting Help
 
