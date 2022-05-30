@@ -316,9 +316,9 @@ for any bug fixes.
 The package.json will hold the value of the previous release
 
 ```json
-...
+
 "version": "0.3.0",
-...
+
 ```
 
 When PR is ready for review, the submitter should run:
