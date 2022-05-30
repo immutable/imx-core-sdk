@@ -15,7 +15,7 @@ get-openapi-prod:
 get-openapi-ropsten:
 	rm openapi.json && touch openapi.json && \
 	curl -H "Accept: application/json+v3" \
-    https://api.x.immutable.com/openapi \
+    https://api.ropsten.x.immutable.com/openapi \
     -o openapi.json
 
 .PHONY: generate-api
