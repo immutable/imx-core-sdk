@@ -1,4 +1,7 @@
 {
+  "schemes": [
+    "https"
+  ],
   "swagger": "2.0",
   "info": {
     "title": "Immutable X API",
@@ -3555,6 +3558,9 @@
     },
     "GetSignableCancelOrderRequest": {
       "type": "object",
+      "required": [
+        "order_id"
+      ],
       "properties": {
         "order_id": {
           "description": "ID of the order to be cancelled",
@@ -3801,6 +3807,7 @@
     "GetSignableTradeRequest": {
       "type": "object",
       "required": [
+        "order_id",
         "user"
       ],
       "properties": {

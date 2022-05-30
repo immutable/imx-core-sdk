@@ -38,7 +38,7 @@ export interface GetSignableTradeRequest {
      * @type {number}
      * @memberof GetSignableTradeRequest
      */
-    'order_id'?: number;
+    'order_id': number;
     /**
      * Ethereum address of the submitting user
      * @type {string}
