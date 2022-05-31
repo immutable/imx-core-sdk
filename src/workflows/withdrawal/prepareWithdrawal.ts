@@ -8,7 +8,13 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception');
 };
 
-export async function prepareWithdrawalWorkflow(signer: Signer, starkWallet: StarkWallet, token: TokenPrepareWithdrawal, quantity: string, withdrawalsApi: WithdrawalsApi): Promise<CreateWithdrawalResponse> {
+export async function prepareWithdrawalWorkflow(
+  signer: Signer,
+  starkWallet: StarkWallet,
+  token: TokenPrepareWithdrawal,
+  quantity: string,
+  withdrawalsApi: WithdrawalsApi,
+): Promise<CreateWithdrawalResponse> {
 
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {

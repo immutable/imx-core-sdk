@@ -83,7 +83,7 @@ async function executeRegisterAndWithdrawERC20(
     usersApi,
   );
 
-  const populatedTrasaction =
+  const populatedTransaction =
     await contract.populateTransaction.registerAndWithdraw(
       etherKey,
       starkPublicKey,
@@ -91,7 +91,7 @@ async function executeRegisterAndWithdrawERC20(
       assetType,
     );
 
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function executeWithdrawERC20(
@@ -100,10 +100,10 @@ async function executeWithdrawERC20(
   starkPublicKey: string,
   contract: Core,
 ): Promise<TransactionResponse> {
-  const populatedTrasaction = await contract.populateTransaction.withdraw(
+  const populatedTransaction = await contract.populateTransaction.withdraw(
     starkPublicKey,
     assetType,
   );
 
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }

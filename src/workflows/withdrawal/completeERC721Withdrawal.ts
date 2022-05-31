@@ -148,7 +148,7 @@ async function executeRegisterAndWithdrawMintableERC721(
     usersApi,
   );
 
-  const populatedTrasaction =
+  const populatedTransaction =
     await contract.populateTransaction.regsiterAndWithdrawAndMint(
       etherKey,
       starkPublicKey,
@@ -157,7 +157,7 @@ async function executeRegisterAndWithdrawMintableERC721(
       mintingBlob,
     );
 
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function executeWithdrawMintableERC721(
@@ -167,13 +167,13 @@ async function executeWithdrawMintableERC721(
   mintingBlob: string,
   contract: Core,
 ): Promise<TransactionResponse> {
-  const populatedTrasaction =
+  const populatedTransaction =
     await contract.populateTransaction.withdrawAndMint(
       starkPublicKey,
       assetType,
       mintingBlob,
     );
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function completeERC721Withdrawal(
@@ -248,7 +248,7 @@ async function executeRegisterAndWithdrawERC721(
     usersApi,
   );
 
-  const populatedTrasaction =
+  const populatedTransaction =
     await contract.populateTransaction.registerAndWithdrawNft(
       etherKey,
       starkPublicKey,
@@ -257,7 +257,7 @@ async function executeRegisterAndWithdrawERC721(
       tokenId,
     );
 
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function executeWithdrawERC721(
@@ -267,12 +267,12 @@ async function executeWithdrawERC721(
   tokenId: string,
   contract: Core,
 ): Promise<TransactionResponse> {
-  const populatedTrasaction = await contract.populateTransaction.withdrawNft(
+  const populatedTransaction = await contract.populateTransaction.withdrawNft(
     starkPublicKey,
     assetType,
     tokenId,
   );
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 function getMintingBlob(token: MintableERC721Withdrawal): string {
