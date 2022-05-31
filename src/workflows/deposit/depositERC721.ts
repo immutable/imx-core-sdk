@@ -134,7 +134,7 @@ async function executeRegisterAndDepositERC721(
     usersApi,
   );
 
-  // Use proxy registration contract for wrapping register and depositi NFTs
+  // Use proxy registration contract for wrapping register and deposit NFTs
   const populatedTransaction =
     await contract.populateTransaction.registerAndDepositNft(
       etherKey,

@@ -74,7 +74,7 @@ async function executeRegisterAndWithdrawEth(
     usersApi,
   );
 
-  const populatedTrasaction =
+  const populatedTransaction =
     await contract.populateTransaction.registerAndWithdraw(
       etherKey,
       starkPublicKey,
@@ -82,7 +82,7 @@ async function executeRegisterAndWithdrawEth(
       assetType,
     );
 
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function executeWithdrawEth(
@@ -91,10 +91,10 @@ async function executeWithdrawEth(
   starkPublicKey: string,
   contract: Core,
 ): Promise<TransactionResponse> {
-  const populatedTrasaction = await contract.populateTransaction.withdraw(
+  const populatedTransaction = await contract.populateTransaction.withdraw(
     starkPublicKey,
     assetType,
   );
 
-  return signer.sendTransaction(populatedTrasaction);
+  return signer.sendTransaction(populatedTransaction);
 }
