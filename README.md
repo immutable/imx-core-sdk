@@ -216,7 +216,7 @@ The current workflow methods exposed from the `Workflow` class.
 | Workflow                   | Description                                                                  |
 | -------------------------- | ---------------------------------------------------------------------------- |
 | `registerOffchain`         | Register L2 wallet.                                                          |
-| `isRegisteredOnchain`      | Check wallet registered on L2.                                               |
+| `isRegisteredOnchain`      | Check wallet registered on L1.                                               |
 | `mint`                     | Mint tokens on L2.                                                           |
 | `transfer`                 | Transfer tokens to another wallet.                                           |
 | `batchNftTransfer`         | Batch transfer tokens.                                                       |
