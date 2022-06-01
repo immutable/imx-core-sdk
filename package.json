@@ -5,11 +5,19 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/src/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/immutable/imx-core-sdk.git"
+  },
+  "keywords": [
+    "immutable"
+  ],
   "files": [
     "dist"
   ],
   "author": "Immutable",
   "license": "Apache-2.0",
+  "bugs": "https://github.com/immutable/imx-core-sdk/issues",
   "engines": {
     "node": ">=14"
   },
