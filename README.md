@@ -221,16 +221,16 @@ The current workflow methods exposed from the `Workflow` class.
 | `transfer`                 | Transfer tokens to another wallet.                                           |
 | `batchNftTransfer`         | Batch transfer tokens.                                                       |
 | `burn`                     | Burn tokens.                                                                 |
-| `getBurn`                  | Verify burn/transfer defails.                                                |
+| `getBurn`                  | Verify burn/transfer details.                                                |
 | `deposit`                  | Helper method around the other deposit methods. Deposit based on token type. |
 | `depositEth`               | Deposit ETH to L2 wallet.                                                    |
-| `depositERC20`             | Depost ERC20 token to L2 wallet.                                             |
-| `depositERC721`            | Depost ERC721 NFT to L2 wallet.                                              |
-| `prepareWithdrawal`        | Prepare token for withdrawl.                                                 |
-| `completeEthWithdrawal`    | Withdraw ETH to L1.                                                          |
-| `completeERC20Withdrawal`  | Withdrawn ERC20 to L1.                                                       |
-| `completeERC721Withdrawal` | Withdraw ERC721 to L1.                                                       |
-| `completeWithdrawal`       | Helper method around withdraw methods. Withdraw based on token type.         |
+| `depositERC20`             | Deposit ERC20 token to L2 wallet.                                            |
+| `depositERC721`            | Deposit ERC721 NFT to L2 wallet.                                             |
+| `prepareWithdrawal`        | Prepare token for withdrawal.                                                |
+| `completeEthWithdrawal`    | withdraw ETH to L1.                                                          |
+| `completeERC20Withdrawal`  | withdraw ERC20 to L1.                                                      |
+| `completeERC721Withdrawal` | withdraw ERC721 to L1.                                                     |
+| `completeWithdrawal`       | Helper method around withdrawal methods. Withdraw based on token type.       |
 | `createOrder`              | Create an order to sell an asset.                                            |
 | `cancelOrder`              | Cancel an order.                                                             |
 | `createTrade`              | Create a trade to buy an asset.                                              |
