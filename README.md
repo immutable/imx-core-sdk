@@ -10,7 +10,9 @@
 
 # Immutable Core SDK
 
-The Immutable Core SDK provides convenient access to the Immutable API's and Ethereum contract methods for applications written on the Immutable X platform.
+The Immutable Core SDK provides convenient access to Immutable's APIs and smart contracts to help projects build better web3 games and marketplaces.
+
+Currently, our SDK supports interactions with our application-specific rollup based on StarkWare's StarkEx. In future, we'll be adding StarkNet support across our platform.
 
 ## Documentation
 
