@@ -9,6 +9,7 @@
 ---
 
 # Immutable Core SDK
+[![Maintainability](https://api.codeclimate.com/v1/badges/219466ee5269620167e5/maintainability)](https://codeclimate.com/repos/62848fd8d4420d01b6002210/maintainability)
 
 The Immutable Core SDK provides convenient access to Immutable's APIs and smart contracts to help projects build better web3 games and marketplaces.
 
@@ -22,13 +23,24 @@ See the [API reference documentation](https://docs.x.immutable.com/reference) fo
 
 ## Installation
 
-Install the package with:
+## Add this NPM package to your project
 
 ```sh
 npm install @imtbl/core-sdk --save
 # or
 yarn add @imtbl/core-sdk
 ```
+
+## Setup local developer environment
+
+```sh
+# install dependencies
+yarn install
+yarn build
+# run tests
+yarn test
+```
+Check out how the [Release Process](https://github.com/immutable/imx-core-sdk/#release-process) works
 
 ## Usage
 
