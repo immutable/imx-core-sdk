@@ -165,8 +165,8 @@ export const WithdrawalsApiAxiosParamCreator = function (configuration?: Configu
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this withdrawal
          * @param {string} [status] Status of this withdrawal
-         * @param {string} [minTimestamp] Minimum timestamp for this deposit
-         * @param {string} [maxTimestamp] Maximum timestamp for this deposit
+         * @param {string} [minTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the withdrawn asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -330,8 +330,8 @@ export const WithdrawalsApiFp = function(configuration?: Configuration) {
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this withdrawal
          * @param {string} [status] Status of this withdrawal
-         * @param {string} [minTimestamp] Minimum timestamp for this deposit
-         * @param {string} [maxTimestamp] Maximum timestamp for this deposit
+         * @param {string} [minTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the withdrawn asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -400,8 +400,8 @@ export const WithdrawalsApiFactory = function (configuration?: Configuration, ba
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this withdrawal
          * @param {string} [status] Status of this withdrawal
-         * @param {string} [minTimestamp] Minimum timestamp for this deposit
-         * @param {string} [maxTimestamp] Maximum timestamp for this deposit
+         * @param {string} [minTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the withdrawn asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -538,14 +538,14 @@ export interface WithdrawalsApiListWithdrawalsRequest {
     readonly status?: string
 
     /**
-     * Minimum timestamp for this deposit
+     * Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof WithdrawalsApiListWithdrawals
      */
     readonly minTimestamp?: string
 
     /**
-     * Maximum timestamp for this deposit
+     * Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof WithdrawalsApiListWithdrawals
      */

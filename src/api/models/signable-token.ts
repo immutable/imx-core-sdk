@@ -21,7 +21,7 @@
  */
 export interface SignableToken {
     /**
-     * Token data
+     * Token data. See https://docs.x.immutable.com/docs/token-data-object\"
      * @type {object}
      * @memberof SignableToken
      */
