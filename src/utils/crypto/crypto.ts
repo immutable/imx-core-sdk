@@ -39,13 +39,7 @@ export function grindKey(privateKey: string): string {
   return key.mod(ORDER).toString('hex');
 }
 
-//called after "sign" when using signable endpoints
-export function serializeSignature(sig: SignatureOptions): string {
-  return encUtils.addHexPrefix(
-    encUtils.padLeft(sig.r.toString(16), 64) +
-        encUtils.padLeft(sig.s.toString(16), 64),
-  );
-}
+
 
 // used to sign message with L1 keys. Used for registration
 export function serializeEthSignature(sig: SignatureOptions): string {

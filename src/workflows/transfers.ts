@@ -7,12 +7,11 @@ import {
   GetSignableTransferRequest,
   CreateTransferResponse,
 } from '../api';
-import { serializeSignature, sign } from '../utils';
-import { StarkWallet } from '../types';
+import { StarkSigner } from '../utils/stark/stark-key';
 
 export async function transfersWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   request: GetSignableTransferRequestV1,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
@@ -33,9 +32,7 @@ export async function transfersWorkflow(
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
+  const starkSignature = await starkSigner.sign(payloadHash);
 
   // Obtain Ethereum Address from signer
   const ethAddress = (await signer.getAddress());
@@ -70,7 +67,7 @@ export async function transfersWorkflow(
 
 export async function batchTransfersWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   request: GetSignableTransferRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponse> {
@@ -98,7 +95,7 @@ export async function batchTransfersWorkflow(
   // Assemble transfer params and sign payload hash
   const transferSigningParams = {
     sender_stark_key: signableResult.data.sender_stark_key,
-    requests: signableResult.data.signable_responses.map(resp => ({
+    requests: await Promise.all(signableResult.data.signable_responses.map(async resp => ({
       sender_vault_id: resp.sender_vault_id,
       receiver_stark_key: resp.receiver_stark_key,
       receiver_vault_id: resp.receiver_vault_id,
@@ -106,10 +103,8 @@ export async function batchTransfersWorkflow(
       amount: resp.amount,
       nonce: resp.nonce,
       expiration_timestamp: resp.expiration_timestamp,
-      stark_signature: serializeSignature(
-        sign(starkWallet.starkKeyPair, resp.payload_hash),
-      ),
-    })),
+      stark_signature: await starkSigner.sign(resp.payload_hash)
+    }))),
   };
 
   // create transfer

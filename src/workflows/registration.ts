@@ -1,7 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import {
-  serializeSignature,
-  sign,
   signRaw,
 } from '../utils';
 import {
@@ -10,11 +8,11 @@ import {
   UsersApi,
 } from '../api';
 import { Registration } from '../contracts';
-import { StarkWallet } from '../types';
+import { StarkSigner } from '../utils/stark/stark-key';
 
 export async function registerOffchainWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   usersApi: UsersApi,
 ): Promise<RegisterUserResponse> {
 
@@ -24,7 +22,7 @@ export async function registerOffchainWorkflow(
   const signableResult = await usersApi.getSignableRegistrationOffchain({
     getSignableRegistrationRequest: {
       ether_key: userAddress,
-      stark_key: starkWallet.starkPublicKey,
+      stark_key: await starkSigner.publicKey(),
     },
   });
 
@@ -35,9 +33,7 @@ export async function registerOffchainWorkflow(
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
+  const starkSignature = await starkSigner.sign(payloadHash);
 
   // Send request for user registratin offchain
   const response = await usersApi.registerUser({
@@ -45,7 +41,7 @@ export async function registerOffchainWorkflow(
       eth_signature: ethSignature,
       ether_key: userAddress,
       stark_signature: starkSignature,
-      stark_key: starkWallet.starkPublicKey,
+      stark_key: await starkSigner.publicKey(),
     },
   });
 

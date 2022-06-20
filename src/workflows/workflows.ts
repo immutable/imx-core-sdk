@@ -49,9 +49,9 @@ import {
   ERC721Withdrawal,
   ERC20Withdrawal,
   TokenWithdrawal,
-  StarkWallet,
 } from '../types';
 import { Registration__factory } from '../contracts';
+import { StarkSigner } from '../utils/stark/stark-key';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -77,11 +77,11 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
-  public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
-    return registerOffchainWorkflow(signer, starkWallet, this.usersApi);
+  public registerOffchain(signer: Signer, starkSigner: StarkSigner) {
+    return registerOffchainWorkflow(signer, starkSigner, this.usersApi);
   }
 
-  public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
+  public async isRegisteredOnchain(signer: Signer, starkSigner: StarkSigner) {
     // Get instance of registration contract
     const registrationContract = Registration__factory.connect(
       this.config.registrationContractAddress,
@@ -89,7 +89,7 @@ export class Workflows {
     );
 
     return isRegisteredOnChainWorkflow(
-      starkWallet.starkPublicKey,
+      await starkSigner.publicKey(),
       registrationContract,
     );
   }
@@ -100,20 +100,20 @@ export class Workflows {
 
   public transfer(
     signer: Signer,
-    starkWallet: StarkWallet,
+    starkSigner: StarkSigner,
     request: UnsignedTransferRequest,
   ) {
-    return transfersWorkflow(signer, starkWallet, request, this.transfersApi);
+    return transfersWorkflow(signer, starkSigner, request, this.transfersApi);
   }
 
   public batchNftTransfer(
     signer: Signer,
-    starkWallet: StarkWallet,
+    starkSigner: StarkSigner,
     request: UnsignedBatchNftTransferRequest,
   ) {
     return batchTransfersWorkflow(
       signer,
-      starkWallet,
+      starkSigner,
       request,
       this.transfersApi,
     );
@@ -121,10 +121,10 @@ export class Workflows {
 
   public burn(
     signer: Signer,
-    starkWallet: StarkWallet,
+    starkSigner: StarkSigner,
     request: UnsignedBurnRequest,
   ) {
-    return burnWorkflow(signer, starkWallet, request, this.transfersApi);
+    return burnWorkflow(signer, starkSigner, request, this.transfersApi);
   }
 
   public getBurn(request: TransfersApiGetTransferRequest) {
@@ -200,13 +200,13 @@ export class Workflows {
 
   public prepareWithdrawal(
     signer: Signer,
-    starkWallet: StarkWallet,
+    starkSigner: StarkSigner,
     token: TokenPrepareWithdrawal,
     quantity: string,
   ) {
     return prepareWithdrawalWorkflow(
       signer,
-      starkWallet,
+      starkSigner,
       token,
       quantity,
       this.withdrawalsApi,
@@ -271,25 +271,25 @@ export class Workflows {
 
   public createOrder(
     signer: Signer,
-    starkWallet: StarkWallet,
+    starkSigner: StarkSigner,
     request: GetSignableOrderRequest,
   ) {
-    return createOrderWorkflow(signer, starkWallet, request, this.ordersApi);
+    return createOrderWorkflow(signer, starkSigner, request, this.ordersApi);
   }
 
   public cancelOrder(
     signer: Signer,
-    starkWallet: StarkWallet,
+    starkSigner: StarkSigner,
     request: GetSignableCancelOrderRequest,
   ) {
-    return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
+    return cancelOrderWorkflow(signer, starkSigner, request, this.ordersApi);
   }
 
   public createTrade(
     signer: Signer,
-    starkWallet: StarkWallet,
+    starkSigner: StarkSigner,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflow(signer, starkWallet, request, this.tradesApi);
+    return createTradeWorkflow(signer, starkSigner, request, this.tradesApi);
   }
 }

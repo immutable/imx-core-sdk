@@ -4,14 +4,14 @@ import {
   CreateTransferResponseV1,
   TransfersApiGetTransferRequest,
 } from '../api';
-import { serializeSignature, sign, signRaw } from '../utils';
+import { signRaw } from '../utils';
 import { BurnAddress } from './constants';
 import { GetSignableBurnRequest } from './types';
-import { StarkWallet } from '../types';
+import { StarkSigner } from '../utils/stark/stark-key';
 
 export async function burnWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   request: GetSignableBurnRequest,
   transfersApi: TransfersApi,
 ): Promise<CreateTransferResponseV1> {
@@ -32,9 +32,7 @@ export async function burnWorkflow(
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
+  const starkSignature = await starkSigner.sign(payloadHash);
 
   // Obtain Ethereum Address from signer
   const ethAddress = (await signer.getAddress());

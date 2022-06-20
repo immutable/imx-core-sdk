@@ -9,7 +9,7 @@ import * as encUtils from 'enc-utils';
 import { ec } from 'elliptic';
 import { splitSignature } from 'ethers/lib/utils';
 import { Signer } from '@ethersproject/abstract-signer';
-import { StarkWallet } from '../../types';
+import { Errors } from '../../workflows/errors';
 
 const DEFAULT_SIGNATURE_MESSAGE =
   'Only sign this request if you’ve initiated an action with Immutable X.';
@@ -65,33 +65,55 @@ const starkEc = new Ec(
   }),
 );
 
+export interface StarkSigner {
+  sign(msg: string): Promise<string>;
+  publicKey(): Promise<string>;
+}
+
+export class BaseSigner implements StarkSigner {
+
+    constructor(private keyPair: ec.KeyPair){}
+
+    // TODO: the old implementation of this is extremely complex
+    // We need to test that the simpler version works and why 
+    // it was originally implemented that way
+    public async publicKey(): Promise<string> {
+        return this.keyPair.getPublic(true, 'hex');
+    }
+
+    public async sign(msg: string): Promise<string> {
+        return this.serialize(this.keyPair.sign(fixMessage(msg)));
+    }
+
+    private serialize(sig: ec.Signature): string {
+        return encUtils.addHexPrefix(
+        encUtils.padLeft(sig.r.toString(16), 64) +
+            encUtils.padLeft(sig.s.toString(16), 64),
+        )
+    }
+}
+
+export function fixMessage(msg: string) {
+    msg = encUtils.removeHexPrefix(msg);
+    msg = new BN(msg, 16).toString(16);
+  
+    if (msg.length <= 62) {
+      // In this case, msg should not be transformed, as the byteLength() is at most 31,
+      // so delta < 0 (see _truncateToN).
+      return msg;
+    }
+    if (msg.length !== 63) {
+      throw new Error(Errors.StarkCurveInvalidMessageLength);
+    }
+    // In this case delta will be 4 so we perform a shift-left of 4 bits by adding a ZERO_BN.
+    return `${msg}0`;
+  }
+
 export function getKeyPair(privateKey: string): ec.KeyPair {
   return starkEc.keyFromPrivate(privateKey, 'hex');
 }
-export function getPublic(keyPair: ec.KeyPair, compressed = false): string {
-  return keyPair.getPublic(compressed, 'hex');
-}
 
-export function getStarkPublicKey(keyPair: ec.KeyPair): string {
-  return getPublic(keyPair, true);
-}
-
-export function getKeyPairFromPublicKey(publicKey: string): ec.KeyPair {
-  return starkEc.keyFromPublic(encUtils.hexToArray(publicKey));
-}
-
-export function getKeyPairFromPrivateKey(privateKey: string): ec.KeyPair {
-  return starkEc.keyFromPrivate(privateKey, 'hex');
-}
-
-export function getXCoordinate(publicKey: string): string {
-  const keyPair = getKeyPairFromPublicKey(publicKey);
-  return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
-}
-
-export async function generateStarkWallet(
-  signer: Signer,
-): Promise<StarkWallet> {
+export async function generateSignerFromL1Seed(signer: Signer): Promise<BaseSigner> {
   const ethAddress = (await signer.getAddress()).toLowerCase();
   const path = getAccountPath(
     DEFAULT_ACCOUNT_LAYER,
@@ -101,9 +123,5 @@ export async function generateStarkWallet(
   );
   const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
   const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
-  const starkPublic = getStarkPublicKey(keyPair);
-  return {
-    starkPublicKey: encUtils.sanitizeHex(getXCoordinate(starkPublic)),
-    starkKeyPair: keyPair,
-  };
+  return new BaseSigner(keyPair);
 }
