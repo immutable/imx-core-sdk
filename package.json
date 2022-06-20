@@ -66,18 +66,15 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^27.1.4",
-    "ts-node": "^10.7.0",
     "typechain": "^8.0.0",
     "typescript": "^4.6.3"
   },
   "dependencies": {
     "axios": "^0.26.1",
     "bn.js": "^5.2.0",
-    "dotenv": "^16.0.0",
     "elliptic": "^6.5.4",
     "enc-utils": "^3.0.0",
     "ethereumjs-wallet": "^1.0.2",
-    "hash.js": "^1.1.7",
-    "soltypes": "^2.0.0"
+    "hash.js": "^1.1.7"
   }
 }
