@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Added `generateStarkWalletFromSignedMessage` function to generate stark keys from EthAddress and Signature
+- Added `L2Signer` type
+- Exported `L1Signer` and `L2Signer`
 
 ### Changed
 
