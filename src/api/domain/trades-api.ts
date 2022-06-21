@@ -167,8 +167,8 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [cursor] Cursor
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [minTimestamp] Minimum timestamp for this trade
-         * @param {string} [maxTimestamp] Maximum timestamp for this trade
+         * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -302,8 +302,8 @@ export const TradesApiFp = function(configuration?: Configuration) {
          * @param {string} [cursor] Cursor
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [minTimestamp] Minimum timestamp for this trade
-         * @param {string} [maxTimestamp] Maximum timestamp for this trade
+         * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -366,8 +366,8 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
          * @param {string} [cursor] Cursor
          * @param {string} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [minTimestamp] Minimum timestamp for this trade
-         * @param {string} [maxTimestamp] Maximum timestamp for this trade
+         * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -510,14 +510,14 @@ export interface TradesApiListTradesRequest {
     readonly direction?: string
 
     /**
-     * Minimum timestamp for this trade
+     * Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof TradesApiListTrades
      */
     readonly minTimestamp?: string
 
     /**
-     * Maximum timestamp for this trade
+     * Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof TradesApiListTrades
      */

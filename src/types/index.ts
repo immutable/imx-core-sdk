@@ -8,6 +8,7 @@ import {
 import { GetSignableBurnRequest } from '../workflows/types';
 
 export interface StarkWallet {
+  path: string;
   starkPublicKey: string;
   starkKeyPair: ec.KeyPair;
 }

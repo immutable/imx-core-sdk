@@ -272,10 +272,10 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this order
          * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-         * @param {string} [minTimestamp] Minimum created at timestamp for this order
-         * @param {string} [maxTimestamp] Maximum created at timestamp for this order
-         * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order
-         * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order
+         * @param {string} [minTimestamp] Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [buyTokenType] Token type of the asset this order buys
          * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
          * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
@@ -515,10 +515,10 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this order
          * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-         * @param {string} [minTimestamp] Minimum created at timestamp for this order
-         * @param {string} [maxTimestamp] Maximum created at timestamp for this order
-         * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order
-         * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order
+         * @param {string} [minTimestamp] Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [buyTokenType] Token type of the asset this order buys
          * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
          * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
@@ -621,10 +621,10 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this order
          * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-         * @param {string} [minTimestamp] Minimum created at timestamp for this order
-         * @param {string} [maxTimestamp] Maximum created at timestamp for this order
-         * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order
-         * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order
+         * @param {string} [minTimestamp] Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [buyTokenType] Token type of the asset this order buys
          * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
          * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
@@ -827,28 +827,28 @@ export interface OrdersApiListOrdersRequest {
     readonly status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'
 
     /**
-     * Minimum created at timestamp for this order
+     * Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof OrdersApiListOrders
      */
     readonly minTimestamp?: string
 
     /**
-     * Maximum created at timestamp for this order
+     * Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof OrdersApiListOrders
      */
     readonly maxTimestamp?: string
 
     /**
-     * Minimum updated at timestamp for this order
+     * Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof OrdersApiListOrders
      */
     readonly updatedMinTimestamp?: string
 
     /**
-     * Maximum updated at timestamp for this order
+     * Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof OrdersApiListOrders
      */

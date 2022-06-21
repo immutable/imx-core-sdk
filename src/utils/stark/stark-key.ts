@@ -93,16 +93,21 @@ export async function generateStarkWallet(
   signer: Signer,
 ): Promise<StarkWallet> {
   const ethAddress = (await signer.getAddress()).toLowerCase();
+  const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
+  return generateStarkWalletFromSignedMessage(ethAddress, signature)
+}
+
+export async function generateStarkWalletFromSignedMessage(ethAddress: string, signature: string) : Promise<StarkWallet> {
   const path = getAccountPath(
     DEFAULT_ACCOUNT_LAYER,
     DEFAULT_ACCOUNT_APPLICATION,
     ethAddress,
     DEFAULT_ACCOUNT_INDEX,
   );
-  const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
   const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
   const starkPublic = getStarkPublicKey(keyPair);
   return {
+    path,
     starkPublicKey: encUtils.sanitizeHex(getXCoordinate(starkPublic)),
     starkKeyPair: keyPair,
   };

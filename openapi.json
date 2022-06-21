@@ -104,13 +104,13 @@
           },
           {
             "type": "string",
-            "description": "Minimum timestamp for when these assets were last updated",
+            "description": "Minimum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "updated_min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum timestamp for when these assets were last updated",
+            "description": "Maximum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "updated_max_timestamp",
             "in": "query"
           },
@@ -272,7 +272,7 @@
           },
           {
             "type": "string",
-            "description": "String created by signing wallet address and timestamp",
+            "description": "String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature",
             "name": "IMX-Signature",
             "in": "header",
             "required": true
@@ -635,14 +635,14 @@
           },
           {
             "type": "string",
-            "description": "Minimum timestamp for this deposit",
-            "name": "min_timestamp",
+            "description": "Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "updated_min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum timestamp for this deposit",
-            "name": "max_timestamp",
+            "description": "Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "updated_max_timestamp",
             "in": "query"
           },
           {
@@ -863,14 +863,14 @@
           },
           {
             "type": "string",
-            "description": "Minimum timestamp for this mint",
-            "name": "min_timestamp",
+            "description": "Minimum timestamp for this mint, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "updated_min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum timestamp for this mint",
-            "name": "max_timestamp",
+            "description": "Maximum timestamp for this mint, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "updated_max_timestamp",
             "in": "query"
           },
           {
@@ -1024,25 +1024,25 @@
           },
           {
             "type": "string",
-            "description": "Minimum created at timestamp for this order",
+            "description": "Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum created at timestamp for this order",
+            "description": "Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "max_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Minimum updated at timestamp for this order",
+            "description": "Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "updated_min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum updated at timestamp for this order",
+            "description": "Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "updated_max_timestamp",
             "in": "query"
           },
@@ -1808,13 +1808,13 @@
           },
           {
             "type": "string",
-            "description": "Minimum timestamp for this trade",
+            "description": "Minimum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum timestamp for this trade",
+            "description": "Maximum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "max_timestamp",
             "in": "query"
           }
@@ -1964,13 +1964,13 @@
           },
           {
             "type": "string",
-            "description": "Minimum timestamp for this transfer",
+            "description": "Minimum timestamp for this transfer, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum timestamp for this transfer",
+            "description": "Maximum timestamp for this transfer, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "max_timestamp",
             "in": "query"
           },
@@ -2241,13 +2241,13 @@
           },
           {
             "type": "string",
-            "description": "Minimum timestamp for this deposit",
+            "description": "Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum timestamp for this deposit",
+            "description": "Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "max_timestamp",
             "in": "query"
           },
@@ -2856,7 +2856,8 @@
         "icon_url",
         "metadata_api_url",
         "name",
-        "project_id"
+        "project_id",
+        "project_owner_address"
       ],
       "properties": {
         "address": {
@@ -2890,6 +2891,10 @@
         "project_id": {
           "description": "The collection's project ID",
           "type": "integer"
+        },
+        "project_owner_address": {
+          "description": "Project owner address",
+          "type": "string"
         }
       }
     },
@@ -4798,7 +4803,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "description": "Token data"
+          "description": "Token data. See https://docs.x.immutable.com/docs/token-data-object\""
         },
         "type": {
           "description": "Type of token",

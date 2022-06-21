@@ -88,8 +88,8 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
          * @param {string} [collection] Collection contract address
-         * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated
-         * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated
+         * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {*} [options] Override http request option.
@@ -221,8 +221,8 @@ export const AssetsApiFp = function(configuration?: Configuration) {
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
          * @param {string} [collection] Collection contract address
-         * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated
-         * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated
+         * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {*} [options] Override http request option.
@@ -269,8 +269,8 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
          * @param {string} [collection] Collection contract address
-         * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated
-         * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated
+         * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {*} [options] Override http request option.
@@ -401,14 +401,14 @@ export interface AssetsApiListAssetsRequest {
     readonly collection?: string
 
     /**
-     * Minimum timestamp for when these assets were last updated
+     * Minimum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof AssetsApiListAssets
      */
     readonly updatedMinTimestamp?: string
 
     /**
-     * Maximum timestamp for when these assets were last updated
+     * Maximum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof AssetsApiListAssets
      */

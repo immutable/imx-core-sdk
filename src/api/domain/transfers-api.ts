@@ -254,8 +254,8 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
          * @param {string} [user] Ethereum address of the user who submitted this transfer
          * @param {string} [receiver] Ethereum address of the user who received this transfer
          * @param {'success' | 'failure'} [status] Status of this transfer
-         * @param {string} [minTimestamp] Minimum timestamp for this transfer
-         * @param {string} [maxTimestamp] Maximum timestamp for this transfer
+         * @param {string} [minTimestamp] Minimum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the transferred asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -438,8 +438,8 @@ export const TransfersApiFp = function(configuration?: Configuration) {
          * @param {string} [user] Ethereum address of the user who submitted this transfer
          * @param {string} [receiver] Ethereum address of the user who received this transfer
          * @param {'success' | 'failure'} [status] Status of this transfer
-         * @param {string} [minTimestamp] Minimum timestamp for this transfer
-         * @param {string} [maxTimestamp] Maximum timestamp for this transfer
+         * @param {string} [minTimestamp] Minimum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the transferred asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -529,8 +529,8 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
          * @param {string} [user] Ethereum address of the user who submitted this transfer
          * @param {string} [receiver] Ethereum address of the user who received this transfer
          * @param {'success' | 'failure'} [status] Status of this transfer
-         * @param {string} [minTimestamp] Minimum timestamp for this transfer
-         * @param {string} [maxTimestamp] Maximum timestamp for this transfer
+         * @param {string} [minTimestamp] Minimum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the transferred asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -702,14 +702,14 @@ export interface TransfersApiListTransfersRequest {
     readonly status?: 'success' | 'failure'
 
     /**
-     * Minimum timestamp for this transfer
+     * Minimum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof TransfersApiListTransfers
      */
     readonly minTimestamp?: string
 
     /**
-     * Maximum timestamp for this transfer
+     * Maximum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof TransfersApiListTransfers
      */
