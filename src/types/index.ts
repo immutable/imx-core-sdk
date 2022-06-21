@@ -17,7 +17,7 @@ export interface L2Signer {
   getAddress(): string;
 }
 
-export { Signer } from '@ethersproject/abstract-signer';
+export { Signer as L1Signer } from '@ethersproject/abstract-signer';
 
 export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
 
