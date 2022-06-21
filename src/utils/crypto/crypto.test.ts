@@ -1,10 +1,11 @@
 import { grindKey, signMessage, signRaw } from './crypto';
-import { ethers } from 'ethers';
+import { getDefaultProvider } from '@ethersproject/providers';
+import { Wallet } from '@ethersproject/wallet';
 
 describe('signRaw()', () => {
   test('Correctly signs string', async () => {
-    const provider = ethers.getDefaultProvider('ropsten', {});
-    const signer = new ethers.Wallet(
+    const provider = getDefaultProvider('ropsten', {});
+    const signer = new Wallet(
       '5c7b4b5cad9a3fc7b1ba235a49cd74e615488a18b0d6a531739fd1062935104d',
     ).connect(provider);
     const timestamp = '1609462141000';
@@ -18,8 +19,8 @@ describe('signRaw()', () => {
 
 describe('signMessage()', () => {
   test('Correctly signs message', async () => {
-    const provider = ethers.getDefaultProvider('ropsten', {});
-    const signer = new ethers.Wallet(
+    const provider = getDefaultProvider('ropsten', {});
+    const signer = new Wallet(
       '5c7b4b5cad9a3fc7b1ba235a49cd74e615488a18b0d6a531739fd1062935104d',
     ).connect(provider);
     const message = 'Some message to sign ABC';
