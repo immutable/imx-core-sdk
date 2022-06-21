@@ -12,6 +12,13 @@ export interface StarkWallet {
   starkKeyPair: ec.KeyPair;
 }
 
+export interface L2Signer {
+  signMessage(message: string): Promise<string>;
+  getAddress(): string;
+}
+
+export { Signer } from '@ethersproject/abstract-signer';
+
 export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
 
 export interface Config {
