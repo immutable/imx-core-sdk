@@ -1,7 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
-import { parseUnits } from 'ethers/lib/utils';
+import { parseUnits } from '@ethersproject/units';
 import {
   Core,
   Core__factory,
@@ -13,7 +13,7 @@ import {
   isRegisteredOnChainWorkflow,
 } from '../registration';
 import { Config, ERC20Deposit } from '../../types';
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 
 interface ERC20TokenData {
   decimals: number;
