@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added `generateStarkWalletFromSignedMessage` function to generate stark keys from EthAddress and Signature
+
 ### Changed
 
 - Added `project_owner_address` property to collection objects returned from `GET` `/v1/collections` public API endpoints.
