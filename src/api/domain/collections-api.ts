@@ -39,7 +39,7 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Create collection
          * @summary Create collection
-         * @param {string} iMXSignature String created by signing wallet address and timestamp
+         * @param {string} iMXSignature String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateCollectionRequest} createCollectionRequest create a collection
          * @param {*} [options] Override http request option.
@@ -296,7 +296,7 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
         /**
          * Create collection
          * @summary Create collection
-         * @param {string} iMXSignature String created by signing wallet address and timestamp
+         * @param {string} iMXSignature String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateCollectionRequest} createCollectionRequest create a collection
          * @param {*} [options] Override http request option.
@@ -374,7 +374,7 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
         /**
          * Create collection
          * @summary Create collection
-         * @param {string} iMXSignature String created by signing wallet address and timestamp
+         * @param {string} iMXSignature String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateCollectionRequest} createCollectionRequest create a collection
          * @param {*} [options] Override http request option.
@@ -444,7 +444,7 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
  */
 export interface CollectionsApiCreateCollectionRequest {
     /**
-     * String created by signing wallet address and timestamp
+     * String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
      * @type {string}
      * @memberof CollectionsApiCreateCollection
      */

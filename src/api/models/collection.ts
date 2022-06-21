@@ -62,5 +62,11 @@ export interface Collection {
      * @memberof Collection
      */
     'project_id': number;
+    /**
+     * Project owner address
+     * @type {string}
+     * @memberof Collection
+     */
+    'project_owner_address': string;
 }
 
