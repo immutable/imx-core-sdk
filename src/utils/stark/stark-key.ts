@@ -7,7 +7,7 @@ import BN from 'bn.js';
 import { constantPointsHex } from './points';
 import * as encUtils from 'enc-utils';
 import { ec } from 'elliptic';
-import { splitSignature } from 'ethers/lib/utils';
+import { splitSignature } from '@ethersproject/bytes';
 import { Signer } from '@ethersproject/abstract-signer';
 import { StarkWallet } from '../../types';
 

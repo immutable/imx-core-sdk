@@ -1,14 +1,14 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
-import { parseEther } from 'ethers/lib/utils';
+import { parseEther } from '@ethersproject/units';
 import { Core, Core__factory, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
 import { Config, ETHDeposit } from '../../types';
-import { BigNumber } from 'ethers';
+import { BigNumber } from '@ethersproject/bignumber';
 
 interface ETHTokenData {
   decimals: number;
