@@ -1,4 +1,8 @@
-import { getAccountPath, getKeyPairFromPath } from './stark-key';
+import {
+  getAccountPath,
+  getKeyPairFromPath,
+  generateStarkWalletFromSignedMessage,
+} from './stark-key';
 
 const layer = 'starkex';
 const application = 'starkdeployement';
@@ -14,6 +18,21 @@ describe('Key derivation', () => {
     const keyPair = getKeyPairFromPath(seed, path);
     expect(keyPair.getPrivate('hex')).toEqual(
       '06cf0a8bf113352eb863157a45c5e5567abb34f8d32cddafd2c22aa803f4892c',
+    );
+  });
+});
+
+describe('generateStarkWalletFromSignedMessage', () => {
+  const signature =
+  '0x6d1550458c7a9a1257d73adbcf0fabc12f4497e970d9fa62dd88bf7d9e12719148c96225c1402d8707fd061b1aae2222bdf13571dfc82b3aa9974039f247f2b81b';
+
+  it('should generate stark wallet correctly', async () => {
+    const { starkPublicKey } = await generateStarkWalletFromSignedMessage(
+      ethAddress,
+      signature,
+    );
+    expect(starkPublicKey).toEqual(
+      '0x035919acd61e97b3ecdc75ff8beed8d1803f7ea3cad2937926ae59cc3f8070d4',
     );
   });
 });
