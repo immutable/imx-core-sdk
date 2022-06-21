@@ -1,7 +1,8 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { serializeSignature, sign, signMessage } from '../../utils';
+import { signMessage } from '../../utils';
 import { CreateWithdrawalResponse, WithdrawalsApi } from '../../api';
-import { convertToSignableRequestFormat, StarkWallet, TokenPrepareWithdrawal } from '../../types';
+import { convertToSignableRequestFormat, TokenPrepareWithdrawal } from '../../types';
+import { StarkSigner } from '../../utils/stark/stark-key';
 
 const assertIsDefined = <T>(value?: T): T => {
   if (value !== undefined) return value;
@@ -10,7 +11,7 @@ const assertIsDefined = <T>(value?: T): T => {
 
 export async function prepareWithdrawalWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   token: TokenPrepareWithdrawal,
   quantity: string,
   withdrawalsApi: WithdrawalsApi,
@@ -27,7 +28,7 @@ export async function prepareWithdrawalWorkflow(
   const { signable_message: signableMessage, payload_hash: payloadHash } = signableWithdrawalResult.data
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
+  const starkSignature = await starkSigner.sign(payloadHash);
 
   const { ethAddress, ethSignature } = await signMessage(signableMessage, signer);
 

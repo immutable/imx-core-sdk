@@ -7,11 +7,6 @@ import {
 } from '../api';
 import { GetSignableBurnRequest } from '../workflows/types';
 
-export interface StarkWallet {
-  starkPublicKey: string;
-  starkKeyPair: ec.KeyPair;
-}
-
 export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
 
 export interface Config {

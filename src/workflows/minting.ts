@@ -5,7 +5,6 @@ import { signRaw } from '../utils';
 import { keccak256 } from '@ethersproject/keccak256';
 import { toUtf8Bytes } from '@ethersproject/strings';
 
-
 export async function mintingWorkflow(signer: Signer,
   request: UnsignedMintRequest,
   mintsApi: MintsApi,

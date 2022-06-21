@@ -1,11 +1,11 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { StarkWallet } from '../types';
 import { GetSignableTradeRequest, TradesApi } from '../api';
-import { serializeSignature, sign, signRaw } from '../utils';
+import { signRaw } from '../utils';
+import { StarkSigner } from '../utils/stark/stark-key';
 
 export async function createTradeWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   request: GetSignableTradeRequest,
   tradesApi: TradesApi,
 ) {
@@ -27,9 +27,7 @@ export async function createTradeWorkflow(
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
+  const starkSignature = await starkSigner.sign(payloadHash);
 
   const createTradeResponse = await tradesApi.createTrade({
     createTradeRequest: {

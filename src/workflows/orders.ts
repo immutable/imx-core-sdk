@@ -1,16 +1,16 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import { StarkWallet } from '../types';
 import {
   GetSignableCancelOrderRequest,
   GetSignableOrderRequest,
   OrdersApi,
   OrdersApiCreateOrderRequest,
 } from '../api';
-import { serializeSignature, sign, signRaw } from '../utils';
+import { signRaw } from '../utils';
+import { StarkSigner } from '../utils/stark/stark-key';
 
 export async function createOrderWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   request: GetSignableOrderRequest,
   ordersApi: OrdersApi,
 ) {
@@ -25,9 +25,7 @@ export async function createOrderWorkflow(
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign has with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
+  const starkSignature = await starkSigner.sign(payloadHash);
 
   // Obtain Eth address from signer
   const ethAddress = (await signer.getAddress());
@@ -63,7 +61,7 @@ export async function createOrderWorkflow(
 
 export async function cancelOrderWorkflow(
   signer: Signer,
-  starkWallet: StarkWallet,
+  starkSigner: StarkSigner,
   request: GetSignableCancelOrderRequest,
   ordersApi: OrdersApi,
 ) {
@@ -82,9 +80,7 @@ export async function cancelOrderWorkflow(
   const ethSignature = await signRaw(signableMessage, signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
+  const starkSignature = await starkSigner.sign(payloadHash);
 
   // Obtain Ethereum Address from signer
   const ethAddress = await signer.getAddress();
