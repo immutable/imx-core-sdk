@@ -44,5 +44,11 @@ export interface RegisterUserRequest {
      * @memberof RegisterUserRequest
      */
     'stark_signature': string;
+    /**
+     * User email
+     * @type {string}
+     * @memberof RegisterUserRequest
+     */
+    'email'?: string;
 }
 

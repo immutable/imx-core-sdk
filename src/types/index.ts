@@ -28,6 +28,10 @@ export interface Config {
   registrationContractAddress: string;
 }
 
+export interface RegistrationOptions {
+  email: string
+}
+
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;
 export type UnsignedTransferRequest = GetSignableTransferRequestV1;
 export type UnsignedBatchNftTransferRequest = GetSignableTransferRequest;

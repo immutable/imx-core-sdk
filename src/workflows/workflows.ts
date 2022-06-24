@@ -50,6 +50,7 @@ import {
   ERC20Withdrawal,
   TokenWithdrawal,
   StarkWallet,
+  RegistrationOptions,
 } from '../types';
 import { Registration__factory } from '../contracts';
 
@@ -77,8 +78,8 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
-  public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
-    return registerOffchainWorkflow(signer, starkWallet, this.usersApi);
+  public registerOffchain(signer: Signer, starkWallet: StarkWallet, options?: RegistrationOptions) {
+    return registerOffchainWorkflow(signer, starkWallet, this.usersApi, options);
   }
 
   public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
