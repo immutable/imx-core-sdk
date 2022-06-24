@@ -50,6 +50,8 @@ import {
   ERC20Withdrawal,
   TokenWithdrawal,
   StarkWallet,
+  L1Signer,
+  L2Signer,
 } from '../types';
 import { Registration__factory } from '../contracts';
 
@@ -286,10 +288,17 @@ export class Workflows {
   }
 
   public createTrade(
-    signer: Signer,
-    starkWallet: StarkWallet,
+    l1Signer: L1Signer,
+    l2Signer: L2Signer,
+    l2Message: string,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflow(signer, starkWallet, request, this.tradesApi);
+    return createTradeWorkflow(
+      l1Signer,
+      l2Signer,
+      l2Message,
+      request,
+      this.tradesApi,
+    );
   }
 }

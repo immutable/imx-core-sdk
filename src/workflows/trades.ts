@@ -1,16 +1,16 @@
-import { Signer } from '@ethersproject/abstract-signer';
-import { StarkWallet } from '../types';
+import { L1Signer, L2Signer } from '../types';
 import { GetSignableTradeRequest, TradesApi } from '../api';
-import { serializeSignature, sign, signRaw } from '../utils';
+import { signRaw } from '../utils';
 
 export async function createTradeWorkflow(
-  signer: Signer,
-  starkWallet: StarkWallet,
+  l1Signer: L1Signer,
+  l2Signer: L2Signer,
+  l2Message: string,
   request: GetSignableTradeRequest,
   tradesApi: TradesApi,
 ) {
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress());
+  const ethAddress = await l1Signer.getAddress();
 
   const signableResult = await tradesApi.getSignableTrade({
     getSignableTradeRequest: {
@@ -20,16 +20,13 @@ export async function createTradeWorkflow(
     },
   });
 
-  const { signable_message: signableMessage, payload_hash: payloadHash } =
-    signableResult.data;
+  const { signable_message: signableMessage } = signableResult.data;
 
   // Sign message with L1 credentials
-  const ethSignature = await signRaw(signableMessage, signer);
+  const ethSignature = await signRaw(signableMessage, l1Signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
+  const starkSignature = await l2Signer.signMessage(l2Message);
 
   const createTradeResponse = await tradesApi.createTrade({
     createTradeRequest: {
