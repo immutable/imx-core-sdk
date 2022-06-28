@@ -290,15 +290,8 @@ export class Workflows {
   public createTrade(
     l1Signer: L1Signer,
     l2Signer: L2Signer,
-    l2Message: string,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflow(
-      l1Signer,
-      l2Signer,
-      l2Message,
-      request,
-      this.tradesApi,
-    );
+    return createTradeWorkflow(l1Signer, l2Signer, request, this.tradesApi);
   }
 }

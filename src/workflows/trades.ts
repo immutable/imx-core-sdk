@@ -5,7 +5,6 @@ import { signRaw } from '../utils';
 export async function createTradeWorkflow(
   l1Signer: L1Signer,
   l2Signer: L2Signer,
-  l2Message: string,
   request: GetSignableTradeRequest,
   tradesApi: TradesApi,
 ) {
@@ -20,13 +19,14 @@ export async function createTradeWorkflow(
     },
   });
 
-  const { signable_message: signableMessage } = signableResult.data;
+  const { signable_message: signableMessage, payload_hash: payloadHash } =
+    signableResult.data;
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = await l2Signer.signMessage(l2Message);
+  const starkSignature = await l2Signer.signMessage(payloadHash);
 
   const createTradeResponse = await tradesApi.createTrade({
     createTradeRequest: {
