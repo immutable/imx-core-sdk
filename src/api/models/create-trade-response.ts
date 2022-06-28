@@ -31,6 +31,12 @@ export interface CreateTradeResponse {
      * @type {number}
      * @memberof CreateTradeResponse
      */
-    'trade_id': number;
+    'trade_id': number
+    /**
+     * Request ID of async trade request reference within Immutable X
+     * @type {number}
+     * @memberof CreateTradeResponse
+     */
+    'request_id': number;
 }
 
