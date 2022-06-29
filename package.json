@@ -59,6 +59,7 @@
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "typechain": "^8.0.0",
+    "typedoc-plugin-markdown": "^3.13.1",
     "typescript": "^4.6.3"
   },
   "dependencies": {
@@ -69,6 +70,7 @@
     "enc-utils": "^3.0.0",
     "ethereumjs-wallet": "^1.0.2",
     "hash.js": "^1.1.7",
-    "soltypes": "^2.0.0"
+    "soltypes": "^2.0.0",
+    "typedoc": "^0.23.2"
   }
 }

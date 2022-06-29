@@ -1,0 +1,14 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": [
+        "./src/index.ts"
+    ],
+    "out": "sdk-docs-md",
+    "json": "sdk-docs-json",
+    "plugin": [
+        "typedoc-plugin-markdown"
+    ],
+    "compilerOptions": {
+        "skipLibCheck": true
+    }
+}
