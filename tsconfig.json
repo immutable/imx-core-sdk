@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDirs": ["src"],
+    "rootDirs": [
+      "src"
+    ],
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
@@ -17,7 +19,21 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"],
-  "files": ["hardhat.config.ts"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "files": [
+    "./hardhat.config.ts"
+  ],
+  "tsdocsOptions": {
+    "entryPoints": [
+      "./src/index.ts"
+    ],
+    "out": "./tsdocs-html",
+    "json": "./tsdocs.json"
+  }
 }
