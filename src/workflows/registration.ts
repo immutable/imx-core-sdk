@@ -10,12 +10,13 @@ import {
   UsersApi,
 } from '../api';
 import { Registration } from '../contracts';
-import { StarkWallet } from '../types';
+import { RegistrationOptions, StarkWallet } from '../types';
 
 export async function registerOffchainWorkflow(
   signer: Signer,
   starkWallet: StarkWallet,
   usersApi: UsersApi,
+  options?: RegistrationOptions,
 ): Promise<RegisterUserResponse> {
 
   const userAddress = (await signer.getAddress());
@@ -42,6 +43,7 @@ export async function registerOffchainWorkflow(
   // Send request for user registratin offchain
   const response = await usersApi.registerUser({
     registerUserRequest: {
+      email: options?.email,
       eth_signature: ethSignature,
       ether_key: userAddress,
       stark_signature: starkSignature,
