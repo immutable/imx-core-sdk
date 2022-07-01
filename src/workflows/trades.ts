@@ -55,7 +55,7 @@ export async function createTradeWorkflow(
   return createTradeResponse.data;
 }
 
-export async function createTradeWorkflowV2(
+export async function createTradeWorkflowWithSigner(
   l1Signer: L1Signer,
   l2Signer: L2Signer,
   request: GetSignableTradeRequest,
