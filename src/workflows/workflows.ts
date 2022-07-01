@@ -33,7 +33,7 @@ import {
   prepareWithdrawalWorkflow,
 } from './withdrawal';
 import { createOrderWorkflow, cancelOrderWorkflow } from './orders';
-import { createTradeWorkflow } from './trades';
+import { createTradeWorkflow, createTradeWorkflowV2 } from './trades';
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
@@ -287,11 +287,20 @@ export class Workflows {
     return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 
+  /** @deprecated */
   public createTrade(
+    signer: Signer,
+    starkWallet: StarkWallet,
+    request: GetSignableTradeRequest,
+  ) {
+    return createTradeWorkflow(signer, starkWallet, request, this.tradesApi);
+  }
+
+  public createTradeV2(
     l1Signer: L1Signer,
     l2Signer: L2Signer,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflow(l1Signer, l2Signer, request, this.tradesApi);
+    return createTradeWorkflowV2(l1Signer, l2Signer, request, this.tradesApi);
   }
 }
