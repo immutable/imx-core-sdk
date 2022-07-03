@@ -52,6 +52,7 @@ import {
   StarkWallet,
 } from '../types';
 import { Registration__factory } from '../contracts';
+import { type AxiosInstance } from 'axios';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -64,17 +65,17 @@ export class Workflows {
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
 
-  constructor(protected config: Config) {
+  constructor(protected config: Config, basePath?: string, axiosInstance?: AxiosInstance) {
     this.config = config;
-    this.depositsApi = new DepositsApi(config.api);
-    this.encodingApi = new EncodingApi(config.api);
-    this.mintsApi = new MintsApi(config.api);
-    this.ordersApi = new OrdersApi(config.api);
-    this.tokensApi = new TokensApi(config.api);
-    this.tradesApi = new TradesApi(config.api);
-    this.transfersApi = new TransfersApi(config.api);
-    this.usersApi = new UsersApi(config.api);
-    this.withdrawalsApi = new WithdrawalsApi(config.api);
+    this.depositsApi = new DepositsApi(config.api, basePath, axiosInstance);
+    this.encodingApi = new EncodingApi(config.api, basePath, axiosInstance);
+    this.mintsApi = new MintsApi(config.api, basePath, axiosInstance);
+    this.ordersApi = new OrdersApi(config.api, basePath, axiosInstance);
+    this.tokensApi = new TokensApi(config.api, basePath, axiosInstance);
+    this.tradesApi = new TradesApi(config.api, basePath, axiosInstance);
+    this.transfersApi = new TransfersApi(config.api, basePath, axiosInstance);
+    this.usersApi = new UsersApi(config.api, basePath, axiosInstance);
+    this.withdrawalsApi = new WithdrawalsApi(config.api, basePath, axiosInstance);
   }
 
   public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
