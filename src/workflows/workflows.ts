@@ -17,6 +17,7 @@ import {
 import {
   isRegisteredOnChainWorkflow,
   registerOffchainWorkflow,
+  registerOffchainWorkflowWithSigner,
 } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
@@ -79,8 +80,14 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
+  /** @deprecated */
   public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
     return registerOffchainWorkflow(signer, starkWallet, this.usersApi);
+  }
+
+
+  public registerOffchainWithSigner(l1Signer: L1Signer, l2Signer: L2Signer) {
+    return registerOffchainWorkflowWithSigner(l1Signer, l2Signer, this.usersApi);
   }
 
   public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
