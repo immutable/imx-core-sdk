@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Added
+- Added `registerOffchainWithSigner` function to enable register offchain user with L2Signer
+
+### Changed
+- mark `registerOffchain` as deprecated
+
+### Fixed
+- `getAddress` method from BaseSigner
+
 ## [0.4.0] - 2022-07-05
 ### Added
 - Added `BaseSigner`, a default implementation of the Stark L2Signer interface
