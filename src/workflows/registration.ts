@@ -7,6 +7,7 @@ import {
 } from '../api';
 import { Registration } from '../contracts';
 import { L2Signer, StarkWallet } from '../types';
+import { AxiosError } from 'axios';
 
 /** @deprecated */
 export async function registerOffchainWorkflow(
@@ -54,9 +55,13 @@ export async function registerOffchainWorkflowWithSigner(
   l1Signer: Signer,
   l2Signer: L2Signer,
   usersApi: UsersApi,
-): Promise<RegisterUserResponse> {
+): Promise<void> {
   const userAddress = await l1Signer.getAddress();
-  const starkPublicKey = await l2Signer.getAddress();
+  const starkPublicKey = l2Signer.getAddress();
+
+  if (await isUserRegistered(userAddress, usersApi)) {
+    return;
+  }
 
   // Get signable details for offchain registration
   const signableResult = await usersApi.getSignableRegistrationOffchain({
@@ -76,7 +81,7 @@ export async function registerOffchainWorkflowWithSigner(
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
   // Send request for user registration offchain
-  const response = await usersApi.registerUser({
+  await usersApi.registerUser({
     registerUserRequest: {
       eth_signature: ethSignature,
       ether_key: userAddress,
@@ -85,9 +90,7 @@ export async function registerOffchainWorkflowWithSigner(
     },
   });
 
-  return {
-    tx_hash: response.data.tx_hash,
-  };
+  return;
 }
 
 export async function isRegisteredOnChainWorkflow(
@@ -112,4 +115,20 @@ export async function getSignableRegistrationOnchain(
     operator_signature: response.data.operator_signature,
     payload_hash: response.data.payload_hash,
   };
+}
+
+async function isUserRegistered(
+  userAddress: string,
+  usersApi: UsersApi,
+): Promise<boolean> {
+  try {
+    await usersApi.getUsers({ user: userAddress });
+    return true;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    if (axiosError.response?.status === 404) {
+      return false;
+    }
+    throw error;
+  }
 }
