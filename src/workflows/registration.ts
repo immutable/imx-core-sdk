@@ -123,12 +123,11 @@ async function isUserRegistered(
 ): Promise<boolean> {
   try {
     await usersApi.getUsers({ user: userAddress });
-    return true;
   } catch (error) {
     const axiosError = error as AxiosError;
     if (axiosError.response?.status === 404) {
       return false;
     }
-    throw error;
   }
+  return true;
 }
