@@ -7,7 +7,6 @@ import {
 } from '../api';
 import { Registration } from '../contracts';
 import { L2Signer, StarkWallet } from '../types';
-import { AxiosError } from 'axios';
 
 /** @deprecated */
 export async function registerOffchainWorkflow(
@@ -123,11 +122,8 @@ async function isUserRegistered(
 ): Promise<boolean> {
   try {
     await usersApi.getUsers({ user: userAddress });
+    return true;
   } catch (error) {
-    const axiosError = error as AxiosError;
-    if (axiosError.response?.status === 404) {
-      return false;
-    }
+    return false;
   }
-  return true;
 }
