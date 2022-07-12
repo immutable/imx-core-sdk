@@ -83,7 +83,7 @@ export async function createOrderWorkflowWithSigner({
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
-  // Sign has with L2 credentials
+  // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash)
 
   // Obtain Eth address from signer
