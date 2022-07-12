@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - mark `registerOffchain` as deprecated
+- Changed `registerOffchainWorkflowWithSigner` to return a void promise and return early if wallet
+is already registered
 
 ### Fixed
 - `getAddress` method from BaseSigner
