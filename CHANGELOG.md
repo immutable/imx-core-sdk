@@ -11,7 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `createTradeWithSigner` function to enable creating trade workflow with l2signer
 
 ### Changed
-- mark `createTrade` as deprecated 
+- Mark `createTrade` as deprecated
+
+### Fixed
+- Mark `project_id` as required on `CreateCollectionRequest`
+- Updated list orders OpenAPI spec to document the `include_fees` query param
 
 ## [0.3.1] - 2022-07-01
 
