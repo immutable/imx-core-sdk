@@ -33,7 +33,12 @@ import {
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
-import { createOrderWorkflow, cancelOrderWorkflow } from './orders';
+import {
+  createOrderWorkflow,
+  cancelOrderWorkflow,
+  cancelOrderWorkflowWithSigner,
+  createOrderWorkflowWithSigner,
+} from './orders';
 import { createTradeWorkflow, createTradeWorkflowWithSigner } from './trades';
 import {
   UnsignedMintRequest,
@@ -55,6 +60,15 @@ import {
   L2Signer,
 } from '../types';
 import { Registration__factory } from '../contracts';
+import { WalletConnection } from '../types/index';
+
+export type CreateOrderWithSignerRequest = WalletConnection & {
+  request: GetSignableOrderRequest
+}
+
+export type CancelOrderWithSignerRequest = WalletConnection & {
+  request: GetSignableCancelOrderRequest
+}
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -278,6 +292,7 @@ export class Workflows {
     }
   }
 
+  /** @deprecated */
   public createOrder(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -286,12 +301,30 @@ export class Workflows {
     return createOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 
+
+  public createOrderWithSigner({
+    l1Signer,
+    l2Signer,
+    request,
+  }: CreateOrderWithSignerRequest) {
+    return createOrderWorkflowWithSigner({ l1Signer, l2Signer, request, ordersApi: this.ordersApi });
+  }
+
+  /** @deprecated */
   public cancelOrder(
     signer: Signer,
     starkWallet: StarkWallet,
     request: GetSignableCancelOrderRequest,
   ) {
     return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
+  }
+
+  public cancelOrderWithSigner({
+    l1Signer,
+    l2Signer,
+    request,
+  }: CancelOrderWithSignerRequest) {
+    return cancelOrderWorkflowWithSigner({ l1Signer, l2Signer, request, ordersApi: this.ordersApi });
   }
 
   /** @deprecated */
