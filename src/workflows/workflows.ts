@@ -62,14 +62,6 @@ import {
 import { Registration__factory } from '../contracts';
 import { WalletConnection } from '../types/index';
 
-export type CreateOrderWithSignerRequest = WalletConnection & {
-  request: GetSignableOrderRequest
-}
-
-export type CancelOrderWithSignerRequest = WalletConnection & {
-  request: GetSignableCancelOrderRequest
-}
-
 export class Workflows {
   private readonly depositsApi: DepositsApi;
   private readonly encodingApi: EncodingApi;
@@ -301,13 +293,8 @@ export class Workflows {
     return createOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 
-
-  public createOrderWithSigner({
-    l1Signer,
-    l2Signer,
-    request,
-  }: CreateOrderWithSignerRequest) {
-    return createOrderWorkflowWithSigner({ l1Signer, l2Signer, request, ordersApi: this.ordersApi });
+  public createOrderWithSigner(walletConnection: WalletConnection, request: GetSignableOrderRequest) {
+    return createOrderWorkflowWithSigner({ ...walletConnection, request, ordersApi: this.ordersApi });
   }
 
   /** @deprecated */
@@ -319,12 +306,8 @@ export class Workflows {
     return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 
-  public cancelOrderWithSigner({
-    l1Signer,
-    l2Signer,
-    request,
-  }: CancelOrderWithSignerRequest) {
-    return cancelOrderWorkflowWithSigner({ l1Signer, l2Signer, request, ordersApi: this.ordersApi });
+  public cancelOrderWithSigner(walletConnection: WalletConnection, request: GetSignableCancelOrderRequest) {
+    return cancelOrderWorkflowWithSigner({ ...walletConnection, request, ordersApi: this.ordersApi });
   }
 
   /** @deprecated */

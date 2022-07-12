@@ -7,11 +7,17 @@ import {
   OrdersApiCreateOrderRequest,
 } from '../api';
 import { serializeSignature, sign, signRaw } from '../utils';
-import { CancelOrderWithSignerRequest, CreateOrderWithSignerRequest } from './workflows';
+import { WalletConnection } from '../types/index';
 
+type CreateOrderWorkflowWithSignerRequest = WalletConnection & {
+  request: GetSignableOrderRequest;
+  ordersApi: OrdersApi;
+};
 
-type CreateOrderWorkflowWithSignerRequest = CreateOrderWithSignerRequest & { ordersApi:OrdersApi }
-type CancelOrderWorkflowWithSignerRequest = CancelOrderWithSignerRequest & { ordersApi:OrdersApi }
+type CancelOrderWorkflowWithSignerRequest = WalletConnection & {
+  request: GetSignableCancelOrderRequest;
+  ordersApi: OrdersApi;
+};
 
 /** @deprecated */
 export async function createOrderWorkflow(
@@ -84,10 +90,10 @@ export async function createOrderWorkflowWithSigner({
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = await l2Signer.signMessage(payloadHash)
+  const starkSignature = await l2Signer.signMessage(payloadHash);
 
   // Obtain Eth address from signer
-  const ethAddress = (await l1Signer.getAddress());
+  const ethAddress = await l1Signer.getAddress();
 
   const resp = getSignableOrderResponse.data;
 
@@ -164,8 +170,8 @@ export async function cancelOrderWorkflow(
 }
 
 export async function cancelOrderWorkflowWithSigner({
-  l1Signer ,
-  l2Signer ,
+  l1Signer,
+  l2Signer,
   request,
   ordersApi,
 }: CancelOrderWorkflowWithSignerRequest) {
