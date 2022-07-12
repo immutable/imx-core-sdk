@@ -23,13 +23,13 @@ import { SignableToken } from './signable-token';
  */
 export interface GetSignableOrderRequest {
     /**
-     * Fee-exclusive amount to buy
+     * Fee-exclusive amount to buy the asset
      * @type {string}
      * @memberof GetSignableOrderRequest
      */
     'amount_buy': string;
     /**
-     * Amount to sell
+     * Amount to sell (quantity)
      * @type {string}
      * @memberof GetSignableOrderRequest
      */

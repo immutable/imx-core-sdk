@@ -62,5 +62,11 @@ export interface CreateCollectionRequest {
      * @memberof CreateCollectionRequest
      */
     'owner_public_key': string;
+    /**
+     * The collection\'s project ID
+     * @type {number}
+     * @memberof CreateCollectionRequest
+     */
+    'project_id': number;
 }
 

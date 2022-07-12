@@ -1153,6 +1153,12 @@
             "description": "Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages",
             "name": "auxiliary_fee_recipients",
             "in": "query"
+          },
+          {
+            "type": "boolean",
+            "description": "Set flag to true to include fee object for orders",
+            "name": "include_fees",
+            "in": "query"
           }
         ],
         "responses": {
@@ -2588,7 +2594,7 @@
     },
     "/v3/signable-order-details": {
       "post": {
-        "description": "Get details a signable order V3",
+        "description": "Get a signable order request (V3)",
         "consumes": [
           "application/json"
         ],
@@ -2598,7 +2604,7 @@
         "tags": [
           "orders"
         ],
-        "summary": "Get details a signable order V3",
+        "summary": "Get a signable order request (V3)",
         "operationId": "getSignableOrder",
         "parameters": [
           {
@@ -2776,13 +2782,11 @@
         },
         "image_url": {
           "description": "Image URL of this asset",
-          "type": "string",
-          "x-nullable": true
+          "type": "string"
         },
         "name": {
           "description": "Name of this asset",
-          "type": "string",
-          "x-nullable": true
+          "type": "string"
         }
       }
     },
@@ -2792,6 +2796,7 @@
         "balance",
         "preparing_withdrawal",
         "symbol",
+        "token_address",
         "withdrawable"
       ],
       "properties": {
@@ -2805,6 +2810,10 @@
         },
         "symbol": {
           "description": "Symbol of the token (e.g. ETH, IMX)",
+          "type": "string"
+        },
+        "token_address": {
+          "description": "Address of the contract that represents this ERC20 token or empty for ETH",
           "type": "string"
         },
         "withdrawable": {
@@ -2945,7 +2954,8 @@
       "required": [
         "contract_address",
         "name",
-        "owner_public_key"
+        "owner_public_key",
+        "project_id"
       ],
       "properties": {
         "collection_image_url": {
@@ -2975,6 +2985,10 @@
         "owner_public_key": {
           "description": "Owner Public Key: The public key of the owner of the contract",
           "type": "string"
+        },
+        "project_id": {
+          "description": "The collection's project ID",
+          "type": "integer"
         }
       }
     },
@@ -3186,6 +3200,10 @@
         "trade_id"
       ],
       "properties": {
+        "request_id": {
+          "description": "Request ID that returns when a trade initiated through risk-manager",
+          "type": "string"
+        },
         "status": {
           "description": "Current status of trade",
           "type": "string"
@@ -3660,11 +3678,11 @@
       ],
       "properties": {
         "amount_buy": {
-          "description": "Fee-exclusive amount to buy",
+          "description": "Fee-exclusive amount to buy the asset",
           "type": "string"
         },
         "amount_sell": {
-          "description": "Amount to sell",
+          "description": "Amount to sell (quantity)",
           "type": "string"
         },
         "expiration_timestamp": {
@@ -4769,6 +4787,10 @@
         "stark_signature"
       ],
       "properties": {
+        "email": {
+          "description": "User email",
+          "type": "string"
+        },
         "eth_signature": {
           "description": "Eth signature",
           "type": "string"
@@ -5054,19 +5076,14 @@
     "Transfer": {
       "type": "object",
       "required": [
-        "data",
         "receiver",
         "status",
         "timestamp",
+        "token",
         "transaction_id",
-        "type",
         "user"
       ],
       "properties": {
-        "data": {
-          "description": "Token details of this asset",
-          "$ref": "#/definitions/TokenData"
-        },
         "receiver": {
           "description": "Ethereum address of the user who received this transfer",
           "type": "string"
@@ -5080,13 +5097,13 @@
           "type": "string",
           "x-nullable": true
         },
+        "token": {
+          "description": "Token transferred by the user",
+          "$ref": "#/definitions/Token"
+        },
         "transaction_id": {
           "description": "Sequential transaction ID",
           "type": "integer"
-        },
-        "type": {
-          "description": "Type of this asset (ETH/ERC20/ERC721)",
-          "type": "string"
         },
         "user": {
           "description": "Ethereum address of the user  who submitted this transfer",

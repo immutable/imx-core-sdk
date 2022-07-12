@@ -32,12 +32,12 @@ export interface AssetProperties {
      * @type {string}
      * @memberof AssetProperties
      */
-    'image_url'?: string | null;
+    'image_url'?: string;
     /**
      * Name of this asset
      * @type {string}
      * @memberof AssetProperties
      */
-    'name'?: string | null;
+    'name'?: string;
 }
 

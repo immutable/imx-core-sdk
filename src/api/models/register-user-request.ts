@@ -21,6 +21,12 @@
  */
 export interface RegisterUserRequest {
     /**
+     * User email
+     * @type {string}
+     * @memberof RegisterUserRequest
+     */
+    'email'?: string;
+    /**
      * Eth signature
      * @type {string}
      * @memberof RegisterUserRequest

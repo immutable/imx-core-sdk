@@ -39,6 +39,12 @@ export interface Balance {
      */
     'symbol': string;
     /**
+     * Address of the contract that represents this ERC20 token or empty for ETH
+     * @type {string}
+     * @memberof Balance
+     */
+    'token_address': string;
+    /**
      * Amount which is currently withdrawable from the exchange
      * @type {string}
      * @memberof Balance

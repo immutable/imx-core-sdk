@@ -21,6 +21,12 @@
  */
 export interface CreateTradeResponse {
     /**
+     * Request ID that returns when a trade initiated through risk-manager
+     * @type {string}
+     * @memberof CreateTradeResponse
+     */
+    'request_id'?: string;
+    /**
      * Current status of trade
      * @type {string}
      * @memberof CreateTradeResponse
