@@ -11,10 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `registerOffchainWithSigner` function to enable register offchain user with L2Signer
 
-## Changed
+### Changed
 
 - Changed `registerOffchainWorkflowWithSigner` to return a void promise and return early if wallet
-- Mark `registerOffchain` as deprecated
+- RegisterUserRequest `email` property added
+- [BREAKING CHANGE] `Transfer` and `ListTransfersResponse` objects swapped `data` and `type` properties with `token`
+
+### Deprecated
+
+- `registerOffchain`, use `registerOffchainWithSigner` instead
 
 ### Fixed
 
