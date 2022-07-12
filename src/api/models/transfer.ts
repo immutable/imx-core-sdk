@@ -13,7 +13,7 @@
  */
 
 
-import { TokenData } from './token-data';
+import { Token } from './token';
 
 /**
  * 
@@ -21,12 +21,6 @@ import { TokenData } from './token-data';
  * @interface Transfer
  */
 export interface Transfer {
-    /**
-     * 
-     * @type {TokenData}
-     * @memberof Transfer
-     */
-    'data': TokenData;
     /**
      * Ethereum address of the user who received this transfer
      * @type {string}
@@ -46,17 +40,17 @@ export interface Transfer {
      */
     'timestamp': string | null;
     /**
+     * 
+     * @type {Token}
+     * @memberof Transfer
+     */
+    'token': Token;
+    /**
      * Sequential transaction ID
      * @type {number}
      * @memberof Transfer
      */
     'transaction_id': number;
-    /**
-     * Type of this asset (ETH/ERC20/ERC721)
-     * @type {string}
-     * @memberof Transfer
-     */
-    'type': string;
     /**
      * Ethereum address of the user  who submitted this transfer
      * @type {string}

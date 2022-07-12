@@ -6,24 +6,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Added
+
 - Added `registerOffchainWithSigner` function to enable register offchain user with L2Signer
 
 ### Changed
-- mark `registerOffchain` as deprecated
+
 - Changed `registerOffchainWorkflowWithSigner` to return a void promise and return early if wallet
-is already registered
+- RegisterUserRequest `email` property added
+- [BREAKING CHANGE] `Transfer` and `ListTransfersResponse` objects swapped `data` and `type` properties with `token`
+
+### Deprecated
+
+- `registerOffchain`, use `registerOffchainWithSigner` instead
 
 ### Fixed
+
 - `getAddress` method from BaseSigner
+- Mark `project_id` as required on `CreateCollectionRequest`
+- Updated list orders OpenAPI spec to document the `include_fees` query param
 
 ## [0.4.0] - 2022-07-05
+
 ### Added
+
 - Added `BaseSigner`, a default implementation of the Stark L2Signer interface
 - Added `createTradeWithSigner` function to enable creating trade workflow with l2signer
 
 ### Changed
-- mark `createTrade` as deprecated 
+
+- Mark `createTrade` as deprecated
 
 ## [0.3.1] - 2022-07-01
 
@@ -35,6 +48,7 @@ is already registered
 ## [0.3.0] - 2022-06-21
 
 ### Added
+
 - Added `generateStarkWalletFromSignedMessage` function to generate stark keys from EthAddress and Signature
 - Added `L2Signer` type
 
