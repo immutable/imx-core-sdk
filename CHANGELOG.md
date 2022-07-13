@@ -11,11 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `createOrderWithSigner` function to enable create order with l2signer
 - Added `cancelOrderWithSigner` function to enable cancel order with l2signer
 - Added `WalletConnection` type
+- Added `transferWithSigner` type
 
 ### Deprecated
 
 - `createOrder`, use `createOrderWithSigner` instead
 - `cancelOrder`, use `cancelOrderWithSigner` instead
+- `transfer`, use `transferWithSigner` instead
 
 ## [0.5.0] - 2022-07-12
 
