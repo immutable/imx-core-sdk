@@ -119,7 +119,6 @@ export async function createOrderWorkflowWithSigner({
   const createOrderResponse = await ordersApi.createOrder(orderParams);
 
   return {
-    // order_id, status, time
     ...createOrderResponse.data,
   };
 }
