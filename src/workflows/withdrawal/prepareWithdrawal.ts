@@ -13,6 +13,9 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception');
 };
 
+type PrepareWithdrawalRequestParams = PrepareWithdrawalRequest & {
+  withdrawalsApi: WithdrawalsApi;
+}
 
 export async function prepareWithdrawalWorkflowWithSigner({
   l1Signer,
@@ -20,7 +23,7 @@ export async function prepareWithdrawalWorkflowWithSigner({
   token,
   quantity,
   withdrawalsApi,
-}:PrepareWithdrawalRequest): Promise<CreateWithdrawalResponse> {
+}:PrepareWithdrawalRequestParams): Promise<CreateWithdrawalResponse> {
 
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {

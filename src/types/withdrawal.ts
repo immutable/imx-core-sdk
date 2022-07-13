@@ -51,5 +51,4 @@ export type TokenPrepareWithdrawal = ETHPrepareWithdrawal | ERC20PrepareWithdraw
 export type PrepareWithdrawalRequest = {
   token: TokenPrepareWithdrawal;
   quantity: string;
-  withdrawalsApi: WithdrawalsApi;
 } & WalletConnection
