@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Added
+
+- Added `createOrderWithSigner` function to enable create order with l2signer
+- Added `cancelOrderWithSigner` function to enable cancel order with l2signer
+- Added `WalletConnection` type
+
+### Deprecated
+
+- `createOrder`, use `createOrderWithSigner` instead
+- `cancelOrder`, use `cancelOrderWithSigner` instead
+
 ## [0.5.0] - 2022-07-12
 
 ### Added
@@ -13,7 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Changed `registerOffchainWorkflowWithSigner` to return a void promise and return early if wallet
+- Changed `registerOffchainWorkflowWithSigner` to return a void promise and return early if wallet is already registered
 - RegisterUserRequest `email` property added
 - [BREAKING CHANGE] `Transfer` and `ListTransfersResponse` objects swapped `data` and `type` properties with `token`
 

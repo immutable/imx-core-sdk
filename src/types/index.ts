@@ -6,6 +6,7 @@ import {
   Configuration,
 } from '../api';
 import { GetSignableBurnRequest } from '../workflows/types';
+import { Signer as L1Signer } from '@ethersproject/abstract-signer';
 
 export interface StarkWallet {
   path: string;
@@ -19,6 +20,11 @@ export interface L2Signer {
 }
 
 export { Signer as L1Signer } from '@ethersproject/abstract-signer';
+
+export interface WalletConnection {
+  l1Signer: L1Signer;
+  l2Signer: L2Signer;
+}
 
 export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
 
