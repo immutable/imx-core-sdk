@@ -15,7 +15,7 @@ const assertIsDefined = <T>(value?: T): T => {
 
 
 export async function prepareWithdrawalWorkflowWithSigner({
-  signer,
+  l1Signer,
   l2Signer,
   token,
   quantity,
@@ -24,7 +24,7 @@ export async function prepareWithdrawalWorkflowWithSigner({
 
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
-      user: await signer.getAddress(),
+      user: await l1Signer.getAddress(),
       token: convertToSignableRequestFormat(token),
       amount: quantity.toString(),
     },
@@ -35,7 +35,7 @@ export async function prepareWithdrawalWorkflowWithSigner({
   // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
-  const { ethAddress, ethSignature } = await signMessage(signableMessage, signer);
+  const { ethAddress, ethSignature } = await signMessage(signableMessage, l1Signer);
 
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
     createWithdrawalRequest: {

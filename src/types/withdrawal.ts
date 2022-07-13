@@ -1,6 +1,5 @@
 import { TokenType } from './token';
-import { Signer } from '@ethersproject/abstract-signer';
-import { L2Signer } from './index';
+import { WalletConnection } from './index';
 import { WithdrawalsApi } from '../api';
 
 export interface ETHWithdrawal {
@@ -11,7 +10,7 @@ interface ETHPrepareWithdrawal {
   type: TokenType.ETH;
   data: {
     decimals: number
-  }
+  };
 }
 
 export const ETH_PREPARE_WITHDRAWAL_DATA: ETHPrepareWithdrawal = {
@@ -19,7 +18,7 @@ export const ETH_PREPARE_WITHDRAWAL_DATA: ETHPrepareWithdrawal = {
   data: {
     decimals: 18,
   },
-}
+};
 
 export interface ERC721Withdrawal {
   type: TokenType.ERC721;
@@ -49,11 +48,8 @@ export interface ERC20PrepareWithdrawal {
 export type TokenWithdrawal = ETHWithdrawal | ERC20Withdrawal | ERC721Withdrawal;
 export type TokenPrepareWithdrawal = ETHPrepareWithdrawal | ERC20PrepareWithdrawal | ERC721Withdrawal;
 
-
-export interface PrepareWithdrawalRequest {
-  signer: Signer;
-  l2Signer: L2Signer;
-  token: TokenPrepareWithdrawal;
-  quantity: string;
-  withdrawalsApi: WithdrawalsApi;
-}
+export type PrepareWithdrawalRequest = {
+  token: TokenPrepareWithdrawal,
+  quantity: string,
+  withdrawalsApi: WithdrawalsApi,
+} & WalletConnection
