@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `createOrderWithSigner` function to enable create order with l2signer
 - Added `cancelOrderWithSigner` function to enable cancel order with l2signer
 - Added `WalletConnection` type
-- Added `transferWithSigner` type
-- Added `batchNftTransferWithSigner` type
+- Added `transferWithSigner` function to enable transfer with l2signer
+- Added `batchNftTransferWithSigner` function to enable batch transfer with l2signer
 
 ### Deprecated
 
