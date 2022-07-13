@@ -6,6 +6,7 @@ import {
   PrepareWithdrawalRequest,
   StarkWallet,
   TokenPrepareWithdrawal,
+  WalletConnection,
 } from '../../types';
 
 const assertIsDefined = <T>(value?: T): T => {
@@ -13,7 +14,7 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception');
 };
 
-type PrepareWithdrawalRequestParams = PrepareWithdrawalRequest & {
+type PrepareWithdrawalRequestParams = PrepareWithdrawalRequest & WalletConnection & {
   withdrawalsApi: WithdrawalsApi;
 }
 
@@ -24,7 +25,6 @@ export async function prepareWithdrawalWorkflowWithSigner({
   quantity,
   withdrawalsApi,
 }:PrepareWithdrawalRequestParams): Promise<CreateWithdrawalResponse> {
-
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await l1Signer.getAddress(),

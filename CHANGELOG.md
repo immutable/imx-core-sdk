@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `createOrderWithSigner` function to enable create order with l2signer
 - Added `cancelOrderWithSigner` function to enable cancel order with l2signer
 - Added `WalletConnection` type
-- Added `prepareWithdrawalWorkflowWithSigner` type
+- Added `prepareWithdrawalWorkflowWithSigner` function to enable prepare withdrawal with l2signer
 
 ### Deprecated
 

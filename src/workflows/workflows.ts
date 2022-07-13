@@ -229,9 +229,10 @@ export class Workflows {
     );
   }
 
-  public prepareWithdrawalWithSigner(params: PrepareWithdrawalRequest) {
+  public prepareWithdrawalWithSigner(walletConnection:   WalletConnection,request: PrepareWithdrawalRequest) {
     return prepareWithdrawalWorkflowWithSigner( {
-      ...params,
+      ...walletConnection,
+      ...request,
       withdrawalsApi: this.withdrawalsApi,
     },
     )
