@@ -14,7 +14,7 @@ import {
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 
-export async function completeERC20WithdrawalWorkflow(
+export async function completeERC20WithdrawalWorfklow(
   signer: Signer,
   starkPublicKey: string,
   token: ERC20Withdrawal,

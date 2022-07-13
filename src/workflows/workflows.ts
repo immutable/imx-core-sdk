@@ -28,7 +28,7 @@ import {
 } from './deposit';
 import { burnWorkflow, getBurnWorkflow } from './burn';
 import {
-  completeERC20WithdrawalWorkflow,
+  completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow, prepareWithdrawalWorkflowWithSigner,
@@ -252,7 +252,7 @@ export class Workflows {
     starkPublicKey: string,
     token: ERC20Withdrawal,
   ) {
-    return completeERC20WithdrawalWorkflow(
+    return completeERC20WithdrawalWorfklow(
       signer,
       starkPublicKey,
       token,
