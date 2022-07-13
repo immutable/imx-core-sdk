@@ -133,8 +133,6 @@ export async function transfersWorkflow(
   };
 }
 
-
-
 export async function batchTransfersWorkflow(
   signer: Signer,
   starkWallet: StarkWallet,
