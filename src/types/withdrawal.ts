@@ -48,7 +48,7 @@ export interface ERC20PrepareWithdrawal {
 export type TokenWithdrawal = ETHWithdrawal | ERC20Withdrawal | ERC721Withdrawal;
 export type TokenPrepareWithdrawal = ETHPrepareWithdrawal | ERC20PrepareWithdrawal | ERC721Withdrawal;
 
-export type PrepareWithdrawalRequest = {
+export type PrepareWithdrawalRequest = WalletConnection & {
   token: TokenPrepareWithdrawal;
   quantity: string;
-} & WalletConnection
+}
