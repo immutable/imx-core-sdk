@@ -28,10 +28,10 @@ import {
 } from './deposit';
 import { burnWorkflow, getBurnWorkflow } from './burn';
 import {
-  completeERC20WithdrawalWorfklow,
+  completeERC20WithdrawalWorkflow,
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
-  prepareWithdrawalWorkflow,
+  prepareWithdrawalWorkflow, prepareWithdrawalWorkflowWithSigner,
 } from './withdrawal';
 import { createOrderWorkflow, cancelOrderWorkflow } from './orders';
 import { createTradeWorkflow, createTradeWorkflowWithSigner } from './trades';
@@ -52,7 +52,7 @@ import {
   TokenWithdrawal,
   StarkWallet,
   L1Signer,
-  L2Signer,
+  L2Signer, PrepareWithdrawalRequest,
 } from '../types';
 import { Registration__factory } from '../contracts';
 
@@ -207,6 +207,7 @@ export class Workflows {
     );
   }
 
+  /** @deprecated */
   public prepareWithdrawal(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -220,6 +221,14 @@ export class Workflows {
       quantity,
       this.withdrawalsApi,
     );
+  }
+
+  public prepareWithdrawalWithSigner(params: PrepareWithdrawalRequest) {
+    return prepareWithdrawalWorkflowWithSigner( {
+      ...params,
+      withdrawalsApi: this.withdrawalsApi,
+    },
+    )
   }
 
   public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
@@ -237,7 +246,7 @@ export class Workflows {
     starkPublicKey: string,
     token: ERC20Withdrawal,
   ) {
-    return completeERC20WithdrawalWorfklow(
+    return completeERC20WithdrawalWorkflow(
       signer,
       starkPublicKey,
       token,
