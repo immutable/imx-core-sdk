@@ -5,7 +5,7 @@ import {
   GetSignableTransferRequestV1,
   CreateTransferResponseV1,
   GetSignableTransferRequest,
-  CreateTransferResponse, SignableTransferResponseDetails,
+  CreateTransferResponse,
 } from '../api';
 import { serializeSignature, sign } from '../utils';
 import { StarkWallet, WalletConnection } from '../types';
@@ -24,7 +24,7 @@ export async function transfersWorkflowWithSigner({
   l2Signer,
   request,
   transfersApi,
-}:TransferRequestParams): Promise<CreateTransferResponseV1> {
+}: TransferRequestParams): Promise<CreateTransferResponseV1> {
   // Get signable response for transfer
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
@@ -189,13 +189,12 @@ export async function batchTransfersWorkflow(
   };
 }
 
-
 export async function batchTransfersWorkflowWithSigner({
   l1Signer,
   l2Signer,
   request,
   transfersApi,
-}:BatchTransferRequestParams): Promise<CreateTransferResponse> {
+}: BatchTransferRequestParams): Promise<CreateTransferResponse> {
   // Get signable response for transfer
   const signableResult = await transfersApi.getSignableTransfer({
     getSignableTransferRequestV2: {
@@ -211,7 +210,7 @@ export async function batchTransfersWorkflowWithSigner({
   }
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await l1Signer.getAddress());
+  const ethAddress = await l1Signer.getAddress();
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);

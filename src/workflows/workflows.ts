@@ -129,7 +129,7 @@ export class Workflows {
 
   public transferWithSigner(walletConnection: WalletConnection, request: UnsignedTransferRequest) {
     return transfersWorkflowWithSigner(
-      { ...walletConnection, request, transfersApi: this.transfersApi  });
+      { ...walletConnection, request, transfersApi: this.transfersApi });
   }
 
   /** @deprecated */
@@ -149,7 +149,7 @@ export class Workflows {
   public batchNftTransferWithSigner(
     walletConnection: WalletConnection, request: UnsignedBatchNftTransferRequest,
   ) {
-    return batchTransfersWorkflowWithSigner( {
+    return batchTransfersWorkflowWithSigner({
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
