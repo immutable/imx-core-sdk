@@ -1,4 +1,4 @@
-import { Signer as L1Signer } from '@ethersproject/abstract-signer';
+import { Signer } from '@ethersproject/abstract-signer';
 import {
   TransfersApi,
   CreateTransferResponseV1,
@@ -16,7 +16,7 @@ type burnWorkflowWithSignerRequest = WalletConnection & {
 
 /** @deprecated */
 export async function burnWorkflow(
-  signer: L1Signer,
+  signer: Signer,
   starkWallet: StarkWallet,
   request: GetSignableBurnRequest,
   transfersApi: TransfersApi,
