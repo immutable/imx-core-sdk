@@ -37,6 +37,7 @@ import {
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
+  prepareWithdrawalWorkflowWithSigner,
 } from './withdrawal';
 import {
   createOrderWorkflow,
@@ -63,6 +64,7 @@ import {
   StarkWallet,
   L1Signer,
   L2Signer,
+  PrepareWithdrawalRequest,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import { WalletConnection } from '../types/index';
@@ -236,6 +238,7 @@ export class Workflows {
     );
   }
 
+  /** @deprecated */
   public prepareWithdrawal(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -249,6 +252,15 @@ export class Workflows {
       quantity,
       this.withdrawalsApi,
     );
+  }
+
+  public prepareWithdrawalWithSigner(walletConnection: WalletConnection, request: PrepareWithdrawalRequest) {
+    return prepareWithdrawalWorkflowWithSigner({
+      ...walletConnection,
+      ...request,
+      withdrawalsApi: this.withdrawalsApi,
+    },
+    )
   }
 
   public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
