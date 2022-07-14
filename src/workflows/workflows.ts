@@ -20,7 +20,12 @@ import {
   registerOffchainWorkflowWithSigner,
 } from './registration';
 import { mintingWorkflow } from './minting';
-import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
+import {
+  transfersWorkflow,
+  batchTransfersWorkflow,
+  transfersWorkflowWithSigner,
+  batchTransfersWorkflowWithSigner,
+} from './transfers';
 import {
   depositERC20Workflow,
   depositERC721Workflow,
@@ -115,6 +120,7 @@ export class Workflows {
     return mintingWorkflow(signer, request, this.mintsApi);
   }
 
+  /** @deprecated */
   public transfer(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -123,6 +129,12 @@ export class Workflows {
     return transfersWorkflow(signer, starkWallet, request, this.transfersApi);
   }
 
+  public transferWithSigner(walletConnection: WalletConnection, request: UnsignedTransferRequest) {
+    return transfersWorkflowWithSigner(
+      { ...walletConnection, request, transfersApi: this.transfersApi });
+  }
+
+  /** @deprecated */
   public batchNftTransfer(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -133,6 +145,17 @@ export class Workflows {
       starkWallet,
       request,
       this.transfersApi,
+    );
+  }
+
+  public batchNftTransferWithSigner(
+    walletConnection: WalletConnection, request: UnsignedBatchNftTransferRequest,
+  ) {
+    return batchTransfersWorkflowWithSigner({
+      ...walletConnection,
+      request,
+      transfersApi: this.transfersApi,
+    },
     );
   }
 
