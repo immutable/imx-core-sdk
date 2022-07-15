@@ -73,7 +73,7 @@ export function getPublic(keyPair: ec.KeyPair, compressed = false): string {
 }
 
 export function getStarkPublicKey(keyPair: ec.KeyPair): string {
-  return getPublic(keyPair, true);
+  return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
 }
 
 export function getKeyPairFromPublicKey(publicKey: string): ec.KeyPair {
@@ -105,10 +105,10 @@ export async function generateStarkWalletFromSignedMessage(ethAddress: string, s
     DEFAULT_ACCOUNT_INDEX,
   );
   const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
-  const starkPublic = getStarkPublicKey(keyPair);
+  const starkPublicKey = getStarkPublicKey(keyPair);
   return {
     path,
-    starkPublicKey: encUtils.sanitizeHex(getXCoordinate(starkPublic)),
+    starkPublicKey,
     starkKeyPair: keyPair,
   };
 }

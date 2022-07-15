@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `prepareWithdrawalWorkflowWithSigner` function to enable prepare withdrawal with l2signer
 - Added `burnWithSigner` function to enable burn with l2signer
 
+### Fixed
+
+- `getStarkPublicKey` method to get the same public key as the `generateStarkWallet` returns
+
 ### Deprecated
 
 - `createOrder`, use `createOrderWithSigner` instead
