@@ -20,7 +20,12 @@ import {
   registerOffchainWorkflowWithSigner,
 } from './registration';
 import { mintingWorkflow } from './minting';
-import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
+import {
+  transfersWorkflow,
+  batchTransfersWorkflow,
+  transfersWorkflowWithSigner,
+  batchTransfersWorkflowWithSigner,
+} from './transfers';
 import {
   depositERC20Workflow,
   depositERC721Workflow,
@@ -36,6 +41,7 @@ import {
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
+  prepareWithdrawalWorkflowWithSigner,
 } from './withdrawal';
 import {
   createOrderWorkflow,
@@ -62,6 +68,7 @@ import {
   StarkWallet,
   L1Signer,
   L2Signer,
+  PrepareWithdrawalRequest,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import { WalletConnection } from '../types/index';
@@ -116,6 +123,7 @@ export class Workflows {
     return mintingWorkflow(signer, request, this.mintsApi);
   }
 
+  /** @deprecated */
   public transfer(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -124,6 +132,12 @@ export class Workflows {
     return transfersWorkflow(signer, starkWallet, request, this.transfersApi);
   }
 
+  public transferWithSigner(walletConnection: WalletConnection, request: UnsignedTransferRequest) {
+    return transfersWorkflowWithSigner(
+      { ...walletConnection, request, transfersApi: this.transfersApi });
+  }
+
+  /** @deprecated */
   public batchNftTransfer(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -137,6 +151,18 @@ export class Workflows {
     );
   }
 
+  public batchNftTransferWithSigner(
+    walletConnection: WalletConnection,
+    request: UnsignedBatchNftTransferRequest,
+  ) {
+    return batchTransfersWorkflowWithSigner({
+      ...walletConnection,
+      request,
+      transfersApi: this.transfersApi,
+    },
+    );
+  }
+    
   /** @deprecated */
   public burn(
     signer: Signer,
@@ -221,6 +247,7 @@ export class Workflows {
     );
   }
 
+  /** @deprecated */
   public prepareWithdrawal(
     signer: Signer,
     starkWallet: StarkWallet,
@@ -234,6 +261,15 @@ export class Workflows {
       quantity,
       this.withdrawalsApi,
     );
+  }
+
+  public prepareWithdrawalWithSigner(walletConnection: WalletConnection, request: PrepareWithdrawalRequest) {
+    return prepareWithdrawalWorkflowWithSigner({
+      ...walletConnection,
+      ...request,
+      withdrawalsApi: this.withdrawalsApi,
+    },
+    )
   }
 
   public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {

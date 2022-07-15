@@ -1,4 +1,6 @@
 import { TokenType } from './token';
+import { WalletConnection } from './index';
+import { WithdrawalsApi } from '../api';
 
 export interface ETHWithdrawal {
   type: TokenType.ETH;
@@ -46,3 +48,7 @@ export interface ERC20PrepareWithdrawal {
 export type TokenWithdrawal = ETHWithdrawal | ERC20Withdrawal | ERC721Withdrawal;
 export type TokenPrepareWithdrawal = ETHPrepareWithdrawal | ERC20PrepareWithdrawal | ERC721Withdrawal;
 
+export type PrepareWithdrawalRequest =  {
+  token: TokenPrepareWithdrawal;
+  quantity: string;
+}

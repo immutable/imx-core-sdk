@@ -11,12 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `createOrderWithSigner` function to enable create order with l2signer
 - Added `cancelOrderWithSigner` function to enable cancel order with l2signer
 - Added `WalletConnection` type
+- Added `transferWithSigner` function to enable transfer with l2signer
+- Added `batchNftTransferWithSigner` function to enable batch transfer with l2signer
+- Added `prepareWithdrawalWorkflowWithSigner` function to enable prepare withdrawal with l2signer
 - Added `burnWithSigner` function to enable burn with l2signer
 
 ### Deprecated
 
 - `createOrder`, use `createOrderWithSigner` instead
 - `cancelOrder`, use `cancelOrderWithSigner` instead
+- `transfer`, use `transferWithSigner` instead
+- `batchNftTransfer`, use `batchNftTransferWithSigner` instead
+- `prepareWithdrawalWorkflow`, use `prepareWithdrawalWorkflowWithSigner` instead
 - `burn`, use `burnWithSigner` instead
 
 ## [0.5.0] - 2022-07-12
