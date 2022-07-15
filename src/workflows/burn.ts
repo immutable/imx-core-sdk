@@ -4,11 +4,22 @@ import {
   CreateTransferResponseV1,
   TransfersApiGetTransferRequest,
 } from '../api';
+import { transfersWorkflowWithSigner } from './transfers';
 import { serializeSignature, sign, signRaw } from '../utils';
 import { BurnAddress } from './constants';
 import { GetSignableBurnRequest } from './types';
-import { StarkWallet } from '../types';
+import {
+  StarkWallet,
+  WalletConnection,
+  UnsignedTransferRequest,
+} from '../types';
 
+type burnWorkflowWithSignerParams = WalletConnection & {
+  request: GetSignableBurnRequest;
+  transfersApi: TransfersApi;
+};
+
+/** @deprecated */
 export async function burnWorkflow(
   signer: Signer,
   starkWallet: StarkWallet,
@@ -65,6 +76,27 @@ export async function burnWorkflow(
     time: response?.data.time,
     transfer_id: response?.data.transfer_id,
   };
+}
+
+export async function burnWorkflowWithSigner({
+  l1Signer,
+  l2Signer,
+  request,
+  transfersApi,
+}: burnWorkflowWithSignerParams): Promise<CreateTransferResponseV1> {
+  const transferRequest: UnsignedTransferRequest = {
+    sender: request.sender,
+    receiver: BurnAddress.BurnEthAddress,
+    token: request.token,
+    amount: request.amount,
+  }
+
+  return transfersWorkflowWithSigner({
+    l1Signer,
+    l2Signer,
+    request: transferRequest,
+    transfersApi,
+  });
 }
 
 export async function getBurnWorkflow(

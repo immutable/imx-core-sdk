@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `transferWithSigner` function to enable transfer with l2signer
 - Added `batchNftTransferWithSigner` function to enable batch transfer with l2signer
 - Added `prepareWithdrawalWorkflowWithSigner` function to enable prepare withdrawal with l2signer
+- Added `burnWithSigner` function to enable burn with l2signer
 
 ### Deprecated
 
@@ -22,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `transfer`, use `transferWithSigner` instead
 - `batchNftTransfer`, use `batchNftTransferWithSigner` instead
 - `prepareWithdrawalWorkflow`, use `prepareWithdrawalWorkflowWithSigner` instead
+- `burn`, use `burnWithSigner` instead
 
 ## [0.5.0] - 2022-07-12
 

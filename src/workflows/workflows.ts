@@ -31,7 +31,11 @@ import {
   depositERC721Workflow,
   depositEthWorkflow,
 } from './deposit';
-import { burnWorkflow, getBurnWorkflow } from './burn';
+import {
+  burnWorkflow,
+  getBurnWorkflow,
+  burnWorkflowWithSigner,
+} from './burn';
 import {
   completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
@@ -98,7 +102,6 @@ export class Workflows {
     return registerOffchainWorkflow(signer, starkWallet, this.usersApi);
   }
 
-
   public registerOffchainWithSigner(l1Signer: L1Signer, l2Signer: L2Signer) {
     return registerOffchainWorkflowWithSigner(l1Signer, l2Signer, this.usersApi);
   }
@@ -149,7 +152,8 @@ export class Workflows {
   }
 
   public batchNftTransferWithSigner(
-    walletConnection: WalletConnection, request: UnsignedBatchNftTransferRequest,
+    walletConnection: WalletConnection,
+    request: UnsignedBatchNftTransferRequest,
   ) {
     return batchTransfersWorkflowWithSigner({
       ...walletConnection,
@@ -158,13 +162,18 @@ export class Workflows {
     },
     );
   }
-
+    
+  /** @deprecated */
   public burn(
     signer: Signer,
     starkWallet: StarkWallet,
     request: UnsignedBurnRequest,
   ) {
     return burnWorkflow(signer, starkWallet, request, this.transfersApi);
+  }
+
+  public burnWithSigner(walletConnection: WalletConnection, request: UnsignedBurnRequest) {
+    return burnWorkflowWithSigner({ ...walletConnection, request, transfersApi: this.transfersApi });
   }
 
   public getBurn(request: TransfersApiGetTransferRequest) {
