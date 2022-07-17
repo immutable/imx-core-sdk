@@ -6,7 +6,7 @@ import {
   UsersApi,
 } from '../api';
 import { Registration } from '../contracts';
-import { L2Signer, StarkWallet } from '../types';
+import { WalletConnection, StarkWallet } from '../types';
 
 /** @deprecated */
 export async function registerOffchainWorkflow(
@@ -51,12 +51,11 @@ export async function registerOffchainWorkflow(
 }
 
 export async function registerOffchainWorkflowWithSigner(
-  l1Signer: Signer,
-  l2Signer: L2Signer,
+  walletConnection: WalletConnection,
   usersApi: UsersApi,
 ): Promise<void> {
-  const userAddress = await l1Signer.getAddress();
-  const starkPublicKey = l2Signer.getAddress();
+  const userAddress = await walletConnection.l1Signer.getAddress();
+  const starkPublicKey = walletConnection.l2Signer.getAddress();
 
   if (await isUserRegistered(userAddress, usersApi)) {
     return;
@@ -74,10 +73,10 @@ export async function registerOffchainWorkflowWithSigner(
     signableResult.data;
 
   // Sign message with L1 credentials
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, walletConnection.l1Signer);
 
   // Sign hash with L2 credentials
-  const starkSignature = await l2Signer.signMessage(payloadHash);
+  const starkSignature = await walletConnection.l2Signer.signMessage(payloadHash);
 
   // Send request for user registration offchain
   await usersApi.registerUser({
