@@ -15,10 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `batchNftTransferWithSigner` function to enable batch transfer with l2signer
 - Added `prepareWithdrawalWorkflowWithSigner` function to enable prepare withdrawal with l2signer
 - Added `burnWithSigner` function to enable burn with l2signer
-
-### Fixed
-
-- `getStarkPublicKey` method to get the same public key as the `generateStarkWallet` returns
+- Added `getStarkPublicKeyWithXCoordinate` method to get the same public key as the `generateStarkWallet` returns
 
 ### Deprecated
 
@@ -28,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `batchNftTransfer`, use `batchNftTransferWithSigner` instead
 - `prepareWithdrawalWorkflow`, use `prepareWithdrawalWorkflowWithSigner` instead
 - `burn`, use `burnWithSigner` instead
+- `getStarkPublicKey`, use BaseSigner's `getAddress` instead
 
 ## [0.5.0] - 2022-07-12
 
