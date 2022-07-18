@@ -72,8 +72,13 @@ export function getPublic(keyPair: ec.KeyPair, compressed = false): string {
   return keyPair.getPublic(compressed, 'hex');
 }
 
+/** @deprecated */
 export function getStarkPublicKey(keyPair: ec.KeyPair): string {
   return getPublic(keyPair, true);
+}
+
+function getStarkPublicKeyWithXCoordinate(keyPair: ec.KeyPair): string {
+  return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
 }
 
 export function getKeyPairFromPublicKey(publicKey: string): ec.KeyPair {
@@ -94,10 +99,13 @@ export async function generateStarkWallet(
 ): Promise<StarkWallet> {
   const ethAddress = (await signer.getAddress()).toLowerCase();
   const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
-  return generateStarkWalletFromSignedMessage(ethAddress, signature)
+  return generateStarkWalletFromSignedMessage(ethAddress, signature);
 }
 
-export async function generateStarkWalletFromSignedMessage(ethAddress: string, signature: string) : Promise<StarkWallet> {
+export async function generateStarkWalletFromSignedMessage(
+  ethAddress: string,
+  signature: string,
+): Promise<StarkWallet> {
   const path = getAccountPath(
     DEFAULT_ACCOUNT_LAYER,
     DEFAULT_ACCOUNT_APPLICATION,
@@ -105,10 +113,10 @@ export async function generateStarkWalletFromSignedMessage(ethAddress: string, s
     DEFAULT_ACCOUNT_INDEX,
   );
   const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
-  const starkPublic = getStarkPublicKey(keyPair);
+  const starkPublicKey = getStarkPublicKeyWithXCoordinate(keyPair);
   return {
     path,
-    starkPublicKey: encUtils.sanitizeHex(getXCoordinate(starkPublic)),
+    starkPublicKey,
     starkKeyPair: keyPair,
   };
 }
