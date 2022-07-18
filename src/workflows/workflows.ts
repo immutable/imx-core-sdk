@@ -101,7 +101,7 @@ export class Workflows {
   }
 
   public registerOffchainWithSigner(walletConnection: WalletConnection) {
-    return registerOffchainWorkflowWithSigner(walletConnection, this.usersApi);
+    return registerOffchainWorkflowWithSigner({ ...walletConnection, usersApi: this.usersApi });
   }
 
   public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
@@ -365,6 +365,6 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflowWithSigner(walletConnection, request, this.tradesApi);
+    return createTradeWorkflowWithSigner({ ...walletConnection, request, tradesApi: this.tradesApi });
   }
 }
