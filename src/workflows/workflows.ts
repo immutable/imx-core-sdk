@@ -66,8 +66,6 @@ import {
   ERC20Withdrawal,
   TokenWithdrawal,
   StarkWallet,
-  L1Signer,
-  L2Signer,
   PrepareWithdrawalRequest,
 } from '../types';
 import { Registration__factory } from '../contracts';
@@ -102,8 +100,8 @@ export class Workflows {
     return registerOffchainWorkflow(signer, starkWallet, this.usersApi);
   }
 
-  public registerOffchainWithSigner(l1Signer: L1Signer, l2Signer: L2Signer) {
-    return registerOffchainWorkflowWithSigner(l1Signer, l2Signer, this.usersApi);
+  public registerOffchainWithSigner(walletConnection: WalletConnection) {
+    return registerOffchainWorkflowWithSigner({ ...walletConnection, usersApi: this.usersApi });
   }
 
   public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
@@ -364,10 +362,9 @@ export class Workflows {
   }
 
   public createTradeWithSigner(
-    l1Signer: L1Signer,
-    l2Signer: L2Signer,
+    walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflowWithSigner(l1Signer, l2Signer, request, this.tradesApi);
+    return createTradeWorkflowWithSigner({ ...walletConnection, request, tradesApi: this.tradesApi });
   }
 }

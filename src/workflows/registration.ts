@@ -6,7 +6,11 @@ import {
   UsersApi,
 } from '../api';
 import { Registration } from '../contracts';
-import { L2Signer, StarkWallet } from '../types';
+import { WalletConnection, StarkWallet } from '../types';
+
+type registerOffchainWorkflowWithSignerParams = WalletConnection & {
+  usersApi: UsersApi,
+};
 
 /** @deprecated */
 export async function registerOffchainWorkflow(
@@ -50,11 +54,11 @@ export async function registerOffchainWorkflow(
   };
 }
 
-export async function registerOffchainWorkflowWithSigner(
-  l1Signer: Signer,
-  l2Signer: L2Signer,
-  usersApi: UsersApi,
-): Promise<void> {
+export async function registerOffchainWorkflowWithSigner({
+  l1Signer,
+  l2Signer,
+  usersApi,
+}: registerOffchainWorkflowWithSignerParams): Promise<void> {
   const userAddress = await l1Signer.getAddress();
   const starkPublicKey = l2Signer.getAddress();
 
