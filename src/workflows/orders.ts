@@ -42,7 +42,7 @@ export async function createOrderWorkflow(
   );
 
   // Obtain Eth address from signer
-  const ethAddress = (await signer.getAddress());
+  const ethAddress = await signer.getAddress();
 
   const resp = getSignableOrderResponse.data;
 

@@ -14,9 +14,10 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception');
 };
 
-type PrepareWithdrawalRequestParams = PrepareWithdrawalRequest & WalletConnection & {
-  withdrawalsApi: WithdrawalsApi;
-}
+type PrepareWithdrawalRequestParams = PrepareWithdrawalRequest &
+  WalletConnection & {
+    withdrawalsApi: WithdrawalsApi;
+  };
 
 export async function prepareWithdrawalWorkflowWithSigner({
   l1Signer,
@@ -24,21 +25,25 @@ export async function prepareWithdrawalWorkflowWithSigner({
   token,
   quantity,
   withdrawalsApi,
-}:PrepareWithdrawalRequestParams): Promise<CreateWithdrawalResponse> {
+}: PrepareWithdrawalRequestParams): Promise<CreateWithdrawalResponse> {
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await l1Signer.getAddress(),
       token: convertToSignableRequestFormat(token),
       amount: quantity.toString(),
     },
-  })
+  });
 
-  const { signable_message: signableMessage, payload_hash: payloadHash } = signableWithdrawalResult.data
+  const { signable_message: signableMessage, payload_hash: payloadHash } =
+    signableWithdrawalResult.data;
 
   // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
-  const { ethAddress, ethSignature } = await signMessage(signableMessage, l1Signer);
+  const { ethAddress, ethSignature } = await signMessage(
+    signableMessage,
+    l1Signer,
+  );
 
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
     createWithdrawalRequest: {
@@ -51,7 +56,7 @@ export async function prepareWithdrawalWorkflowWithSigner({
     },
     xImxEthAddress: ethAddress,
     xImxEthSignature: ethSignature,
-  })
+  });
 
   return prepareWithdrawalResponse.data;
 }
@@ -63,21 +68,26 @@ export async function prepareWithdrawalWorkflow(
   quantity: string,
   withdrawalsApi: WithdrawalsApi,
 ): Promise<CreateWithdrawalResponse> {
-
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await signer.getAddress(),
       token: convertToSignableRequestFormat(token),
       amount: quantity.toString(),
     },
-  })
+  });
 
-  const { signable_message: signableMessage, payload_hash: payloadHash } = signableWithdrawalResult.data
+  const { signable_message: signableMessage, payload_hash: payloadHash } =
+    signableWithdrawalResult.data;
 
   // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(sign(starkWallet.starkKeyPair, payloadHash));
+  const starkSignature = serializeSignature(
+    sign(starkWallet.starkKeyPair, payloadHash),
+  );
 
-  const { ethAddress, ethSignature } = await signMessage(signableMessage, signer);
+  const { ethAddress, ethSignature } = await signMessage(
+    signableMessage,
+    signer,
+  );
 
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
     createWithdrawalRequest: {
@@ -90,7 +100,7 @@ export async function prepareWithdrawalWorkflow(
     },
     xImxEthAddress: ethAddress,
     xImxEthSignature: ethSignature,
-  })
+  });
 
   return prepareWithdrawalResponse.data;
 }

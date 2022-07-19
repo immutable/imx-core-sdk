@@ -9,7 +9,7 @@ import { Registration } from '../contracts';
 import { WalletConnection, StarkWallet } from '../types';
 
 type registerOffchainWorkflowWithSignerParams = WalletConnection & {
-  usersApi: UsersApi,
+  usersApi: UsersApi;
 };
 
 /** @deprecated */

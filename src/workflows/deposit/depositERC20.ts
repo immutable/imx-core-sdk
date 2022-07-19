@@ -30,7 +30,7 @@ export async function depositERC20Workflow(
   config: Config,
 ): Promise<TransactionResponse> {
   // Configure request parameters
-  const user = (await signer.getAddress());
+  const user = await signer.getAddress();
 
   // Get decimals for this specific ERC20
   const token = await tokensApi.getToken({ address: deposit.tokenAddress });

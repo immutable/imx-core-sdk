@@ -48,7 +48,7 @@ export async function burnWorkflow(
   );
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress());
+  const ethAddress = await signer.getAddress();
 
   // Assemble transfer params
   const transferSigningParams = {
@@ -89,7 +89,7 @@ export async function burnWorkflowWithSigner({
     receiver: BurnAddress.BurnEthAddress,
     token: request.token,
     amount: request.amount,
-  }
+  };
 
   return transfersWorkflowWithSigner({
     l1Signer,

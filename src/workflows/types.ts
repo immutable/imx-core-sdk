@@ -11,17 +11,17 @@ export interface GetSignableBurnRequest {
    * @type {string}
    * @memberof GetSignableBurnRequest
    */
-  'amount': string;
+  amount: string;
   /**
    * Ethereum address of the receiving user
    * @type {string}
    * @memberof GetSignableBurnRequest
    */
-  'sender': string;
+  sender: string;
   /**
    *
    * @type {SignableToken}
    * @memberof GetSignableBurnRequest
    */
-  'token': SignableToken;
+  token: SignableToken;
 }

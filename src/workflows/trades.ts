@@ -1,11 +1,15 @@
 import { WalletConnection, StarkWallet } from '../types';
-import { CreateTradeResponse, GetSignableTradeRequest, TradesApi } from '../api';
+import {
+  CreateTradeResponse,
+  GetSignableTradeRequest,
+  TradesApi,
+} from '../api';
 import { serializeSignature, sign, signRaw } from '../utils';
 import { Signer } from 'ethers';
 
 type createTradeWorkflowWithSignerParams = WalletConnection & {
-  request: GetSignableTradeRequest,
-  tradesApi: TradesApi,
+  request: GetSignableTradeRequest;
+  tradesApi: TradesApi;
 };
 
 /** @deprecated */
@@ -66,7 +70,7 @@ export async function createTradeWorkflowWithSigner({
   l2Signer,
   request,
   tradesApi,
-}: createTradeWorkflowWithSignerParams) : Promise<CreateTradeResponse> {
+}: createTradeWorkflowWithSignerParams): Promise<CreateTradeResponse> {
   const ethAddress = await l1Signer.getAddress();
 
   const signableResult = await tradesApi.getSignableTrade({
