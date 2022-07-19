@@ -2,6 +2,23 @@ import { Configuration, ConfigurationParameters } from '../api';
 import { Config, EthNetwork } from '../types';
 import { version } from '../../package.json';
 
+const headers = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
+
+const mergeApiProperties = (
+  basePath: string,
+  apiConfigOptions: ConfigurationParameters,
+) => ({
+  basePath,
+  ...apiConfigOptions,
+  baseOptions: {
+    ...(apiConfigOptions.baseOptions || {}),
+    headers: {
+      ...(apiConfigOptions.baseOptions?.headers || {}),
+      ...headers,
+    },
+  },
+});
+
 export const getConfig = (
   network: EthNetwork = 'ropsten',
   apiConfigOptions: ConfigurationParameters = {},
@@ -44,20 +61,3 @@ export const getConfig = (
       };
   }
 };
-
-const headers = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
-
-const mergeApiProperties = (
-  basePath: string,
-  apiConfigOptions: ConfigurationParameters,
-) => ({
-  basePath,
-  ...apiConfigOptions,
-  baseOptions: {
-    ...(apiConfigOptions.baseOptions || {}),
-    headers: {
-      ...(apiConfigOptions.baseOptions?.headers || {}),
-      ...headers,
-    },
-  },
-});

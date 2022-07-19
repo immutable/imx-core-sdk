@@ -44,6 +44,46 @@ export async function completeERC20WithdrawalWorfklow(
     signer,
   );
 
+  async function executeRegisterAndWithdrawERC20(
+    signer: Signer,
+    assetType: string,
+    starkPublicKey: string,
+    contract: Registration,
+    usersApi: UsersApi,
+  ): Promise<TransactionResponse> {
+    const etherKey = await signer.getAddress();
+
+    const signableResult = await getSignableRegistrationOnchain(
+      etherKey,
+      starkPublicKey,
+      usersApi,
+    );
+
+    const populatedTransaction =
+      await contract.populateTransaction.registerAndWithdraw(
+        etherKey,
+        starkPublicKey,
+        signableResult.operator_signature,
+        assetType,
+      );
+
+    return signer.sendTransaction(populatedTransaction);
+  }
+
+  async function executeWithdrawERC20(
+    signer: Signer,
+    assetType: string,
+    starkPublicKey: string,
+    contract: Core,
+  ): Promise<TransactionResponse> {
+    const populatedTransaction = await contract.populateTransaction.withdraw(
+      starkPublicKey,
+      assetType,
+    );
+
+    return signer.sendTransaction(populatedTransaction);
+  }
+
   // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(
     starkPublicKey,
@@ -66,44 +106,4 @@ export async function completeERC20WithdrawalWorfklow(
       coreContract,
     );
   }
-}
-
-async function executeRegisterAndWithdrawERC20(
-  signer: Signer,
-  assetType: string,
-  starkPublicKey: string,
-  contract: Registration,
-  usersApi: UsersApi,
-): Promise<TransactionResponse> {
-  const etherKey = await signer.getAddress();
-
-  const signableResult = await getSignableRegistrationOnchain(
-    etherKey,
-    starkPublicKey,
-    usersApi,
-  );
-
-  const populatedTransaction =
-    await contract.populateTransaction.registerAndWithdraw(
-      etherKey,
-      starkPublicKey,
-      signableResult.operator_signature,
-      assetType,
-    );
-
-  return signer.sendTransaction(populatedTransaction);
-}
-
-async function executeWithdrawERC20(
-  signer: Signer,
-  assetType: string,
-  starkPublicKey: string,
-  contract: Core,
-): Promise<TransactionResponse> {
-  const populatedTransaction = await contract.populateTransaction.withdraw(
-    starkPublicKey,
-    assetType,
-  );
-
-  return signer.sendTransaction(populatedTransaction);
 }

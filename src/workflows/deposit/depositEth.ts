@@ -14,6 +14,50 @@ interface ETHTokenData {
   decimals: number;
 }
 
+async function executeRegisterAndDepositEth(
+  signer: Signer,
+  amount: BigNumber,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Core,
+  usersApi: UsersApi,
+): Promise<TransactionResponse> {
+  const etherKey = await signer.getAddress();
+
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositEth(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature,
+      assetType,
+      vaultId,
+    );
+
+  return signer.sendTransaction({ ...populatedTransaction, value: amount });
+}
+
+async function executeDepositEth(
+  signer: Signer,
+  amount: BigNumber,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Core,
+): Promise<TransactionResponse> {
+  const populatedTransaction = await contract.populateTransaction[
+    'deposit(uint256,uint256,uint256)'
+  ](starkPublicKey, assetType, vaultId);
+
+  return signer.sendTransaction({ ...populatedTransaction, value: amount });
+}
+
 export async function depositEthWorkflow(
   signer: Signer,
   deposit: ETHDeposit,
@@ -94,48 +138,4 @@ export async function depositEthWorkflow(
       coreContract,
     );
   }
-}
-
-async function executeRegisterAndDepositEth(
-  signer: Signer,
-  amount: BigNumber,
-  assetType: string,
-  starkPublicKey: string,
-  vaultId: number,
-  contract: Core,
-  usersApi: UsersApi,
-): Promise<TransactionResponse> {
-  const etherKey = await signer.getAddress();
-
-  const signableResult = await getSignableRegistrationOnchain(
-    etherKey,
-    starkPublicKey,
-    usersApi,
-  );
-
-  const populatedTransaction =
-    await contract.populateTransaction.registerAndDepositEth(
-      etherKey,
-      starkPublicKey,
-      signableResult.operator_signature,
-      assetType,
-      vaultId,
-    );
-
-  return signer.sendTransaction({ ...populatedTransaction, value: amount });
-}
-
-async function executeDepositEth(
-  signer: Signer,
-  amount: BigNumber,
-  assetType: string,
-  starkPublicKey: string,
-  vaultId: number,
-  contract: Core,
-): Promise<TransactionResponse> {
-  const populatedTransaction = await contract.populateTransaction[
-    'deposit(uint256,uint256,uint256)'
-  ](starkPublicKey, assetType, vaultId);
-
-  return signer.sendTransaction({ ...populatedTransaction, value: amount });
 }

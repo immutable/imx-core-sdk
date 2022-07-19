@@ -54,6 +54,18 @@ export async function registerOffchainWorkflow(
   };
 }
 
+async function isUserRegistered(
+  userAddress: string,
+  usersApi: UsersApi,
+): Promise<boolean> {
+  try {
+    await usersApi.getUsers({ user: userAddress });
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 export async function registerOffchainWorkflowWithSigner({
   l1Signer,
   l2Signer,
@@ -118,16 +130,4 @@ export async function getSignableRegistrationOnchain(
     operator_signature: response.data.operator_signature,
     payload_hash: response.data.payload_hash,
   };
-}
-
-async function isUserRegistered(
-  userAddress: string,
-  usersApi: UsersApi,
-): Promise<boolean> {
-  try {
-    await usersApi.getUsers({ user: userAddress });
-    return true;
-  } catch (error) {
-    return false;
-  }
 }
