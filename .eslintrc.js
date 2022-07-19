@@ -8,6 +8,7 @@ module.exports = {
   plugins: ['prettier', '@typescript-eslint'],
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
@@ -28,8 +29,8 @@ module.exports = {
     'no-use-before-define': 0,
     'arrow-body-style': 0,
     '@typescript-eslint/no-unused-expressions': 0,
-    '@typescript-eslint/no-unused-vars': ['warn', { args: 'none' }],
-    '@typescript-eslint/no-use-before-define': 'warn',
+    '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+    '@typescript-eslint/no-use-before-define': 'error',
     '@typescript-eslint/naming-convention': [
       'error',
       {
