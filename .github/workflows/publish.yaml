@@ -24,10 +24,15 @@ jobs:
       - name: Check Input
         run: echo "Version - ${{github.event.inputs.tag}}"
 
-      - name: Use Node.js 16
-        uses: actions/setup-node@v1
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+
+      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
+        uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
 
       - name: Install yarn
         run: npm install -g yarn
