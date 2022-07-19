@@ -49,7 +49,7 @@ export async function transfersWorkflowWithSigner({
 
   // Assemble transfer params
   const transferSigningParams = {
-    sender_stark_key: signableResult.data.sender_stark_key!,
+    sender_stark_key: signableResult.data.sender_stark_key,
     sender_vault_id: signableResult.data.sender_vault_id,
     receiver_stark_key: signableResult.data.receiver_stark_key,
     receiver_vault_id: signableResult.data.receiver_vault_id,
@@ -107,7 +107,7 @@ export async function transfersWorkflow(
 
   // Assemble transfer params
   const transferSigningParams = {
-    sender_stark_key: signableResult.data.sender_stark_key!,
+    sender_stark_key: signableResult.data.sender_stark_key,
     sender_vault_id: signableResult.data.sender_vault_id,
     receiver_stark_key: signableResult.data.receiver_stark_key,
     receiver_vault_id: signableResult.data.receiver_vault_id,

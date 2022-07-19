@@ -49,7 +49,7 @@ const starkEc = new Ec(
     p: prime as BN,
     a: '00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000001',
     b: '06f21413 efbe40de 150e596d 72f7a8c5 609ad26c 15c915c1 f4cdfcb9 9cee9e89',
-    n: order as any,
+    n: order as BN,
     hash: hashJS.sha256,
     gRed: false,
     g: constantPointsHex[1],
@@ -84,7 +84,7 @@ export function getKeyPairFromPublicKey(publicKey: string): ec.KeyPair {
 
 export function getXCoordinate(publicKey: string): string {
   const keyPair = getKeyPairFromPublicKey(publicKey);
-  return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
+  return encUtils.sanitizeBytes(keyPair.pub.getX().toString(16), 2);
 }
 
 function getStarkPublicKeyWithXCoordinate(keyPair: ec.KeyPair): string {
