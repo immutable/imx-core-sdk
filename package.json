@@ -29,7 +29,8 @@
     "release": "release-it",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
-    "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix"
+    "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
@@ -64,7 +65,8 @@
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.5",
     "typechain": "^8.1.0",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "husky": "^8.0.0"
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.6.2",
