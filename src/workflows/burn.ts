@@ -52,7 +52,8 @@ export async function burnWorkflow(
 
   // Assemble transfer params
   const transferSigningParams = {
-    sender_stark_key: signableResult.data.sender_stark_key,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    sender_stark_key: signableResult.data.sender_stark_key!,
     sender_vault_id: signableResult.data.sender_vault_id,
     receiver_stark_key: signableResult.data.receiver_stark_key,
     receiver_vault_id: signableResult.data.receiver_vault_id,
