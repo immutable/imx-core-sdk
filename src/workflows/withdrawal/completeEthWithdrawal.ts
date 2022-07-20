@@ -14,6 +14,46 @@ import {
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 
+async function executeRegisterAndWithdrawEth(
+  signer: Signer,
+  assetType: string,
+  starkPublicKey: string,
+  contract: Registration,
+  usersApi: UsersApi,
+): Promise<TransactionResponse> {
+  const etherKey = await signer.getAddress();
+
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndWithdraw(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature,
+      assetType,
+    );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
+async function executeWithdrawEth(
+  signer: Signer,
+  assetType: string,
+  starkPublicKey: string,
+  contract: Core,
+): Promise<TransactionResponse> {
+  const populatedTransaction = await contract.populateTransaction.withdraw(
+    starkPublicKey,
+    assetType,
+  );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
 export async function completeEthWithdrawalWorkflow(
   signer: Signer,
   starkPublicKey: string,
@@ -57,44 +97,4 @@ export async function completeEthWithdrawalWorkflow(
       coreContract,
     );
   }
-}
-
-async function executeRegisterAndWithdrawEth(
-  signer: Signer,
-  assetType: string,
-  starkPublicKey: string,
-  contract: Registration,
-  usersApi: UsersApi,
-): Promise<TransactionResponse> {
-  const etherKey = await signer.getAddress();
-
-  const signableResult = await getSignableRegistrationOnchain(
-    etherKey,
-    starkPublicKey,
-    usersApi,
-  );
-
-  const populatedTransaction =
-    await contract.populateTransaction.registerAndWithdraw(
-      etherKey,
-      starkPublicKey,
-      signableResult.operator_signature,
-      assetType,
-    );
-
-  return signer.sendTransaction(populatedTransaction);
-}
-
-async function executeWithdrawEth(
-  signer: Signer,
-  assetType: string,
-  starkPublicKey: string,
-  contract: Core,
-): Promise<TransactionResponse> {
-  const populatedTransaction = await contract.populateTransaction.withdraw(
-    starkPublicKey,
-    assetType,
-  );
-
-  return signer.sendTransaction(populatedTransaction);
 }

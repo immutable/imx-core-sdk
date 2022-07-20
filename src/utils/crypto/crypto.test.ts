@@ -25,9 +25,9 @@ describe('signMessage()', () => {
     ).connect(provider);
     const message = 'Some message to sign ABC';
     const ethSignature = await signRaw(message, signer);
-    const ethAddress = await signer.getAddress()
+    const ethAddress = await signer.getAddress();
 
-    const result = await signMessage(message, signer)
+    const result = await signMessage(message, signer);
     expect(result).toEqual({
       message,
       ethSignature,
@@ -38,7 +38,8 @@ describe('signMessage()', () => {
 
 describe('Key grinding', () => {
   it('should produce the correct ground key', () => {
-    const privateKey = '86F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E0519';
+    const privateKey =
+      '86F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E0519';
     expect(grindKey(privateKey)).toEqual(
       '5c8c8683596c732541a59e03007b2d30dbbbb873556fe65b5fb63c16688f941',
     );

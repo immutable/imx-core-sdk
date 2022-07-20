@@ -10,7 +10,4 @@ const SECP_ORDER = new BN(
   16,
 );
 
-export {
-  ORDER,
-  SECP_ORDER,
-};
+export { ORDER, SECP_ORDER };

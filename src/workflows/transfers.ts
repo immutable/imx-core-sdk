@@ -13,11 +13,11 @@ import { StarkWallet, WalletConnection } from '../types';
 type TransferRequestParams = WalletConnection & {
   request: GetSignableTransferRequestV1;
   transfersApi: TransfersApi;
-}
+};
 type BatchTransferRequestParams = WalletConnection & {
   request: GetSignableTransferRequest;
   transfersApi: TransfersApi;
-}
+};
 
 export async function transfersWorkflowWithSigner({
   l1Signer,
@@ -45,10 +45,11 @@ export async function transfersWorkflowWithSigner({
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await l1Signer.getAddress());
+  const ethAddress = await l1Signer.getAddress();
 
   // Assemble transfer params
   const transferSigningParams = {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     sender_stark_key: signableResult.data.sender_stark_key!,
     sender_vault_id: signableResult.data.sender_vault_id,
     receiver_stark_key: signableResult.data.receiver_stark_key,
@@ -103,10 +104,11 @@ export async function transfersWorkflow(
   );
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress());
+  const ethAddress = await signer.getAddress();
 
   // Assemble transfer params
   const transferSigningParams = {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     sender_stark_key: signableResult.data.sender_stark_key!,
     sender_vault_id: signableResult.data.sender_vault_id,
     receiver_stark_key: signableResult.data.receiver_stark_key,
@@ -154,7 +156,7 @@ export async function batchTransfersWorkflow(
   }
 
   // Obtain Ethereum Address from signer
-  const ethAddress = (await signer.getAddress());
+  const ethAddress = await signer.getAddress();
 
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, signer);
@@ -215,7 +217,7 @@ export async function batchTransfersWorkflowWithSigner({
   // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
-  const requests = []
+  const requests = [];
   for (const resp of signableResult.data.signable_responses) {
     // Sign hash with L2 credentials
     const starkSignature = await l2Signer.signMessage(resp.payload_hash);
@@ -227,9 +229,9 @@ export async function batchTransfersWorkflowWithSigner({
       amount: resp.amount,
       nonce: resp.nonce,
       expiration_timestamp: resp.expiration_timestamp,
-      stark_signature:starkSignature,
-    }
-    requests.push(req)
+      stark_signature: starkSignature,
+    };
+    requests.push(req);
   }
 
   // TODO: throw error on missing payload hash?

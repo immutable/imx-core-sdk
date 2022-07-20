@@ -19,6 +19,55 @@ interface ERC721TokenData {
   token_address: string;
 }
 
+async function executeRegisterAndDepositERC721(
+  signer: Signer,
+  tokenId: string,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Registration,
+  usersApi: UsersApi,
+): Promise<TransactionResponse> {
+  const etherKey = await signer.getAddress();
+
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
+
+  // Use proxy registration contract for wrapping register and deposit NFTs
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositNft(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature,
+      assetType,
+      vaultId,
+      tokenId,
+    );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
+async function executeDepositERC721(
+  signer: Signer,
+  tokenId: string,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Core,
+): Promise<TransactionResponse> {
+  const populatedTransaction = await contract.populateTransaction.depositNft(
+    starkPublicKey,
+    assetType,
+    vaultId,
+    tokenId,
+  );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
 export async function depositERC721Workflow(
   signer: Signer,
   deposit: ERC721Deposit,
@@ -28,7 +77,7 @@ export async function depositERC721Workflow(
   config: Config,
 ): Promise<TransactionResponse> {
   // Configure request parameters
-  const user = (await signer.getAddress());
+  const user = await signer.getAddress();
 
   const data: ERC721TokenData = {
     token_address: deposit.tokenAddress,
@@ -115,53 +164,4 @@ export async function depositERC721Workflow(
       coreContract,
     );
   }
-}
-
-async function executeRegisterAndDepositERC721(
-  signer: Signer,
-  tokenId: string,
-  assetType: string,
-  starkPublicKey: string,
-  vaultId: number,
-  contract: Registration,
-  usersApi: UsersApi,
-): Promise<TransactionResponse> {
-  const etherKey = await signer.getAddress();
-
-  const signableResult = await getSignableRegistrationOnchain(
-    etherKey,
-    starkPublicKey,
-    usersApi,
-  );
-
-  // Use proxy registration contract for wrapping register and deposit NFTs
-  const populatedTransaction =
-    await contract.populateTransaction.registerAndDepositNft(
-      etherKey,
-      starkPublicKey,
-      signableResult.operator_signature,
-      assetType,
-      vaultId,
-      tokenId,
-    );
-
-  return signer.sendTransaction(populatedTransaction);
-}
-
-async function executeDepositERC721(
-  signer: Signer,
-  tokenId: string,
-  assetType: string,
-  starkPublicKey: string,
-  vaultId: number,
-  contract: Core,
-): Promise<TransactionResponse> {
-  const populatedTransaction = await contract.populateTransaction.depositNft(
-    starkPublicKey,
-    assetType,
-    vaultId,
-    tokenId,
-  );
-
-  return signer.sendTransaction(populatedTransaction);
 }

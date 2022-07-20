@@ -2,15 +2,12 @@ import BN from 'bn.js';
 import * as encUtils from 'enc-utils';
 import hashJS from 'hash.js';
 import { Signer } from '@ethersproject/abstract-signer';
-import {
-  ORDER,
-  SECP_ORDER,
-} from './constants';
+import { ORDER, SECP_ORDER } from './constants';
 
 type SignatureOptions = {
-    r: BN;
-    s: BN;
-    recoveryParam: number | null | undefined;
+  r: BN;
+  s: BN;
+  recoveryParam: number | null | undefined;
 };
 
 export function hashKeyWithIndex(key: string, index: number): BN {
@@ -20,7 +17,7 @@ export function hashKeyWithIndex(key: string, index: number): BN {
       .update(
         encUtils.hexToBuffer(
           encUtils.removeHexPrefix(key) +
-                    encUtils.sanitizeBytes(encUtils.numberToHex(index), 2),
+            encUtils.sanitizeBytes(encUtils.numberToHex(index), 2),
         ),
       )
       .digest('hex'),
@@ -43,7 +40,7 @@ export function grindKey(privateKey: string): string {
 export function serializeSignature(sig: SignatureOptions): string {
   return encUtils.addHexPrefix(
     encUtils.padLeft(sig.r.toString(16), 64) +
-        encUtils.padLeft(sig.s.toString(16), 64),
+      encUtils.padLeft(sig.s.toString(16), 64),
   );
 }
 
@@ -53,8 +50,8 @@ export function serializeEthSignature(sig: SignatureOptions): string {
   // https://github.com/ethers-io/ethers.js/issues/823
   return encUtils.addHexPrefix(
     encUtils.padLeft(sig.r.toString(16), 64) +
-        encUtils.padLeft(sig.s.toString(16), 64) +
-        encUtils.padLeft(sig.recoveryParam?.toString(16) || '', 2),
+      encUtils.padLeft(sig.s.toString(16), 64) +
+      encUtils.padLeft(sig.recoveryParam?.toString(16) || '', 2),
   );
 }
 
@@ -87,9 +84,9 @@ export async function signRaw(
 export async function signMessage(
   message: string,
   signer: Signer,
-): Promise<{message: string, ethAddress: string, ethSignature: string}> {
-  const ethAddress = await signer.getAddress()
-  const ethSignature = await signRaw(message, signer)
+): Promise<{ message: string; ethAddress: string; ethSignature: string }> {
+  const ethAddress = await signer.getAddress();
+  const ethSignature = await signRaw(message, signer);
   return {
     message,
     ethAddress,

@@ -24,7 +24,7 @@ describe('Key derivation', () => {
 
 describe('generateStarkWalletFromSignedMessage', () => {
   const signature =
-  '0x6d1550458c7a9a1257d73adbcf0fabc12f4497e970d9fa62dd88bf7d9e12719148c96225c1402d8707fd061b1aae2222bdf13571dfc82b3aa9974039f247f2b81b';
+    '0x6d1550458c7a9a1257d73adbcf0fabc12f4497e970d9fa62dd88bf7d9e12719148c96225c1402d8707fd061b1aae2222bdf13571dfc82b3aa9974039f247f2b81b';
 
   it('should generate stark wallet correctly', async () => {
     const { starkPublicKey } = await generateStarkWalletFromSignedMessage(

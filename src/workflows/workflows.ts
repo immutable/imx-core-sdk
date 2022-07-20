@@ -31,11 +31,7 @@ import {
   depositERC721Workflow,
   depositEthWorkflow,
 } from './deposit';
-import {
-  burnWorkflow,
-  getBurnWorkflow,
-  burnWorkflowWithSigner,
-} from './burn';
+import { burnWorkflow, getBurnWorkflow, burnWorkflowWithSigner } from './burn';
 import {
   completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
@@ -101,7 +97,10 @@ export class Workflows {
   }
 
   public registerOffchainWithSigner(walletConnection: WalletConnection) {
-    return registerOffchainWorkflowWithSigner({ ...walletConnection, usersApi: this.usersApi });
+    return registerOffchainWorkflowWithSigner({
+      ...walletConnection,
+      usersApi: this.usersApi,
+    });
   }
 
   /** @deprecated */
@@ -144,9 +143,15 @@ export class Workflows {
     return transfersWorkflow(signer, starkWallet, request, this.transfersApi);
   }
 
-  public transferWithSigner(walletConnection: WalletConnection, request: UnsignedTransferRequest) {
-    return transfersWorkflowWithSigner(
-      { ...walletConnection, request, transfersApi: this.transfersApi });
+  public transferWithSigner(
+    walletConnection: WalletConnection,
+    request: UnsignedTransferRequest,
+  ) {
+    return transfersWorkflowWithSigner({
+      ...walletConnection,
+      request,
+      transfersApi: this.transfersApi,
+    });
   }
 
   /** @deprecated */
@@ -171,10 +176,9 @@ export class Workflows {
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
-    },
-    );
+    });
   }
-    
+
   /** @deprecated */
   public burn(
     signer: Signer,
@@ -184,8 +188,15 @@ export class Workflows {
     return burnWorkflow(signer, starkWallet, request, this.transfersApi);
   }
 
-  public burnWithSigner(walletConnection: WalletConnection, request: UnsignedBurnRequest) {
-    return burnWorkflowWithSigner({ ...walletConnection, request, transfersApi: this.transfersApi });
+  public burnWithSigner(
+    walletConnection: WalletConnection,
+    request: UnsignedBurnRequest,
+  ) {
+    return burnWorkflowWithSigner({
+      ...walletConnection,
+      request,
+      transfersApi: this.transfersApi,
+    });
   }
 
   public getBurn(request: TransfersApiGetTransferRequest) {
@@ -194,34 +205,34 @@ export class Workflows {
 
   public deposit(signer: Signer, deposit: TokenDeposit) {
     switch (deposit.type) {
-    case TokenType.ETH:
-      return depositEthWorkflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        this.config,
-      );
-    case TokenType.ERC20:
-      return depositERC20Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.tokensApi,
-        this.encodingApi,
-        this.config,
-      );
-    case TokenType.ERC721:
-      return depositERC721Workflow(
-        signer,
-        deposit,
-        this.depositsApi,
-        this.usersApi,
-        this.encodingApi,
-        this.config,
-      );
+      case TokenType.ETH:
+        return depositEthWorkflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          this.config,
+        );
+      case TokenType.ERC20:
+        return depositERC20Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.tokensApi,
+          this.encodingApi,
+          this.config,
+        );
+      case TokenType.ERC721:
+        return depositERC721Workflow(
+          signer,
+          deposit,
+          this.depositsApi,
+          this.usersApi,
+          this.encodingApi,
+          this.config,
+        );
     }
   }
 
@@ -275,13 +286,15 @@ export class Workflows {
     );
   }
 
-  public prepareWithdrawalWithSigner(walletConnection: WalletConnection, request: PrepareWithdrawalRequest) {
+  public prepareWithdrawalWithSigner(
+    walletConnection: WalletConnection,
+    request: PrepareWithdrawalRequest,
+  ) {
     return prepareWithdrawalWorkflowWithSigner({
       ...walletConnection,
       ...request,
       withdrawalsApi: this.withdrawalsApi,
-    },
-    )
+    });
   }
 
   public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
@@ -331,12 +344,12 @@ export class Workflows {
     token: TokenWithdrawal,
   ) {
     switch (token.type) {
-    case TokenType.ETH:
-      return this.completeEthWithdrawal(signer, starkPublicKey);
-    case TokenType.ERC721:
-      return this.completeERC721Withdrawal(signer, starkPublicKey, token);
-    case TokenType.ERC20:
-      return this.completeERC20Withdrawal(signer, starkPublicKey, token);
+      case TokenType.ETH:
+        return this.completeEthWithdrawal(signer, starkPublicKey);
+      case TokenType.ERC721:
+        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
+      case TokenType.ERC20:
+        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
     }
   }
 
@@ -349,8 +362,15 @@ export class Workflows {
     return createOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 
-  public createOrderWithSigner(walletConnection: WalletConnection, request: GetSignableOrderRequest) {
-    return createOrderWorkflowWithSigner({ ...walletConnection, request, ordersApi: this.ordersApi });
+  public createOrderWithSigner(
+    walletConnection: WalletConnection,
+    request: GetSignableOrderRequest,
+  ) {
+    return createOrderWorkflowWithSigner({
+      ...walletConnection,
+      request,
+      ordersApi: this.ordersApi,
+    });
   }
 
   /** @deprecated */
@@ -362,8 +382,15 @@ export class Workflows {
     return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
   }
 
-  public cancelOrderWithSigner(walletConnection: WalletConnection, request: GetSignableCancelOrderRequest) {
-    return cancelOrderWorkflowWithSigner({ ...walletConnection, request, ordersApi: this.ordersApi });
+  public cancelOrderWithSigner(
+    walletConnection: WalletConnection,
+    request: GetSignableCancelOrderRequest,
+  ) {
+    return cancelOrderWorkflowWithSigner({
+      ...walletConnection,
+      request,
+      ordersApi: this.ordersApi,
+    });
   }
 
   /** @deprecated */
@@ -379,6 +406,10 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflowWithSigner({ ...walletConnection, request, tradesApi: this.tradesApi });
+    return createTradeWorkflowWithSigner({
+      ...walletConnection,
+      request,
+      tradesApi: this.tradesApi,
+    });
   }
 }

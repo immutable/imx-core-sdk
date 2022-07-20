@@ -9,7 +9,7 @@ import { Registration } from '../contracts';
 import { WalletConnection, StarkWallet } from '../types';
 
 type registerOffchainWorkflowWithSignerParams = WalletConnection & {
-  usersApi: UsersApi,
+  usersApi: UsersApi;
 };
 
 /** @deprecated */
@@ -52,6 +52,18 @@ export async function registerOffchainWorkflow(
   return {
     tx_hash: response.data.tx_hash,
   };
+}
+
+async function isUserRegistered(
+  userAddress: string,
+  usersApi: UsersApi,
+): Promise<boolean> {
+  try {
+    await usersApi.getUsers({ user: userAddress });
+    return true;
+  } catch (error) {
+    return false;
+  }
 }
 
 export async function registerOffchainWorkflowWithSigner({
@@ -118,16 +130,4 @@ export async function getSignableRegistrationOnchain(
     operator_signature: response.data.operator_signature,
     payload_hash: response.data.payload_hash,
   };
-}
-
-async function isUserRegistered(
-  userAddress: string,
-  usersApi: UsersApi,
-): Promise<boolean> {
-  try {
-    await usersApi.getUsers({ user: userAddress });
-    return true;
-  } catch (error) {
-    return false;
-  }
 }

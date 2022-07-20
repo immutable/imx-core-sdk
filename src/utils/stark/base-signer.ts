@@ -9,7 +9,9 @@ export class BaseSigner implements L2Signer {
   constructor(private keyPair: ec.KeyPair) {}
 
   public getAddress(): string {
-    return encUtils.sanitizeHex(getXCoordinate(this.keyPair.getPublic(true, 'hex')));
+    return encUtils.sanitizeHex(
+      getXCoordinate(this.keyPair.getPublic(true, 'hex')),
+    );
   }
 
   public async signMessage(msg: string): Promise<string> {

@@ -42,23 +42,14 @@ export function getAccountPath(
   return `m/2645'/${layerInt}'/${applicationInt}'/${ethAddressInt1}'/${ethAddressInt2}'/${index}`;
 }
 
-export function getKeyPairFromPath(seed: string, path: string): ec.KeyPair {
-  const privateKey = hdkey
-    .fromMasterSeed(Buffer.from(seed.slice(2), 'hex')) // assuming seed is '0x...'
-    .derivePath(path)
-    .getWallet()
-    .getPrivateKeyString();
-  return getKeyPair(grindKey(privateKey));
-}
-
 const starkEc = new Ec(
   new curves.PresetCurve({
     type: 'short',
     prime: null,
-    p: prime as any,
+    p: prime as any, // eslint-disable-line @typescript-eslint/no-explicit-any
     a: '00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000001',
     b: '06f21413 efbe40de 150e596d 72f7a8c5 609ad26c 15c915c1 f4cdfcb9 9cee9e89',
-    n: order as any,
+    n: order as any, // eslint-disable-line @typescript-eslint/no-explicit-any
     hash: hashJS.sha256,
     gRed: false,
     g: constantPointsHex[1],
@@ -68,6 +59,16 @@ const starkEc = new Ec(
 export function getKeyPair(privateKey: string): ec.KeyPair {
   return starkEc.keyFromPrivate(privateKey, 'hex');
 }
+
+export function getKeyPairFromPath(seed: string, path: string): ec.KeyPair {
+  const privateKey = hdkey
+    .fromMasterSeed(Buffer.from(seed.slice(2), 'hex')) // assuming seed is '0x...'
+    .derivePath(path)
+    .getWallet()
+    .getPrivateKeyString();
+  return getKeyPair(grindKey(privateKey));
+}
+
 export function getPublic(keyPair: ec.KeyPair, compressed = false): string {
   return keyPair.getPublic(compressed, 'hex');
 }
@@ -77,29 +78,22 @@ export function getStarkPublicKey(keyPair: ec.KeyPair): string {
   return getPublic(keyPair, true);
 }
 
-function getStarkPublicKeyWithXCoordinate(keyPair: ec.KeyPair): string {
-  return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
-}
-
 export function getKeyPairFromPublicKey(publicKey: string): ec.KeyPair {
   return starkEc.keyFromPublic(encUtils.hexToArray(publicKey));
 }
 
-export function getKeyPairFromPrivateKey(privateKey: string): ec.KeyPair {
-  return starkEc.keyFromPrivate(privateKey, 'hex');
-}
-
 export function getXCoordinate(publicKey: string): string {
   const keyPair = getKeyPairFromPublicKey(publicKey);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
 }
 
-export async function generateStarkWallet(
-  signer: Signer,
-): Promise<StarkWallet> {
-  const ethAddress = (await signer.getAddress()).toLowerCase();
-  const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
-  return generateStarkWalletFromSignedMessage(ethAddress, signature);
+function getStarkPublicKeyWithXCoordinate(keyPair: ec.KeyPair): string {
+  return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
+}
+
+export function getKeyPairFromPrivateKey(privateKey: string): ec.KeyPair {
+  return starkEc.keyFromPrivate(privateKey, 'hex');
 }
 
 export async function generateStarkWalletFromSignedMessage(
@@ -119,4 +113,12 @@ export async function generateStarkWalletFromSignedMessage(
     starkPublicKey,
     starkKeyPair: keyPair,
   };
+}
+
+export async function generateStarkWallet(
+  signer: Signer,
+): Promise<StarkWallet> {
+  const ethAddress = (await signer.getAddress()).toLowerCase();
+  const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
+  return generateStarkWalletFromSignedMessage(ethAddress, signature);
 }
