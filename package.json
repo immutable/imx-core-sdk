@@ -28,9 +28,14 @@
     "test": "NODE_ENV=test jest",
     "release": "release-it",
     "typecheck": "tsc --noEmit",
+    "typecheck-staged": "tsc-files --noEmit",
     "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
     "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
     "prepare": "husky install"
+  },
+  "lint-staged": {
+    "src/**/*.ts": "yarn run lint-fix",
+    "**/*.ts": "yarn run typecheck-staged"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.8",
@@ -58,15 +63,17 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "hardhat": "^2.9.9",
+    "husky": "^8.0.0",
     "jest": "^28.1.1",
+    "lint-staged": "^13.0.3",
     "release-it": "^15.0.0",
     "rollup": "^2.71.1",
     "rollup-plugin-node-externals": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.5",
+    "tsc-files": "^1.1.3",
     "typechain": "^8.1.0",
-    "typescript": "^4.6.3",
-    "husky": "^8.0.0"
+    "typescript": "^4.6.3"
   },
   "dependencies": {
     "@ethersproject/bignumber": "^5.6.2",
