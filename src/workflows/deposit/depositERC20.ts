@@ -20,6 +20,54 @@ interface ERC20TokenData {
   token_address: string;
 }
 
+async function executeDepositERC20(
+  signer: Signer,
+  quantizedAmount: BigNumber,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Core,
+): Promise<TransactionResponse> {
+  const populatedTransaction = await contract.populateTransaction.depositERC20(
+    starkPublicKey,
+    assetType,
+    vaultId,
+    quantizedAmount,
+  );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
+async function executeRegisterAndDepositERC20(
+  signer: Signer,
+  quantizedAmount: BigNumber,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Core,
+  usersApi: UsersApi,
+): Promise<TransactionResponse> {
+  const etherKey = await signer.getAddress();
+
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositERC20(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature,
+      assetType,
+      vaultId,
+      quantizedAmount,
+    );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
 export async function depositERC20Workflow(
   signer: Signer,
   deposit: ERC20Deposit,
@@ -95,60 +143,11 @@ export async function depositERC20Workflow(
     signer,
   );
 
-  async function executeDepositERC20(
-    signer: Signer,
-    quantizedAmount: BigNumber,
-    assetType: string,
-    starkPublicKey: string,
-    vaultId: number,
-    contract: Core,
-  ): Promise<TransactionResponse> {
-    const populatedTransaction =
-      await contract.populateTransaction.depositERC20(
-        starkPublicKey,
-        assetType,
-        vaultId,
-        quantizedAmount,
-      );
-
-    return signer.sendTransaction(populatedTransaction);
-  }
-
   // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(
     starkPublicKey,
     registrationContract,
   );
-
-  async function executeRegisterAndDepositERC20(
-    signer: Signer,
-    quantizedAmount: BigNumber,
-    assetType: string,
-    starkPublicKey: string,
-    vaultId: number,
-    contract: Core,
-    usersApi: UsersApi,
-  ): Promise<TransactionResponse> {
-    const etherKey = await signer.getAddress();
-
-    const signableResult = await getSignableRegistrationOnchain(
-      etherKey,
-      starkPublicKey,
-      usersApi,
-    );
-
-    const populatedTransaction =
-      await contract.populateTransaction.registerAndDepositERC20(
-        etherKey,
-        starkPublicKey,
-        signableResult.operator_signature,
-        assetType,
-        vaultId,
-        quantizedAmount,
-      );
-
-    return signer.sendTransaction(populatedTransaction);
-  }
 
   if (!isRegistered) {
     return executeRegisterAndDepositERC20(
