@@ -80,7 +80,7 @@ const generateWalletConnection = async (provider: AlchemyProvider) : Promise<Wal
 
   // L2 credentials
   const starkWallet = await generateStarkWallet(l1Signer);
-  const l2Signer = new BaseSigner(starkWallet);
+  const l2Signer = new BaseSigner(starkWallet.starkKeyPair);
 
   return {
     l1Signer,
@@ -204,23 +204,35 @@ A workflow is a combination of API and contract calls required for more complica
 // User registration workflow example
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { getConfig, Workflows } from '@imtbl/core-sdk';
+import { 
+  Workflows, 
+  BaseSigner, 
+  getConfig, 
+  generateStarkWallet,
+} from '@imtbl/core-sdk';
 
-const alchemyApiKey = YOUR_ALCHEMY_API_KEY;
 const ethNetwork = 'ropsten';
 
-// Setup provider and signer
-const provider = new AlchemyProvider(ethNetwork, alchemyApiKey);
-const signer = new Wallet(privateKey).connect(provider);
+// Sets up the provider
+const alchemyApiKey = 'UPDATE WITH THE ALCHEMY API KEY HERE';
+const alchemyProvider = new AlchemyProvider(ethNetwork, alchemyApiKey);
 
-// Configure Core SDK Workflow class
-const config = getConfig(ethNetwork);
-const workflows = new Workflows(config);
+// Sets up the L1Signer
+const privateKey = 'UPDATE WITH THE PRIVATE KEY HERE';
+const l1Wallet = new Wallet(privateKey);
+const l1Signer = l1Wallet.connect(alchemyProvider);
 
-const registerUser = async () => {
-  const response = await workflows.registerOffchain(signer);
-  console.log(response);
-};
+// Sets up the L2Signer
+const l2Wallet = await generateStarkWallet(l1Signer);
+const l2Signer = new BaseSigner(l2Wallet.starkKeyPair);
+
+// Sets up the Core SDK workflows
+const coreSdkConfig = getConfig(ethNetwork);
+const coreSdkWorkflows = new Workflows(coreSdkConfig);
+
+// Registers the user
+const walletConnection = { l1Signer, l2Signer };
+await coreSdkWorkflows.registerOffchain(walletConnection);
 ```
 
 The workflow can be found in the [workflows directory](src/workflows/).
