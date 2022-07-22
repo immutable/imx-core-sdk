@@ -58,32 +58,33 @@ const ethNetwork = 'ropsten'; // or mainnet;
 // Use the helper function to get the config
 const config = getConfig(ethNetwork);
 
-// Setup a provider and signer
+// Setup a provider and a signer
 const privateKey = YOUR_PRIVATE_KEY;
 const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
 const signer = new Wallet(privateKey).connect(provider);
 ```
 
-#### Stark Wallet
+#### WalletConnection
 
-Some methods require a stark wallet as a parameter. The Core SDK expects you will generate your own stark wallet.
+WalletConnection is a top level connector which contains all the needed resources (eg.: signers for L1 and L2) to possibilitate Core SDK workflows usage.
 
 ```ts
+import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { generateStarkWallet } from '@imtbl/core-sdk';
+import { WalletConnection, generateStarkWallet, BaseSigner } from '@imtbl/core-sdk';
 
-// generate your own stark wallet
-const generateWallets = async (provider: AlchemyProvider) => {
+// Generate your own WalletConnection
+const generateWalletConnection = async (provider: AlchemyProvider) : Promise<WalletConnection> => {
   // L1 credentials
-  const wallet = Wallet.createRandom().connect(provider);
+  const l1Signer = Wallet.createRandom().connect(provider);
 
   // L2 credentials
-  // Obtain stark key pair associated with this user
-  const starkWallet = await generateStarkWallet(wallet); // this is sdk helper function
+  const starkWallet = await generateStarkWallet(l1Signer);
+  const l2Signer = new BaseSigner(starkWallet);
 
   return {
-    wallet,
-    starkWallet,
+    l1Signer,
+    l2Signer,
   };
 };
 ```
@@ -243,8 +244,8 @@ The current workflow methods exposed from the `Workflow` class.
 | `depositERC721`            | Deposit ERC721 NFT to L2 wallet.                                             |
 | `prepareWithdrawal`        | Prepare token for withdrawal.                                                |
 | `completeEthWithdrawal`    | withdraw ETH to L1.                                                          |
-| `completeERC20Withdrawal`  | withdraw ERC20 to L1.                                                      |
-| `completeERC721Withdrawal` | withdraw ERC721 to L1.                                                     |
+| `completeERC20Withdrawal`  | withdraw ERC20 to L1.                                                        |
+| `completeERC721Withdrawal` | withdraw ERC721 to L1.                                                       |
 | `completeWithdrawal`       | Helper method around withdrawal methods. Withdraw based on token type.       |
 | `createOrder`              | Create an order to sell an asset.                                            |
 | `cancelOrder`              | Cancel an order.                                                             |
