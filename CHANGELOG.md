@@ -6,13 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Added
+### Removed
 
-- Added `isRegisteredOnchainWithSigner` function to enable verify user registration onchain with WalletConnection
+- Removed the deprecated `registerOffchain` method
+- Removed the deprecated `isRegisteredOnchain` method
+- Removed the deprecated `transfer` method
+- Removed the deprecated `batchNftTransfer` method
+- Removed the deprecated `burn` method
+- Removed the deprecated `prepareWithdrawal` method
+- Removed the deprecated `createOrder` method
+- Removed the deprecated `cancelOrder` method
+- Removed the deprecated `createTrade` method
 
-### Deprecated
+### Changed
 
-- `isRegisteredOnchain`, use `isRegisteredOnchainWithSigner` instead
+- Renamed the `registerOffchainWithSigner` method to `registerOffchain`
+- Renamed the `isRegisteredOnchainWithSigner` method to `isRegisteredOnchain`
+- Renamed the `transferWithSigner` method to `transfer`
+- Renamed the `batchNftTransferWithSigner` method to `batchNftTransfer`
+- Renamed the `burnWithSigner` method to `burn`
+- Renamed the `prepareWithdrawalWithSigner` method to `prepareWithdrawal`
+- Renamed the `createOrderWithSigner` method to `createOrder`
+- Renamed the `cancelOrderWithSigner` method to `cancelOrder`
+- Renamed the `createTradeWithSigner` method to `createTrade`
 
 ## [0.6.0] - 2022-07-18
 ### Added
