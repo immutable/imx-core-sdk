@@ -1,58 +1,11 @@
-import { Signer } from '@ethersproject/abstract-signer';
-import { serializeSignature, sign, signRaw } from '../utils';
-import {
-  GetSignableRegistrationResponse,
-  RegisterUserResponse,
-  UsersApi,
-} from '../api';
+import { UsersApi, GetSignableRegistrationResponse } from '../api';
+import { WalletConnection } from '../types';
+import { signRaw } from '../utils';
 import { Registration } from '../contracts';
-import { WalletConnection, StarkWallet } from '../types';
 
-type registerOffchainWorkflowWithSignerParams = WalletConnection & {
+type registerOffchainWorkflowParams = WalletConnection & {
   usersApi: UsersApi;
 };
-
-/** @deprecated */
-export async function registerOffchainWorkflow(
-  signer: Signer,
-  starkWallet: StarkWallet,
-  usersApi: UsersApi,
-): Promise<RegisterUserResponse> {
-  const userAddress = await signer.getAddress();
-
-  // Get signable details for offchain registration
-  const signableResult = await usersApi.getSignableRegistrationOffchain({
-    getSignableRegistrationRequest: {
-      ether_key: userAddress,
-      stark_key: starkWallet.starkPublicKey,
-    },
-  });
-
-  const { signable_message: signableMessage, payload_hash: payloadHash } =
-    signableResult.data;
-
-  // Sign message with L1 credentials
-  const ethSignature = await signRaw(signableMessage, signer);
-
-  // Sign hash with L2 credentials
-  const starkSignature = serializeSignature(
-    sign(starkWallet.starkKeyPair, payloadHash),
-  );
-
-  // Send request for user registration offchain
-  const response = await usersApi.registerUser({
-    registerUserRequest: {
-      eth_signature: ethSignature,
-      ether_key: userAddress,
-      stark_signature: starkSignature,
-      stark_key: starkWallet.starkPublicKey,
-    },
-  });
-
-  return {
-    tx_hash: response.data.tx_hash,
-  };
-}
 
 async function isUserRegistered(
   userAddress: string,
@@ -66,11 +19,11 @@ async function isUserRegistered(
   }
 }
 
-export async function registerOffchainWorkflowWithSigner({
+export async function registerOffchainWorkflow({
   l1Signer,
   l2Signer,
   usersApi,
-}: registerOffchainWorkflowWithSignerParams): Promise<void> {
+}: registerOffchainWorkflowParams): Promise<void> {
   const userAddress = await l1Signer.getAddress();
   const starkPublicKey = l2Signer.getAddress();
 
