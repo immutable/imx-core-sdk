@@ -6,13 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Added
+### Changed
 
-- Added `isRegisteredOnchainWithSigner` function to enable verify user registration onchain with WalletConnection
+- [BREAKING CHANGE] Renamed the `registerOffchainWithSigner` method to `registerOffchain`
+- [BREAKING CHANGE] Renamed the `isRegisteredOnchainWithSigner` method to `isRegisteredOnchain`
+- [BREAKING CHANGE] Renamed the `transferWithSigner` method to `transfer`
+- [BREAKING CHANGE] Renamed the `batchNftTransferWithSigner` method to `batchNftTransfer`
+- [BREAKING CHANGE] Renamed the `burnWithSigner` method to `burn`
+- [BREAKING CHANGE] Renamed the `prepareWithdrawalWithSigner` method to `prepareWithdrawal`
+- [BREAKING CHANGE] Renamed the `createOrderWithSigner` method to `createOrder`
+- [BREAKING CHANGE] Renamed the `cancelOrderWithSigner` method to `cancelOrder`
+- [BREAKING CHANGE] Renamed the `createTradeWithSigner` method to `createTrade`
 
-### Deprecated
+### Removed
 
-- `isRegisteredOnchain`, use `isRegisteredOnchainWithSigner` instead
+- [BREAKING CHANGE] Removed the deprecated `registerOffchain` method
+- [BREAKING CHANGE] Removed the deprecated `isRegisteredOnchain` method
+- [BREAKING CHANGE] Removed the deprecated `transfer` method
+- [BREAKING CHANGE] Removed the deprecated `batchNftTransfer` method
+- [BREAKING CHANGE] Removed the deprecated `burn` method
+- [BREAKING CHANGE] Removed the deprecated `prepareWithdrawal` method
+- [BREAKING CHANGE] Removed the deprecated `createOrder` method
+- [BREAKING CHANGE] Removed the deprecated `cancelOrder` method
+- [BREAKING CHANGE] Removed the deprecated `createTrade` method
 
 ## [0.6.0] - 2022-07-18
 ### Added
