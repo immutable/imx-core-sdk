@@ -86,7 +86,6 @@ export class Workflows {
   }
 
   public isRegisteredOnchain(walletConnection: WalletConnection) {
-    // Get instance of registration contract
     const registrationContract = Registration__factory.connect(
       this.config.registrationContractAddress,
       walletConnection.l1Signer,

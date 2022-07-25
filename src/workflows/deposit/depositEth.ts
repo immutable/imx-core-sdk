@@ -66,14 +66,12 @@ export async function depositEthWorkflow(
   encodingApi: EncodingApi,
   config: Config,
 ): Promise<TransactionResponse> {
-  // Configure request parameters
   const user = await signer.getAddress();
   const data: ETHTokenData = {
     decimals: 18,
   };
   const amount = parseEther(deposit.amount);
 
-  // Get signable deposit details
   const getSignableDepositRequest = {
     user,
     token: {
@@ -100,19 +98,16 @@ export async function depositEthWorkflow(
   const starkPublicKey = signableDepositResult.data.stark_key;
   const vaultId = signableDepositResult.data.vault_id;
 
-  // Get instance of core contract
   const coreContract = Core__factory.connect(
     config.starkContractAddress,
     signer,
   );
 
-  // Get instance of registration contract
   const registrationContract = Registration__factory.connect(
     config.registrationContractAddress,
     signer,
   );
 
-  // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(
     starkPublicKey,
     registrationContract,

@@ -46,7 +46,6 @@ export async function mintingWorkflow(
     auth_signature: '',
   };
 
-  // Sign payload using L1 credentials
   const hash = keccak256(toUtf8Bytes(JSON.stringify(signablePayload)));
   const authSignature = await signRaw(hash, signer);
 

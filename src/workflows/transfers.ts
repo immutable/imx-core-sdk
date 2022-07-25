@@ -23,7 +23,6 @@ export async function transfersWorkflow({
   request,
   transfersApi,
 }: TransfersWorkflowParams): Promise<CreateTransferResponseV1> {
-  // Get signable response for transfer
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
       sender: request.sender,
@@ -36,16 +35,12 @@ export async function transfersWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
-  // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
-  // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
-  // Obtain Ethereum Address from signer
   const ethAddress = await l1Signer.getAddress();
 
-  // Assemble transfer params
   const transferSigningParams = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     sender_stark_key: signableResult.data.sender_stark_key!,
@@ -59,7 +54,6 @@ export async function transfersWorkflow({
     stark_signature: starkSignature,
   };
 
-  // create transfer
   const response = await transfersApi.createTransferV1({
     createTransferRequest: transferSigningParams,
     xImxEthAddress: ethAddress,
@@ -80,7 +74,6 @@ export async function batchTransfersWorkflow({
   request,
   transfersApi,
 }: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
-  // Get signable response for transfer
   const signableResult = await transfersApi.getSignableTransfer({
     getSignableTransferRequestV2: {
       sender_ether_key: request.sender_ether_key,
@@ -94,15 +87,12 @@ export async function batchTransfersWorkflow({
     throw new Error('Invalid response from Signable registration offchain');
   }
 
-  // Obtain Ethereum Address from signer
   const ethAddress = await l1Signer.getAddress();
 
-  // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
   const requests = [];
   for (const resp of signableResult.data.signable_responses) {
-    // Sign hash with L2 credentials
     const starkSignature = await l2Signer.signMessage(resp.payload_hash);
     const req = {
       sender_vault_id: resp.sender_vault_id,
@@ -118,13 +108,11 @@ export async function batchTransfersWorkflow({
   }
 
   // TODO: throw error on missing payload hash?
-  // Assemble transfer params and sign payload hash
   const transferSigningParams = {
     sender_stark_key: signableResult.data.sender_stark_key,
     requests,
   };
 
-  // create transfer
   const response = await transfersApi.createTransfer({
     createTransferRequestV2: transferSigningParams,
     xImxEthAddress: ethAddress,

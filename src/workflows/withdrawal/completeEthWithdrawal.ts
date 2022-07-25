@@ -63,19 +63,16 @@ export async function completeEthWithdrawalWorkflow(
 ) {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
-  // Get instance of core contract
   const coreContract = Core__factory.connect(
     config.starkContractAddress,
     signer,
   );
 
-  // Get instance of registration contract
   const registrationContract = Registration__factory.connect(
     config.registrationContractAddress,
     signer,
   );
 
-  // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(
     starkPublicKey,
     registrationContract,

@@ -34,7 +34,6 @@ export async function prepareWithdrawalWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableWithdrawalResult.data;
 
-  // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
   const { ethAddress, ethSignature } = await signMessage(

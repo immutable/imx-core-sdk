@@ -30,13 +30,10 @@ export async function createOrderWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableOrderResponse.data;
 
-  // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
-  // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
-  // Obtain Eth address from signer
   const ethAddress = await l1Signer.getAddress();
 
   const resp = getSignableOrderResponse.data;
@@ -84,13 +81,10 @@ export async function cancelOrderWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableCancelOrderResponse.data;
 
-  // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
-  // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
-  // Obtain Ethereum Address from signer
   const ethAddress = await l1Signer.getAddress();
 
   const cancelOrderResponse = await ordersApi.cancelOrder({

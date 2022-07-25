@@ -31,7 +31,6 @@ export async function registerOffchainWorkflow({
     return;
   }
 
-  // Get signable details for offchain registration
   const signableResult = await usersApi.getSignableRegistrationOffchain({
     getSignableRegistrationRequest: {
       ether_key: userAddress,
@@ -42,13 +41,10 @@ export async function registerOffchainWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
-  // Sign message with L1 credentials
   const ethSignature = await signRaw(signableMessage, l1Signer);
 
-  // Sign hash with L2 credentials
   const starkSignature = await l2Signer.signMessage(payloadHash);
 
-  // Send request for user registration offchain
   await usersApi.registerUser({
     registerUserRequest: {
       eth_signature: ethSignature,
