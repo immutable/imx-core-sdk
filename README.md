@@ -74,7 +74,7 @@ const signer = new Wallet(privateKey).connect(provider);
 
 #### WalletConnection
 
-WalletConnection is a top level connector which contains all the needed resources (eg.: signers for L1 and L2) to possibilitate Core SDK workflows usage.
+WalletConnection is a top level connector which contains all the required resources (eg. L1 and L2 signers) to enable usage of the Core SDK workflows.
 
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
