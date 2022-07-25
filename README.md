@@ -8,6 +8,14 @@
 
 ---
 
+**The Core TypeScript SDK Interface is unstable and hasn't hit v1.0 yet.** Its public interface is unstable, and there are breaking changes scheduled to happen in the coming weeks to its interface. Some of the upcoming changes include: 
+- The `config` object is getting a revamp
+- The `/src/utils/stark` signing methods will end up private
+- The `/src/utils/crypt`o methods will end up private
+- Many API endpoints require a type to be defined. E.g., `TokenType.ETH`, `TokenType.ERC20`. We are doing away with these constants since they're superfluous and can be inferred from the API being called and the parameters passed in.
+- The workflow methods' signatures are changing to accommodate the new wallet SDK due to be released soon. E.g. the method
+`isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet)` will be changed on v0.7 to `isRegisteredOnchain(walletConnection: WalletConnection)` to be compatible with the Wallets SDK's interface
+
 # Immutable Core SDK
 
 [![npm version](https://badge.fury.io/js/@imtbl%2Fcore-sdk.svg)](https://www.npmjs.com/package/@imtbl/core-sdk) [![Maintainability](https://api.codeclimate.com/v1/badges/219466ee5269620167e5/maintainability)](https://codeclimate.com/repos/62848fd8d4420d01b6002210/maintainability)
