@@ -58,10 +58,10 @@ export async function registerOffchainWorkflow({
 }
 
 export async function isRegisteredOnChainWorkflow(
-  starkPublicKey: string | Promise<string>,
+  starkPublicKey: string,
   contract: Registration,
 ): Promise<boolean> {
-  return await contract.isRegistered(await starkPublicKey);
+  return await contract.isRegistered(starkPublicKey);
 }
 
 export async function getSignableRegistrationOnchain(
