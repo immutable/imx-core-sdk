@@ -85,16 +85,15 @@ export class Workflows {
     });
   }
 
-  public isRegisteredOnchain(walletConnection: WalletConnection) {
+  public async isRegisteredOnchain(walletConnection: WalletConnection) {
     const registrationContract = Registration__factory.connect(
       this.config.registrationContractAddress,
       walletConnection.l1Signer,
     );
 
-    return isRegisteredOnChainWorkflow(
-      walletConnection.l2Signer.getAddress(),
-      registrationContract,
-    );
+    const l2Address = await walletConnection.l2Signer.getAddress();
+
+    return isRegisteredOnChainWorkflow(l2Address, registrationContract);
   }
 
   public mint(signer: Signer, request: UnsignedMintRequest) {

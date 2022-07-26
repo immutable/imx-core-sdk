@@ -25,7 +25,7 @@ export async function registerOffchainWorkflow({
   usersApi,
 }: registerOffchainWorkflowParams): Promise<void> {
   const userAddress = await l1Signer.getAddress();
-  const starkPublicKey = l2Signer.getAddress();
+  const starkPublicKey = await l2Signer.getAddress();
 
   if (await isUserRegistered(userAddress, usersApi)) {
     return;
