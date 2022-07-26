@@ -25,7 +25,7 @@ export async function registerOffchainWorkflow({
   usersApi,
 }: registerOffchainWorkflowParams): Promise<void> {
   const userAddress = await l1Signer.getAddress();
-  const starkPublicKey = l2Signer.getAddress();
+  const starkPublicKey = await l2Signer.getAddress();
 
   if (await isUserRegistered(userAddress, usersApi)) {
     return;
@@ -58,10 +58,10 @@ export async function registerOffchainWorkflow({
 }
 
 export async function isRegisteredOnChainWorkflow(
-  starkPublicKey: string,
+  starkPublicKey: string | Promise<string>,
   contract: Registration,
 ): Promise<boolean> {
-  return await contract.isRegistered(starkPublicKey);
+  return await contract.isRegistered(await starkPublicKey);
 }
 
 export async function getSignableRegistrationOnchain(

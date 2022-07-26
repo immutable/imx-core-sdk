@@ -12,7 +12,7 @@ export { L1Signer };
 
 export interface L2Signer {
   signMessage(message: string): Promise<string>;
-  getAddress(): string;
+  getAddress(): string | Promise<string>;
 }
 
 export interface StarkWallet {
