@@ -1,6 +1,5 @@
 import * as encUtils from 'enc-utils';
 import BN from 'bn.js';
-import { ec } from 'elliptic';
 import { Errors } from '../../workflows/errors';
 
 export function getIntFromBits(
@@ -28,8 +27,4 @@ export function fixMessage(msg: string) {
   }
   // In this case delta will be 4 so we perform a shift-left of 4 bits by adding a ZERO_BN.
   return `${msg}0`;
-}
-
-export function sign(keyPair: ec.KeyPair, msg: string): ec.Signature {
-  return keyPair.sign(fixMessage(msg));
 }

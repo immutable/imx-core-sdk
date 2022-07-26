@@ -1,4 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
+
 import {
   DepositsApi,
   EncodingApi,
@@ -15,38 +16,6 @@ import {
   TradesApi,
 } from '../api';
 import {
-  isRegisteredOnChainWorkflow,
-  registerOffchainWorkflow,
-  registerOffchainWorkflowWithSigner,
-} from './registration';
-import { mintingWorkflow } from './minting';
-import {
-  transfersWorkflow,
-  batchTransfersWorkflow,
-  transfersWorkflowWithSigner,
-  batchTransfersWorkflowWithSigner,
-} from './transfers';
-import {
-  depositERC20Workflow,
-  depositERC721Workflow,
-  depositEthWorkflow,
-} from './deposit';
-import { burnWorkflow, getBurnWorkflow, burnWorkflowWithSigner } from './burn';
-import {
-  completeERC20WithdrawalWorfklow,
-  completeERC721WithdrawalWorkflow,
-  completeEthWithdrawalWorkflow,
-  prepareWithdrawalWorkflow,
-  prepareWithdrawalWorkflowWithSigner,
-} from './withdrawal';
-import {
-  createOrderWorkflow,
-  cancelOrderWorkflow,
-  cancelOrderWorkflowWithSigner,
-  createOrderWorkflowWithSigner,
-} from './orders';
-import { createTradeWorkflow, createTradeWorkflowWithSigner } from './trades';
-import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
   UnsignedBatchNftTransferRequest,
@@ -56,16 +25,34 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  TokenPrepareWithdrawal,
   Config,
   ERC721Withdrawal,
   ERC20Withdrawal,
   TokenWithdrawal,
-  StarkWallet,
   PrepareWithdrawalRequest,
+  WalletConnection,
 } from '../types';
 import { Registration__factory } from '../contracts';
-import { WalletConnection } from '../types/index';
+import {
+  isRegisteredOnChainWorkflow,
+  registerOffchainWorkflow,
+} from './registration';
+import { mintingWorkflow } from './minting';
+import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
+import {
+  depositERC20Workflow,
+  depositERC721Workflow,
+  depositEthWorkflow,
+} from './deposit';
+import { getBurnWorkflow, burnWorkflow } from './burn';
+import {
+  completeERC20WithdrawalWorfklow,
+  completeERC721WithdrawalWorkflow,
+  completeEthWithdrawalWorkflow,
+  prepareWithdrawalWorkflow,
+} from './withdrawal';
+import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
+import { createTradeWorkflow } from './trades';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -91,34 +78,14 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
-  /** @deprecated */
-  public registerOffchain(signer: Signer, starkWallet: StarkWallet) {
-    return registerOffchainWorkflow(signer, starkWallet, this.usersApi);
-  }
-
-  public registerOffchainWithSigner(walletConnection: WalletConnection) {
-    return registerOffchainWorkflowWithSigner({
+  public registerOffchain(walletConnection: WalletConnection) {
+    return registerOffchainWorkflow({
       ...walletConnection,
       usersApi: this.usersApi,
     });
   }
 
-  /** @deprecated */
-  public isRegisteredOnchain(signer: Signer, starkWallet: StarkWallet) {
-    // Get instance of registration contract
-    const registrationContract = Registration__factory.connect(
-      this.config.registrationContractAddress,
-      signer,
-    );
-
-    return isRegisteredOnChainWorkflow(
-      starkWallet.starkPublicKey,
-      registrationContract,
-    );
-  }
-
-  public isRegisteredOnchainWithSigner(walletConnection: WalletConnection) {
-    // Get instance of registration contract
+  public isRegisteredOnchain(walletConnection: WalletConnection) {
     const registrationContract = Registration__factory.connect(
       this.config.registrationContractAddress,
       walletConnection.l1Signer,
@@ -134,65 +101,33 @@ export class Workflows {
     return mintingWorkflow(signer, request, this.mintsApi);
   }
 
-  /** @deprecated */
   public transfer(
-    signer: Signer,
-    starkWallet: StarkWallet,
-    request: UnsignedTransferRequest,
-  ) {
-    return transfersWorkflow(signer, starkWallet, request, this.transfersApi);
-  }
-
-  public transferWithSigner(
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
-    return transfersWorkflowWithSigner({
+    return transfersWorkflow({
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
     });
   }
 
-  /** @deprecated */
   public batchNftTransfer(
-    signer: Signer,
-    starkWallet: StarkWallet,
-    request: UnsignedBatchNftTransferRequest,
-  ) {
-    return batchTransfersWorkflow(
-      signer,
-      starkWallet,
-      request,
-      this.transfersApi,
-    );
-  }
-
-  public batchNftTransferWithSigner(
     walletConnection: WalletConnection,
     request: UnsignedBatchNftTransferRequest,
   ) {
-    return batchTransfersWorkflowWithSigner({
+    return batchTransfersWorkflow({
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
     });
   }
 
-  /** @deprecated */
   public burn(
-    signer: Signer,
-    starkWallet: StarkWallet,
-    request: UnsignedBurnRequest,
-  ) {
-    return burnWorkflow(signer, starkWallet, request, this.transfersApi);
-  }
-
-  public burnWithSigner(
     walletConnection: WalletConnection,
     request: UnsignedBurnRequest,
   ) {
-    return burnWorkflowWithSigner({
+    return burnWorkflow({
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
@@ -270,27 +205,11 @@ export class Workflows {
     );
   }
 
-  /** @deprecated */
   public prepareWithdrawal(
-    signer: Signer,
-    starkWallet: StarkWallet,
-    token: TokenPrepareWithdrawal,
-    quantity: string,
-  ) {
-    return prepareWithdrawalWorkflow(
-      signer,
-      starkWallet,
-      token,
-      quantity,
-      this.withdrawalsApi,
-    );
-  }
-
-  public prepareWithdrawalWithSigner(
     walletConnection: WalletConnection,
     request: PrepareWithdrawalRequest,
   ) {
-    return prepareWithdrawalWorkflowWithSigner({
+    return prepareWithdrawalWorkflow({
       ...walletConnection,
       ...request,
       withdrawalsApi: this.withdrawalsApi,
@@ -353,60 +272,33 @@ export class Workflows {
     }
   }
 
-  /** @deprecated */
   public createOrder(
-    signer: Signer,
-    starkWallet: StarkWallet,
-    request: GetSignableOrderRequest,
-  ) {
-    return createOrderWorkflow(signer, starkWallet, request, this.ordersApi);
-  }
-
-  public createOrderWithSigner(
     walletConnection: WalletConnection,
     request: GetSignableOrderRequest,
   ) {
-    return createOrderWorkflowWithSigner({
+    return createOrderWorkflow({
       ...walletConnection,
       request,
       ordersApi: this.ordersApi,
     });
   }
 
-  /** @deprecated */
   public cancelOrder(
-    signer: Signer,
-    starkWallet: StarkWallet,
-    request: GetSignableCancelOrderRequest,
-  ) {
-    return cancelOrderWorkflow(signer, starkWallet, request, this.ordersApi);
-  }
-
-  public cancelOrderWithSigner(
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
-    return cancelOrderWorkflowWithSigner({
+    return cancelOrderWorkflow({
       ...walletConnection,
       request,
       ordersApi: this.ordersApi,
     });
   }
 
-  /** @deprecated */
   public createTrade(
-    signer: Signer,
-    starkWallet: StarkWallet,
-    request: GetSignableTradeRequest,
-  ) {
-    return createTradeWorkflow(signer, starkWallet, request, this.tradesApi);
-  }
-
-  public createTradeWithSigner(
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    return createTradeWorkflowWithSigner({
+    return createTradeWorkflow({
       ...walletConnection,
       request,
       tradesApi: this.tradesApi,

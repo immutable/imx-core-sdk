@@ -72,19 +72,16 @@ export async function completeERC20WithdrawalWorfklow(
     },
   );
 
-  // Get instance of core contract
   const coreContract = Core__factory.connect(
     config.starkContractAddress,
     signer,
   );
 
-  // Get instance of registration contract
   const registrationContract = Registration__factory.connect(
     config.registrationContractAddress,
     signer,
   );
 
-  // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(
     starkPublicKey,
     registrationContract,

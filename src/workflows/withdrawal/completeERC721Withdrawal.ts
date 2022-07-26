@@ -94,19 +94,16 @@ async function completeMintableERC721Withdrawal(
   );
   const mintingBlob = getMintingBlob(token);
 
-  // Get instance of core contract
   const coreContract = Core__factory.connect(
     config.starkContractAddress,
     signer,
   );
 
-  // Get instance of registration contract
   const registrationContract = Registration__factory.connect(
     config.registrationContractAddress,
     signer,
   );
 
-  // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(
     starkPublicKey,
     registrationContract,
@@ -193,19 +190,16 @@ async function completeERC721Withdrawal(
     },
   );
 
-  // Get instance of core contract
   const coreContract = Core__factory.connect(
     config.starkContractAddress,
     signer,
   );
 
-  // Get instance of registration contract
   const registrationContract = Registration__factory.connect(
     config.registrationContractAddress,
     signer,
   );
 
-  // Check if user is registered onchain
   const isRegistered = await isRegisteredOnChainWorkflow(
     starkPublicKey,
     registrationContract,
@@ -266,8 +260,7 @@ export async function completeERC721WithdrawalWorkflow(
     )
     .catch(error => {
       if (error.response.status === 404) {
-        // token is already minted on L1
-        console.log(error.response);
+        console.log(error.response); // token is already minted on L1
         return completeERC721Withdrawal(
           signer,
           starkPublicKey,

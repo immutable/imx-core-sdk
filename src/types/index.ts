@@ -8,18 +8,18 @@ import {
 import { GetSignableBurnRequest } from '../workflows/types';
 import { Signer as L1Signer } from '@ethersproject/abstract-signer';
 
-export interface StarkWallet {
-  path: string;
-  starkPublicKey: string;
-  starkKeyPair: ec.KeyPair;
-}
+export { L1Signer };
 
 export interface L2Signer {
   signMessage(message: string): Promise<string>;
   getAddress(): string;
 }
 
-export { Signer as L1Signer } from '@ethersproject/abstract-signer';
+export interface StarkWallet {
+  path: string;
+  starkPublicKey: string;
+  starkKeyPair: ec.KeyPair;
+}
 
 export interface WalletConnection {
   l1Signer: L1Signer;
