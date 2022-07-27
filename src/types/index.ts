@@ -30,6 +30,7 @@ export interface Config {
   api: Configuration;
   starkContractAddress: string;
   registrationContractAddress: string;
+  chainID: number;
 }
 
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;

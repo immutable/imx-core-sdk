@@ -9,6 +9,7 @@ describe('getConfig', () => {
       getConfig({
         starkContractAddress: '0x1',
         registrationContractAddress: '0x2',
+        chainID: 3,
         apiConfigOptions: { basePath: ' ' },
       }),
     ).toThrowError('apiConfigOptions.basePath can not be empty');
@@ -19,6 +20,7 @@ describe('getConfig', () => {
       getConfig({
         starkContractAddress: '0x1',
         registrationContractAddress: '0x2',
+        chainID: 3,
         apiConfigOptions: { basePath: '' },
       }),
     ).toThrowError('apiConfigOptions.basePath can not be empty');
@@ -28,6 +30,7 @@ describe('getConfig', () => {
     const basePath = 'https://api.ropsten.x.immutable.com';
     const starkContractAddress = '0x1';
     const registrationContractAddress = '0x2';
+    const chainID = 3;
     const customHeaders = { 'x-custom-headers': 'x values' };
     const expected = {
       api: {
@@ -36,6 +39,7 @@ describe('getConfig', () => {
           headers: { ...customHeaders, ...defaultHeaders },
         },
       },
+      chainID,
       starkContractAddress,
       registrationContractAddress,
     };
@@ -43,6 +47,7 @@ describe('getConfig', () => {
     const actual = getConfig({
       starkContractAddress,
       registrationContractAddress,
+      chainID,
       apiConfigOptions: {
         basePath,
         baseOptions: { headers: customHeaders },
