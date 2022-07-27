@@ -4,7 +4,6 @@ import { grindKey } from '../crypto/crypto';
 import { hdkey } from 'ethereumjs-wallet';
 import { curves, ec as Ec } from 'elliptic';
 import BN from 'bn.js';
-import { constantPointsHex } from './points';
 import * as encUtils from 'enc-utils';
 import { ec } from 'elliptic';
 import { splitSignature } from '@ethersproject/bytes';
@@ -26,6 +25,17 @@ const order = new BN(
   '08000000 00000010 ffffffff ffffffff b781126d cae7b232 1e66a241 adc64d2f',
   16,
 );
+
+const constantPointsHex = [
+  [
+    '49ee3eba8c1600700ee1b87eb599f16716b0b1022947733551fde4050ca6804',
+    '3ca0cfe4b3bc6ddf346d49d06ea0ed34e621062c0e056c1d0405d266e10268a',
+  ],
+  [
+    '1ef15c18599971b7beced415a40f0c7deacfd9b0d1819e03d723d8bc943cfca',
+    '5668060aa49730b7be4801df46ec62de53ecd11abe43a32873000c36e8dc1f',
+  ],
+];
 
 export function getAccountPath(
   layer: string,
@@ -73,27 +83,14 @@ export function getPublic(keyPair: ec.KeyPair, compressed = false): string {
   return keyPair.getPublic(compressed, 'hex');
 }
 
-/** @deprecated */
-export function getStarkPublicKey(keyPair: ec.KeyPair): string {
-  return getPublic(keyPair, true);
-}
-
-export function getKeyPairFromPublicKey(publicKey: string): ec.KeyPair {
-  return starkEc.keyFromPublic(encUtils.hexToArray(publicKey));
-}
-
 export function getXCoordinate(publicKey: string): string {
-  const keyPair = getKeyPairFromPublicKey(publicKey);
+  const keyPair = starkEc.keyFromPublic(encUtils.hexToArray(publicKey));
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
 }
 
 function getStarkPublicKeyWithXCoordinate(keyPair: ec.KeyPair): string {
   return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
-}
-
-export function getKeyPairFromPrivateKey(privateKey: string): ec.KeyPair {
-  return starkEc.keyFromPrivate(privateKey, 'hex');
 }
 
 export async function generateStarkWalletFromSignedMessage(
