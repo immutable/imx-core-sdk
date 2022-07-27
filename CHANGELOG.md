@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [BREAKING CHANGE] Renamed the `createTradeWithSigner` method to `createTrade`
 
 - Changed the `getAddress` method from the `L2Signer` interface to be able to return both `string` or async `Promise<string>`
+- Adding the chain (`network` property) into the `Config` interface
 
 ### Removed
 

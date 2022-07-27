@@ -30,6 +30,7 @@ export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
 
 export interface Config {
   api: Configuration;
+  network: EthNetwork;
   starkContractAddress: string;
   registrationContractAddress: string;
 }
