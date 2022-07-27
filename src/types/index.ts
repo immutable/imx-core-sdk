@@ -26,8 +26,6 @@ export interface WalletConnection {
   l2Signer: L2Signer;
 }
 
-export type EthNetwork = 'dev' | 'ropsten' | 'mainnet';
-
 export interface Config {
   api: Configuration;
   starkContractAddress: string;
