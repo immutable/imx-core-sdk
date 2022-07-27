@@ -4,7 +4,19 @@ import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
-type RequiredProperties<T, P extends keyof T> = Omit<T, P> & Required<Pick<T, P>>;
+type RequiredProperties<T, P extends keyof T> = Omit<T, P> &
+  Required<Pick<T, P>>;
+
+const appendDefaultHeaders = (
+  apiConfigOptions: ConfigurationParameters,
+): ConfigurationParameters => {
+  apiConfigOptions.baseOptions = apiConfigOptions.baseOptions || {};
+  apiConfigOptions.baseOptions.headers = {
+    ...(apiConfigOptions.baseOptions.headers || {}),
+    ...defaultHeaders,
+  };
+  return apiConfigOptions;
+};
 
 interface ConfigParams {
   starkContractAddress: string;
@@ -26,15 +38,4 @@ export const getConfig = ({
     starkContractAddress,
     registrationContractAddress,
   };
-};
-
-const appendDefaultHeaders = (
-  apiConfigOptions: ConfigurationParameters,
-): ConfigurationParameters => {
-  apiConfigOptions.baseOptions = apiConfigOptions.baseOptions || {};
-  apiConfigOptions.baseOptions.headers = {
-    ...(apiConfigOptions.baseOptions.headers || {}),
-    ...defaultHeaders,
-  };
-  return apiConfigOptions;
 };
