@@ -54,6 +54,8 @@ import {
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
 
+const INVALID_CHAIN_ERROR_MESSAGE = 'Invalid chain.';
+
 export class Workflows {
   private readonly depositsApi: DepositsApi;
   private readonly encodingApi: EncodingApi;
@@ -64,6 +66,9 @@ export class Workflows {
   private readonly transfersApi: TransfersApi;
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
+
+  private readonly isChainValid = (chainID: number) =>
+    chainID === this.config.chainID;
 
   constructor(protected config: Config) {
     this.config = config;
@@ -78,7 +83,10 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
-  public registerOffchain(walletConnection: WalletConnection) {
+  public async registerOffchain(walletConnection: WalletConnection) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return registerOffchainWorkflow({
       ...walletConnection,
       usersApi: this.usersApi,
@@ -86,6 +94,9 @@ export class Workflows {
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     const registrationContract = Registration__factory.connect(
       this.config.registrationContractAddress,
       walletConnection.l1Signer,
@@ -96,14 +107,20 @@ export class Workflows {
     return isRegisteredOnChainWorkflow(l2Address, registrationContract);
   }
 
-  public mint(signer: Signer, request: UnsignedMintRequest) {
+  public async mint(signer: Signer, request: UnsignedMintRequest) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return mintingWorkflow(signer, request, this.mintsApi);
   }
 
-  public transfer(
+  public async transfer(
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return transfersWorkflow({
       ...walletConnection,
       request,
@@ -111,10 +128,13 @@ export class Workflows {
     });
   }
 
-  public batchNftTransfer(
+  public async batchNftTransfer(
     walletConnection: WalletConnection,
     request: UnsignedBatchNftTransferRequest,
   ) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return batchTransfersWorkflow({
       ...walletConnection,
       request,
@@ -122,10 +142,13 @@ export class Workflows {
     });
   }
 
-  public burn(
+  public async burn(
     walletConnection: WalletConnection,
     request: UnsignedBurnRequest,
   ) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return burnWorkflow({
       ...walletConnection,
       request,
@@ -133,44 +156,25 @@ export class Workflows {
     });
   }
 
-  public getBurn(request: TransfersApiGetTransferRequest) {
+  public async getBurn(request: TransfersApiGetTransferRequest) {
     return getBurnWorkflow(request, this.transfersApi);
   }
 
-  public deposit(signer: Signer, deposit: TokenDeposit) {
+  public async deposit(signer: Signer, deposit: TokenDeposit) {
     switch (deposit.type) {
       case TokenType.ETH:
-        return depositEthWorkflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.encodingApi,
-          this.config,
-        );
+        return this.depositEth(signer, deposit);
       case TokenType.ERC20:
-        return depositERC20Workflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.tokensApi,
-          this.encodingApi,
-          this.config,
-        );
+        return this.depositERC20(signer, deposit);
       case TokenType.ERC721:
-        return depositERC721Workflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.encodingApi,
-          this.config,
-        );
+        return this.depositERC721(signer, deposit);
     }
   }
 
-  public depositEth(signer: Signer, deposit: ETHDeposit) {
+  public async depositEth(signer: Signer, deposit: ETHDeposit) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return depositEthWorkflow(
       signer,
       deposit,
@@ -181,7 +185,10 @@ export class Workflows {
     );
   }
 
-  public depositERC20(signer: Signer, deposit: ERC20Deposit) {
+  public async depositERC20(signer: Signer, deposit: ERC20Deposit) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return depositERC20Workflow(
       signer,
       deposit,
@@ -193,7 +200,10 @@ export class Workflows {
     );
   }
 
-  public depositERC721(signer: Signer, deposit: ERC721Deposit) {
+  public async depositERC721(signer: Signer, deposit: ERC721Deposit) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return depositERC721Workflow(
       signer,
       deposit,
@@ -204,10 +214,13 @@ export class Workflows {
     );
   }
 
-  public prepareWithdrawal(
+  public async prepareWithdrawal(
     walletConnection: WalletConnection,
     request: PrepareWithdrawalRequest,
   ) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return prepareWithdrawalWorkflow({
       ...walletConnection,
       ...request,
@@ -215,7 +228,25 @@ export class Workflows {
     });
   }
 
-  public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+  public completeWithdrawal(
+    signer: Signer,
+    starkPublicKey: string,
+    token: TokenWithdrawal,
+  ) {
+    switch (token.type) {
+      case TokenType.ETH:
+        return this.completeEthWithdrawal(signer, starkPublicKey);
+      case TokenType.ERC20:
+        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
+      case TokenType.ERC721:
+        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
+    }
+  }
+
+  public async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return completeEthWithdrawalWorkflow(
       signer,
       starkPublicKey,
@@ -225,11 +256,14 @@ export class Workflows {
     );
   }
 
-  public completeERC20Withdrawal(
+  public async completeERC20Withdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: ERC20Withdrawal,
   ) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return completeERC20WithdrawalWorfklow(
       signer,
       starkPublicKey,
@@ -240,11 +274,14 @@ export class Workflows {
     );
   }
 
-  public completeERC721Withdrawal(
+  public async completeERC721Withdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: ERC721Withdrawal,
   ) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return completeERC721WithdrawalWorkflow(
       signer,
       starkPublicKey,
@@ -256,25 +293,13 @@ export class Workflows {
     );
   }
 
-  public completeWithdrawal(
-    signer: Signer,
-    starkPublicKey: string,
-    token: TokenWithdrawal,
-  ) {
-    switch (token.type) {
-      case TokenType.ETH:
-        return this.completeEthWithdrawal(signer, starkPublicKey);
-      case TokenType.ERC721:
-        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
-      case TokenType.ERC20:
-        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
-    }
-  }
-
-  public createOrder(
+  public async createOrder(
     walletConnection: WalletConnection,
     request: GetSignableOrderRequest,
   ) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return createOrderWorkflow({
       ...walletConnection,
       request,
@@ -282,10 +307,13 @@ export class Workflows {
     });
   }
 
-  public cancelOrder(
+  public async cancelOrder(
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return cancelOrderWorkflow({
       ...walletConnection,
       request,
@@ -293,10 +321,13 @@ export class Workflows {
     });
   }
 
-  public createTrade(
+  public async createTrade(
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
+    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
+      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+
     return createTradeWorkflow({
       ...walletConnection,
       request,
