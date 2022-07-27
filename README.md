@@ -55,7 +55,7 @@ Check out how the [Release Process](https://github.com/immutable/imx-core-sdk/#r
 
 ### Configuration
 
-A configuration object is required to be passed into Core SDK requests. This can be obtained by using the `getConfig` function available within the Core SDK. You are required to provide the correct contract addresses and api base path of the network you wish to use. The Immutable X platform currently supports `ropsten` for testing and `mainnet` for production.
+A configuration object is required to be passed into Core SDK requests. This can be obtained by using the `getConfig` function available within the Core SDK. You are required to provide the correct contract addresses, Chain ID, and api base path of the network you wish to use. The Immutable X platform currently supports `ropsten` for testing and `mainnet` for production.
 
 | Network   | Chain ID | API Base Path                       | Stark Contract Address                       | Registration Contract Address                |
 |-----------|----------|-------------------------------------|----------------------------------------------|----------------------------------------------|
