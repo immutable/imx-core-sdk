@@ -73,7 +73,7 @@ export async function completeERC20WithdrawalWorfklow(
   );
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.coreContractAddress,
     signer,
   );
 

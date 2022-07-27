@@ -95,7 +95,7 @@ async function completeMintableERC721Withdrawal(
   const mintingBlob = getMintingBlob(token);
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.coreContractAddress,
     signer,
   );
 
@@ -191,7 +191,7 @@ async function completeERC721Withdrawal(
   );
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.coreContractAddress,
     signer,
   );
 

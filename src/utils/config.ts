@@ -19,14 +19,14 @@ const appendDefaultHeaders = (
 };
 
 interface ConfigParams {
-  starkContractAddress: string;
+  coreContractAddress: string;
   registrationContractAddress: string;
   chainID: number;
   apiConfigOptions: RequiredProperties<ConfigurationParameters, 'basePath'>;
 }
 
 export const getConfig = ({
-  starkContractAddress,
+  coreContractAddress,
   registrationContractAddress,
   chainID,
   apiConfigOptions,
@@ -37,7 +37,7 @@ export const getConfig = ({
   appendDefaultHeaders(apiConfigOptions);
   return {
     api: new Configuration(apiConfigOptions),
-    starkContractAddress,
+    coreContractAddress,
     registrationContractAddress,
     chainID,
   };

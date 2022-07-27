@@ -64,7 +64,7 @@ export async function completeEthWithdrawalWorkflow(
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.coreContractAddress,
     signer,
   );
 

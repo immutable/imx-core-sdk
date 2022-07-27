@@ -28,7 +28,7 @@ export interface WalletConnection {
 
 export interface Config {
   api: Configuration;
-  starkContractAddress: string;
+  coreContractAddress: string;
   registrationContractAddress: string;
   chainID: number;
 }

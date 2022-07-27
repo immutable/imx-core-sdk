@@ -99,7 +99,7 @@ export async function depositEthWorkflow(
   const vaultId = signableDepositResult.data.vault_id;
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.coreContractAddress,
     signer,
   );
 

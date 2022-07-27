@@ -93,7 +93,7 @@ export async function depositERC20Workflow(
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
   const approveTransaction = await tokenContract.populateTransaction.approve(
-    config.starkContractAddress,
+    config.coreContractAddress,
     amount,
   );
   await signer.sendTransaction(approveTransaction);
@@ -130,7 +130,7 @@ export async function depositERC20Workflow(
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount);
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.coreContractAddress,
     signer,
   );
 
