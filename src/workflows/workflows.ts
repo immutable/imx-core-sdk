@@ -65,8 +65,9 @@ export class Workflows {
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
 
-  private readonly isChainValid = (chainID: number) =>
-    chainID === this.config.chainID;
+  private isChainValid(chainID: number) {
+    return chainID === this.config.chainID;
+  }
 
   constructor(protected config: Config) {
     this.config = config;
