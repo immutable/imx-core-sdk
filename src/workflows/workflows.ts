@@ -66,7 +66,7 @@ export class Workflows {
   private readonly withdrawalsApi: WithdrawalsApi;
 
   private isChainValid(chainID: number) {
-    return chainID === this.config.chainID;
+    return chainID === this.config.l1Configuration.chainID;
   }
 
   constructor(protected config: Config) {
