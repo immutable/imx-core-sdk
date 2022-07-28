@@ -54,8 +54,6 @@ import {
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
 
-const INVALID_CHAIN_ERROR_MESSAGE = 'Invalid chain.';
-
 export class Workflows {
   private readonly depositsApi: DepositsApi;
   private readonly encodingApi: EncodingApi;
@@ -83,9 +81,15 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.api);
   }
 
+  private async validateChain(signer: Signer) {
+    if (!this.isChainValid(await signer.getChainId()))
+      throw new Error(
+        'The wallet used for this operation is not from the correct network.',
+      );
+  }
+
   public async registerOffchain(walletConnection: WalletConnection) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return registerOffchainWorkflow({
       ...walletConnection,
@@ -94,8 +98,7 @@ export class Workflows {
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     const registrationContract = Registration__factory.connect(
       this.config.registrationContractAddress,
@@ -108,8 +111,7 @@ export class Workflows {
   }
 
   public async mint(signer: Signer, request: UnsignedMintRequest) {
-    if (!this.isChainValid(await signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(signer);
 
     return mintingWorkflow(signer, request, this.mintsApi);
   }
@@ -118,8 +120,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return transfersWorkflow({
       ...walletConnection,
@@ -132,8 +133,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedBatchNftTransferRequest,
   ) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return batchTransfersWorkflow({
       ...walletConnection,
@@ -146,8 +146,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedBurnRequest,
   ) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return burnWorkflow({
       ...walletConnection,
@@ -172,8 +171,7 @@ export class Workflows {
   }
 
   public async depositEth(signer: Signer, deposit: ETHDeposit) {
-    if (!this.isChainValid(await signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(signer);
 
     return depositEthWorkflow(
       signer,
@@ -186,8 +184,7 @@ export class Workflows {
   }
 
   public async depositERC20(signer: Signer, deposit: ERC20Deposit) {
-    if (!this.isChainValid(await signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(signer);
 
     return depositERC20Workflow(
       signer,
@@ -201,8 +198,7 @@ export class Workflows {
   }
 
   public async depositERC721(signer: Signer, deposit: ERC721Deposit) {
-    if (!this.isChainValid(await signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(signer);
 
     return depositERC721Workflow(
       signer,
@@ -218,8 +214,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: PrepareWithdrawalRequest,
   ) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return prepareWithdrawalWorkflow({
       ...walletConnection,
@@ -244,8 +239,7 @@ export class Workflows {
   }
 
   public async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
-    if (!this.isChainValid(await signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(signer);
 
     return completeEthWithdrawalWorkflow(
       signer,
@@ -261,8 +255,7 @@ export class Workflows {
     starkPublicKey: string,
     token: ERC20Withdrawal,
   ) {
-    if (!this.isChainValid(await signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(signer);
 
     return completeERC20WithdrawalWorfklow(
       signer,
@@ -279,8 +272,7 @@ export class Workflows {
     starkPublicKey: string,
     token: ERC721Withdrawal,
   ) {
-    if (!this.isChainValid(await signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(signer);
 
     return completeERC721WithdrawalWorkflow(
       signer,
@@ -297,8 +289,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableOrderRequest,
   ) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return createOrderWorkflow({
       ...walletConnection,
@@ -311,8 +302,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return cancelOrderWorkflow({
       ...walletConnection,
@@ -325,8 +315,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    if (!this.isChainValid(await walletConnection.l1Signer.getChainId()))
-      throw Error(INVALID_CHAIN_ERROR_MESSAGE);
+    await this.validateChain(walletConnection.l1Signer);
 
     return createTradeWorkflow({
       ...walletConnection,
