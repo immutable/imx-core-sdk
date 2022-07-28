@@ -7,7 +7,7 @@ import {
   Registration,
   Registration__factory,
 } from '../../contracts';
-import { Config } from '../../types';
+import { ImmutableXConfiguration } from '../../types';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -59,17 +59,17 @@ export async function completeEthWithdrawalWorkflow(
   starkPublicKey: string,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
-  config: Config,
+  config: ImmutableXConfiguration,
 ) {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   const coreContract = Core__factory.connect(
-    config.coreContractAddress,
+    config.l1Configuration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.registrationContractAddress,
+    config.l1Configuration.registrationContractAddress,
     signer,
   );
 

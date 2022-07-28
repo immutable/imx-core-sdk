@@ -1,5 +1,7 @@
 import { getConfig } from './config';
 import { version } from '../../package.json';
+import { ImmutableXConfiguration } from '../types';
+import { Configuration } from '../api';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
@@ -10,9 +12,9 @@ describe('getConfig', () => {
         coreContractAddress: '0x1',
         registrationContractAddress: '0x2',
         chainID: 3,
-        apiConfigOptions: { basePath: ' ' },
+        basePath: ' ',
       }),
-    ).toThrowError('apiConfigOptions.basePath can not be empty');
+    ).toThrowError('basePath can not be empty');
   });
 
   it('should throw if basePath is empty', () => {
@@ -21,9 +23,9 @@ describe('getConfig', () => {
         coreContractAddress: '0x1',
         registrationContractAddress: '0x2',
         chainID: 3,
-        apiConfigOptions: { basePath: '' },
+        basePath: '',
       }),
-    ).toThrowError('apiConfigOptions.basePath can not be empty');
+    ).toThrowError('basePath can not be empty');
   });
 
   it('should return config', () => {
@@ -32,26 +34,26 @@ describe('getConfig', () => {
     const registrationContractAddress = '0x2';
     const chainID = 3;
     const customHeaders = { 'x-custom-headers': 'x values' };
-    const expected = {
-      api: {
+    const expected: ImmutableXConfiguration = {
+      apiConfiguration: new Configuration({
         basePath,
         baseOptions: {
           headers: { ...customHeaders, ...defaultHeaders },
         },
+      }),
+      l1Configuration: {
+        chainID,
+        coreContractAddress,
+        registrationContractAddress,
       },
-      chainID,
-      coreContractAddress,
-      registrationContractAddress,
     };
 
     const actual = getConfig({
       coreContractAddress,
       registrationContractAddress,
       chainID,
-      apiConfigOptions: {
-        basePath,
-        baseOptions: { headers: customHeaders },
-      },
+      basePath,
+      headers: customHeaders,
     });
     expect(actual).toEqual(expected);
   });

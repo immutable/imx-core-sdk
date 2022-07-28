@@ -74,9 +74,8 @@ const config = getConfig({
   coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
   registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
   chainID: 3,
-  apiConfigOptions: {
-    basePath:  'https://api.ropsten.x.immutable.com',
-  },
+  basePath:  'https://api.ropsten.x.immutable.com',
+  headers: { 'x-api-custom-header': '...' } // headers are optional unless specified otherwise
 });
 
 // Setup a provider and a signer
@@ -119,8 +118,13 @@ The Core SDK includes classes that interact with the Immutable X APIs.
 import { getConfig, AssetsApi } from '@imtbl/core-sdk';
 
 const getYourAsset = async (tokenAddress: string, tokenId: string) => {
-  const config = getConfig('ropsten');
-  const assetsApi = new AssetsApi(config.api);
+  const config = getConfig({
+    coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
+    registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
+    chainID: 3,
+    basePath:  'https://api.ropsten.x.immutable.com',
+  });
+  const assetsApi = new AssetsApi(config.apiConfiguration);
 
   const response = await assetsApi.getAsset({
     tokenAddress,
@@ -248,7 +252,12 @@ const l2Wallet = await generateStarkWallet(l1Signer);
 const l2Signer = new BaseSigner(l2Wallet.starkKeyPair);
 
 // Sets up the Core SDK workflows
-const coreSdkConfig = getConfig(ethNetwork);
+const coreSdkConfig = getConfig({
+  coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
+  registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
+  chainID: 3,
+  basePath:  'https://api.ropsten.x.immutable.com',
+});
 const coreSdkWorkflows = new Workflows(coreSdkConfig);
 
 // Registers the user

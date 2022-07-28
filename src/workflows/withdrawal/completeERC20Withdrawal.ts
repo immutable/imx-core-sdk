@@ -7,7 +7,11 @@ import {
   Registration,
   Registration__factory,
 } from '../../contracts';
-import { Config, ERC20Withdrawal, TokenType } from '../../types';
+import {
+  ImmutableXConfiguration,
+  ERC20Withdrawal,
+  TokenType,
+} from '../../types';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -60,7 +64,7 @@ export async function completeERC20WithdrawalWorfklow(
   token: ERC20Withdrawal,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
-  config: Config,
+  config: ImmutableXConfiguration,
 ) {
   const assetType = await getEncodeAssetInfo(
     'asset',
@@ -73,12 +77,12 @@ export async function completeERC20WithdrawalWorfklow(
   );
 
   const coreContract = Core__factory.connect(
-    config.coreContractAddress,
+    config.l1Configuration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.registrationContractAddress,
+    config.l1Configuration.registrationContractAddress,
     signer,
   );
 

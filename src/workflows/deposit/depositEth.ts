@@ -7,7 +7,7 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { Config, ETHDeposit } from '../../types';
+import { ImmutableXConfiguration, ETHDeposit } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
 
 interface ETHTokenData {
@@ -64,7 +64,7 @@ export async function depositEthWorkflow(
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   encodingApi: EncodingApi,
-  config: Config,
+  config: ImmutableXConfiguration,
 ): Promise<TransactionResponse> {
   const user = await signer.getAddress();
   const data: ETHTokenData = {
@@ -99,12 +99,12 @@ export async function depositEthWorkflow(
   const vaultId = signableDepositResult.data.vault_id;
 
   const coreContract = Core__factory.connect(
-    config.coreContractAddress,
+    config.l1Configuration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.registrationContractAddress,
+    config.l1Configuration.registrationContractAddress,
     signer,
   );
 
