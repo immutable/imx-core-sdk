@@ -4,17 +4,6 @@ import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
-const appendDefaultHeaders = (
-  apiConfigOptions: ConfigurationParameters,
-): ConfigurationParameters => {
-  apiConfigOptions.baseOptions = apiConfigOptions.baseOptions || {};
-  apiConfigOptions.baseOptions.headers = {
-    ...(apiConfigOptions.baseOptions.headers || {}),
-    ...defaultHeaders,
-  };
-  return apiConfigOptions;
-};
-
 interface Environment extends L1Configuration {
   basePath: string;
   headers?: Record<string, string>;
@@ -30,10 +19,13 @@ export const getConfig = ({
   if (!basePath.trim()) {
     throw Error('basePath can not be empty');
   }
-  const apiConfigOptions = appendDefaultHeaders({
+
+  headers = { ...(headers || {}), ...defaultHeaders };
+  const apiConfigOptions: ConfigurationParameters = {
     basePath,
-    baseOptions: { headers: headers || {} },
-  });
+    baseOptions: { headers },
+  };
+
   return {
     apiConfiguration: new Configuration(apiConfigOptions),
     l1Configuration: {

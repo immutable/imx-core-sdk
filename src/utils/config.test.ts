@@ -33,12 +33,15 @@ describe('getConfig', () => {
     const coreContractAddress = '0x1';
     const registrationContractAddress = '0x2';
     const chainID = 3;
-    const customHeaders = { 'x-custom-headers': 'x values' };
+    const customHeaders = {
+      'x-custom-headers': 'x values',
+      'x-sdk-version': 'this should get overwritten',
+    };
     const expected: ImmutableXConfiguration = {
       apiConfiguration: new Configuration({
         basePath,
         baseOptions: {
-          headers: { ...customHeaders, ...defaultHeaders },
+          headers: { 'x-custom-headers': 'x values', ...defaultHeaders },
         },
       }),
       l1Configuration: {
