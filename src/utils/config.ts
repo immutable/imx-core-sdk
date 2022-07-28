@@ -1,11 +1,8 @@
 import { Configuration, ConfigurationParameters } from '../api';
-import { Config } from '../types';
+import { ImmutableXConfiguration, L1Configuration } from '../types';
 import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
-
-type RequiredProperties<T, P extends keyof T> = Omit<T, P> &
-  Required<Pick<T, P>>;
 
 const appendDefaultHeaders = (
   apiConfigOptions: ConfigurationParameters,
@@ -18,27 +15,31 @@ const appendDefaultHeaders = (
   return apiConfigOptions;
 };
 
-interface ConfigParams {
-  starkContractAddress: string;
-  registrationContractAddress: string;
-  chainID: number;
-  apiConfigOptions: RequiredProperties<ConfigurationParameters, 'basePath'>;
+interface Environment extends L1Configuration {
+  basePath: string;
+  headers?: Record<string, string>;
 }
 
 export const getConfig = ({
-  starkContractAddress,
+  coreContractAddress,
   registrationContractAddress,
   chainID,
-  apiConfigOptions,
-}: ConfigParams): Config => {
-  if (!apiConfigOptions.basePath?.trim()) {
-    throw Error('apiConfigOptions.basePath can not be empty');
+  basePath,
+  headers,
+}: Environment): ImmutableXConfiguration => {
+  if (!basePath.trim()) {
+    throw Error('basePath can not be empty');
   }
-  appendDefaultHeaders(apiConfigOptions);
+  const apiConfigOptions = appendDefaultHeaders({
+    basePath,
+    baseOptions: { headers: headers || {} },
+  });
   return {
-    api: new Configuration(apiConfigOptions),
-    starkContractAddress,
-    registrationContractAddress,
-    chainID,
+    apiConfiguration: new Configuration(apiConfigOptions),
+    l1Configuration: {
+      coreContractAddress,
+      registrationContractAddress,
+      chainID,
+    },
   };
 };

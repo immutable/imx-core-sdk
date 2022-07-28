@@ -3,7 +3,7 @@ import {
   MintRequest,
   GetSignableTransferRequestV1,
   GetSignableTransferRequest,
-  Configuration,
+  Configuration as APIConfiguration,
 } from '../api';
 import { GetSignableBurnRequest } from '../workflows/types';
 import { Signer as L1Signer } from '@ethersproject/abstract-signer';
@@ -26,11 +26,15 @@ export interface WalletConnection {
   l2Signer: L2Signer;
 }
 
-export interface Config {
-  api: Configuration;
-  starkContractAddress: string;
+export interface L1Configuration {
+  coreContractAddress: string;
   registrationContractAddress: string;
   chainID: number;
+}
+
+export interface ImmutableXConfiguration {
+  apiConfiguration: APIConfiguration;
+  l1Configuration: L1Configuration;
 }
 
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;
