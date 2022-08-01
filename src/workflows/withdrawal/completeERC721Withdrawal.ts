@@ -7,7 +7,11 @@ import {
   Registration__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import { Config, ERC721Withdrawal, TokenType } from '../../types';
+import {
+  ImmutableXConfiguration,
+  ERC721Withdrawal,
+  TokenType,
+} from '../../types';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import {
   getSignableRegistrationOnchain,
@@ -80,7 +84,7 @@ async function completeMintableERC721Withdrawal(
   token: MintableERC721Withdrawal,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
-  config: Config,
+  config: ImmutableXConfiguration,
 ) {
   const assetType = await getEncodeAssetInfo(
     'mintable-asset',
@@ -95,12 +99,12 @@ async function completeMintableERC721Withdrawal(
   const mintingBlob = getMintingBlob(token);
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.l1Configuration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.registrationContractAddress,
+    config.l1Configuration.registrationContractAddress,
     signer,
   );
 
@@ -178,7 +182,7 @@ async function completeERC721Withdrawal(
   token: ERC721Withdrawal,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
-  config: Config,
+  config: ImmutableXConfiguration,
 ) {
   const assetType = await getEncodeAssetInfo(
     'asset',
@@ -191,12 +195,12 @@ async function completeERC721Withdrawal(
   );
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.l1Configuration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.registrationContractAddress,
+    config.l1Configuration.registrationContractAddress,
     signer,
   );
 
@@ -232,7 +236,7 @@ export async function completeERC721WithdrawalWorkflow(
   encodingApi: EncodingApi,
   mintsApi: MintsApi,
   usersApi: UsersApi,
-  config: Config,
+  config: ImmutableXConfiguration,
 ) {
   const tokenAddress = token.data.tokenAddress;
   const tokenId = token.data.tokenId;
