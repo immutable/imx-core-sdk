@@ -55,7 +55,13 @@ Check out how the [Release Process](https://github.com/immutable/imx-core-sdk/#r
 
 ### Configuration
 
-A configuration object is required to be passed into Core SDK requests. This can be obtained by using the `getConfig` function available within the Core SDK. You are required to select the Ethereum network. The Immutable X platform currently supports `ropsten` for testing and `mainnet` for production.
+A configuration object is required to be passed into Core SDK requests. This can be obtained by using the `getConfig` function available within the Core SDK. You are required to provide the correct contract addresses, Chain ID, and api base path of the network you wish to use. The Immutable X platform currently supports `ropsten` for testing and `mainnet` for production.
+
+| Network   | Chain ID | API Base Path                       | Core Contract Address                        | Registration Contract Address                |
+|-----------|----------|-------------------------------------|----------------------------------------------|----------------------------------------------|
+| `ropsten` | 3        | https://api.ropsten.x.immutable.com | `0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef` | `0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864` |
+| `mainnet` | 1        | https://api.x.immutable.com         | `0x5FDCCA53617f4d2b9134B29090C87D01058e27e9` | `0x72a06bf2a1CE5e39cBA06c0CAb824960B587d64c` |
+
 
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
@@ -64,7 +70,13 @@ import { getConfig } from '@imtbl/core-sdk';
 const ethNetwork = 'ropsten'; // or mainnet;
 
 // Use the helper function to get the config
-const config = getConfig(ethNetwork);
+const config = getConfig({
+  coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
+  registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
+  chainID: 3,
+  basePath:  'https://api.ropsten.x.immutable.com',
+  headers: { 'x-api-custom-header': '...' } // headers are optional unless specified otherwise
+});
 
 // Setup a provider and a signer
 const privateKey = YOUR_PRIVATE_KEY;
@@ -106,8 +118,13 @@ The Core SDK includes classes that interact with the Immutable X APIs.
 import { getConfig, AssetsApi } from '@imtbl/core-sdk';
 
 const getYourAsset = async (tokenAddress: string, tokenId: string) => {
-  const config = getConfig('ropsten');
-  const assetsApi = new AssetsApi(config.api);
+  const config = getConfig({
+    coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
+    registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
+    chainID: 3,
+    basePath:  'https://api.ropsten.x.immutable.com',
+  });
+  const assetsApi = new AssetsApi(config.apiConfiguration);
 
   const response = await assetsApi.getAsset({
     tokenAddress,
@@ -189,7 +206,7 @@ The Core SDK provides interfaces for all smart contracts required to interact wi
 import { Core__factory } from '@imtbl/core-sdk';
 
 // Get instance of core contract
-const contract = Core__factory.connect(config.starkContractAddress, signer);
+const contract = Core__factory.connect(config.coreContractAddress, signer);
 
 // Obtain necessary parameters...
 
@@ -235,7 +252,12 @@ const l2Wallet = await generateStarkWallet(l1Signer);
 const l2Signer = new BaseSigner(l2Wallet.starkKeyPair);
 
 // Sets up the Core SDK workflows
-const coreSdkConfig = getConfig(ethNetwork);
+const coreSdkConfig = getConfig({
+  coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
+  registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
+  chainID: 3,
+  basePath:  'https://api.ropsten.x.immutable.com',
+});
 const coreSdkWorkflows = new Workflows(coreSdkConfig);
 
 // Registers the user

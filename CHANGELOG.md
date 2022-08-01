@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [BREAKING CHANGE] Removed the `getKeyPairFromPrivateKey` function
 - [BREAKING CHANGE] Removed the `getStarkPublicKey` function
+- [BREAKING CHANGE] `getConfig` method now requires environment parameters and returns the new [ImmutableXConfiguration](https://github.com/immutable/imx-core-sdk/blob/cf33110d1dc6503c1e747dfced4fff0ec57bb536/src/types/index.ts#L35)
 - [BREAKING CHANGE] Renamed the `registerOffchainWithSigner` method to `registerOffchain`
 - [BREAKING CHANGE] Renamed the `isRegisteredOnchainWithSigner` method to `isRegisteredOnchain`
 - [BREAKING CHANGE] Renamed the `transferWithSigner` method to `transfer`

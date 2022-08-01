@@ -12,7 +12,7 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { Config, ERC20Deposit } from '../../types';
+import { ImmutableXConfiguration, ERC20Deposit } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
 
 interface ERC20TokenData {
@@ -75,7 +75,7 @@ export async function depositERC20Workflow(
   usersApi: UsersApi,
   tokensApi: TokensApi,
   encodingApi: EncodingApi,
-  config: Config,
+  config: ImmutableXConfiguration,
 ): Promise<TransactionResponse> {
   const user = await signer.getAddress();
 
@@ -93,7 +93,7 @@ export async function depositERC20Workflow(
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
   const approveTransaction = await tokenContract.populateTransaction.approve(
-    config.starkContractAddress,
+    config.l1Configuration.coreContractAddress,
     amount,
   );
   await signer.sendTransaction(approveTransaction);
@@ -130,12 +130,12 @@ export async function depositERC20Workflow(
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount);
 
   const coreContract = Core__factory.connect(
-    config.starkContractAddress,
+    config.l1Configuration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.registrationContractAddress,
+    config.l1Configuration.registrationContractAddress,
     signer,
   );
 
