@@ -25,7 +25,7 @@ import {
   TokenDeposit,
   TokenType,
   UnsignedBurnRequest,
-  Config,
+  ImmutableXConfiguration,
   ERC721Withdrawal,
   ERC20Withdrawal,
   TokenWithdrawal,
@@ -69,17 +69,17 @@ export class Workflows {
     return chainID === this.config.l1Configuration.chainID;
   }
 
-  constructor(protected config: Config) {
+  constructor(protected config: ImmutableXConfiguration) {
     this.config = config;
-    this.depositsApi = new DepositsApi(config.api);
-    this.encodingApi = new EncodingApi(config.api);
-    this.mintsApi = new MintsApi(config.api);
-    this.ordersApi = new OrdersApi(config.api);
-    this.tokensApi = new TokensApi(config.api);
-    this.tradesApi = new TradesApi(config.api);
-    this.transfersApi = new TransfersApi(config.api);
-    this.usersApi = new UsersApi(config.api);
-    this.withdrawalsApi = new WithdrawalsApi(config.api);
+    this.depositsApi = new DepositsApi(config.apiConfiguration);
+    this.encodingApi = new EncodingApi(config.apiConfiguration);
+    this.mintsApi = new MintsApi(config.apiConfiguration);
+    this.ordersApi = new OrdersApi(config.apiConfiguration);
+    this.tokensApi = new TokensApi(config.apiConfiguration);
+    this.tradesApi = new TradesApi(config.apiConfiguration);
+    this.transfersApi = new TransfersApi(config.apiConfiguration);
+    this.usersApi = new UsersApi(config.apiConfiguration);
+    this.withdrawalsApi = new WithdrawalsApi(config.apiConfiguration);
   }
 
   private async validateChain(signer: Signer) {
@@ -102,7 +102,7 @@ export class Workflows {
     await this.validateChain(walletConnection.l1Signer);
 
     const registrationContract = Registration__factory.connect(
-      this.config.registrationContractAddress,
+      this.config.l1Configuration.registrationContractAddress,
       walletConnection.l1Signer,
     );
 
