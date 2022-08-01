@@ -4,9 +4,10 @@ import {
   CreateTransferResponseV1,
 } from '../api';
 import { WalletConnection, UnsignedTransferRequest } from '../types';
-import { BurnAddress } from './constants';
 import { GetSignableBurnRequest } from './types';
 import { transfersWorkflow } from './transfers';
+
+const BurnEthAddress = '0x0000000000000000000000000000000000000000';
 
 type burnWorkflowParams = WalletConnection & {
   request: GetSignableBurnRequest;
@@ -21,7 +22,7 @@ export async function burnWorkflow({
 }: burnWorkflowParams): Promise<CreateTransferResponseV1> {
   const transferRequest: UnsignedTransferRequest = {
     sender: request.sender,
-    receiver: BurnAddress.BurnEthAddress,
+    receiver: BurnEthAddress,
     token: request.token,
     amount: request.amount,
   };
