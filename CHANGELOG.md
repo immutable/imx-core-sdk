@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 
+- [BREAKING CHANGE] Removed the `getStarkPublicKey` method
 - [BREAKING CHANGE] Renamed the `registerOffchainWithSigner` method to `registerOffchain`
 - [BREAKING CHANGE] Renamed the `isRegisteredOnchainWithSigner` method to `isRegisteredOnchain`
 - [BREAKING CHANGE] Renamed the `transferWithSigner` method to `transfer`

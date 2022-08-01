@@ -89,7 +89,7 @@ export function getXCoordinate(publicKey: string): string {
   return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
 }
 
-function getStarkPublicKeyWithXCoordinate(keyPair: ec.KeyPair): string {
+function getStarkPublicKey(keyPair: ec.KeyPair): string {
   return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
 }
 
@@ -104,7 +104,7 @@ export async function generateStarkWalletFromSignedMessage(
     DEFAULT_ACCOUNT_INDEX,
   );
   const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
-  const starkPublicKey = getStarkPublicKeyWithXCoordinate(keyPair);
+  const starkPublicKey = getStarkPublicKey(keyPair);
   return {
     path,
     starkPublicKey,
