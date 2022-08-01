@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Changed
 
-- [BREAKING CHANGE] Removed the `getStarkPublicKey` method
+- [BREAKING CHANGE] Removed the `getKeyPairFromPrivateKey` function
+- [BREAKING CHANGE] Removed the `getStarkPublicKey` function
 - [BREAKING CHANGE] Renamed the `registerOffchainWithSigner` method to `registerOffchain`
 - [BREAKING CHANGE] Renamed the `isRegisteredOnchainWithSigner` method to `isRegisteredOnchain`
 - [BREAKING CHANGE] Renamed the `transferWithSigner` method to `transfer`
@@ -34,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [BREAKING CHANGE] Removed the deprecated `createTrade` method
 
 ## [0.6.0] - 2022-07-18
+
 ### Added
 
 - Added `createOrderWithSigner` function to enable create order with l2signer
