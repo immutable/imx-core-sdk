@@ -1431,7 +1431,8 @@ async function createTradeWorkflow({
   return createTradeResponse.data;
 }
 // <-- End Trades -->
-export class Workflows {
+
+export class ImmutableX {
   private readonly depositsApi: DepositsApi;
   private readonly encodingApi: EncodingApi;
   private readonly mintsApi: MintsApi;
