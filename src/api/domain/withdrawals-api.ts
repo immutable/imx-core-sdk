@@ -66,11 +66,11 @@ export const WithdrawalsApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xImxEthAddress !== undefined && xImxEthAddress !== null) {
+            if (xImxEthAddress != null) {
                 localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
             }
 
-            if (xImxEthSignature !== undefined && xImxEthSignature !== null) {
+            if (xImxEthSignature != null) {
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
             }
 

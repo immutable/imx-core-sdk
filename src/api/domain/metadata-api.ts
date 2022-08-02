@@ -66,11 +66,11 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (iMXSignature !== undefined && iMXSignature !== null) {
+            if (iMXSignature != null) {
                 localVarHeaderParameter['IMX-Signature'] = String(iMXSignature);
             }
 
-            if (iMXTimestamp !== undefined && iMXTimestamp !== null) {
+            if (iMXTimestamp != null) {
                 localVarHeaderParameter['IMX-Timestamp'] = String(iMXTimestamp);
             }
 
@@ -158,11 +158,11 @@ export const MetadataApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (iMXSignature !== undefined && iMXSignature !== null) {
+            if (iMXSignature != null) {
                 localVarHeaderParameter['IMX-Signature'] = String(iMXSignature);
             }
 
-            if (iMXTimestamp !== undefined && iMXTimestamp !== null) {
+            if (iMXTimestamp != null) {
                 localVarHeaderParameter['IMX-Timestamp'] = String(iMXTimestamp);
             }
 
