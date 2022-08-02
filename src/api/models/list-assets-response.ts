@@ -13,7 +13,7 @@
  */
 
 
-import { Asset } from './asset';
+import { AssetWithOrders } from './asset-with-orders';
 
 /**
  * 
@@ -35,9 +35,9 @@ export interface ListAssetsResponse {
     'remaining': number;
     /**
      * Assets matching query parameters
-     * @type {Array<Asset>}
+     * @type {Array<AssetWithOrders>}
      * @memberof ListAssetsResponse
      */
-    'result': Array<Asset>;
+    'result': Array<AssetWithOrders>;
 }
 

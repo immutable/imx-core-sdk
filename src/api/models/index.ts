@@ -1,6 +1,7 @@
 export * from './add-metadata-schema-to-collection-request';
 export * from './asset';
 export * from './asset-properties';
+export * from './asset-with-orders';
 export * from './balance';
 export * from './cancel-order-request';
 export * from './cancel-order-response';

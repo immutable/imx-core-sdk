@@ -23,6 +23,7 @@ git_push.sh
 index.ts
 models/add-metadata-schema-to-collection-request.ts
 models/asset-properties.ts
+models/asset-with-orders.ts
 models/asset.ts
 models/balance.ts
 models/cancel-order-request.ts

@@ -65,7 +65,7 @@ export interface CreateTradeRequestV1 {
      */
     'fees'?: Array<FeeEntry>;
     /**
-     * Whether to include fees in trade
+     * [deprecated] All orders include fees since the introduction of protocol fees
      * @type {boolean}
      * @memberof CreateTradeRequestV1
      */
