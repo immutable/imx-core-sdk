@@ -83,7 +83,9 @@ export class Workflows {
   }
 
   private async validateChain(signer: Signer) {
-    if (!this.isChainValid(await signer.getChainId()))
+    const chainID = await signer.getChainId();
+
+    if (!this.isChainValid(chainID))
       throw new Error(
         'The wallet used for this operation is not from the correct network.',
       );
