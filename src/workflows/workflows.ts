@@ -65,6 +65,10 @@ export class Workflows {
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
 
+  private isChainValid(chainID: number) {
+    return chainID === this.config.l1Configuration.chainID;
+  }
+
   constructor(protected config: ImmutableXConfiguration) {
     this.config = config;
     this.depositsApi = new DepositsApi(config.apiConfiguration);
@@ -78,7 +82,18 @@ export class Workflows {
     this.withdrawalsApi = new WithdrawalsApi(config.apiConfiguration);
   }
 
-  public registerOffchain(walletConnection: WalletConnection) {
+  private async validateChain(signer: Signer) {
+    const chainID = await signer.getChainId();
+
+    if (!this.isChainValid(chainID))
+      throw new Error(
+        'The wallet used for this operation is not from the correct network.',
+      );
+  }
+
+  public async registerOffchain(walletConnection: WalletConnection) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return registerOffchainWorkflow({
       ...walletConnection,
       usersApi: this.usersApi,
@@ -86,6 +101,8 @@ export class Workflows {
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
+    await this.validateChain(walletConnection.l1Signer);
+
     const registrationContract = Registration__factory.connect(
       this.config.l1Configuration.registrationContractAddress,
       walletConnection.l1Signer,
@@ -96,14 +113,18 @@ export class Workflows {
     return isRegisteredOnChainWorkflow(l2Address, registrationContract);
   }
 
-  public mint(signer: Signer, request: UnsignedMintRequest) {
+  public async mint(signer: Signer, request: UnsignedMintRequest) {
+    await this.validateChain(signer);
+
     return mintingWorkflow(signer, request, this.mintsApi);
   }
 
-  public transfer(
+  public async transfer(
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return transfersWorkflow({
       ...walletConnection,
       request,
@@ -111,10 +132,12 @@ export class Workflows {
     });
   }
 
-  public batchNftTransfer(
+  public async batchNftTransfer(
     walletConnection: WalletConnection,
     request: UnsignedBatchNftTransferRequest,
   ) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return batchTransfersWorkflow({
       ...walletConnection,
       request,
@@ -122,10 +145,12 @@ export class Workflows {
     });
   }
 
-  public burn(
+  public async burn(
     walletConnection: WalletConnection,
     request: UnsignedBurnRequest,
   ) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return burnWorkflow({
       ...walletConnection,
       request,
@@ -133,44 +158,24 @@ export class Workflows {
     });
   }
 
-  public getBurn(request: TransfersApiGetTransferRequest) {
+  public async getBurn(request: TransfersApiGetTransferRequest) {
     return getBurnWorkflow(request, this.transfersApi);
   }
 
-  public deposit(signer: Signer, deposit: TokenDeposit) {
+  public async deposit(signer: Signer, deposit: TokenDeposit) {
     switch (deposit.type) {
       case TokenType.ETH:
-        return depositEthWorkflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.encodingApi,
-          this.config,
-        );
+        return this.depositEth(signer, deposit);
       case TokenType.ERC20:
-        return depositERC20Workflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.tokensApi,
-          this.encodingApi,
-          this.config,
-        );
+        return this.depositERC20(signer, deposit);
       case TokenType.ERC721:
-        return depositERC721Workflow(
-          signer,
-          deposit,
-          this.depositsApi,
-          this.usersApi,
-          this.encodingApi,
-          this.config,
-        );
+        return this.depositERC721(signer, deposit);
     }
   }
 
-  public depositEth(signer: Signer, deposit: ETHDeposit) {
+  public async depositEth(signer: Signer, deposit: ETHDeposit) {
+    await this.validateChain(signer);
+
     return depositEthWorkflow(
       signer,
       deposit,
@@ -181,7 +186,9 @@ export class Workflows {
     );
   }
 
-  public depositERC20(signer: Signer, deposit: ERC20Deposit) {
+  public async depositERC20(signer: Signer, deposit: ERC20Deposit) {
+    await this.validateChain(signer);
+
     return depositERC20Workflow(
       signer,
       deposit,
@@ -193,7 +200,9 @@ export class Workflows {
     );
   }
 
-  public depositERC721(signer: Signer, deposit: ERC721Deposit) {
+  public async depositERC721(signer: Signer, deposit: ERC721Deposit) {
+    await this.validateChain(signer);
+
     return depositERC721Workflow(
       signer,
       deposit,
@@ -204,10 +213,12 @@ export class Workflows {
     );
   }
 
-  public prepareWithdrawal(
+  public async prepareWithdrawal(
     walletConnection: WalletConnection,
     request: PrepareWithdrawalRequest,
   ) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return prepareWithdrawalWorkflow({
       ...walletConnection,
       ...request,
@@ -215,7 +226,24 @@ export class Workflows {
     });
   }
 
-  public completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+  public completeWithdrawal(
+    signer: Signer,
+    starkPublicKey: string,
+    token: TokenWithdrawal,
+  ) {
+    switch (token.type) {
+      case TokenType.ETH:
+        return this.completeEthWithdrawal(signer, starkPublicKey);
+      case TokenType.ERC20:
+        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
+      case TokenType.ERC721:
+        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
+    }
+  }
+
+  public async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+    await this.validateChain(signer);
+
     return completeEthWithdrawalWorkflow(
       signer,
       starkPublicKey,
@@ -225,11 +253,13 @@ export class Workflows {
     );
   }
 
-  public completeERC20Withdrawal(
+  public async completeERC20Withdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: ERC20Withdrawal,
   ) {
+    await this.validateChain(signer);
+
     return completeERC20WithdrawalWorfklow(
       signer,
       starkPublicKey,
@@ -240,11 +270,13 @@ export class Workflows {
     );
   }
 
-  public completeERC721Withdrawal(
+  public async completeERC721Withdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: ERC721Withdrawal,
   ) {
+    await this.validateChain(signer);
+
     return completeERC721WithdrawalWorkflow(
       signer,
       starkPublicKey,
@@ -256,25 +288,12 @@ export class Workflows {
     );
   }
 
-  public completeWithdrawal(
-    signer: Signer,
-    starkPublicKey: string,
-    token: TokenWithdrawal,
-  ) {
-    switch (token.type) {
-      case TokenType.ETH:
-        return this.completeEthWithdrawal(signer, starkPublicKey);
-      case TokenType.ERC721:
-        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
-      case TokenType.ERC20:
-        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
-    }
-  }
-
-  public createOrder(
+  public async createOrder(
     walletConnection: WalletConnection,
     request: GetSignableOrderRequest,
   ) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return createOrderWorkflow({
       ...walletConnection,
       request,
@@ -282,10 +301,12 @@ export class Workflows {
     });
   }
 
-  public cancelOrder(
+  public async cancelOrder(
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return cancelOrderWorkflow({
       ...walletConnection,
       request,
@@ -293,10 +314,12 @@ export class Workflows {
     });
   }
 
-  public createTrade(
+  public async createTrade(
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
+    await this.validateChain(walletConnection.l1Signer);
+
     return createTradeWorkflow({
       ...walletConnection,
       request,
