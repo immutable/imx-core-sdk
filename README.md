@@ -226,7 +226,7 @@ A workflow is a combination of API and contract calls required for more complica
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { 
-  Workflows, 
+  ImmutableX,
   BaseSigner, 
   getConfig, 
   generateStarkWallet,
@@ -254,11 +254,11 @@ const coreSdkConfig = getConfig({
   chainID: 3,
   basePath:  'https://api.ropsten.x.immutable.com',
 });
-const coreSdkWorkflows = new Workflows(coreSdkConfig);
+const immutableX = new ImmutableX(coreSdkConfig);
 
 // Registers the user
 const walletConnection = { l1Signer, l2Signer };
-await coreSdkWorkflows.registerOffchain(walletConnection);
+await immutableX.registerOffchain(walletConnection);
 ```
 
 The workflow can be found in the [workflows directory](src/workflows/).

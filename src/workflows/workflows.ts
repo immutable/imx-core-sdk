@@ -54,7 +54,7 @@ import {
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
 
-export class Workflows {
+export class ImmutableX {
   private readonly depositsApi: DepositsApi;
   private readonly encodingApi: EncodingApi;
   private readonly mintsApi: MintsApi;
