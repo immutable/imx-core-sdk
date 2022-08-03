@@ -208,6 +208,13 @@
             "in": "query"
           },
           {
+            "enum": [
+              "\"name\"",
+              "\"address\"",
+              "\"project_id\"",
+              "\"created_at\"",
+              "\"updated_at\""
+            ],
             "type": "string",
             "description": "Property to sort by",
             "name": "order_by",
@@ -864,13 +871,13 @@
           {
             "type": "string",
             "description": "Minimum timestamp for this mint, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "updated_min_timestamp",
+            "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
             "description": "Maximum timestamp for this mint, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "updated_max_timestamp",
+            "name": "max_timestamp",
             "in": "query"
           },
           {
@@ -1066,7 +1073,7 @@
           },
           {
             "type": "string",
-            "description": "Comma separated string of token addresses of the asset this order buys",
+            "description": "Token address of the asset this order buys",
             "name": "buy_token_address",
             "in": "query"
           },
@@ -1114,7 +1121,7 @@
           },
           {
             "type": "string",
-            "description": "Comma separated string of token addresses of the asset this order sells",
+            "description": "Token address of the asset this order sells",
             "name": "sell_token_address",
             "in": "query"
           },
@@ -1188,13 +1195,15 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "description": "create an order",
@@ -1277,20 +1286,22 @@
         "tags": [
           "orders"
         ],
-        "summary": "cancel an order",
+        "summary": "Cancel an order",
         "operationId": "cancelOrder",
         "parameters": [
           {
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "description": "cancel an order",
@@ -1506,6 +1517,9 @@
     "/v1/signable-deposit-details": {
       "post": {
         "description": "Gets details of a signable deposit",
+        "consumes": [
+          "application/json"
+        ],
         "produces": [
           "application/json"
         ],
@@ -1754,37 +1768,43 @@
         "parameters": [
           {
             "type": "string",
-            "description": "Party A's sell token type",
+            "description": "Party A's (buy order) order id",
+            "name": "party_a_order_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Party A's (buy order) token type of currency used to buy",
             "name": "party_a_token_type",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Party A's sell token address",
+            "description": "Party A's (buy order) token address of currency used to buy",
             "name": "party_a_token_address",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Party A's sell token id",
-            "name": "party_a_token_id",
+            "description": "Party B's (sell order) order id",
+            "name": "party_b_order_id",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Party B's sell token type",
+            "description": "Party B's (sell order) token type of NFT sold - always ERC721",
             "name": "party_b_token_type",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Party B's sell token address",
+            "description": "Party B's (sell order) collection address of NFT sold",
             "name": "party_b_token_address",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Party B's sell token id",
+            "description": "Party B's (sell order) token id of NFT sold",
             "name": "party_b_token_id",
             "in": "query"
           },
@@ -1852,13 +1872,15 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "description": "create a trade",
@@ -1935,6 +1957,13 @@
             "in": "query"
           },
           {
+            "enum": [
+              "transaction_id",
+              "updated_at",
+              "created_at",
+              "sender_ether_key",
+              "receiver_ether_key"
+            ],
             "type": "string",
             "description": "Property to sort by",
             "name": "order_by",
@@ -2056,13 +2085,15 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "description": "Create transfer",
@@ -2333,13 +2364,15 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "description": "create a withdrawal",
@@ -2564,13 +2597,15 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
             "description": "Create transfer",
@@ -2742,7 +2777,7 @@
           "x-nullable": true
         },
         "orders": {
-          "description": "Open orders for this asset",
+          "description": "[DEPRECATED] Open orders for this asset will always return empty. Use GET /orders",
           "$ref": "#/definitions/OrderDetails"
         },
         "status": {
@@ -2786,6 +2821,95 @@
         },
         "name": {
           "description": "Name of this asset",
+          "type": "string"
+        }
+      }
+    },
+    "AssetWithOrders": {
+      "type": "object",
+      "required": [
+        "collection",
+        "created_at",
+        "description",
+        "image_url",
+        "metadata",
+        "name",
+        "status",
+        "token_address",
+        "token_id",
+        "updated_at",
+        "uri",
+        "user"
+      ],
+      "properties": {
+        "collection": {
+          "description": "Information about the collection to which this asset belongs",
+          "$ref": "#/definitions/CollectionDetails"
+        },
+        "created_at": {
+          "description": "Timestamp of when the asset was created",
+          "type": "string",
+          "x-nullable": true
+        },
+        "description": {
+          "description": "Description of this asset",
+          "type": "string",
+          "x-nullable": true
+        },
+        "fees": {
+          "description": "Royalties to pay on this asset operations",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Fee"
+          }
+        },
+        "id": {
+          "description": "[DEPRECATED] Internal Immutable X Token ID",
+          "type": "string"
+        },
+        "image_url": {
+          "description": "URL of the image which should be used for this asset",
+          "type": "string",
+          "x-nullable": true
+        },
+        "metadata": {
+          "description": "Metadata of this asset",
+          "type": "object",
+          "x-nullable": true
+        },
+        "name": {
+          "description": "Name of this asset",
+          "type": "string",
+          "x-nullable": true
+        },
+        "orders": {
+          "description": "Open orders for this asset",
+          "$ref": "#/definitions/OrderDetails"
+        },
+        "status": {
+          "description": "Status of this asset (where it is in the system)",
+          "type": "string"
+        },
+        "token_address": {
+          "description": "Address of the ERC721 contract",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "ERC721 Token ID of this asset",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the asset was updated",
+          "type": "string",
+          "x-nullable": true
+        },
+        "uri": {
+          "description": "URI to access this asset externally to Immutable X",
+          "type": "string",
+          "x-nullable": true
+        },
+        "user": {
+          "description": "Ethereum address of the user who owns this asset",
           "type": "string"
         }
       }
@@ -3164,7 +3288,7 @@
           }
         },
         "include_fees": {
-          "description": "Whether to include fees in trade",
+          "description": "[deprecated] All orders include fees since the introduction of protocol fees",
           "type": "boolean"
         },
         "nonce": {
@@ -4148,7 +4272,7 @@
           "description": "Assets matching query parameters",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Asset"
+            "$ref": "#/definitions/AssetWithOrders"
           }
         }
       }
@@ -5021,11 +5145,11 @@
       ],
       "properties": {
         "a": {
-          "description": "Side A of this trade",
+          "description": "Side A of this trade (the buy order)",
           "$ref": "#/definitions/TradeSide"
         },
         "b": {
-          "description": "Side B of this trade",
+          "description": "Side B of this trade (the sell order)",
           "$ref": "#/definitions/TradeSide"
         },
         "status": {

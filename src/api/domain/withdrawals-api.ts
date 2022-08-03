@@ -41,13 +41,17 @@ export const WithdrawalsApiAxiosParamCreator = function (configuration?: Configu
         /**
          * Creates a withdrawal
          * @summary Creates a withdrawal of a token
+         * @param {string} xImxEthAddress eth address
+         * @param {string} xImxEthSignature eth signature
          * @param {CreateWithdrawalRequest} createWithdrawalRequest create a withdrawal
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createWithdrawal: async (createWithdrawalRequest: CreateWithdrawalRequest, xImxEthAddress?: string, xImxEthSignature?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createWithdrawal: async (xImxEthAddress: string, xImxEthSignature: string, createWithdrawalRequest: CreateWithdrawalRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xImxEthAddress' is not null or undefined
+            assertParamExists('createWithdrawal', 'xImxEthAddress', xImxEthAddress)
+            // verify required parameter 'xImxEthSignature' is not null or undefined
+            assertParamExists('createWithdrawal', 'xImxEthSignature', xImxEthSignature)
             // verify required parameter 'createWithdrawalRequest' is not null or undefined
             assertParamExists('createWithdrawal', 'createWithdrawalRequest', createWithdrawalRequest)
             const localVarPath = `/v1/withdrawals`;
@@ -62,11 +66,11 @@ export const WithdrawalsApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xImxEthAddress !== undefined && xImxEthAddress !== null) {
+            if (xImxEthAddress != null) {
                 localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
             }
 
-            if (xImxEthSignature !== undefined && xImxEthSignature !== null) {
+            if (xImxEthSignature != null) {
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
             }
 
@@ -287,14 +291,14 @@ export const WithdrawalsApiFp = function(configuration?: Configuration) {
         /**
          * Creates a withdrawal
          * @summary Creates a withdrawal of a token
+         * @param {string} xImxEthAddress eth address
+         * @param {string} xImxEthSignature eth signature
          * @param {CreateWithdrawalRequest} createWithdrawalRequest create a withdrawal
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createWithdrawal(createWithdrawalRequest: CreateWithdrawalRequest, xImxEthAddress?: string, xImxEthSignature?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateWithdrawalResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createWithdrawal(createWithdrawalRequest, xImxEthAddress, xImxEthSignature, options);
+        async createWithdrawal(xImxEthAddress: string, xImxEthSignature: string, createWithdrawalRequest: CreateWithdrawalRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateWithdrawalResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createWithdrawal(xImxEthAddress, xImxEthSignature, createWithdrawalRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -360,14 +364,14 @@ export const WithdrawalsApiFactory = function (configuration?: Configuration, ba
         /**
          * Creates a withdrawal
          * @summary Creates a withdrawal of a token
+         * @param {string} xImxEthAddress eth address
+         * @param {string} xImxEthSignature eth signature
          * @param {CreateWithdrawalRequest} createWithdrawalRequest create a withdrawal
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createWithdrawal(createWithdrawalRequest: CreateWithdrawalRequest, xImxEthAddress?: string, xImxEthSignature?: string, options?: any): AxiosPromise<CreateWithdrawalResponse> {
-            return localVarFp.createWithdrawal(createWithdrawalRequest, xImxEthAddress, xImxEthSignature, options).then((request) => request(axios, basePath));
+        createWithdrawal(xImxEthAddress: string, xImxEthSignature: string, createWithdrawalRequest: CreateWithdrawalRequest, options?: any): AxiosPromise<CreateWithdrawalResponse> {
+            return localVarFp.createWithdrawal(xImxEthAddress, xImxEthSignature, createWithdrawalRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets details of a signable withdrawal
@@ -426,25 +430,25 @@ export const WithdrawalsApiFactory = function (configuration?: Configuration, ba
  */
 export interface WithdrawalsApiCreateWithdrawalRequest {
     /**
-     * create a withdrawal
-     * @type {CreateWithdrawalRequest}
-     * @memberof WithdrawalsApiCreateWithdrawal
-     */
-    readonly createWithdrawalRequest: CreateWithdrawalRequest
-
-    /**
      * eth address
      * @type {string}
      * @memberof WithdrawalsApiCreateWithdrawal
      */
-    readonly xImxEthAddress?: string
+    readonly xImxEthAddress: string
 
     /**
      * eth signature
      * @type {string}
      * @memberof WithdrawalsApiCreateWithdrawal
      */
-    readonly xImxEthSignature?: string
+    readonly xImxEthSignature: string
+
+    /**
+     * create a withdrawal
+     * @type {CreateWithdrawalRequest}
+     * @memberof WithdrawalsApiCreateWithdrawal
+     */
+    readonly createWithdrawalRequest: CreateWithdrawalRequest
 }
 
 /**
@@ -624,7 +628,7 @@ export class WithdrawalsApi extends BaseAPI {
      * @memberof WithdrawalsApi
      */
     public createWithdrawal(requestParameters: WithdrawalsApiCreateWithdrawalRequest, options?: AxiosRequestConfig) {
-        return WithdrawalsApiFp(this.configuration).createWithdrawal(requestParameters.createWithdrawalRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, options).then((request) => request(this.axios, this.basePath));
+        return WithdrawalsApiFp(this.configuration).createWithdrawal(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

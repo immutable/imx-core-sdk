@@ -64,11 +64,11 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (iMXSignature !== undefined && iMXSignature !== null) {
+            if (iMXSignature != null) {
                 localVarHeaderParameter['IMX-Signature'] = String(iMXSignature);
             }
 
-            if (iMXTimestamp !== undefined && iMXTimestamp !== null) {
+            if (iMXTimestamp != null) {
                 localVarHeaderParameter['IMX-Timestamp'] = String(iMXTimestamp);
             }
 
@@ -169,7 +169,7 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
          * @summary Get a list of collections
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {string} [orderBy] Property to sort by
+         * @param {'\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [blacklist] List of collections not to be included, separated by commas
          * @param {string} [whitelist] List of collections to be included, separated by commas
@@ -177,7 +177,7 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listCollections: async (pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listCollections: async (pageSize?: number, cursor?: string, orderBy?: '\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"', direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/collections`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -261,11 +261,11 @@ export const CollectionsApiAxiosParamCreator = function (configuration?: Configu
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (iMXSignature !== undefined && iMXSignature !== null) {
+            if (iMXSignature != null) {
                 localVarHeaderParameter['IMX-Signature'] = String(iMXSignature);
             }
 
-            if (iMXTimestamp !== undefined && iMXTimestamp !== null) {
+            if (iMXTimestamp != null) {
                 localVarHeaderParameter['IMX-Timestamp'] = String(iMXTimestamp);
             }
 
@@ -335,7 +335,7 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
          * @summary Get a list of collections
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {string} [orderBy] Property to sort by
+         * @param {'\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [blacklist] List of collections not to be included, separated by commas
          * @param {string} [whitelist] List of collections to be included, separated by commas
@@ -343,7 +343,7 @@ export const CollectionsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListCollectionsResponse>> {
+        async listCollections(pageSize?: number, cursor?: string, orderBy?: '\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"', direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListCollectionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listCollections(pageSize, cursor, orderBy, direction, blacklist, whitelist, keyword, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -410,7 +410,7 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
          * @summary Get a list of collections
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {string} [orderBy] Property to sort by
+         * @param {'\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [blacklist] List of collections not to be included, separated by commas
          * @param {string} [whitelist] List of collections to be included, separated by commas
@@ -418,7 +418,7 @@ export const CollectionsApiFactory = function (configuration?: Configuration, ba
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listCollections(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options?: any): AxiosPromise<ListCollectionsResponse> {
+        listCollections(pageSize?: number, cursor?: string, orderBy?: '\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"', direction?: string, blacklist?: string, whitelist?: string, keyword?: string, options?: any): AxiosPromise<ListCollectionsResponse> {
             return localVarFp.listCollections(pageSize, cursor, orderBy, direction, blacklist, whitelist, keyword, options).then((request) => request(axios, basePath));
         },
         /**
@@ -529,10 +529,10 @@ export interface CollectionsApiListCollectionsRequest {
 
     /**
      * Property to sort by
-     * @type {string}
+     * @type {'\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"'}
      * @memberof CollectionsApiListCollections
      */
-    readonly orderBy?: string
+    readonly orderBy?: '\"name\"' | '\"address\"' | '\"project_id\"' | '\"created_at\"' | '\"updated_at\"'
 
     /**
      * Direction to sort (asc/desc)
