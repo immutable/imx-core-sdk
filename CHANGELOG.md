@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- [BREAKING CHANGE] Withdrawal workflow interfaces simplified to remove `data` object
+
+  Affected workflows:
+  - `prepareWithdrawal`
+  - `completeEthWithdrawal`
+  - `completeERC20Withdrawal`
+  - `completeERC721Withdrawal`
+  - `completeWithdrawal`
+- Fixed typo in function name `completeERC20WithdrawalWorfklow`
+
 ## [0.7.0] - 2022-08-03
 
 ### Added

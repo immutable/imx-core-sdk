@@ -46,7 +46,7 @@ import {
 } from './deposit';
 import { getBurnWorkflow, burnWorkflow } from './burn';
 import {
-  completeERC20WithdrawalWorfklow,
+  completeERC20WithdrawalWorkflow,
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
@@ -260,7 +260,7 @@ export class Workflows {
   ) {
     await this.validateChain(signer);
 
-    return completeERC20WithdrawalWorfklow(
+    return completeERC20WithdrawalWorkflow(
       signer,
       starkPublicKey,
       token,

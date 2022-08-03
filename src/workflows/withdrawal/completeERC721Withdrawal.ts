@@ -189,8 +189,8 @@ async function completeERC721Withdrawal(
     TokenType.ERC721,
     encodingApi,
     {
-      token_id: token.data.tokenId,
-      token_address: token.data.tokenAddress,
+      token_id: token.tokenId,
+      token_address: token.tokenAddress,
     },
   );
 
@@ -214,7 +214,7 @@ async function completeERC721Withdrawal(
       signer,
       assetType.asset_type,
       starkPublicKey,
-      token.data.tokenId,
+      token.tokenId,
       registrationContract,
       usersApi,
     );
@@ -223,7 +223,7 @@ async function completeERC721Withdrawal(
       signer,
       assetType.asset_type,
       starkPublicKey,
-      token.data.tokenId,
+      token.tokenId,
       coreContract,
     );
   }
@@ -238,8 +238,8 @@ export async function completeERC721WithdrawalWorkflow(
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
-  const tokenAddress = token.data.tokenAddress;
-  const tokenId = token.data.tokenId;
+  const tokenAddress = token.tokenAddress;
+  const tokenId = token.tokenId;
   return await mintsApi
     .getMintableTokenDetailsByClientTokenId({
       tokenAddress,
