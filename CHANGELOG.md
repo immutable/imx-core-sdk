@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added on all workflow methods a chain check comparing the current connected wallet chain versus the chain informed on setup phase
+
 ### Changed
 
 - [listMints](https://docs.x.immutable.com/reference#/operations/listMints) endpoint accepts `max_timestamp`, `min_timestamp` instead of `updated_max_timestamp`, `updated_min_timestamp` respectively
