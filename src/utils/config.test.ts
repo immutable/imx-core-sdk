@@ -51,13 +51,15 @@ describe('getConfig', () => {
       },
     };
 
-    const actual = getConfig({
-      coreContractAddress,
-      registrationContractAddress,
-      chainID,
-      basePath,
-      headers: customHeaders,
-    });
+    const actual = getConfig(
+      {
+        coreContractAddress,
+        registrationContractAddress,
+        chainID,
+        basePath,
+      },
+      customHeaders,
+    );
     expect(actual).toEqual(expected);
   });
 });
