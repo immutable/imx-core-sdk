@@ -1,8 +1,8 @@
 import {
-  getAccountPath,
   getKeyPairFromPath,
   generateStarkWalletFromSignedMessage,
 } from './stark-key';
+import starkwareCrypto from '@starkware-industries/starkware-crypto-utils';
 
 const layer = 'starkex';
 const application = 'starkdeployement';
@@ -14,7 +14,7 @@ const ethAddress = '0xa4864d977b944315389d1765ffa7e66F74ee8cd7';
 describe('Key derivation', () => {
   it('should derive key from mnemonic and eth-address correctly', () => {
     const index = '0';
-    const path = getAccountPath(layer, application, ethAddress, index);
+    const path = starkwareCrypto.keyDerivation.getAccountPath(layer, application, ethAddress, index);
     const keyPair = getKeyPairFromPath(seed, path);
     expect(keyPair.getPrivate('hex')).toEqual(
       '06cf0a8bf113352eb863157a45c5e5567abb34f8d32cddafd2c22aa803f4892c',
