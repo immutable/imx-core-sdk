@@ -62,11 +62,11 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (iMXSignature != null) {
+            if (iMXSignature !== undefined && iMXSignature !== null) {
                 localVarHeaderParameter['IMX-Signature'] = String(iMXSignature);
             }
 
-            if (iMXTimestamp != null) {
+            if (iMXTimestamp !== undefined && iMXTimestamp !== null) {
                 localVarHeaderParameter['IMX-Timestamp'] = String(iMXTimestamp);
             }
 
@@ -113,11 +113,11 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (iMXSignature != null) {
+            if (iMXSignature !== undefined && iMXSignature !== null) {
                 localVarHeaderParameter['IMX-Signature'] = String(iMXSignature);
             }
 
-            if (iMXTimestamp != null) {
+            if (iMXTimestamp !== undefined && iMXTimestamp !== null) {
                 localVarHeaderParameter['IMX-Timestamp'] = String(iMXTimestamp);
             }
 
@@ -177,11 +177,11 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['direction'] = direction;
             }
 
-            if (iMXSignature != null) {
+            if (iMXSignature !== undefined && iMXSignature !== null) {
                 localVarHeaderParameter['IMX-Signature'] = String(iMXSignature);
             }
 
-            if (iMXTimestamp != null) {
+            if (iMXTimestamp !== undefined && iMXTimestamp !== null) {
                 localVarHeaderParameter['IMX-Timestamp'] = String(iMXTimestamp);
             }
 

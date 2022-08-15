@@ -78,11 +78,11 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xImxEthAddress != null) {
+            if (xImxEthAddress !== undefined && xImxEthAddress !== null) {
                 localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
             }
 
-            if (xImxEthSignature != null) {
+            if (xImxEthSignature !== undefined && xImxEthSignature !== null) {
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
             }
 
@@ -128,11 +128,11 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            if (xImxEthAddress != null) {
+            if (xImxEthAddress !== undefined && xImxEthAddress !== null) {
                 localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
             }
 
-            if (xImxEthSignature != null) {
+            if (xImxEthSignature !== undefined && xImxEthSignature !== null) {
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
             }
 
