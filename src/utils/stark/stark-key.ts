@@ -8,7 +8,6 @@ import * as encUtils from 'enc-utils';
 import { ec } from 'elliptic';
 import { splitSignature } from '@ethersproject/bytes';
 import { Signer } from '@ethersproject/abstract-signer';
-import { StarkWallet } from '../../types';
 
 const DEFAULT_SIGNATURE_MESSAGE =
   'Only sign this request if you’ve initiated an action with Immutable X.';
@@ -89,14 +88,14 @@ export function getXCoordinate(publicKey: string): string {
   return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
 }
 
-function getStarkPublicKey(keyPair: ec.KeyPair): string {
+export function getStarkPublicKey(keyPair: ec.KeyPair): string {
   return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
 }
 
-export async function generateStarkWalletFromSignedMessage(
+export async function generateStarkKeyPairFromSignedMessage(
   ethAddress: string,
   signature: string,
-): Promise<StarkWallet> {
+): Promise<Ec.KeyPair> {
   const path = getAccountPath(
     DEFAULT_ACCOUNT_LAYER,
     DEFAULT_ACCOUNT_APPLICATION,
@@ -104,18 +103,13 @@ export async function generateStarkWalletFromSignedMessage(
     DEFAULT_ACCOUNT_INDEX,
   );
   const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
-  const starkPublicKey = getStarkPublicKey(keyPair);
-  return {
-    path,
-    starkPublicKey,
-    starkKeyPair: keyPair,
-  };
+  return keyPair;
 }
 
-export async function generateStarkWallet(
+export async function generateStarkKeyPair(
   signer: Signer,
-): Promise<StarkWallet> {
+): Promise<Ec.KeyPair> {
   const ethAddress = (await signer.getAddress()).toLowerCase();
   const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
-  return generateStarkWalletFromSignedMessage(ethAddress, signature);
+  return generateStarkKeyPairFromSignedMessage(ethAddress, signature);
 }

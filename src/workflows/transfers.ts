@@ -18,8 +18,8 @@ type BatchTransfersWorkflowParams = WalletConnection & {
 };
 
 export async function transfersWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   transfersApi,
 }: TransfersWorkflowParams): Promise<CreateTransferResponseV1> {
@@ -35,11 +35,11 @@ export async function transfersWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await l2Signer.signMessage(payloadHash);
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
-  const ethAddress = await l1Signer.getAddress();
+  const ethAddress = await ethSigner.getAddress();
 
   const transferSigningParams = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -69,8 +69,8 @@ export async function transfersWorkflow({
 }
 
 export async function batchTransfersWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   transfersApi,
 }: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
@@ -87,13 +87,13 @@ export async function batchTransfersWorkflow({
     throw new Error('Invalid response from Signable registration offchain');
   }
 
-  const ethAddress = await l1Signer.getAddress();
+  const ethAddress = await ethSigner.getAddress();
 
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
   const requests = [];
   for (const resp of signableResult.data.signable_responses) {
-    const starkSignature = await l2Signer.signMessage(resp.payload_hash);
+    const starkSignature = await starkSigner.signMessage(resp.payload_hash);
     const req = {
       sender_vault_id: resp.sender_vault_id,
       receiver_stark_key: resp.receiver_stark_key,

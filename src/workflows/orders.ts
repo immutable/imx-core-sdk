@@ -18,8 +18,8 @@ type CancelOrderWorkflowParams = WalletConnection & {
 };
 
 export async function createOrderWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   ordersApi,
 }: CreateOrderWorkflowParams) {
@@ -30,11 +30,11 @@ export async function createOrderWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableOrderResponse.data;
 
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await l2Signer.signMessage(payloadHash);
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
-  const ethAddress = await l1Signer.getAddress();
+  const ethAddress = await ethSigner.getAddress();
 
   const resp = getSignableOrderResponse.data;
 
@@ -65,8 +65,8 @@ export async function createOrderWorkflow({
 }
 
 export async function cancelOrderWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   ordersApi,
 }: CancelOrderWorkflowParams) {
@@ -81,11 +81,11 @@ export async function cancelOrderWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableCancelOrderResponse.data;
 
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await l2Signer.signMessage(payloadHash);
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
-  const ethAddress = await l1Signer.getAddress();
+  const ethAddress = await ethSigner.getAddress();
 
   const cancelOrderResponse = await ordersApi.cancelOrder({
     id: request.order_id.toString(),

@@ -1,4 +1,3 @@
-import { ec } from 'elliptic';
 import {
   MintRequest,
   GetSignableTransferRequestV1,
@@ -6,24 +5,24 @@ import {
   Configuration as APIConfiguration,
 } from '../api';
 import { GetSignableBurnRequest } from '../workflows/types';
-import { Signer as L1Signer } from '@ethersproject/abstract-signer';
+import { Signer as EthSigner } from '@ethersproject/abstract-signer';
 
-export { L1Signer };
+export { EthSigner };
 
-export interface L2Signer {
+export interface StarkSigner {
   signMessage(message: string): Promise<string>;
   getAddress(): string | Promise<string>;
 }
 
-export interface StarkWallet {
-  path: string;
-  starkPublicKey: string;
-  starkKeyPair: ec.KeyPair;
-}
+// export interface StarkWallet {
+//   path: string;
+//   starkPublicKey: string;
+//   starkKeyPair: ec.KeyPair;
+// }
 
 export interface WalletConnection {
-  l1Signer: L1Signer;
-  l2Signer: L2Signer;
+  ethSigner: EthSigner;
+  starkSigner: StarkSigner;
 }
 
 export interface L1Configuration {

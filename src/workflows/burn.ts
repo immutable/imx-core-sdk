@@ -15,8 +15,8 @@ type burnWorkflowParams = WalletConnection & {
 };
 
 export async function burnWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   transfersApi,
 }: burnWorkflowParams): Promise<CreateTransferResponseV1> {
@@ -28,8 +28,8 @@ export async function burnWorkflow({
   };
 
   return transfersWorkflow({
-    l1Signer,
-    l2Signer,
+    ethSigner,
+    starkSigner,
     request: transferRequest,
     transfersApi,
   });

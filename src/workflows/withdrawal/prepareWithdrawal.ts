@@ -17,15 +17,15 @@ type PrepareWithdrawalWorkflowParams = PrepareWithdrawalRequest &
   };
 
 export async function prepareWithdrawalWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   token,
   quantity,
   withdrawalsApi,
 }: PrepareWithdrawalWorkflowParams): Promise<CreateWithdrawalResponse> {
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
-      user: await l1Signer.getAddress(),
+      user: await ethSigner.getAddress(),
       token: convertToSignableRequestFormat(token),
       amount: quantity.toString(),
     },
@@ -34,11 +34,11 @@ export async function prepareWithdrawalWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableWithdrawalResult.data;
 
-  const starkSignature = await l2Signer.signMessage(payloadHash);
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
   const { ethAddress, ethSignature } = await signMessage(
     signableMessage,
-    l1Signer,
+    ethSigner,
   );
 
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({

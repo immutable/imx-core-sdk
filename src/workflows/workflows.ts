@@ -8,7 +8,6 @@ import {
   TokensApi,
   UsersApi,
   TransfersApi,
-  TransfersApiGetTransferRequest,
   WithdrawalsApi,
   GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
@@ -44,7 +43,7 @@ import {
   depositERC721Workflow,
   depositEthWorkflow,
 } from './deposit';
-import { getBurnWorkflow, burnWorkflow } from './burn';
+import { burnWorkflow } from './burn';
 import {
   completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
@@ -92,7 +91,7 @@ export class Workflows {
   }
 
   public async registerOffchain(walletConnection: WalletConnection) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return registerOffchainWorkflow({
       ...walletConnection,
@@ -101,14 +100,14 @@ export class Workflows {
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     const registrationContract = Registration__factory.connect(
       this.config.l1Configuration.registrationContractAddress,
-      walletConnection.l1Signer,
+      walletConnection.ethSigner,
     );
 
-    const l2Address = await walletConnection.l2Signer.getAddress();
+    const l2Address = await walletConnection.starkSigner.getAddress();
 
     return isRegisteredOnChainWorkflow(l2Address, registrationContract);
   }
@@ -123,7 +122,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return transfersWorkflow({
       ...walletConnection,
@@ -136,7 +135,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedBatchNftTransferRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return batchTransfersWorkflow({
       ...walletConnection,
@@ -149,17 +148,13 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedBurnRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return burnWorkflow({
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
     });
-  }
-
-  public async getBurn(request: TransfersApiGetTransferRequest) {
-    return getBurnWorkflow(request, this.transfersApi);
   }
 
   public async deposit(signer: Signer, deposit: TokenDeposit) {
@@ -173,7 +168,7 @@ export class Workflows {
     }
   }
 
-  public async depositEth(signer: Signer, deposit: ETHDeposit) {
+  private async depositEth(signer: Signer, deposit: ETHDeposit) {
     await this.validateChain(signer);
 
     return depositEthWorkflow(
@@ -186,7 +181,7 @@ export class Workflows {
     );
   }
 
-  public async depositERC20(signer: Signer, deposit: ERC20Deposit) {
+  private async depositERC20(signer: Signer, deposit: ERC20Deposit) {
     await this.validateChain(signer);
 
     return depositERC20Workflow(
@@ -200,7 +195,7 @@ export class Workflows {
     );
   }
 
-  public async depositERC721(signer: Signer, deposit: ERC721Deposit) {
+  private async depositERC721(signer: Signer, deposit: ERC721Deposit) {
     await this.validateChain(signer);
 
     return depositERC721Workflow(
@@ -217,7 +212,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: PrepareWithdrawalRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return prepareWithdrawalWorkflow({
       ...walletConnection,
@@ -241,7 +236,7 @@ export class Workflows {
     }
   }
 
-  public async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+  private async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
     await this.validateChain(signer);
 
     return completeEthWithdrawalWorkflow(
@@ -253,7 +248,7 @@ export class Workflows {
     );
   }
 
-  public async completeERC20Withdrawal(
+  private async completeERC20Withdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: ERC20Withdrawal,
@@ -270,7 +265,7 @@ export class Workflows {
     );
   }
 
-  public async completeERC721Withdrawal(
+  private async completeERC721Withdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: ERC721Withdrawal,
@@ -292,7 +287,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableOrderRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return createOrderWorkflow({
       ...walletConnection,
@@ -305,7 +300,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return cancelOrderWorkflow({
       ...walletConnection,
@@ -318,7 +313,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return createTradeWorkflow({
       ...walletConnection,
