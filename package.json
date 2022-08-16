@@ -4,7 +4,7 @@
   "description": "Immutable Core SDK",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/immutable/imx-core-sdk.git"
@@ -71,6 +71,7 @@
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-node-externals": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-visualizer": "^5.7.1",
     "ts-jest": "^28.0.5",
     "tsc-files": "^1.1.3",
     "typechain": "^8.1.0",
