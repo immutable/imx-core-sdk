@@ -1,3 +1,4 @@
+import { ec } from 'elliptic';
 import { Signer } from '@ethersproject/abstract-signer';
 import {
   AssetsApi,
@@ -134,6 +135,7 @@ export class ImxClient {
   ) {
     return this.workflows.createOrder(walletConnection, request);
   }
+
   public cancelOrder(
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
@@ -151,13 +153,29 @@ export class ImxClient {
   /**
    * Util Methods
    */
-  // TODO
+  public createStarkSigner(keyPair: ec.KeyPair) {
+    return createStarkSigner(keyPair);
+  }
+
+  public generateStarkKeyPair(signer: Signer) {
+    return generateStarkKeyPair(signer);
+  }
+
+  public generateStarkKeyPairFromSignedMessage(
+    ethAddress: string,
+    signature: string,
+  ) {
+    return generateStarkKeyPairFromSignedMessage(ethAddress, signature);
+  }
+
+  public getKeyPair(privateKey: string) {
+    return getKeyPair(privateKey);
+  }
 
   /**
    * API Methods
    */
   // TODO
-
 }
 
 // export const IMXClientFactory = (config: ImmutableXConfiguration) => {
