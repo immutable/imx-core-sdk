@@ -31,7 +31,9 @@
     "typecheck-staged": "tsc-files --noEmit",
     "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
     "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docs:class-docs": "yarn typedoc --out docsClientClass --excludePrivate  src/IMXClientClass.ts",
+    "serve:class-docs": "http-server -c-1 ./docsClient"
   },
   "lint-staged": {
     "src/**/*.ts": "yarn run lint-fix",
@@ -63,6 +65,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "hardhat": "^2.9.9",
+    "http-server": "^14.1.1",
     "husky": "^8.0.0",
     "jest": "^28.1.1",
     "lint-staged": "^13.0.3",
