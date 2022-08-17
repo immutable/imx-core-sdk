@@ -3,5 +3,5 @@ export * as Contracts from './exportcontracts';
 export * as Utils from './exportutils';
 export * from './workflows';
 export * from './types';
-export { IMXClientFactory } from './IMXClient';
-export { ImxClient } from './IMXClientClass';
+export { IMXClientFactory } from './IMXClientFactory';
+export { IMXClientClass } from './IMXClientClass';

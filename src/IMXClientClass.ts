@@ -2,56 +2,6 @@ import { AxiosRequestConfig } from 'axios';
 import { ec } from 'elliptic';
 import { Signer } from '@ethersproject/abstract-signer';
 import {
-  AssetsApi,
-  BalancesApi,
-  CollectionsApi,
-  DepositsApi,
-  MetadataApi,
-  MintsApi,
-  OrdersApi,
-  ProjectsApi,
-  TokensApi,
-  TradesApi,
-  TransfersApi,
-  UsersApi,
-  WithdrawalsApi,
-  // AssetsApiGetAssetRequest,
-  // AssetsApiListAssetsRequest,
-  // BalancesApiGetBalanceRequest,
-  // BalancesApiListBalancesRequest,
-  // CollectionsApiCreateCollectionRequest,
-  // CollectionsApiGetCollectionRequest,
-  // CollectionsApiListCollectionFiltersRequest,
-  // CollectionsApiListCollectionsRequest,
-  // CollectionsApiUpdateCollectionRequest,
-  // DepositsApiGetDepositRequest,
-  // DepositsApiListDepositsRequest,
-  GetSignableTransferRequestV1,
-  GetSignableTransferRequest,
-  GetSignableOrderRequest,
-  GetSignableCancelOrderRequest,
-  GetSignableTradeRequest,
-  // MetadataApiAddMetadataSchemaToCollectionRequest,
-  // MetadataApiGetMetadataSchemaRequest,
-  // MetadataApiUpdateMetadataSchemaByNameRequest,
-  // MintsApiGetMintRequest,
-  // MintsApiListMintsRequest,
-  // OrdersApiGetOrderRequest,
-  // OrdersApiListOrdersRequest,
-  // ProjectsApiCreateProjectRequest,
-  // ProjectsApiGetProjectRequest,
-  // ProjectsApiGetProjectsRequest,
-  // TokensApiGetTokenRequest,
-  // TokensApiListTokensRequest,
-  // TradesApiGetTradeRequest,
-  // TradesApiListTradesRequest,
-  // TransfersApiGetTransferRequest,
-  // TransfersApiListTransfersRequest,
-  // UsersApiGetUsersRequest,
-  // WithdrawalsApiListWithdrawalsRequest,
-  // WithdrawalsApiGetWithdrawalRequest,
-} from './api';
-import {
   ImmutableXConfiguration,
   WalletConnection,
   UnsignedMintRequest,
@@ -67,52 +17,11 @@ import {
   generateStarkKeyPairFromSignedMessage,
   getKeyPair,
 } from './exportutils';
-
-export * from './types';
-// export * from './api';
-export * from './api/models';
-
-import {
-  AssetsApiGetAssetRequest,
-  AssetsApiListAssetsRequest,
-  BalancesApiGetBalanceRequest,
-  BalancesApiListBalancesRequest,
-  CollectionsApiCreateCollectionRequest,
-  CollectionsApiGetCollectionRequest,
-  CollectionsApiListCollectionFiltersRequest,
-  CollectionsApiListCollectionsRequest,
-  CollectionsApiUpdateCollectionRequest,
-  DepositsApiGetDepositRequest,
-  DepositsApiListDepositsRequest,
-  // GetSignableTransferRequestV1,
-  // GetSignableTransferRequest,
-  // GetSignableOrderRequest,
-  // GetSignableCancelOrderRequest,
-  // GetSignableTradeRequest,
-  MetadataApiAddMetadataSchemaToCollectionRequest,
-  MetadataApiGetMetadataSchemaRequest,
-  MetadataApiUpdateMetadataSchemaByNameRequest,
-  MintsApiGetMintRequest,
-  MintsApiListMintsRequest,
-  OrdersApiGetOrderRequest,
-  OrdersApiListOrdersRequest,
-  ProjectsApiCreateProjectRequest,
-  ProjectsApiGetProjectRequest,
-  ProjectsApiGetProjectsRequest,
-  TokensApiGetTokenRequest,
-  TokensApiListTokensRequest,
-  TradesApiGetTradeRequest,
-  TradesApiListTradesRequest,
-  TransfersApiGetTransferRequest,
-  TransfersApiListTransfersRequest,
-  UsersApiGetUsersRequest,
-  WithdrawalsApiListWithdrawalsRequest,
-  WithdrawalsApiGetWithdrawalRequest,
-} from './api';
+import * as API from './api';
 
 export type AxiosOptions = AxiosRequestConfig<any> | undefined;
 
-export class ImxClient {
+export class IMXClientClass {
   private depositsApi;
   private mintsApi;
   private ordersApi;
@@ -129,19 +38,19 @@ export class ImxClient {
   private workflows;
 
   constructor(config: ImmutableXConfiguration) {
-    this.depositsApi = new DepositsApi(config.apiConfiguration);
-    this.mintsApi = new MintsApi(config.apiConfiguration);
-    this.ordersApi = new OrdersApi(config.apiConfiguration);
-    this.tokensApi = new TokensApi(config.apiConfiguration);
-    this.tradesApi = new TradesApi(config.apiConfiguration);
-    this.transfersApi = new TransfersApi(config.apiConfiguration);
-    this.usersApi = new UsersApi(config.apiConfiguration);
-    this.withdrawalsApi = new WithdrawalsApi(config.apiConfiguration);
-    this.balanceApi = new BalancesApi(config.apiConfiguration);
-    this.assetApi = new AssetsApi(config.apiConfiguration);
-    this.collectionApi = new CollectionsApi(config.apiConfiguration);
-    this.metadataApi = new MetadataApi(config.apiConfiguration);
-    this.projectsApi = new ProjectsApi(config.apiConfiguration);
+    this.depositsApi = new API.DepositsApi(config.apiConfiguration);
+    this.mintsApi = new API.MintsApi(config.apiConfiguration);
+    this.ordersApi = new API.OrdersApi(config.apiConfiguration);
+    this.tokensApi = new API.TokensApi(config.apiConfiguration);
+    this.tradesApi = new API.TradesApi(config.apiConfiguration);
+    this.transfersApi = new API.TransfersApi(config.apiConfiguration);
+    this.usersApi = new API.UsersApi(config.apiConfiguration);
+    this.withdrawalsApi = new API.WithdrawalsApi(config.apiConfiguration);
+    this.balanceApi = new API.BalancesApi(config.apiConfiguration);
+    this.assetApi = new API.AssetsApi(config.apiConfiguration);
+    this.collectionApi = new API.CollectionsApi(config.apiConfiguration);
+    this.metadataApi = new API.MetadataApi(config.apiConfiguration);
+    this.projectsApi = new API.ProjectsApi(config.apiConfiguration);
     this.workflows = new Workflows(config);
   }
 
@@ -169,14 +78,14 @@ export class ImxClient {
 
   public transfer(
     walletConnection: WalletConnection,
-    request: GetSignableTransferRequestV1,
+    request: API.GetSignableTransferRequestV1,
   ) {
     return this.workflows.transfer(walletConnection, request);
   }
 
   public batchNftTransfer(
     walletConnection: WalletConnection,
-    request: GetSignableTransferRequest,
+    request: API.GetSignableTransferRequest,
   ) {
     return this.workflows.batchNftTransfer(walletConnection, request);
   }
@@ -202,21 +111,21 @@ export class ImxClient {
 
   public createOrder(
     walletConnection: WalletConnection,
-    request: GetSignableOrderRequest,
+    request: API.GetSignableOrderRequest,
   ) {
     return this.workflows.createOrder(walletConnection, request);
   }
 
   public cancelOrder(
     walletConnection: WalletConnection,
-    request: GetSignableCancelOrderRequest,
+    request: API.GetSignableCancelOrderRequest,
   ) {
     return this.workflows.cancelOrder(walletConnection, request);
   }
 
   public createTrade(
     walletConnection: WalletConnection,
-    request: GetSignableTradeRequest,
+    request: API.GetSignableTradeRequest,
   ) {
     return this.workflows.createTrade(walletConnection, request);
   }
@@ -248,14 +157,14 @@ export class ImxClient {
    */
   // Assets
   public getAsset(
-    requestParameters: AssetsApiGetAssetRequest,
+    requestParameters: API.AssetsApiGetAssetRequest,
     options?: AxiosOptions,
   ) {
     return this.assetApi.getAsset(requestParameters, options);
   }
 
   public listAsset(
-    requestParameters?: AssetsApiListAssetsRequest,
+    requestParameters?: API.AssetsApiListAssetsRequest,
     options?: AxiosOptions,
   ) {
     return this.assetApi.listAssets(requestParameters, options);
@@ -263,35 +172,35 @@ export class ImxClient {
 
   // Collections
   public createCollection(
-    requestParameters: CollectionsApiCreateCollectionRequest,
+    requestParameters: API.CollectionsApiCreateCollectionRequest,
     options?: AxiosOptions,
   ) {
     return this.collectionApi.createCollection(requestParameters, options);
   }
 
   public getCollection(
-    requestParameters: CollectionsApiGetCollectionRequest,
+    requestParameters: API.CollectionsApiGetCollectionRequest,
     options?: AxiosOptions,
   ) {
     return this.collectionApi.getCollection(requestParameters, options);
   }
 
   public listCollectionFilters(
-    requestParameters: CollectionsApiListCollectionFiltersRequest,
+    requestParameters: API.CollectionsApiListCollectionFiltersRequest,
     options?: AxiosOptions,
   ) {
     return this.collectionApi.listCollectionFilters(requestParameters, options);
   }
 
   public listCollections(
-    requestParameters?: CollectionsApiListCollectionsRequest,
+    requestParameters?: API.CollectionsApiListCollectionsRequest,
     options?: AxiosOptions,
   ) {
     return this.collectionApi.listCollections(requestParameters, options);
   }
 
   public updateCollection(
-    requestParameters: CollectionsApiUpdateCollectionRequest,
+    requestParameters: API.CollectionsApiUpdateCollectionRequest,
     options?: AxiosOptions,
   ) {
     return this.collectionApi.updateCollection(requestParameters, options);
@@ -299,7 +208,7 @@ export class ImxClient {
 
   // Metadata
   public addMetadataSchemaToCollection(
-    requestParameters: MetadataApiAddMetadataSchemaToCollectionRequest,
+    requestParameters: API.MetadataApiAddMetadataSchemaToCollectionRequest,
     options?: AxiosOptions,
   ) {
     return this.metadataApi.addMetadataSchemaToCollection(
@@ -309,14 +218,14 @@ export class ImxClient {
   }
 
   public getMetadataSchema(
-    requestParameters: MetadataApiGetMetadataSchemaRequest,
+    requestParameters: API.MetadataApiGetMetadataSchemaRequest,
     options?: AxiosOptions,
   ) {
     return this.metadataApi.getMetadataSchema(requestParameters, options);
   }
 
   public updateMetadataSchemaByName(
-    requestParameters: MetadataApiUpdateMetadataSchemaByNameRequest,
+    requestParameters: API.MetadataApiUpdateMetadataSchemaByNameRequest,
     options?: AxiosOptions,
   ) {
     return this.metadataApi.updateMetadataSchemaByName(
@@ -327,21 +236,21 @@ export class ImxClient {
 
   // Projects
   public createProject(
-    requestParameters: ProjectsApiCreateProjectRequest,
+    requestParameters: API.ProjectsApiCreateProjectRequest,
     options?: AxiosOptions,
   ) {
     return this.projectsApi.createProject(requestParameters, options);
   }
 
   public getProject(
-    requestParameters: ProjectsApiGetProjectRequest,
+    requestParameters: API.ProjectsApiGetProjectRequest,
     options?: AxiosOptions,
   ) {
     return this.projectsApi.getProject(requestParameters, options);
   }
 
   public getProjects(
-    requestParameters: ProjectsApiGetProjectsRequest,
+    requestParameters: API.ProjectsApiGetProjectsRequest,
     options?: AxiosOptions,
   ) {
     return this.projectsApi.getProjects(requestParameters, options);
@@ -349,14 +258,14 @@ export class ImxClient {
 
   // Balance
   public getBalance(
-    requestParameters: BalancesApiGetBalanceRequest,
+    requestParameters: API.BalancesApiGetBalanceRequest,
     options?: AxiosOptions,
   ) {
     return this.balanceApi.getBalance(requestParameters, options);
   }
 
   public listBalances(
-    requestParameters: BalancesApiListBalancesRequest,
+    requestParameters: API.BalancesApiListBalancesRequest,
     options?: AxiosOptions,
   ) {
     return this.balanceApi.listBalances(requestParameters, options);
@@ -364,14 +273,14 @@ export class ImxClient {
 
   // Deposits
   public getDeposit(
-    requestParameters: DepositsApiGetDepositRequest,
+    requestParameters: API.DepositsApiGetDepositRequest,
     options?: AxiosOptions,
   ) {
     return this.depositsApi.getDeposit(requestParameters, options);
   }
 
   public listDeposits(
-    requestParameters?: DepositsApiListDepositsRequest,
+    requestParameters?: API.DepositsApiListDepositsRequest,
     options?: AxiosOptions,
   ) {
     return this.depositsApi.listDeposits(requestParameters, options);
@@ -379,14 +288,14 @@ export class ImxClient {
 
   // MintsApi
   public getMint(
-    requestParameters: MintsApiGetMintRequest,
+    requestParameters: API.MintsApiGetMintRequest,
     options?: AxiosOptions,
   ) {
     return this.mintsApi.getMint(requestParameters, options);
   }
 
   public listMints(
-    requestParameters?: MintsApiListMintsRequest,
+    requestParameters?: API.MintsApiListMintsRequest,
     options?: AxiosOptions,
   ) {
     return this.mintsApi.listMints(requestParameters, options);
@@ -394,14 +303,14 @@ export class ImxClient {
 
   // Withdrawal
   public listWithdrawals(
-    requestParameters?: WithdrawalsApiListWithdrawalsRequest,
+    requestParameters?: API.WithdrawalsApiListWithdrawalsRequest,
     options?: AxiosOptions,
   ) {
     return this.withdrawalsApi.listWithdrawals(requestParameters, options);
   }
 
   public getWithdrawal(
-    requestParameters: WithdrawalsApiGetWithdrawalRequest,
+    requestParameters: API.WithdrawalsApiGetWithdrawalRequest,
     options?: AxiosOptions,
   ) {
     return this.withdrawalsApi.getWithdrawal(requestParameters, options);
@@ -409,7 +318,7 @@ export class ImxClient {
 
   // Users
   public getUsers(
-    requestParameters: UsersApiGetUsersRequest,
+    requestParameters: API.UsersApiGetUsersRequest,
     options?: AxiosOptions,
   ) {
     return this.usersApi.getUsers(requestParameters, options);
@@ -417,14 +326,14 @@ export class ImxClient {
 
   // Order
   public getOrder(
-    requestParameters: OrdersApiGetOrderRequest,
+    requestParameters: API.OrdersApiGetOrderRequest,
     options?: AxiosOptions,
   ) {
     return this.ordersApi.getOrder(requestParameters, options);
   }
 
   public listOrders(
-    requestParameters?: OrdersApiListOrdersRequest,
+    requestParameters?: API.OrdersApiListOrdersRequest,
     options?: AxiosOptions,
   ) {
     return this.ordersApi.listOrders(requestParameters, options);
@@ -432,14 +341,14 @@ export class ImxClient {
 
   // Trades
   public getTrade(
-    requestParameters: TradesApiGetTradeRequest,
+    requestParameters: API.TradesApiGetTradeRequest,
     options?: AxiosOptions,
   ) {
     return this.tradesApi.getTrade(requestParameters, options);
   }
 
   public listTrades(
-    requestParameters?: TradesApiListTradesRequest,
+    requestParameters?: API.TradesApiListTradesRequest,
     options?: AxiosOptions,
   ) {
     return this.tradesApi.listTrades(requestParameters, options);
@@ -447,14 +356,14 @@ export class ImxClient {
 
   // Tokens
   public getToken(
-    requestParameters: TokensApiGetTokenRequest,
+    requestParameters: API.TokensApiGetTokenRequest,
     options?: AxiosOptions,
   ) {
     return this.tokensApi.getToken(requestParameters, options);
   }
 
   public listTokens(
-    requestParameters?: TokensApiListTokensRequest,
+    requestParameters?: API.TokensApiListTokensRequest,
     options?: AxiosOptions,
   ) {
     return this.tokensApi.listTokens(requestParameters, options);
@@ -462,14 +371,14 @@ export class ImxClient {
 
   // Transfers
   public getTransfer(
-    requestParameters: TransfersApiGetTransferRequest,
+    requestParameters: API.TransfersApiGetTransferRequest,
     options?: AxiosOptions,
   ) {
     return this.transfersApi.getTransfer(requestParameters, options);
   }
 
   public listTransfers(
-    requestParameters?: TransfersApiListTransfersRequest,
+    requestParameters?: API.TransfersApiListTransfersRequest,
     options?: AxiosOptions,
   ) {
     return this.transfersApi.listTransfers(requestParameters, options);
