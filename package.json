@@ -13,7 +13,11 @@
     "immutable"
   ],
   "files": [
-    "dist"
+    "dist/index.d.ts",
+    "dist/index.es.js",
+    "dist/index.es.js.map",
+    "dist/index.cjs.js",
+    "dist/index.cjs.js.map"
   ],
   "author": "Immutable",
   "license": "Apache-2.0",
@@ -32,8 +36,8 @@
     "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
     "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
     "prepare": "husky install",
-    "docs:class-docs": "yarn typedoc --out docsClientClass --excludePrivate  src/IMXClientClass.ts",
-    "serve:class-docs": "http-server -c-1 ./docsClient"
+    "docs:build": "yarn typedoc --entryPoints ./src/IMXClientClass.ts ./src/IMXClientFactory.ts ./src/index.ts --excludePrivate",
+    "docs:serve": "http-server -c-1 ./docs"
   },
   "lint-staged": {
     "src/**/*.ts": "yarn run lint-fix",
