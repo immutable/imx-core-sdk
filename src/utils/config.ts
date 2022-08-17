@@ -4,7 +4,7 @@ import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
-interface Environment extends L1Configuration {
+export interface Environment extends L1Configuration {
   basePath: string;
   headers?: Record<string, string>;
 }
