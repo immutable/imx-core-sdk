@@ -6,7 +6,7 @@ export interface ETHWithdrawal {
   type: TokenType.ETH;
 }
 
-interface ETHPrepareWithdrawal {
+export interface ETHPrepareWithdrawal {
   type: TokenType.ETH;
   data: {
     decimals: number

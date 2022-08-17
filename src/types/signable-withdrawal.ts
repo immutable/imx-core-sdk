@@ -1,33 +1,38 @@
 import { TokenPrepareWithdrawal } from './withdrawal';
 import { TokenType } from './token';
 
-interface SignableWithdrawalERC20 {
+export interface SignableWithdrawalERC20 {
   type: TokenType.ERC20;
   data: {
     token_address: string;
-    decimals: number,
+    decimals: number;
   };
 }
 
-interface SignableWithdrawalERC721 {
+export interface SignableWithdrawalERC721 {
   type: TokenType.ERC721;
   data: {
-    token_id: string,
+    token_id: string;
     token_address: string;
   };
 }
 
-type SignableWithdrawalEth = {
-  type: TokenType.ETH,
+export type SignableWithdrawalEth = {
+  type: TokenType.ETH;
   data: {
-    decimals: number,
-  }
-}
+    decimals: number;
+  };
+};
 
-type SignableWithdrawalToken = SignableWithdrawalEth | SignableWithdrawalERC721 | SignableWithdrawalERC20
+export type SignableWithdrawalToken =
+  | SignableWithdrawalEth
+  | SignableWithdrawalERC721
+  | SignableWithdrawalERC20;
 
 //SignableWithdrawal endpoint requires fields in snake_case format
-export function convertToSignableRequestFormat(token: TokenPrepareWithdrawal): SignableWithdrawalToken {
+export function convertToSignableRequestFormat(
+  token: TokenPrepareWithdrawal,
+): SignableWithdrawalToken {
   if (token.type === TokenType.ERC721) {
     return {
       type: TokenType.ERC721,
@@ -35,7 +40,7 @@ export function convertToSignableRequestFormat(token: TokenPrepareWithdrawal): S
         token_id: token.data.tokenId,
         token_address: token.data.tokenAddress,
       },
-    }
+    };
   }
   if (token.type === TokenType.ERC20) {
     return {
@@ -44,7 +49,7 @@ export function convertToSignableRequestFormat(token: TokenPrepareWithdrawal): S
         decimals: token.data.decimals,
         token_address: token.data.tokenAddress,
       },
-    }
+    };
   }
   return token;
 }
