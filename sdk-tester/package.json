@@ -1,0 +1,14 @@
+{
+  "name": "sdk-tester",
+  "version": "1.0.0",
+  "description": "SDK testing app",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@imtbl/core-sdk": "file:.yalc/@imtbl/core-sdk",
+    "ts-node": "^10.9.1"
+  }
+}
