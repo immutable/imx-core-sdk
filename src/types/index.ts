@@ -45,3 +45,4 @@ export * from './deposit';
 export * from './withdrawal';
 export * from './token';
 export * from './signable-withdrawal';
+export * from './burn';
