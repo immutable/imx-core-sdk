@@ -17,14 +17,26 @@
 /**
  * 
  * @export
- * @interface CreateTransferResponse
+ * @interface APIError
  */
-export interface CreateTransferResponse {
+export interface APIError {
     /**
-     * List of transfer IDs
-     * @type {Array<number>}
-     * @memberof CreateTransferResponse
+     * The error code
+     * @type {string}
+     * @memberof APIError
      */
-    'transfer_ids': Array<number>;
+    'code': string;
+    /**
+     * The error details
+     * @type {string}
+     * @memberof APIError
+     */
+    'details'?: string;
+    /**
+     * The error message
+     * @type {string}
+     * @memberof APIError
+     */
+    'message': string;
 }
 

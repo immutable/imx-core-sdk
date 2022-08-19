@@ -9,7 +9,7 @@
       "name": "Immutable API Support",
       "email": "support@immutable.com"
     },
-    "version": "0.1"
+    "version": "3.0"
   },
   "host": "api.ropsten.x.immutable.com",
   "basePath": "/",
@@ -133,6 +133,18 @@
             "schema": {
               "$ref": "#/definitions/ListAssetsResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -179,6 +191,18 @@
             "schema": {
               "$ref": "#/definitions/Asset"
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -209,11 +233,11 @@
           },
           {
             "enum": [
-              "\"name\"",
-              "\"address\"",
-              "\"project_id\"",
-              "\"created_at\"",
-              "\"updated_at\""
+              "name",
+              "address",
+              "project_id",
+              "created_at",
+              "updated_at"
             ],
             "type": "string",
             "description": "Property to sort by",
@@ -250,6 +274,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/ListCollectionsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -312,6 +348,30 @@
                 "description": "The amount of collections remaining for current four-week window."
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -341,6 +401,12 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Collection"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -395,6 +461,36 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Collection"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -471,6 +567,18 @@
                 "$ref": "#/definitions/MetadataSchemaProperty"
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       },
@@ -524,6 +632,36 @@
             "description": "Created",
             "schema": {
               "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -587,6 +725,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -816,6 +978,18 @@
             "schema": {
               "$ref": "#/definitions/MintableTokenDetails"
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -845,6 +1019,12 @@
             "in": "query"
           },
           {
+            "enum": [
+              "transaction_id",
+              "token_id",
+              "created_at",
+              "updated_at"
+            ],
             "type": "string",
             "description": "Property to sort by",
             "name": "order_by",
@@ -935,6 +1115,18 @@
             "schema": {
               "$ref": "#/definitions/ListMintsResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -964,6 +1156,24 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Mint"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -1336,6 +1546,9 @@
         "consumes": [
           "application/json"
         ],
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "projects"
         ],
@@ -1387,12 +1600,39 @@
             "schema": {
               "$ref": "#/definitions/GetProjectsResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       },
       "post": {
         "description": "Create a project",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "tags": [
@@ -1431,6 +1671,30 @@
             "schema": {
               "$ref": "#/definitions/CreateProjectResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -1439,6 +1703,9 @@
       "get": {
         "description": "Get a project",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "tags": [
@@ -1474,6 +1741,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -1580,6 +1871,18 @@
             "schema": {
               "$ref": "#/definitions/GetSignableRegistrationResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -1614,6 +1917,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetSignableRegistrationOffchainResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -1768,12 +2083,6 @@
         "parameters": [
           {
             "type": "string",
-            "description": "Party A's (buy order) order id",
-            "name": "party_a_order_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
             "description": "Party A's (buy order) token type of currency used to buy",
             "name": "party_a_token_type",
             "in": "query"
@@ -1782,12 +2091,6 @@
             "type": "string",
             "description": "Party A's (buy order) token address of currency used to buy",
             "name": "party_a_token_address",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Party B's (sell order) order id",
-            "name": "party_b_order_id",
             "in": "query"
           },
           {
@@ -2064,6 +2367,18 @@
             "schema": {
               "$ref": "#/definitions/ListTransfersResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       },
@@ -2111,6 +2426,30 @@
             "schema": {
               "$ref": "#/definitions/CreateTransferResponseV1"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -2143,6 +2482,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Transfer"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2179,6 +2530,18 @@
             "schema": {
               "$ref": "#/definitions/RegisterUserResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -2211,6 +2574,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetUsersApiResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2539,6 +2914,30 @@
                 "description": "The amount of mints remaining for current four-week window."
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -2573,6 +2972,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetSignableTransferResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2622,6 +3045,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/CreateTransferResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2699,6 +3146,27 @@
     }
   },
   "definitions": {
+    "APIError": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "description": "The error code",
+          "type": "string"
+        },
+        "details": {
+          "description": "The error details",
+          "type": "string"
+        },
+        "message": {
+          "description": "The error message",
+          "type": "string"
+        }
+      }
+    },
     "AddMetadataSchemaToCollectionRequest": {
       "type": "object",
       "required": [

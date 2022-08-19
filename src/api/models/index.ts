@@ -1,3 +1,4 @@
+export * from './apierror';
 export * from './add-metadata-schema-to-collection-request';
 export * from './asset';
 export * from './asset-properties';
