@@ -88,7 +88,7 @@ export async function depositERC721Workflow(
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC721__factory.connect(deposit.tokenAddress, signer);
   const approveTransaction = await tokenContract.populateTransaction.approve(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     deposit.tokenId,
   );
   await signer.sendTransaction(approveTransaction);
@@ -125,12 +125,12 @@ export async function depositERC721Workflow(
   const vaultId = signableDepositResult.data.vault_id;
 
   const coreContract = Core__factory.connect(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.l1Configuration.registrationContractAddress,
+    config.ethConfiguration.registrationContractAddress,
     signer,
   );
 

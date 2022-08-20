@@ -36,7 +36,7 @@
     "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
     "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
     "prepare": "husky install",
-    "docs:build": "yarn typedoc --cleanOutputDir --entryPoints ./src/ImmutableX.ts ./src/index.ts --excludePrivate --excludeProtected",
+    "docs:build": "yarn typedoc --cleanOutputDir ./src/ImmutableX.ts ./src/index.ts --excludePrivate --excludeProtected",
     "docs:serve": "http-server -c-1 ./docs"
   },
   "lint-staged": {

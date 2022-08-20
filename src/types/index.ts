@@ -14,18 +14,12 @@ export interface StarkSigner {
   getAddress(): string | Promise<string>;
 }
 
-// export interface StarkWallet {
-//   path: string;
-//   starkPublicKey: string;
-//   starkKeyPair: ec.KeyPair;
-// }
-
 export interface WalletConnection {
   ethSigner: EthSigner;
   starkSigner: StarkSigner;
 }
 
-export interface L1Configuration {
+export interface EthConfiguration {
   coreContractAddress: string;
   registrationContractAddress: string;
   chainID: number;
@@ -33,7 +27,7 @@ export interface L1Configuration {
 
 export interface ImmutableXConfiguration {
   apiConfiguration: APIConfiguration;
-  l1Configuration: L1Configuration;
+  ethConfiguration: EthConfiguration;
 }
 
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;

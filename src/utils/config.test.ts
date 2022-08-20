@@ -44,7 +44,7 @@ describe('createConfig', () => {
           headers: { 'x-custom-headers': 'x values', ...defaultHeaders },
         },
       }),
-      l1Configuration: {
+      ethConfiguration: {
         chainID,
         coreContractAddress,
         registrationContractAddress,

@@ -1,10 +1,10 @@
 import { Configuration, ConfigurationParameters } from '../api';
-import { ImmutableXConfiguration, L1Configuration } from '../types';
+import { ImmutableXConfiguration, EthConfiguration } from '../types';
 import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
-export interface Environment extends L1Configuration {
+export interface Environment extends EthConfiguration {
   basePath: string;
   headers?: Record<string, string>;
 }
@@ -28,7 +28,7 @@ const createConfig = ({
 
   return {
     apiConfiguration: new Configuration(apiConfigOptions),
-    l1Configuration: {
+    ethConfiguration: {
       coreContractAddress,
       registrationContractAddress,
       chainID,
