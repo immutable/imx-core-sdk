@@ -36,7 +36,7 @@
     "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
     "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
     "prepare": "husky install",
-    "docs:build": "yarn typedoc --cleanOutputDir --entryPoints ./src/IMXClientClass.ts ./src/index.ts --excludePrivate --excludeProtected",
+    "docs:build": "yarn typedoc --cleanOutputDir --entryPoints ./src/ImmutableX.ts ./src/index.ts --excludePrivate --excludeProtected",
     "docs:serve": "http-server -c-1 ./docs"
   },
   "lint-staged": {
@@ -89,6 +89,7 @@
     "@ethersproject/providers": "^5.6.4",
     "@ethersproject/units": "^5.6.1",
     "@ethersproject/wallet": "^5.6.2",
+    "@imtbl/core-sdk": "file:.yalc/@imtbl/core-sdk",
     "axios": "^0.26.1",
     "bn.js": "^5.2.0",
     "dts-bundle-generator": "^6.12.0",
