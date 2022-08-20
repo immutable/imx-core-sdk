@@ -89,7 +89,6 @@
     "@ethersproject/providers": "^5.6.4",
     "@ethersproject/units": "^5.6.1",
     "@ethersproject/wallet": "^5.6.2",
-    "@imtbl/core-sdk": "file:.yalc/@imtbl/core-sdk",
     "axios": "^0.26.1",
     "bn.js": "^5.2.0",
     "dts-bundle-generator": "^6.12.0",

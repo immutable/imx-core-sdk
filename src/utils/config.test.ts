@@ -1,14 +1,14 @@
-import { getConfig } from './config';
+import { Config } from './config';
 import { version } from '../../package.json';
 import { ImmutableXConfiguration } from '../types';
 import { Configuration } from '../api';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
-describe('getConfig', () => {
+describe('createConfig', () => {
   it('should throw if basePath is whitespace', () => {
     expect(() =>
-      getConfig({
+      Config.createConfig({
         coreContractAddress: '0x1',
         registrationContractAddress: '0x2',
         chainID: 3,
@@ -19,7 +19,7 @@ describe('getConfig', () => {
 
   it('should throw if basePath is empty', () => {
     expect(() =>
-      getConfig({
+      Config.createConfig({
         coreContractAddress: '0x1',
         registrationContractAddress: '0x2',
         chainID: 3,
@@ -51,7 +51,7 @@ describe('getConfig', () => {
       },
     };
 
-    const actual = getConfig({
+    const actual = Config.createConfig({
       coreContractAddress,
       registrationContractAddress,
       chainID,
