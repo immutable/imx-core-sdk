@@ -1,5 +1,6 @@
 export {
-  generateStarkKeyPair,
+  BaseSigner,
+  generateStarkWallet,
   generateStarkKeyPairFromSignedMessage,
   getKeyPair,
   createStarkSigner,
