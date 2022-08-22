@@ -5,7 +5,7 @@ import {
   GetSignableTransferRequest,
   Configuration as APIConfiguration,
 } from '../api';
-import { GetSignableBurnRequest } from '../workflows/types';
+import { GetSignableBurnRequest } from './transfer';
 import { Signer as EthSigner } from '@ethersproject/abstract-signer';
 
 export { EthSigner };
@@ -48,3 +48,4 @@ export * from './deposit';
 export * from './withdrawal';
 export * from './token';
 export * from './signable-withdrawal';
+export * from './transfer';
