@@ -13,7 +13,6 @@ import { GetSignableBurnRequest } from './workflows/types';
 import { Workflows } from './workflows';
 import {
   createStarkSigner,
-  generateStarkKeyPair,
   generateStarkKeyPairFromSignedMessage,
   getKeyPair,
 } from './exportutils';
@@ -135,10 +134,6 @@ export class IMXClientClass {
    */
   public createStarkSigner(keyPair: ec.KeyPair) {
     return createStarkSigner(keyPair);
-  }
-
-  public generateStarkKeyPair(signer: Signer) {
-    return generateStarkKeyPair(signer);
   }
 
   public generateStarkKeyPairFromSignedMessage(

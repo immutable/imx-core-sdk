@@ -1,3 +1,4 @@
+import { ec } from 'elliptic';
 import {
   MintRequest,
   GetSignableTransferRequestV1,
@@ -14,11 +15,13 @@ export interface StarkSigner {
   getAddress(): string | Promise<string>;
 }
 
-// export interface StarkWallet {
-//   path: string;
-//   starkPublicKey: string;
-//   starkKeyPair: ec.KeyPair;
-// }
+export type L2Signer = StarkSigner;
+
+export interface StarkWallet {
+  path: string;
+  starkPublicKey: string;
+  starkKeyPair: ec.KeyPair;
+}
 
 export interface WalletConnection {
   ethSigner: EthSigner;
