@@ -1,15 +1,15 @@
 import { Configuration, ConfigurationParameters } from '../api';
-import { ImmutableXConfiguration, L1Configuration } from '../types';
+import { ImmutableXConfiguration, EthConfiguration } from '../types';
 import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
-export interface Environment extends L1Configuration {
+export interface Environment extends EthConfiguration {
   basePath: string;
   headers?: Record<string, string>;
 }
 
-export const getConfig = ({
+const createConfig = ({
   coreContractAddress,
   registrationContractAddress,
   chainID,
@@ -28,7 +28,7 @@ export const getConfig = ({
 
   return {
     apiConfiguration: new Configuration(apiConfigOptions),
-    l1Configuration: {
+    ethConfiguration: {
       coreContractAddress,
       registrationContractAddress,
       chainID,
@@ -38,7 +38,7 @@ export const getConfig = ({
 
 export const Config = {
   get production() {
-    return getConfig({
+    return createConfig({
       basePath: 'https://api.ropsten.x.immutable.com',
       chainID: 3,
       coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
@@ -47,7 +47,7 @@ export const Config = {
   },
 
   get sandbox() {
-    return getConfig({
+    return createConfig({
       basePath: 'https://api.ropsten.x.immutable.com',
       chainID: 3,
       coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
@@ -55,5 +55,5 @@ export const Config = {
     });
   },
 
-  creatConfig: getConfig,
+  createConfig: createConfig,
 };
