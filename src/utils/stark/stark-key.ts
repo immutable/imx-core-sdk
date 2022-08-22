@@ -93,20 +93,6 @@ export function getStarkPublicKey(keyPair: ec.KeyPair): string {
   return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
 }
 
-export async function generateStarkKeyPairFromSignedMessage(
-  ethAddress: string,
-  signature: string,
-): Promise<Ec.KeyPair> {
-  const path = getAccountPath(
-    DEFAULT_ACCOUNT_LAYER,
-    DEFAULT_ACCOUNT_APPLICATION,
-    ethAddress,
-    DEFAULT_ACCOUNT_INDEX,
-  );
-  const keyPair = getKeyPairFromPath(splitSignature(signature).s, path);
-  return keyPair;
-}
-
 export async function generateStarkWalletFromSignedMessage(
   ethAddress: string,
   signature: string,
