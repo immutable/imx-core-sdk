@@ -4,7 +4,7 @@ import {
   CreateTransferResponseV1,
 } from '../api';
 import { WalletConnection, UnsignedTransferRequest } from '../types';
-import { GetSignableBurnRequest } from './types';
+import { GetSignableBurnRequest } from '../types';
 import { transfersWorkflow } from './transfers';
 
 const BurnEthAddress = '0x0000000000000000000000000000000000000000';
