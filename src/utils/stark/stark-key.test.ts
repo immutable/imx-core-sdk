@@ -2,7 +2,7 @@ import { createStarkSigner } from './base-signer';
 import {
   getAccountPath,
   getKeyPairFromPath,
-  generateStarkKeyPairFromSignedMessage,
+  generateStarkWalletFromSignedMessage,
 } from './stark-key';
 
 const layer = 'starkex';
@@ -28,12 +28,12 @@ describe('generateStarkWalletFromSignedMessage', () => {
     '0x6d1550458c7a9a1257d73adbcf0fabc12f4497e970d9fa62dd88bf7d9e12719148c96225c1402d8707fd061b1aae2222bdf13571dfc82b3aa9974039f247f2b81b';
 
   it('should generate stark wallet correctly', async () => {
-    const kp = await generateStarkKeyPairFromSignedMessage(
+    const kp = await generateStarkWalletFromSignedMessage(
       ethAddress,
       signature,
     );
-    const signer = createStarkSigner(kp);
-    const starkPublicKey = signer.getAddress();
+    const signer = createStarkSigner(kp.starkKeyPair);
+    const starkPublicKey = signer;
     expect(starkPublicKey).toEqual(
       '0x035919acd61e97b3ecdc75ff8beed8d1803f7ea3cad2937926ae59cc3f8070d4',
     );
