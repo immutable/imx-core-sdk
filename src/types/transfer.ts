@@ -1,7 +1,6 @@
 import { SignableToken } from '../api';
 
 /**
- *
  * @export
  * @interface GetSignableBurnRequest
  */
