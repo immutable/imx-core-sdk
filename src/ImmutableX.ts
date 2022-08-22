@@ -6,8 +6,8 @@ import {
   TokenDeposit,
   TokenWithdrawal,
   EthSigner,
+  GetSignableBurnRequest,
 } from './types';
-import { GetSignableBurnRequest } from './workflows/types';
 import { Workflows } from './workflows';
 import * as API from './api';
 import { generateIMXAuthorisationHeaders } from './utils';
@@ -46,7 +46,22 @@ export class ImmutableX {
   }
 
   /**
-   * Workflow Methods
+   * Deposits
+   */
+  public deposit(signer: EthSigner, deposit: TokenDeposit) {
+    return this.workflows.deposit(signer, deposit);
+  }
+
+  public getDeposit(requestParameters: API.DepositsApiGetDepositRequest) {
+    return this.depositsApi.getDeposit(requestParameters);
+  }
+
+  public listDeposits(requestParameters?: API.DepositsApiListDepositsRequest) {
+    return this.depositsApi.listDeposits(requestParameters);
+  }
+
+  /**
+   * Registration
    */
   public registerOffchain(walletConnection: WalletConnection) {
     return this.workflows.registerOffchain(walletConnection);
@@ -56,75 +71,9 @@ export class ImmutableX {
     return this.workflows.isRegisteredOnchain(walletConnection);
   }
 
-  public mint(signer: EthSigner, request: UnsignedMintRequest) {
-    return this.workflows.mint(signer, request);
-  }
-
-  public burn(
-    walletConnection: WalletConnection,
-    request: GetSignableBurnRequest,
-  ) {
-    return this.workflows.burn(walletConnection, request);
-  }
-
-  public transfer(
-    walletConnection: WalletConnection,
-    request: API.GetSignableTransferRequestV1,
-  ) {
-    return this.workflows.transfer(walletConnection, request);
-  }
-
-  public batchNftTransfer(
-    walletConnection: WalletConnection,
-    request: API.GetSignableTransferRequest,
-  ) {
-    return this.workflows.batchNftTransfer(walletConnection, request);
-  }
-
-  public prepareWithdrawal(
-    walletConnection: WalletConnection,
-    request: PrepareWithdrawalRequest,
-  ) {
-    return this.workflows.prepareWithdrawal(walletConnection, request);
-  }
-
-  public deposit(signer: EthSigner, deposit: TokenDeposit) {
-    return this.workflows.deposit(signer, deposit);
-  }
-
-  public completeWithdrawal(
-    signer: EthSigner,
-    starkPublicKey: string,
-    token: TokenWithdrawal,
-  ) {
-    return this.workflows.completeWithdrawal(signer, starkPublicKey, token);
-  }
-
-  public createOrder(
-    walletConnection: WalletConnection,
-    request: API.GetSignableOrderRequest,
-  ) {
-    return this.workflows.createOrder(walletConnection, request);
-  }
-
-  public cancelOrder(
-    walletConnection: WalletConnection,
-    request: API.GetSignableCancelOrderRequest,
-  ) {
-    return this.workflows.cancelOrder(walletConnection, request);
-  }
-
-  public createTrade(
-    walletConnection: WalletConnection,
-    request: API.GetSignableTradeRequest,
-  ) {
-    return this.workflows.createTrade(walletConnection, request);
-  }
-
   /**
-   * API Methods
+   * Assets
    */
-  // Assets
   public getAsset(requestParameters: API.AssetsApiGetAssetRequest) {
     return this.assetApi.getAsset(requestParameters);
   }
@@ -133,7 +82,9 @@ export class ImmutableX {
     return this.assetApi.listAssets(requestParameters);
   }
 
-  // Collections
+  /**
+   * Collections
+   */
   public createCollection(
     requestParameters: API.CollectionsApiCreateCollectionRequest,
   ) {
@@ -164,7 +115,9 @@ export class ImmutableX {
     return this.collectionApi.updateCollection(requestParameters);
   }
 
-  // Metadata
+  /**
+   * /metadata
+   */
   public addMetadataSchemaToCollection(
     requestParameters: API.MetadataApiAddMetadataSchemaToCollectionRequest,
   ) {
@@ -183,7 +136,9 @@ export class ImmutableX {
     return this.metadataApi.updateMetadataSchemaByName(requestParameters);
   }
 
-  // Projects
+  /**
+   * Projects
+   */
   // Alternative createProject & getProject that handle auth headers internally.
   // WHY:
   // - hides the unnecessary complexity around generating IMX signature from the user
@@ -231,7 +186,9 @@ export class ImmutableX {
     });
   }
 
-  // Balance
+  /**
+   * Balances
+   */
   public getBalance(requestParameters: API.BalancesApiGetBalanceRequest) {
     return this.balanceApi.getBalance(requestParameters);
   }
@@ -240,16 +197,9 @@ export class ImmutableX {
     return this.balanceApi.listBalances(requestParameters);
   }
 
-  // Deposits
-  public getDeposit(requestParameters: API.DepositsApiGetDepositRequest) {
-    return this.depositsApi.getDeposit(requestParameters);
-  }
-
-  public listDeposits(requestParameters?: API.DepositsApiListDepositsRequest) {
-    return this.depositsApi.listDeposits(requestParameters);
-  }
-
-  // MintsApi
+  /**
+   * Mints
+   */
   public getMint(requestParameters: API.MintsApiGetMintRequest) {
     return this.mintsApi.getMint(requestParameters);
   }
@@ -258,7 +208,13 @@ export class ImmutableX {
     return this.mintsApi.listMints(requestParameters);
   }
 
-  // Withdrawal
+  public mint(signer: EthSigner, request: UnsignedMintRequest) {
+    return this.workflows.mint(signer, request);
+  }
+
+  /**
+   * Withdrawal
+   */
   public listWithdrawals(
     requestParameters?: API.WithdrawalsApiListWithdrawalsRequest,
   ) {
@@ -271,12 +227,31 @@ export class ImmutableX {
     return this.withdrawalsApi.getWithdrawal(requestParameters);
   }
 
-  // Users
+  public prepareWithdrawal(
+    walletConnection: WalletConnection,
+    request: PrepareWithdrawalRequest,
+  ) {
+    return this.workflows.prepareWithdrawal(walletConnection, request);
+  }
+
+  public completeWithdrawal(
+    signer: EthSigner,
+    starkPublicKey: string,
+    token: TokenWithdrawal,
+  ) {
+    return this.workflows.completeWithdrawal(signer, starkPublicKey, token);
+  }
+
+  /**
+   * Users
+   */
   public getUsers(requestParameters: API.UsersApiGetUsersRequest) {
     return this.usersApi.getUsers(requestParameters);
   }
 
-  // Order
+  /**
+   * Order
+   */
   public getOrder(requestParameters: API.OrdersApiGetOrderRequest) {
     return this.ordersApi.getOrder(requestParameters);
   }
@@ -285,7 +260,23 @@ export class ImmutableX {
     return this.ordersApi.listOrders(requestParameters);
   }
 
-  // Trades
+  public createOrder(
+    walletConnection: WalletConnection,
+    request: API.GetSignableOrderRequest,
+  ) {
+    return this.workflows.createOrder(walletConnection, request);
+  }
+
+  public cancelOrder(
+    walletConnection: WalletConnection,
+    request: API.GetSignableCancelOrderRequest,
+  ) {
+    return this.workflows.cancelOrder(walletConnection, request);
+  }
+
+  /**
+   * Trades
+   */
   public getTrade(requestParameters: API.TradesApiGetTradeRequest) {
     return this.tradesApi.getTrade(requestParameters);
   }
@@ -294,7 +285,16 @@ export class ImmutableX {
     return this.tradesApi.listTrades(requestParameters);
   }
 
-  // Tokens
+  public createTrade(
+    walletConnection: WalletConnection,
+    request: API.GetSignableTradeRequest,
+  ) {
+    return this.workflows.createTrade(walletConnection, request);
+  }
+
+  /**
+   * Tokens
+   */
   public getToken(requestParameters: API.TokensApiGetTokenRequest) {
     return this.tokensApi.getToken(requestParameters);
   }
@@ -303,7 +303,9 @@ export class ImmutableX {
     return this.tokensApi.listTokens(requestParameters);
   }
 
-  // Transfers
+  /**
+   * Transfers
+   */
   public getTransfer(requestParameters: API.TransfersApiGetTransferRequest) {
     return this.transfersApi.getTransfer(requestParameters);
   }
@@ -312,5 +314,26 @@ export class ImmutableX {
     requestParameters?: API.TransfersApiListTransfersRequest,
   ) {
     return this.transfersApi.listTransfers(requestParameters);
+  }
+
+  public transfer(
+    walletConnection: WalletConnection,
+    request: API.GetSignableTransferRequestV1,
+  ) {
+    return this.workflows.transfer(walletConnection, request);
+  }
+
+  public batchNftTransfer(
+    walletConnection: WalletConnection,
+    request: API.GetSignableTransferRequest,
+  ) {
+    return this.workflows.batchNftTransfer(walletConnection, request);
+  }
+
+  public burn(
+    walletConnection: WalletConnection,
+    request: GetSignableBurnRequest,
+  ) {
+    return this.workflows.burn(walletConnection, request);
   }
 }
