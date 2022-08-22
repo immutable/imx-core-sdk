@@ -65,7 +65,7 @@ export class Workflows {
   private readonly withdrawalsApi: WithdrawalsApi;
 
   private isChainValid(chainID: number) {
-    return chainID === this.config.l1Configuration.chainID;
+    return chainID === this.config.ethConfiguration.chainID;
   }
 
   constructor(protected config: ImmutableXConfiguration) {
@@ -103,7 +103,7 @@ export class Workflows {
     await this.validateChain(walletConnection.ethSigner);
 
     const registrationContract = Registration__factory.connect(
-      this.config.l1Configuration.registrationContractAddress,
+      this.config.ethConfiguration.registrationContractAddress,
       walletConnection.ethSigner,
     );
 

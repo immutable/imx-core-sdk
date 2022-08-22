@@ -28,7 +28,7 @@ export interface WalletConnection {
   starkSigner: StarkSigner;
 }
 
-export interface L1Configuration {
+export interface EthConfiguration {
   coreContractAddress: string;
   registrationContractAddress: string;
   chainID: number;
@@ -36,7 +36,7 @@ export interface L1Configuration {
 
 export interface ImmutableXConfiguration {
   apiConfiguration: APIConfiguration;
-  l1Configuration: L1Configuration;
+  ethConfiguration: EthConfiguration;
 }
 
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;

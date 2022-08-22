@@ -82,6 +82,23 @@ export async function signRaw(
   return serializeEthSignature(signature);
 }
 
+type IMXAuthorisationHeaders = {
+  timestamp: string;
+  signature: string;
+};
+
+export async function generateIMXAuthorisationHeaders(
+  ethSigner: Signer,
+): Promise<IMXAuthorisationHeaders> {
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const signature = await signRaw(timestamp, ethSigner);
+
+  return {
+    timestamp,
+    signature,
+  };
+}
+
 export async function signMessage(
   message: string,
   signer: Signer,

@@ -90,9 +90,7 @@ export function getXCoordinate(publicKey: string): string {
 }
 
 export function getStarkPublicKey(keyPair: ec.KeyPair): string {
-  return encUtils.sanitizeHex(
-    getXCoordinate(getPublic(keyPair, true))
-  );
+  return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
 }
 
 export async function generateStarkKeyPairFromSignedMessage(
