@@ -8,7 +8,6 @@ import * as encUtils from 'enc-utils';
 import { ec } from 'elliptic';
 import { splitSignature } from '@ethersproject/bytes';
 import { Signer } from '@ethersproject/abstract-signer';
-import { StarkWallet } from '../../types';
 
 const DEFAULT_SIGNATURE_MESSAGE =
   'Only sign this request if you’ve initiated an action with Immutable X.';
@@ -91,6 +90,12 @@ export function getXCoordinate(publicKey: string): string {
 
 export function getStarkPublicKey(keyPair: ec.KeyPair): string {
   return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
+}
+
+interface StarkWallet {
+  path: string;
+  starkPublicKey: string;
+  starkKeyPair: ec.KeyPair;
 }
 
 export async function generateStarkWalletFromSignedMessage(
