@@ -37,7 +37,7 @@ const createConfig = ({
 };
 
 export const Config = {
-  get production() {
+  get PRODUCTION() {
     return createConfig({
       basePath: 'https://api.ropsten.x.immutable.com',
       chainID: 3,
@@ -46,7 +46,7 @@ export const Config = {
     });
   },
 
-  get sandbox() {
+  get SANDBOX() {
     return createConfig({
       basePath: 'https://api.ropsten.x.immutable.com',
       chainID: 3,
