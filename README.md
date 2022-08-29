@@ -55,13 +55,7 @@ import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { Utils } from '@imtbl/core-sdk';
 
-// Setup a provider and a signer
-const ethNetwork = 'ropsten'; // or mainnet;
-const privateKey = YOUR_PRIVATE_KEY;
-const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
-const signer = new Wallet(privateKey).connect(provider);
 
-const config = Utils.Config.sandbox; // or production;
 ```
 
 #### WalletConnection
@@ -77,16 +71,21 @@ import {
   BaseSigner,
 } from '@imtbl/core-sdk';
 
+// Setup a provider and a signer
+const ethNetwork = 'ropsten'; // or mainnet;
+const privateKey = YOUR_PRIVATE_KEY;
+const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
+
 // Generate your own WalletConnection
 const generateWalletConnection = async (
   provider: AlchemyProvider,
 ): Promise<WalletConnection> => {
   // L1 credentials
-  const l1Signer = Wallet.createRandom().connect(provider);
+  const ethSigner = Wallet.createRandom().connect(provider);
 
   // L2 credentials
-  const starkWallet = await generateStarkWallet(l1Signer);
-  const l2Signer = new BaseSigner(starkWallet.starkKeyPair);
+  const starkWallet = await generateStarkSigner(ethSigner);
+  
 
   return {
     l1Signer,
