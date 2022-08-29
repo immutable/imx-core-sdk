@@ -124,3 +124,16 @@ export async function generateStarkWallet(
   const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
   return generateStarkWalletFromSignedMessage(ethAddress, signature);
 }
+
+/*
+// random stark key
+export function generateStarkPrivateKey(): string {
+
+}
+
+// user's reponsibilit to save and manage their private key
+export async function generateStarkSigner(starkPrivateKey: string)
+  : Promise<StarkWallet> {
+
+}
+*/
