@@ -2,7 +2,16 @@ import {
   getAccountPath,
   getKeyPairFromPath,
   generateStarkWalletFromSignedMessage,
+  generateStarkWalletFromSignedMessageNew,
 } from './stark-key';
+
+import { AlchemyProvider } from '@ethersproject/providers';
+import { Wallet } from '@ethersproject/wallet';
+import starkwareCrypto from '@starkware-industries/starkware-crypto-utils';
+import { BaseSigner } from './base-signer';
+
+const DEFAULT_SIGNATURE_MESSAGE =
+  'Only sign this request if you’ve initiated an action with Immutable X.';
 
 const layer = 'starkex';
 const application = 'starkdeployement';
@@ -34,5 +43,61 @@ describe('generateStarkWalletFromSignedMessage', () => {
     expect(starkPublicKey).toEqual(
       '0x035919acd61e97b3ecdc75ff8beed8d1803f7ea3cad2937926ae59cc3f8070d4',
     );
+  });
+});
+
+describe('compare stark key generation', () => {
+  it('compare', async () => {
+    const ethNetwork = 'ropsten';
+
+    // Sets up the provider
+    const alchemyApiKey = 'c9CT8RFcLtL774SDW0qAfC2NjIYQJLr_';
+    const alchemyProvider = new AlchemyProvider(ethNetwork, alchemyApiKey);
+
+    // Sets up Eth Signer
+    const privateKey =
+      '7f9a31af8ca797f655446218d4b7fc85b64bf6191901d13148ad4afced68c441';
+    const wallet = new Wallet(privateKey);
+    const ethSigner = wallet.connect(alchemyProvider);
+
+    const ethAddress = (await ethSigner.getAddress()).toLowerCase();
+    const signature = await ethSigner.signMessage(DEFAULT_SIGNATURE_MESSAGE);
+
+    const starkWallet = generateStarkWalletFromSignedMessage(
+      ethAddress,
+      signature,
+    );
+    const starkWalletNew = generateStarkWalletFromSignedMessageNew(
+      ethAddress,
+      signature,
+    );
+    const starkSigner = new BaseSigner((await starkWallet).starkKeyPair);
+
+    console.log('starkSigner.getAddress()', starkSigner.getAddress());
+    console.log('Core SDK - starkWallet: ', starkWallet);
+    console.log(
+      'Core SDK - private key: ',
+      (await starkWallet).starkKeyPair.getPrivate('hex'),
+    );
+
+    console.log('Core SDK - starkWalletNew: ', starkWalletNew);
+    console.log(
+      'Core SDK - private key new: ',
+      (await starkWalletNew).starkKeyPair.getPrivate('hex'),
+    );
+
+    console.log(
+      'getPublic: ',
+      (await starkWallet).starkKeyPair.getPublic(true, 'hex'),
+    );
+
+    // Stark utils
+    const starkPrivateKey2 =
+      starkwareCrypto.keyDerivation.getPrivateKeyFromEthSignature(signature);
+    const starkKey2 =
+      starkwareCrypto.keyDerivation.privateToStarkKey(starkPrivateKey2);
+
+    console.log('starkware-crypto-utils starkPrivateKey', starkPrivateKey2);
+    console.log('starkware-crypto-utils starkKey', starkKey2);
   });
 });

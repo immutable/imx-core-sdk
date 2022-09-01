@@ -12,6 +12,7 @@ export class BaseSigner implements L2Signer {
     return encUtils.sanitizeHex(
       getXCoordinate(this.keyPair.getPublic(true, 'hex')),
     );
+    //      return encUtils.sanitizeHex(getXCoordinate(getPublic(keyPair, true)));
   }
 
   public async signMessage(msg: string): Promise<string> {
