@@ -1,8 +1,6 @@
 import {
   TransfersApi,
-  GetSignableTransferRequest,
   GetSignableTransferRequestV1,
-  CreateTransferResponse,
   CreateTransferResponseV1,
 } from '../api';
 import { WalletConnection } from '../types';
@@ -10,10 +8,6 @@ import { signRaw } from '../utils';
 
 type TransfersWorkflowParams = WalletConnection & {
   request: GetSignableTransferRequestV1;
-  transfersApi: TransfersApi;
-};
-type BatchTransfersWorkflowParams = WalletConnection & {
-  request: GetSignableTransferRequest;
   transfersApi: TransfersApi;
 };
 
@@ -65,61 +59,5 @@ export async function transfersWorkflow({
     status: response?.data.status?.toString(),
     time: response?.data.time,
     transfer_id: response?.data.transfer_id,
-  };
-}
-
-export async function batchTransfersWorkflow({
-  ethSigner,
-  starkSigner,
-  request,
-  transfersApi,
-}: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
-  const signableResult = await transfersApi.getSignableTransfer({
-    getSignableTransferRequestV2: {
-      sender_ether_key: request.sender_ether_key,
-      signable_requests: request.signable_requests,
-    },
-  });
-
-  const signableMessage = signableResult.data.signable_message;
-
-  if (signableMessage === undefined) {
-    throw new Error('Invalid response from Signable registration offchain');
-  }
-
-  const ethAddress = await ethSigner.getAddress();
-
-  const ethSignature = await signRaw(signableMessage, ethSigner);
-
-  const requests = [];
-  for (const resp of signableResult.data.signable_responses) {
-    const starkSignature = await starkSigner.signMessage(resp.payload_hash);
-    const req = {
-      sender_vault_id: resp.sender_vault_id,
-      receiver_stark_key: resp.receiver_stark_key,
-      receiver_vault_id: resp.receiver_vault_id,
-      asset_id: resp.asset_id,
-      amount: resp.amount,
-      nonce: resp.nonce,
-      expiration_timestamp: resp.expiration_timestamp,
-      stark_signature: starkSignature,
-    };
-    requests.push(req);
-  }
-
-  // TODO: throw error on missing payload hash?
-  const transferSigningParams = {
-    sender_stark_key: signableResult.data.sender_stark_key,
-    requests,
-  };
-
-  const response = await transfersApi.createTransfer({
-    createTransferRequestV2: transferSigningParams,
-    xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature,
-  });
-
-  return {
-    transfer_ids: response?.data.transfer_ids,
   };
 }
