@@ -22,7 +22,6 @@ import {
   ETHDeposit,
   TokenDeposit,
   TokenType,
-  UnsignedBurnRequest,
   ImmutableXConfiguration,
   ERC721Withdrawal,
   ERC20Withdrawal,
@@ -42,7 +41,6 @@ import {
   depositERC721Workflow,
   depositEthWorkflow,
 } from './deposit';
-import { burnWorkflow } from './burn';
 import {
   completeERC20WithdrawalWorfklow,
   completeERC721WithdrawalWorkflow,
@@ -124,19 +122,6 @@ export class Workflows {
     await this.validateChain(walletConnection.ethSigner);
 
     return transfersWorkflow({
-      ...walletConnection,
-      request,
-      transfersApi: this.transfersApi,
-    });
-  }
-
-  public async burn(
-    walletConnection: WalletConnection,
-    request: UnsignedBurnRequest,
-  ) {
-    await this.validateChain(walletConnection.ethSigner);
-
-    return burnWorkflow({
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,

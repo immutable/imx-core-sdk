@@ -6,7 +6,6 @@ import {
   TokenDeposit,
   TokenWithdrawal,
   EthSigner,
-  GetSignableBurnRequest,
 } from './types';
 import { Workflows } from './workflows';
 import * as API from './api';
@@ -321,12 +320,5 @@ export class ImmutableX {
     request: API.GetSignableTransferRequestV1,
   ) {
     return this.workflows.transfer(walletConnection, request);
-  }
-
-  public burn(
-    walletConnection: WalletConnection,
-    request: GetSignableBurnRequest,
-  ) {
-    return this.workflows.burn(walletConnection, request);
   }
 }
