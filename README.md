@@ -54,8 +54,6 @@ Check out how the [Release Process](https://github.com/immutable/imx-core-sdk/#r
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { Utils } from '@imtbl/core-sdk';
-
-
 ```
 
 #### WalletConnection
@@ -85,7 +83,6 @@ const generateWalletConnection = async (
 
   // L2 credentials
   const starkWallet = await generateStarkSigner(ethSigner);
-  
 
   return {
     l1Signer,
@@ -262,7 +259,6 @@ The current workflow methods exposed from the `Workflow` class.
 | `isRegisteredOnchain`      | Check wallet registered on L1.                                               |
 | `mint`                     | Mint tokens on L2.                                                           |
 | `transfer`                 | Transfer tokens to another wallet.                                           |
-| `batchNftTransfer`         | Batch transfer tokens.                                                       |
 | `burn`                     | Burn tokens.                                                                 |
 | `getBurn`                  | Verify burn/transfer details.                                                |
 | `deposit`                  | Helper method around the other deposit methods. Deposit based on token type. |
