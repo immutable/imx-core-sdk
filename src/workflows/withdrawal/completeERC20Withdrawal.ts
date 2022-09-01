@@ -10,7 +10,6 @@ import {
 import {
   ImmutableXConfiguration,
   ERC20Withdrawal,
-  TokenType,
 } from '../../types';
 import {
   getSignableRegistrationOnchain,
@@ -68,7 +67,7 @@ export async function completeERC20WithdrawalWorfklow(
 ) {
   const assetType = await getEncodeAssetInfo(
     'asset',
-    TokenType.ERC20,
+    'ERC20',
     encodingApi,
     {
       token_id: token.data.tokenId,

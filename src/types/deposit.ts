@@ -1,19 +1,17 @@
-import { TokenType } from './token';
-
 export interface ETHDeposit {
-  type: TokenType.ETH;
+  type: 'ETH';
   amount: string;
 }
 
 export interface ERC20Deposit {
-  type: TokenType.ERC20;
+  type: 'ERC20';
   tokenAddress: string;
   symbol: string;
   amount: string;
 }
 
 export interface ERC721Deposit {
-  type: TokenType.ERC721;
+  type: 'ERC721';
   tokenId: string;
   tokenAddress: string;
 }

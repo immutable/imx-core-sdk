@@ -35,5 +35,4 @@ export type UnsignedTransferRequest = GetSignableTransferRequestV1;
 
 export * from './deposit';
 export * from './withdrawal';
-export * from './token';
 export * from './signable-withdrawal';
