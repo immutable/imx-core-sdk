@@ -259,8 +259,6 @@ The current workflow methods exposed from the `Workflow` class.
 | `isRegisteredOnchain`      | Check wallet registered on L1.                                               |
 | `mint`                     | Mint tokens on L2.                                                           |
 | `transfer`                 | Transfer tokens to another wallet.                                           |
-| `burn`                     | Burn tokens.                                                                 |
-| `getBurn`                  | Verify burn/transfer details.                                                |
 | `deposit`                  | Helper method around the other deposit methods. Deposit based on token type. |
 | `depositEth`               | Deposit ETH to L2 wallet.                                                    |
 | `depositERC20`             | Deposit ERC20 token to L2 wallet.                                            |
