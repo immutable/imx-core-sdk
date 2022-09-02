@@ -1,19 +1,23 @@
 import {
   TransfersApi,
-  GetSignableTransferRequest,
-  GetSignableTransferRequestV1,
-  CreateTransferResponse,
   CreateTransferResponseV1,
+  CreateTransferResponse,
 } from '../api';
-import { WalletConnection } from '../types';
+import {
+  convertToSignableToken,
+  UnsignedBatchNftTransferRequest,
+  UnsignedTransferRequest,
+  WalletConnection,
+} from '../types';
 import { signRaw } from '../utils';
 
 type TransfersWorkflowParams = WalletConnection & {
-  request: GetSignableTransferRequestV1;
+  request: UnsignedTransferRequest;
   transfersApi: TransfersApi;
 };
+
 type BatchTransfersWorkflowParams = WalletConnection & {
-  request: GetSignableTransferRequest;
+  request: UnsignedBatchNftTransferRequest;
   transfersApi: TransfersApi;
 };
 
@@ -26,7 +30,7 @@ export async function transfersWorkflow({
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
       sender: request.sender,
-      token: request.token,
+      token: convertToSignableToken(request.token),
       amount: request.amount,
       receiver: request.receiver,
     },
@@ -77,7 +81,13 @@ export async function batchTransfersWorkflow({
   const signableResult = await transfersApi.getSignableTransfer({
     getSignableTransferRequestV2: {
       sender_ether_key: request.sender_ether_key,
-      signable_requests: request.signable_requests,
+      signable_requests: request.signable_requests.map(x => {
+        return {
+          amount: '1',
+          token: convertToSignableToken(x.token),
+          receiver: x.receiver,
+        };
+      }),
     },
   });
 

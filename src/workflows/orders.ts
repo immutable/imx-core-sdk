@@ -1,14 +1,17 @@
 import {
   OrdersApi,
   OrdersApiCreateOrderRequest,
-  GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
 } from '../api';
-import { WalletConnection } from '../types';
+import {
+  convertToSignableToken,
+  UnsignedOrderRequest,
+  WalletConnection,
+} from '../types';
 import { signRaw } from '../utils';
 
 type CreateOrderWorkflowParams = WalletConnection & {
-  request: GetSignableOrderRequest;
+  request: UnsignedOrderRequest;
   ordersApi: OrdersApi;
 };
 
@@ -24,7 +27,11 @@ export async function createOrderWorkflow({
   ordersApi,
 }: CreateOrderWorkflowParams) {
   const getSignableOrderResponse = await ordersApi.getSignableOrder({
-    getSignableOrderRequestV3: request,
+    getSignableOrderRequestV3: {
+      ...request,
+      token_buy: convertToSignableToken(request.token_buy),
+      token_sell: convertToSignableToken(request.token_sell),
+    },
   });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =

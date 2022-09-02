@@ -6,6 +6,9 @@ import {
   TokenDeposit,
   TokenWithdrawal,
   EthSigner,
+  UnsignedOrderRequest,
+  UnsignedTransferRequest,
+  UnsignedBatchNftTransferRequest,
 } from './types';
 import { Workflows } from './workflows';
 import * as API from './api';
@@ -261,7 +264,7 @@ export class ImmutableX {
 
   public createOrder(
     walletConnection: WalletConnection,
-    request: API.GetSignableOrderRequest,
+    request: UnsignedOrderRequest,
   ) {
     return this.workflows.createOrder(walletConnection, request);
   }
@@ -317,14 +320,14 @@ export class ImmutableX {
 
   public transfer(
     walletConnection: WalletConnection,
-    request: API.GetSignableTransferRequestV1,
+    request: UnsignedTransferRequest,
   ) {
     return this.workflows.transfer(walletConnection, request);
   }
 
   public batchNftTransfer(
     walletConnection: WalletConnection,
-    request: API.GetSignableTransferRequest,
+    request: UnsignedBatchNftTransferRequest,
   ) {
     return this.workflows.batchNftTransfer(walletConnection, request);
   }

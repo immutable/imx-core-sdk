@@ -63,8 +63,8 @@ export async function completeERC20WithdrawalWorkflow(
   config: ImmutableXConfiguration,
 ) {
   const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
-    token_id: token.data.tokenId,
-    token_address: token.data.tokenAddress,
+    token_id: token.tokenId,
+    token_address: token.tokenAddress,
   });
 
   const coreContract = Core__factory.connect(

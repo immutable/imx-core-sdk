@@ -7,7 +7,7 @@ import {
   Registration__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import { ImmutableXConfiguration, ERC721Withdrawal } from '../../types';
+import { ERC721Token, ImmutableXConfiguration } from '../../types';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import {
   getSignableRegistrationOnchain,
@@ -175,14 +175,14 @@ async function executeWithdrawERC721(
 async function completeERC721Withdrawal(
   signer: Signer,
   starkPublicKey: string,
-  token: ERC721Withdrawal,
+  token: ERC721Token,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
   const assetType = await getEncodeAssetInfo('asset', 'ERC721', encodingApi, {
-    token_id: token.data.tokenId,
-    token_address: token.data.tokenAddress,
+    token_id: token.tokenId,
+    token_address: token.tokenAddress,
   });
 
   const coreContract = Core__factory.connect(
@@ -205,7 +205,7 @@ async function completeERC721Withdrawal(
       signer,
       assetType.asset_type,
       starkPublicKey,
-      token.data.tokenId,
+      token.tokenId,
       registrationContract,
       usersApi,
     );
@@ -214,7 +214,7 @@ async function completeERC721Withdrawal(
       signer,
       assetType.asset_type,
       starkPublicKey,
-      token.data.tokenId,
+      token.tokenId,
       coreContract,
     );
   }
@@ -223,14 +223,14 @@ async function completeERC721Withdrawal(
 export async function completeERC721WithdrawalWorkflow(
   signer: Signer,
   starkPublicKey: string,
-  token: ERC721Withdrawal,
+  token: ERC721Token,
   encodingApi: EncodingApi,
   mintsApi: MintsApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
-  const tokenAddress = token.data.tokenAddress;
-  const tokenId = token.data.tokenId;
+  const tokenAddress = token.tokenAddress;
+  const tokenId = token.tokenId;
   return await mintsApi
     .getMintableTokenDetailsByClientTokenId({
       tokenAddress,

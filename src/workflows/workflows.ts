@@ -9,7 +9,6 @@ import {
   UsersApi,
   TransfersApi,
   WithdrawalsApi,
-  GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
   GetSignableTradeRequest,
   TradesApi,
@@ -23,11 +22,12 @@ import {
   ETHDeposit,
   TokenDeposit,
   ImmutableXConfiguration,
-  ERC721Withdrawal,
   ERC20Withdrawal,
   TokenWithdrawal,
   PrepareWithdrawalRequest,
   WalletConnection,
+  ERC721Token,
+  UnsignedOrderRequest,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import {
@@ -252,7 +252,7 @@ export class Workflows {
   private async completeERC721Withdrawal(
     signer: Signer,
     starkPublicKey: string,
-    token: ERC721Withdrawal,
+    token: ERC721Token,
   ) {
     await this.validateChain(signer);
 
@@ -269,7 +269,7 @@ export class Workflows {
 
   public async createOrder(
     walletConnection: WalletConnection,
-    request: GetSignableOrderRequest,
+    request: UnsignedOrderRequest,
   ) {
     await this.validateChain(walletConnection.ethSigner);
 

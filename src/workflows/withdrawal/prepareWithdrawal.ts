@@ -1,6 +1,6 @@
 import { WithdrawalsApi, CreateWithdrawalResponse } from '../../api';
 import {
-  convertToSignableRequestFormat,
+  convertToSignableToken,
   PrepareWithdrawalRequest,
   WalletConnection,
 } from '../../types';
@@ -26,7 +26,7 @@ export async function prepareWithdrawalWorkflow({
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await ethSigner.getAddress(),
-      token: convertToSignableRequestFormat(token),
+      token: convertToSignableToken(token),
       amount: quantity.toString(),
     },
   });
