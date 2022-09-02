@@ -21,7 +21,6 @@ import {
   ERC721Deposit,
   ETHDeposit,
   TokenDeposit,
-  TokenType,
   ImmutableXConfiguration,
   ERC721Withdrawal,
   ERC20Withdrawal,
@@ -130,11 +129,11 @@ export class Workflows {
 
   public async deposit(signer: Signer, deposit: TokenDeposit) {
     switch (deposit.type) {
-      case TokenType.ETH:
+      case 'ETH':
         return this.depositEth(signer, deposit);
-      case TokenType.ERC20:
+      case 'ERC20':
         return this.depositERC20(signer, deposit);
-      case TokenType.ERC721:
+      case 'ERC721':
         return this.depositERC721(signer, deposit);
     }
   }
@@ -198,11 +197,11 @@ export class Workflows {
     token: TokenWithdrawal,
   ) {
     switch (token.type) {
-      case TokenType.ETH:
+      case 'ETH':
         return this.completeEthWithdrawal(signer, starkPublicKey);
-      case TokenType.ERC20:
+      case 'ERC20':
         return this.completeERC20Withdrawal(signer, starkPublicKey, token);
-      case TokenType.ERC721:
+      case 'ERC721':
         return this.completeERC721Withdrawal(signer, starkPublicKey, token);
     }
   }

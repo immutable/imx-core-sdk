@@ -1,46 +1,42 @@
-import { TokenType } from './token';
-import { WalletConnection } from './index';
-import { WithdrawalsApi } from '../api';
-
 export interface ETHWithdrawal {
-  type: TokenType.ETH;
+  type: 'ETH';
 }
 
 export interface ETHPrepareWithdrawal {
-  type: TokenType.ETH;
+  type: 'ETH';
   data: {
-    decimals: number
-  }
+    decimals: number;
+  };
 }
 
 export const ETH_PREPARE_WITHDRAWAL_DATA: ETHPrepareWithdrawal = {
-  type: TokenType.ETH,
+  type: 'ETH',
   data: {
     decimals: 18,
   },
-}
+};
 
 export interface ERC721Withdrawal {
-  type: TokenType.ERC721;
+  type: 'ERC721';
   data: {
-    tokenId: string,
+    tokenId: string;
     tokenAddress: string;
   };
 }
 
 export interface ERC20Withdrawal {
-  type: TokenType.ERC20;
+  type: 'ERC20';
   data: {
-    tokenId: string,
+    tokenId: string;
     tokenAddress: string;
   };
 }
 
 export interface ERC20PrepareWithdrawal {
-  type: TokenType.ERC20;
+  type: 'ERC20';
   data: {
-    tokenAddress: string,
-    decimals: number,
+    tokenAddress: string;
+    decimals: number;
   };
 }
 
@@ -48,7 +44,7 @@ export interface ERC20PrepareWithdrawal {
 export type TokenWithdrawal = ETHWithdrawal | ERC20Withdrawal | ERC721Withdrawal;
 export type TokenPrepareWithdrawal = ETHPrepareWithdrawal | ERC20PrepareWithdrawal | ERC721Withdrawal;
 
-export type PrepareWithdrawalRequest =  {
+export type PrepareWithdrawalRequest = {
   token: TokenPrepareWithdrawal;
   quantity: string;
-}
+};

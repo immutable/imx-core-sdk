@@ -7,11 +7,7 @@ import {
   Registration__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import {
-  ImmutableXConfiguration,
-  ERC721Withdrawal,
-  TokenType,
-} from '../../types';
+import { ImmutableXConfiguration, ERC721Withdrawal } from '../../types';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import {
   getSignableRegistrationOnchain,
@@ -20,7 +16,7 @@ import {
 import { TransactionResponse } from '@ethersproject/providers';
 
 interface MintableERC721Withdrawal {
-  type: TokenType.ERC721;
+  type: 'ERC721';
   data: {
     id: string;
     blueprint?: string;
@@ -88,7 +84,7 @@ async function completeMintableERC721Withdrawal(
 ) {
   const assetType = await getEncodeAssetInfo(
     'mintable-asset',
-    TokenType.ERC721,
+    'ERC721',
     encodingApi,
     {
       id: token.data.id,
@@ -184,15 +180,10 @@ async function completeERC721Withdrawal(
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
-  const assetType = await getEncodeAssetInfo(
-    'asset',
-    TokenType.ERC721,
-    encodingApi,
-    {
-      token_id: token.data.tokenId,
-      token_address: token.data.tokenAddress,
-    },
-  );
+  const assetType = await getEncodeAssetInfo('asset', 'ERC721', encodingApi, {
+    token_id: token.data.tokenId,
+    token_address: token.data.tokenAddress,
+  });
 
   const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
@@ -250,7 +241,7 @@ export async function completeERC721WithdrawalWorkflow(
         signer,
         starkPublicKey,
         {
-          type: TokenType.ERC721,
+          type: 'ERC721',
           data: {
             id: tokenId,
             tokenAddress: tokenAddress,
