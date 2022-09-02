@@ -1,8 +1,7 @@
 import { TokenPrepareWithdrawal } from './withdrawal';
-import { TokenType } from './token';
 
 export interface SignableWithdrawalERC20 {
-  type: TokenType.ERC20;
+  type: 'ERC20';
   data: {
     token_address: string;
     decimals: number;
@@ -10,7 +9,7 @@ export interface SignableWithdrawalERC20 {
 }
 
 export interface SignableWithdrawalERC721 {
-  type: TokenType.ERC721;
+  type: 'ERC721';
   data: {
     token_id: string;
     token_address: string;
@@ -18,7 +17,7 @@ export interface SignableWithdrawalERC721 {
 }
 
 export type SignableWithdrawalEth = {
-  type: TokenType.ETH;
+  type: 'ETH';
   data: {
     decimals: number;
   };
@@ -33,18 +32,18 @@ export type SignableWithdrawalToken =
 export function convertToSignableRequestFormat(
   token: TokenPrepareWithdrawal,
 ): SignableWithdrawalToken {
-  if (token.type === TokenType.ERC721) {
+  if (token.type === 'ERC721') {
     return {
-      type: TokenType.ERC721,
+      type: 'ERC721',
       data: {
         token_id: token.data.tokenId,
         token_address: token.data.tokenAddress,
       },
     };
   }
-  if (token.type === TokenType.ERC20) {
+  if (token.type === 'ERC20') {
     return {
-      type: TokenType.ERC20,
+      type: 'ERC20',
       data: {
         decimals: token.data.decimals,
         token_address: token.data.tokenAddress,
