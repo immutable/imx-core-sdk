@@ -17,6 +17,7 @@ import {
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
+  UnsignedBatchNftTransferRequest,
   ERC20Deposit,
   ERC721Deposit,
   ETHDeposit,
@@ -34,7 +35,7 @@ import {
   registerOffchainWorkflow,
 } from './registration';
 import { mintingWorkflow } from './minting';
-import { transfersWorkflow } from './transfers';
+import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
 import {
   depositERC20Workflow,
   depositERC721Workflow,
@@ -121,6 +122,19 @@ export class Workflows {
     await this.validateChain(walletConnection.ethSigner);
 
     return transfersWorkflow({
+      ...walletConnection,
+      request,
+      transfersApi: this.transfersApi,
+    });
+  }
+
+  public async batchNftTransfer(
+    walletConnection: WalletConnection,
+    request: UnsignedBatchNftTransferRequest,
+  ) {
+    await this.validateChain(walletConnection.ethSigner);
+
+    return batchTransfersWorkflow({
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
