@@ -84,7 +84,11 @@ export async function batchTransfersWorkflow({
       signable_requests: request.signable_requests.map(x => {
         return {
           amount: '1',
-          token: convertToSignableToken(x.token),
+          token: convertToSignableToken({
+            type: 'ERC721',
+            tokenId: x.tokenId,
+            tokenAddress: x.tokenAddress,
+          }),
           receiver: x.receiver,
         };
       }),
