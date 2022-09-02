@@ -54,7 +54,7 @@ async function executeWithdrawERC20(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function completeERC20WithdrawalWorfklow(
+export async function completeERC20WithdrawalWorkflow(
   signer: Signer,
   starkPublicKey: string,
   token: ERC20Withdrawal,
