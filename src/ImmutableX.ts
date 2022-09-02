@@ -321,4 +321,11 @@ export class ImmutableX {
   ) {
     return this.workflows.transfer(walletConnection, request);
   }
+
+  public batchNftTransfer(
+    walletConnection: WalletConnection,
+    request: API.GetSignableTransferRequest,
+  ) {
+    return this.workflows.batchNftTransfer(walletConnection, request);
+  }
 }
