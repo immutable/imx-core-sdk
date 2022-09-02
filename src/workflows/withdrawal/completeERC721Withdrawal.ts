@@ -7,10 +7,7 @@ import {
   Registration__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import {
-  ImmutableXConfiguration,
-  ERC721Withdrawal,
-} from '../../types';
+import { ImmutableXConfiguration, ERC721Withdrawal } from '../../types';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import {
   getSignableRegistrationOnchain,
@@ -183,15 +180,10 @@ async function completeERC721Withdrawal(
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
-  const assetType = await getEncodeAssetInfo(
-    'asset',
-    'ERC721',
-    encodingApi,
-    {
-      token_id: token.data.tokenId,
-      token_address: token.data.tokenAddress,
-    },
-  );
+  const assetType = await getEncodeAssetInfo('asset', 'ERC721', encodingApi, {
+    token_id: token.data.tokenId,
+    token_address: token.data.tokenAddress,
+  });
 
   const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
