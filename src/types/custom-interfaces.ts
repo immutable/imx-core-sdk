@@ -1,5 +1,9 @@
-import { GetSignableOrderRequest, GetSignableTransferRequestV1 } from '../api';
 import { AnyToken, ERC721Token } from './signable-token';
+import {
+  GetSignableOrderRequest,
+  GetSignableTransferRequest,
+  GetSignableTransferRequestV1,
+} from '../api';
 
 // These custom interfaces are used because API.SignableToken is not yet a union type due to OAS 2.0 spec not supporting `OneOf`
 // As well as the fact that SignableToken has an extra `data` object which we would like to flatten
@@ -16,19 +20,8 @@ export interface UnsignedTransferRequest
   token: AnyToken;
 }
 
-// UnsignedBatchNftTransferRequest overrides GetSignableTransferRequestV1
-export interface UnsignedBatchNftTransferRequest {
-  /**
-   * Ethereum address of the transferring user
-   * @type {string}
-   * @memberof UnsignedBatchNftTransferRequest
-   */
-  sender_ether_key: string;
-  /**
-   * List of signable transfer details
-   * @type {Array<NftTransferDetails>}
-   * @memberof UnsignedBatchNftTransferRequest
-   */
+export interface UnsignedBatchNftTransferRequest
+  extends Omit<GetSignableTransferRequest, 'signable_requests'> {
   signable_requests: Array<NftTransferDetails>;
 }
 

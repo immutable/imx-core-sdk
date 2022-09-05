@@ -78,20 +78,22 @@ export async function batchTransfersWorkflow({
   request,
   transfersApi,
 }: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
+  const signableRequests = request.signable_requests.map(x => {
+    return {
+      amount: '1',
+      token: convertToSignableToken({
+        type: 'ERC721',
+        tokenId: x.tokenId,
+        tokenAddress: x.tokenAddress,
+      }),
+      receiver: x.receiver,
+    };
+  });
+
   const signableResult = await transfersApi.getSignableTransfer({
     getSignableTransferRequestV2: {
       sender_ether_key: request.sender_ether_key,
-      signable_requests: request.signable_requests.map(x => {
-        return {
-          amount: '1',
-          token: convertToSignableToken({
-            type: 'ERC721',
-            tokenId: x.tokenId,
-            tokenAddress: x.tokenAddress,
-          }),
-          receiver: x.receiver,
-        };
-      }),
+      signable_requests: signableRequests,
     },
   });
 
