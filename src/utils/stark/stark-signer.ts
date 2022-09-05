@@ -1,13 +1,10 @@
-import { generateStarkWallet } from './stark-key';
-
 import { ec } from 'elliptic';
 import * as encUtils from 'enc-utils';
 import { StarkSigner } from '../../types';
-import { fixMessage } from './stark-curve';
-import { getStarkPublicKey } from './stark-key';
-import { Signer } from '@ethersproject/abstract-signer';
+import { fixMessage, starkEc } from './stark-curve';
+import { getStarkPublicKey } from './stark-curve';
 
-export class StandardStarkSigner implements StarkSigner {
+class StandardStarkSigner implements StarkSigner {
   constructor(private keyPair: ec.KeyPair) {}
 
   public getAddress(): string {
@@ -26,9 +23,7 @@ export class StandardStarkSigner implements StarkSigner {
   }
 }
 
-export async function generateStarkSigner(
-  ethSigner: Signer,
-): Promise<StarkSigner> {
-  const starkWallet = await generateStarkWallet(ethSigner);
-  return new StandardStarkSigner(starkWallet.starkKeyPair);
+export function createStarkSigner(privateKey: string): StarkSigner {
+  const keyPair = starkEc.keyFromPrivate(privateKey, 'hex');
+  return new StandardStarkSigner(keyPair);
 }

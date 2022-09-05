@@ -1,1 +1,1 @@
-export { generateStarkSigner } from './utils';
+export { generatePrivateKey, createStarkSigner } from './utils';
