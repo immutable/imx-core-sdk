@@ -5,7 +5,7 @@ import {
 } from '../api';
 import {
   convertToSignableToken,
-  UnsignedBatchNftTransferRequest,
+  NftTransferDetails,
   UnsignedTransferRequest,
   WalletConnection,
 } from '../types';
@@ -17,7 +17,7 @@ type TransfersWorkflowParams = WalletConnection & {
 };
 
 type BatchTransfersWorkflowParams = WalletConnection & {
-  request: UnsignedBatchNftTransferRequest;
+  request: Array<NftTransferDetails>;
   transfersApi: TransfersApi;
 };
 
@@ -27,9 +27,11 @@ export async function transfersWorkflow({
   request,
   transfersApi,
 }: TransfersWorkflowParams): Promise<CreateTransferResponseV1> {
+  const ethAddress = await ethSigner.getAddress();
+
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
-      sender: request.sender,
+      sender: ethAddress,
       token: convertToSignableToken(request.token),
       amount: request.amount,
       receiver: request.receiver,
@@ -42,8 +44,6 @@ export async function transfersWorkflow({
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
   const starkSignature = await starkSigner.signMessage(payloadHash);
-
-  const ethAddress = await ethSigner.getAddress();
 
   const transferSigningParams = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -78,7 +78,9 @@ export async function batchTransfersWorkflow({
   request,
   transfersApi,
 }: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
-  const signableRequests = request.signable_requests.map(x => {
+  const ethAddress = await ethSigner.getAddress();
+
+  const signableRequests = request.map(x => {
     return {
       amount: '1',
       token: convertToSignableToken({
@@ -92,7 +94,7 @@ export async function batchTransfersWorkflow({
 
   const signableResult = await transfersApi.getSignableTransfer({
     getSignableTransferRequestV2: {
-      sender_ether_key: request.sender_ether_key,
+      sender_ether_key: ethAddress,
       signable_requests: signableRequests,
     },
   });
@@ -102,8 +104,6 @@ export async function batchTransfersWorkflow({
   if (signableMessage === undefined) {
     throw new Error('Invalid response from Signable registration offchain');
   }
-
-  const ethAddress = await ethSigner.getAddress();
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 

@@ -1,9 +1,5 @@
 import { AnyToken, ERC721Token } from './signable-token';
-import {
-  FeeEntry,
-  GetSignableTransferRequest,
-  GetSignableTransferRequestV1,
-} from '../api';
+import { FeeEntry, GetSignableTransferRequestV1 } from '../api';
 
 // These custom interfaces are used because API.SignableToken is not yet a union type due to OAS 2.0 spec not supporting `OneOf`
 // As well as the fact that SignableToken has an extra `data` object which we would like to flatten
@@ -41,13 +37,8 @@ export interface UnsignedOrderRequest {
 }
 
 export interface UnsignedTransferRequest
-  extends Omit<GetSignableTransferRequestV1, 'token'> {
+  extends Omit<GetSignableTransferRequestV1, 'token' | 'sender'> {
   token: AnyToken;
-}
-
-export interface UnsignedBatchNftTransferRequest
-  extends Omit<GetSignableTransferRequest, 'signable_requests'> {
-  signable_requests: Array<NftTransferDetails>;
 }
 
 export interface NftTransferDetails extends Omit<ERC721Token, 'type'> {

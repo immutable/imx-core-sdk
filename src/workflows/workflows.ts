@@ -16,7 +16,6 @@ import {
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
-  UnsignedBatchNftTransferRequest,
   ERC20Deposit,
   ERC721Deposit,
   ETHDeposit,
@@ -28,6 +27,7 @@ import {
   WalletConnection,
   ERC721Token,
   UnsignedOrderRequest,
+  NftTransferDetails,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import {
@@ -130,7 +130,7 @@ export class Workflows {
 
   public async batchNftTransfer(
     walletConnection: WalletConnection,
-    request: UnsignedBatchNftTransferRequest,
+    request: Array<NftTransferDetails>,
   ) {
     await this.validateChain(walletConnection.ethSigner);
 

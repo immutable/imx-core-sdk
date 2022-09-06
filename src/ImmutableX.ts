@@ -1,14 +1,14 @@
 import {
+  EthSigner,
   ImmutableXConfiguration,
-  WalletConnection,
-  UnsignedMintRequest,
+  NftTransferDetails,
   PrepareWithdrawalRequest,
   TokenDeposit,
   TokenWithdrawal,
-  EthSigner,
+  UnsignedMintRequest,
   UnsignedOrderRequest,
   UnsignedTransferRequest,
-  UnsignedBatchNftTransferRequest,
+  WalletConnection,
 } from './types';
 import { Workflows } from './workflows';
 import * as API from './api';
@@ -327,7 +327,7 @@ export class ImmutableX {
 
   public batchNftTransfer(
     walletConnection: WalletConnection,
-    request: UnsignedBatchNftTransferRequest,
+    request: Array<NftTransferDetails>,
   ) {
     return this.workflows.batchNftTransfer(walletConnection, request);
   }
