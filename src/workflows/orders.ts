@@ -2,6 +2,7 @@ import {
   OrdersApi,
   OrdersApiCreateOrderRequest,
   GetSignableCancelOrderRequest,
+  GetSignableOrderRequest,
 } from '../api';
 import {
   convertToSignableToken,
@@ -26,12 +27,20 @@ export async function createOrderWorkflow({
   request,
   ordersApi,
 }: CreateOrderWorkflowParams) {
+  const ethAddress = await ethSigner.getAddress();
+
+  const getSignableOrderRequest: GetSignableOrderRequest = {
+    user: ethAddress,
+    amount_buy: request.buy.amount,
+    token_buy: convertToSignableToken(request.buy.token),
+    amount_sell: request.sell.amount,
+    token_sell: convertToSignableToken(request.sell.token),
+    fees: request.fees,
+    expiration_timestamp: request.expiration_timestamp,
+  };
+
   const getSignableOrderResponse = await ordersApi.getSignableOrder({
-    getSignableOrderRequestV3: {
-      ...request,
-      token_buy: convertToSignableToken(request.token_buy),
-      token_sell: convertToSignableToken(request.token_sell),
-    },
+    getSignableOrderRequestV3: getSignableOrderRequest,
   });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
@@ -40,8 +49,6 @@ export async function createOrderWorkflow({
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
   const starkSignature = await starkSigner.signMessage(payloadHash);
-
-  const ethAddress = await ethSigner.getAddress();
 
   const resp = getSignableOrderResponse.data;
 

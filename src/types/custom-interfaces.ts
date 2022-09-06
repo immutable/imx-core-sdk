@@ -1,6 +1,6 @@
 import { AnyToken, ERC721Token } from './signable-token';
 import {
-  GetSignableOrderRequest,
+  FeeEntry,
   GetSignableTransferRequest,
   GetSignableTransferRequestV1,
 } from '../api';
@@ -9,10 +9,35 @@ import {
 // As well as the fact that SignableToken has an extra `data` object which we would like to flatten
 // SignableToken is replaced with AnyToken
 
-export interface UnsignedOrderRequest
-  extends Omit<GetSignableOrderRequest, 'token_buy' | 'token_sell'> {
-  token_buy: AnyToken;
-  token_sell: AnyToken;
+export interface UnsignedOrderRequest {
+  buy: {
+    /**
+     * Fee-exclusive amount to buy the asset
+     * @type {string}
+     */
+    amount: string;
+    token: AnyToken;
+  };
+  sell: {
+    /**
+     * Amount to sell (quantity)
+     * @type {string}
+     */
+    amount: string;
+    token: AnyToken;
+  };
+  /**
+   * ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour
+   * @type {number}
+   * @memberof UnsignedOrderRequest
+   */
+  expiration_timestamp?: number;
+  /**
+   * Inclusion of either maker or taker fees
+   * @type {Array<FeeEntry>}
+   * @memberof UnsignedOrderRequest
+   */
+  fees?: Array<FeeEntry>;
 }
 
 export interface UnsignedTransferRequest
