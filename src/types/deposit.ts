@@ -6,7 +6,6 @@ export interface ETHDeposit {
 export interface ERC20Deposit {
   type: 'ERC20';
   tokenAddress: string;
-  symbol: string;
   amount: string;
 }
 
