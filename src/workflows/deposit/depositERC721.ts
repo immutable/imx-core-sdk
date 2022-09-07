@@ -12,7 +12,7 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ERC721Deposit } from '../../types';
+import { ImmutableXConfiguration, ERC721Token } from '../../types';
 
 interface ERC721TokenData {
   token_id: string;
@@ -70,7 +70,7 @@ async function executeDepositERC721(
 
 export async function depositERC721Workflow(
   signer: Signer,
-  deposit: ERC721Deposit,
+  deposit: ERC721Token,
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   encodingApi: EncodingApi,

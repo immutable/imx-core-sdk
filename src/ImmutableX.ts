@@ -1,11 +1,13 @@
 import {
-  ImmutableXConfiguration,
-  WalletConnection,
-  UnsignedMintRequest,
-  PrepareWithdrawalRequest,
-  TokenDeposit,
-  TokenWithdrawal,
+  AnyToken,
   EthSigner,
+  ImmutableXConfiguration,
+  NftTransferDetails,
+  TokenAmount,
+  UnsignedMintRequest,
+  UnsignedOrderRequest,
+  UnsignedTransferRequest,
+  WalletConnection,
 } from './types';
 import { Workflows } from './workflows';
 import * as API from './api';
@@ -47,7 +49,7 @@ export class ImmutableX {
   /**
    * Deposits
    */
-  public deposit(signer: EthSigner, deposit: TokenDeposit) {
+  public deposit(signer: EthSigner, deposit: TokenAmount) {
     return this.workflows.deposit(signer, deposit);
   }
 
@@ -228,7 +230,7 @@ export class ImmutableX {
 
   public prepareWithdrawal(
     walletConnection: WalletConnection,
-    request: PrepareWithdrawalRequest,
+    request: TokenAmount,
   ) {
     return this.workflows.prepareWithdrawal(walletConnection, request);
   }
@@ -236,7 +238,7 @@ export class ImmutableX {
   public completeWithdrawal(
     signer: EthSigner,
     starkPublicKey: string,
-    token: TokenWithdrawal,
+    token: AnyToken,
   ) {
     return this.workflows.completeWithdrawal(signer, starkPublicKey, token);
   }
@@ -261,7 +263,7 @@ export class ImmutableX {
 
   public createOrder(
     walletConnection: WalletConnection,
-    request: API.GetSignableOrderRequest,
+    request: UnsignedOrderRequest,
   ) {
     return this.workflows.createOrder(walletConnection, request);
   }
@@ -317,8 +319,15 @@ export class ImmutableX {
 
   public transfer(
     walletConnection: WalletConnection,
-    request: API.GetSignableTransferRequestV1,
+    request: UnsignedTransferRequest,
   ) {
     return this.workflows.transfer(walletConnection, request);
+  }
+
+  public batchNftTransfer(
+    walletConnection: WalletConnection,
+    request: Array<NftTransferDetails>,
+  ) {
+    return this.workflows.batchNftTransfer(walletConnection, request);
   }
 }

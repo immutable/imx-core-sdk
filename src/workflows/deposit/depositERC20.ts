@@ -12,7 +12,7 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ERC20Deposit } from '../../types';
+import { ImmutableXConfiguration, ERC20Amount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
 
 interface ERC20TokenData {
@@ -70,7 +70,7 @@ async function executeRegisterAndDepositERC20(
 
 export async function depositERC20Workflow(
   signer: Signer,
-  deposit: ERC20Deposit,
+  deposit: ERC20Amount,
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   tokensApi: TokensApi,
@@ -88,7 +88,7 @@ export async function depositERC20Workflow(
     token_address: deposit.tokenAddress,
   };
 
-  const amount = parseUnits(deposit.amount, BigNumber.from(decimals));
+  const amount = parseUnits(deposit.amount, 0); // 0 to always use undecimilised value
 
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
