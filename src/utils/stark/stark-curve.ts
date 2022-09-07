@@ -80,8 +80,7 @@ export function fixMessage(msg: string) {
 
 function getXCoordinate(publicKey: string): string {
   const keyPair = starkEc.keyFromPublic(encUtils.hexToArray(publicKey));
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return encUtils.sanitizeBytes((keyPair as any).pub.getX().toString(16), 2);
+  return encUtils.sanitizeBytes(keyPair.getPublic().getX().toString(16), 2);
 }
 
 export function getStarkPublicKey(keyPair: ec.KeyPair): string {
