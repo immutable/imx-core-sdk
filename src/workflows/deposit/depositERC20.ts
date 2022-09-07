@@ -12,7 +12,7 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ERC20Deposit } from '../../types';
+import { ImmutableXConfiguration, ERC20Amount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
 
 interface ERC20TokenData {
@@ -70,7 +70,7 @@ async function executeRegisterAndDepositERC20(
 
 export async function depositERC20Workflow(
   signer: Signer,
-  deposit: ERC20Deposit,
+  deposit: ERC20Amount,
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   tokensApi: TokensApi,

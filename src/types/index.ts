@@ -1,8 +1,4 @@
-import {
-  MintRequest,
-  GetSignableTransferRequestV1,
-  Configuration as APIConfiguration,
-} from '../api';
+import { MintRequest, Configuration as APIConfiguration } from '../api';
 import { Signer as EthSigner } from '@ethersproject/abstract-signer';
 
 export { EthSigner };
@@ -31,9 +27,6 @@ export interface ImmutableXConfiguration {
 }
 
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;
-export type UnsignedTransferRequest = GetSignableTransferRequestV1;
 
-export * from './deposit';
-export * from './withdrawal';
-export * from './token';
-export * from './signable-withdrawal';
+export * from './tokens';
+export * from './custom-interfaces';
