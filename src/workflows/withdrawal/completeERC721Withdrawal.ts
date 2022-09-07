@@ -254,7 +254,7 @@ export async function completeERC721WithdrawalWorkflow(
       ),
     )
     .catch(error => {
-      if (error.response.status === 404) {
+      if (error.response?.status === 404) {
         console.log(error.response); // token is already minted on L1
         return completeERC721Withdrawal(
           signer,
