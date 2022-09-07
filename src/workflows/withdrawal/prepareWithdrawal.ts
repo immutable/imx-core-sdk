@@ -1,7 +1,7 @@
 import { WithdrawalsApi, CreateWithdrawalResponse } from '../../api';
 import {
-  convertToSignableRequestFormat,
-  PrepareWithdrawalRequest,
+  convertToSignableToken,
+  TokenAmount,
   WalletConnection,
 } from '../../types';
 import { signMessage } from '../../utils';
@@ -11,23 +11,21 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception');
 };
 
-type PrepareWithdrawalWorkflowParams = PrepareWithdrawalRequest &
+type PrepareWithdrawalWorkflowParams = TokenAmount &
   WalletConnection & {
     withdrawalsApi: WithdrawalsApi;
   };
 
-export async function prepareWithdrawalWorkflow({
-  ethSigner,
-  starkSigner,
-  token,
-  quantity,
-  withdrawalsApi,
-}: PrepareWithdrawalWorkflowParams): Promise<CreateWithdrawalResponse> {
+export async function prepareWithdrawalWorkflow(
+  params: PrepareWithdrawalWorkflowParams,
+): Promise<CreateWithdrawalResponse> {
+  const { ethSigner, starkSigner, withdrawalsApi } = params;
+  const withdrawalAmount = params.type === 'ERC721' ? '1' : params.amount;
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
       user: await ethSigner.getAddress(),
-      token: convertToSignableRequestFormat(token),
-      amount: quantity.toString(),
+      token: convertToSignableToken(params),
+      amount: withdrawalAmount,
     },
   });
 
@@ -44,7 +42,7 @@ export async function prepareWithdrawalWorkflow({
   const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
     createWithdrawalRequest: {
       stark_key: assertIsDefined(signableWithdrawalResult.data.stark_key),
-      amount: quantity.toString(),
+      amount: withdrawalAmount,
       asset_id: assertIsDefined(signableWithdrawalResult.data.asset_id),
       vault_id: assertIsDefined(signableWithdrawalResult.data.vault_id),
       nonce: assertIsDefined(signableWithdrawalResult.data.nonce),
