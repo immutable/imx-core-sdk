@@ -18,6 +18,7 @@ export interface ETHToken {
 export interface ETHAmount extends ETHToken {
   amount: string;
 }
+
 export interface ERC20Amount extends ERC20Token {
   amount: string;
 }
@@ -53,3 +54,4 @@ export function convertToSignableToken(token: TokenAmount): SignableToken {
       };
   }
 }
+
