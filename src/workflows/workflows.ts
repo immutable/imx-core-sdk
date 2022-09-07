@@ -9,7 +9,6 @@ import {
   UsersApi,
   TransfersApi,
   WithdrawalsApi,
-  GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
   GetSignableTradeRequest,
   TradesApi,
@@ -17,17 +16,16 @@ import {
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
-  UnsignedBatchNftTransferRequest,
-  ERC20Deposit,
-  ERC721Deposit,
-  ETHDeposit,
-  TokenDeposit,
   ImmutableXConfiguration,
-  ERC721Withdrawal,
-  ERC20Withdrawal,
-  TokenWithdrawal,
-  PrepareWithdrawalRequest,
   WalletConnection,
+  ERC721Token,
+  UnsignedOrderRequest,
+  NftTransferDetails,
+  TokenAmount,
+  ETHAmount,
+  ERC20Amount,
+  AnyToken,
+  ERC20Token,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import {
@@ -42,7 +40,7 @@ import {
   depositEthWorkflow,
 } from './deposit';
 import {
-  completeERC20WithdrawalWorfklow,
+  completeERC20WithdrawalWorkflow,
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
@@ -130,7 +128,7 @@ export class Workflows {
 
   public async batchNftTransfer(
     walletConnection: WalletConnection,
-    request: UnsignedBatchNftTransferRequest,
+    request: Array<NftTransferDetails>,
   ) {
     await this.validateChain(walletConnection.ethSigner);
 
@@ -141,7 +139,7 @@ export class Workflows {
     });
   }
 
-  public async deposit(signer: Signer, deposit: TokenDeposit) {
+  public async deposit(signer: Signer, deposit: TokenAmount) {
     switch (deposit.type) {
       case 'ETH':
         return this.depositEth(signer, deposit);
@@ -152,7 +150,7 @@ export class Workflows {
     }
   }
 
-  private async depositEth(signer: Signer, deposit: ETHDeposit) {
+  private async depositEth(signer: Signer, deposit: ETHAmount) {
     await this.validateChain(signer);
 
     return depositEthWorkflow(
@@ -165,7 +163,7 @@ export class Workflows {
     );
   }
 
-  private async depositERC20(signer: Signer, deposit: ERC20Deposit) {
+  private async depositERC20(signer: Signer, deposit: ERC20Amount) {
     await this.validateChain(signer);
 
     return depositERC20Workflow(
@@ -179,7 +177,7 @@ export class Workflows {
     );
   }
 
-  private async depositERC721(signer: Signer, deposit: ERC721Deposit) {
+  private async depositERC721(signer: Signer, deposit: ERC721Token) {
     await this.validateChain(signer);
 
     return depositERC721Workflow(
@@ -194,7 +192,7 @@ export class Workflows {
 
   public async prepareWithdrawal(
     walletConnection: WalletConnection,
-    request: PrepareWithdrawalRequest,
+    request: TokenAmount,
   ) {
     await this.validateChain(walletConnection.ethSigner);
 
@@ -208,7 +206,7 @@ export class Workflows {
   public completeWithdrawal(
     signer: Signer,
     starkPublicKey: string,
-    token: TokenWithdrawal,
+    token: AnyToken,
   ) {
     switch (token.type) {
       case 'ETH':
@@ -235,11 +233,11 @@ export class Workflows {
   private async completeERC20Withdrawal(
     signer: Signer,
     starkPublicKey: string,
-    token: ERC20Withdrawal,
+    token: ERC20Token,
   ) {
     await this.validateChain(signer);
 
-    return completeERC20WithdrawalWorfklow(
+    return completeERC20WithdrawalWorkflow(
       signer,
       starkPublicKey,
       token,
@@ -252,7 +250,7 @@ export class Workflows {
   private async completeERC721Withdrawal(
     signer: Signer,
     starkPublicKey: string,
-    token: ERC721Withdrawal,
+    token: ERC721Token,
   ) {
     await this.validateChain(signer);
 
@@ -269,7 +267,7 @@ export class Workflows {
 
   public async createOrder(
     walletConnection: WalletConnection,
-    request: GetSignableOrderRequest,
+    request: UnsignedOrderRequest,
   ) {
     await this.validateChain(walletConnection.ethSigner);
 

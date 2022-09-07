@@ -7,7 +7,7 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ETHDeposit } from '../../types';
+import { ImmutableXConfiguration, ETHAmount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
 
 interface ETHTokenData {
@@ -60,7 +60,7 @@ async function executeDepositEth(
 
 export async function depositEthWorkflow(
   signer: Signer,
-  deposit: ETHDeposit,
+  deposit: ETHAmount,
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   encodingApi: EncodingApi,

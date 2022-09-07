@@ -1,14 +1,18 @@
 import {
   OrdersApi,
   OrdersApiCreateOrderRequest,
-  GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
+  GetSignableOrderRequest,
 } from '../api';
-import { WalletConnection } from '../types';
+import {
+  convertToSignableToken,
+  UnsignedOrderRequest,
+  WalletConnection,
+} from '../types';
 import { signRaw } from '../utils';
 
 type CreateOrderWorkflowParams = WalletConnection & {
-  request: GetSignableOrderRequest;
+  request: UnsignedOrderRequest;
   ordersApi: OrdersApi;
 };
 
@@ -23,8 +27,22 @@ export async function createOrderWorkflow({
   request,
   ordersApi,
 }: CreateOrderWorkflowParams) {
+  const ethAddress = await ethSigner.getAddress();
+
+  const amountSell = request.sell.type === 'ERC721' ? '1' : request.sell.amount;
+  const amountBuy = request.buy.type === 'ERC721' ? '1' : request.buy.amount;
+  const getSignableOrderRequest: GetSignableOrderRequest = {
+    user: ethAddress,
+    amount_buy: amountBuy,
+    token_buy: convertToSignableToken(request.buy),
+    amount_sell: amountSell,
+    token_sell: convertToSignableToken(request.sell),
+    fees: request.fees,
+    expiration_timestamp: request.expiration_timestamp,
+  };
+
   const getSignableOrderResponse = await ordersApi.getSignableOrder({
-    getSignableOrderRequestV3: request,
+    getSignableOrderRequestV3: getSignableOrderRequest,
   });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
@@ -33,8 +51,6 @@ export async function createOrderWorkflow({
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
   const starkSignature = await starkSigner.signMessage(payloadHash);
-
-  const ethAddress = await ethSigner.getAddress();
 
   const resp = getSignableOrderResponse.data;
 
