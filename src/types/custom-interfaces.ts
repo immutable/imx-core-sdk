@@ -1,4 +1,4 @@
-import { TokenAmount } from './signable-token';
+import { TokenAmount } from './tokens';
 import { FeeEntry } from '../api';
 
 // These custom interfaces are used because API.SignableToken is not yet a union type due to OAS 2.0 spec not supporting `OneOf`
