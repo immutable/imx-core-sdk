@@ -29,12 +29,14 @@ export async function createOrderWorkflow({
 }: CreateOrderWorkflowParams) {
   const ethAddress = await ethSigner.getAddress();
 
+  const amountSell = request.sell.type === 'ERC721' ? '1' : request.sell.amount;
+  const amountBuy = request.buy.type === 'ERC721' ? '1' : request.buy.amount;
   const getSignableOrderRequest: GetSignableOrderRequest = {
     user: ethAddress,
-    amount_buy: request.buy.amount,
-    token_buy: convertToSignableToken(request.buy.token),
-    amount_sell: request.sell.amount,
-    token_sell: convertToSignableToken(request.sell.token),
+    amount_buy: amountBuy,
+    token_buy: convertToSignableToken(request.buy),
+    amount_sell: amountSell,
+    token_sell: convertToSignableToken(request.sell),
     fees: request.fees,
     expiration_timestamp: request.expiration_timestamp,
   };

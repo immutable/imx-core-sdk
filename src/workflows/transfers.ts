@@ -29,11 +29,12 @@ export async function transfersWorkflow({
 }: TransfersWorkflowParams): Promise<CreateTransferResponseV1> {
   const ethAddress = await ethSigner.getAddress();
 
+  const transferAmount = request.type === 'ERC721' ? '1' : request.amount;
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
       sender: ethAddress,
-      token: convertToSignableToken(request.token),
-      amount: request.amount,
+      token: convertToSignableToken(request),
+      amount: transferAmount,
       receiver: request.receiver,
     },
   });

@@ -28,7 +28,5 @@ export interface ImmutableXConfiguration {
 
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;
 
-export * from './deposit';
-export * from './withdrawal';
 export * from './signable-token';
 export * from './custom-interfaces';

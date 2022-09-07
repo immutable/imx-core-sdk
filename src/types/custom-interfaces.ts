@@ -1,4 +1,4 @@
-import { AnyToken } from './signable-token';
+import { TokenAmount } from './signable-token';
 import { FeeEntry } from '../api';
 
 // These custom interfaces are used because API.SignableToken is not yet a union type due to OAS 2.0 spec not supporting `OneOf`
@@ -6,22 +6,8 @@ import { FeeEntry } from '../api';
 // SignableToken is replaced with AnyToken
 
 export interface UnsignedOrderRequest {
-  buy: {
-    /**
-     * Fee-exclusive amount to buy the asset
-     * @type {string}
-     */
-    amount: string;
-    token: AnyToken;
-  };
-  sell: {
-    /**
-     * Amount to sell (quantity)
-     * @type {string}
-     */
-    amount: string;
-    token: AnyToken;
-  };
+  buy: TokenAmount;
+  sell: TokenAmount;
   /**
    * ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour
    * @type {number}
@@ -36,21 +22,14 @@ export interface UnsignedOrderRequest {
   fees?: Array<FeeEntry>;
 }
 
-export interface UnsignedTransferRequest {
-  /**
-   * Amount of the token to transfer
-   * @type {string}
-   * @memberof UnsignedTransferRequest
-   */
-  amount: string;
+export type UnsignedTransferRequest = TokenAmount & {
   /**
    * Ethereum address of the receiving user
    * @type {string}
    * @memberof UnsignedTransferRequest
    */
   receiver: string;
-  token: AnyToken;
-}
+};
 
 export interface NftTransferDetails {
   /**

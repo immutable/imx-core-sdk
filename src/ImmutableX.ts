@@ -1,10 +1,9 @@
 import {
+  AnyToken,
   EthSigner,
   ImmutableXConfiguration,
   NftTransferDetails,
-  PrepareWithdrawalRequest,
-  TokenDeposit,
-  TokenWithdrawal,
+  TokenAmount,
   UnsignedMintRequest,
   UnsignedOrderRequest,
   UnsignedTransferRequest,
@@ -50,7 +49,7 @@ export class ImmutableX {
   /**
    * Deposits
    */
-  public deposit(signer: EthSigner, deposit: TokenDeposit) {
+  public deposit(signer: EthSigner, deposit: TokenAmount) {
     return this.workflows.deposit(signer, deposit);
   }
 
@@ -231,7 +230,7 @@ export class ImmutableX {
 
   public prepareWithdrawal(
     walletConnection: WalletConnection,
-    request: PrepareWithdrawalRequest,
+    request: TokenAmount,
   ) {
     return this.workflows.prepareWithdrawal(walletConnection, request);
   }
@@ -239,7 +238,7 @@ export class ImmutableX {
   public completeWithdrawal(
     signer: EthSigner,
     starkPublicKey: string,
-    token: TokenWithdrawal,
+    token: AnyToken,
   ) {
     return this.workflows.completeWithdrawal(signer, starkPublicKey, token);
   }
