@@ -1,5 +1,4 @@
 import { Signer } from '@ethersproject/abstract-signer';
-
 import {
   DepositsApi,
   EncodingApi,
@@ -12,6 +11,14 @@ import {
   GetSignableCancelOrderRequest,
   GetSignableTradeRequest,
   TradesApi,
+  ProjectsApi,
+  CreateProjectRequest,
+  CollectionsApi,
+  CreateCollectionRequest,
+  UpdateCollectionRequest,
+  MetadataApi,
+  AddMetadataSchemaToCollectionRequest,
+  MetadataSchemaRequest,
 } from '../api';
 import {
   UnsignedMintRequest,
@@ -26,6 +33,7 @@ import {
   ERC20Amount,
   AnyToken,
   ERC20Token,
+  EthSigner,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import {
@@ -47,6 +55,7 @@ import {
 } from './withdrawal';
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
+import { generateIMXAuthorisationHeaders } from '../utils';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -58,22 +67,30 @@ export class Workflows {
   private readonly transfersApi: TransfersApi;
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
+  private readonly projectsApi: ProjectsApi;
+  private readonly collectionsApi: CollectionsApi;
+  private readonly metadataApi: MetadataApi;
 
   private isChainValid(chainID: number) {
     return chainID === this.config.ethConfiguration.chainID;
   }
 
   constructor(protected config: ImmutableXConfiguration) {
+    const { apiConfiguration } = config;
+
     this.config = config;
-    this.depositsApi = new DepositsApi(config.apiConfiguration);
-    this.encodingApi = new EncodingApi(config.apiConfiguration);
-    this.mintsApi = new MintsApi(config.apiConfiguration);
-    this.ordersApi = new OrdersApi(config.apiConfiguration);
-    this.tokensApi = new TokensApi(config.apiConfiguration);
-    this.tradesApi = new TradesApi(config.apiConfiguration);
-    this.transfersApi = new TransfersApi(config.apiConfiguration);
-    this.usersApi = new UsersApi(config.apiConfiguration);
-    this.withdrawalsApi = new WithdrawalsApi(config.apiConfiguration);
+    this.depositsApi = new DepositsApi(apiConfiguration);
+    this.encodingApi = new EncodingApi(apiConfiguration);
+    this.mintsApi = new MintsApi(apiConfiguration);
+    this.ordersApi = new OrdersApi(apiConfiguration);
+    this.tokensApi = new TokensApi(apiConfiguration);
+    this.tradesApi = new TradesApi(apiConfiguration);
+    this.transfersApi = new TransfersApi(apiConfiguration);
+    this.usersApi = new UsersApi(apiConfiguration);
+    this.withdrawalsApi = new WithdrawalsApi(apiConfiguration);
+    this.projectsApi = new ProjectsApi(apiConfiguration);
+    this.collectionsApi = new CollectionsApi(apiConfiguration);
+    this.metadataApi = new MetadataApi(apiConfiguration);
   }
 
   private async validateChain(signer: Signer) {
@@ -301,6 +318,111 @@ export class Workflows {
       ...walletConnection,
       request,
       tradesApi: this.tradesApi,
+    });
+  }
+
+  /**
+   * IMX authorisation header functions
+   */
+  public async createProject(
+    ethSigner: EthSigner,
+    createProjectRequest: CreateProjectRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.projectsApi.createProject({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      createProjectRequest,
+    });
+  }
+
+  public async getProject(ethSigner: EthSigner, id: string) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.projectsApi.getProject({
+      id,
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+    });
+  }
+
+  public async getProjects(
+    ethSigner: EthSigner,
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: string,
+    direction?: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.projectsApi.getProjects({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+    });
+  }
+
+  public async createCollection(
+    ethSigner: EthSigner,
+    createCollectionRequest: CreateCollectionRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.collectionsApi.createCollection({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      createCollectionRequest,
+    });
+  }
+
+  public async updateCollection(
+    ethSigner: EthSigner,
+    address: string,
+    updateCollectionRequest: UpdateCollectionRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.collectionsApi.updateCollection({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      address,
+      updateCollectionRequest,
+    });
+  }
+
+  public async addMetadataSchemaToCollection(
+    ethSigner: EthSigner,
+    address: string,
+    addMetadataSchemaToCollectionRequest: AddMetadataSchemaToCollectionRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.metadataApi.addMetadataSchemaToCollection({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      addMetadataSchemaToCollectionRequest,
+      address,
+    });
+  }
+
+  public async updateMetadataSchemaByName(
+    ethSigner: EthSigner,
+    address: string,
+    name: string,
+    metadataSchemaRequest: MetadataSchemaRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.metadataApi.updateMetadataSchemaByName({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      address,
+      name,
+      metadataSchemaRequest,
     });
   }
 }
