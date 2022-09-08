@@ -48,8 +48,8 @@ export class ImmutableX {
   /**
    * Deposits
    */
-  public deposit(signer: EthSigner, deposit: TokenAmount) {
-    return this.workflows.deposit(signer, deposit);
+  public deposit(ethSigner: EthSigner, deposit: TokenAmount) {
+    return this.workflows.deposit(ethSigner, deposit);
   }
 
   public getDeposit(requestParameters: API.DepositsApiGetDepositRequest) {
@@ -86,10 +86,10 @@ export class ImmutableX {
    * Collections
    */
   public createCollection(
-    signer: EthSigner,
+    ethSigner: EthSigner,
     requestParameters: API.CreateCollectionRequest,
   ) {
-    return this.workflows.createCollection(signer, requestParameters);
+    return this.workflows.createCollection(ethSigner, requestParameters);
   }
 
   public getCollection(
@@ -111,23 +111,27 @@ export class ImmutableX {
   }
 
   public updateCollection(
-    signer: EthSigner,
+    ethSigner: EthSigner,
     address: string,
     requestParameters: API.UpdateCollectionRequest,
   ) {
-    return this.workflows.updateCollection(signer, address, requestParameters);
+    return this.workflows.updateCollection(
+      ethSigner,
+      address,
+      requestParameters,
+    );
   }
 
   /**
    * /metadata
    */
   public addMetadataSchemaToCollection(
-    signer: EthSigner,
+    ethSigner: EthSigner,
     address: string,
     requestParameters: API.AddMetadataSchemaToCollectionRequest,
   ) {
     return this.workflows.addMetadataSchemaToCollection(
-      signer,
+      ethSigner,
       address,
       requestParameters,
     );
@@ -140,13 +144,13 @@ export class ImmutableX {
   }
 
   public updateMetadataSchemaByName(
-    signer: EthSigner,
+    ethSigner: EthSigner,
     address: string,
     name: string,
     requestParameters: API.MetadataSchemaRequest,
   ) {
     return this.workflows.updateMetadataSchemaByName(
-      signer,
+      ethSigner,
       address,
       name,
       requestParameters,
@@ -157,25 +161,25 @@ export class ImmutableX {
    * Projects
    */
   public async createProject(
-    signer: EthSigner,
+    ethSigner: EthSigner,
     requestParameters: API.CreateProjectRequest,
   ) {
-    return this.workflows.createProject(signer, requestParameters);
+    return this.workflows.createProject(ethSigner, requestParameters);
   }
 
-  public async getProject(signer: EthSigner, id: string) {
-    return this.workflows.getProject(signer, id);
+  public async getProject(ethSigner: EthSigner, id: string) {
+    return this.workflows.getProject(ethSigner, id);
   }
 
   public async getProjects(
-    signer: EthSigner,
+    ethSigner: EthSigner,
     pageSize?: number,
     cursor?: string,
     orderBy?: string,
     direction?: string,
   ) {
     return this.workflows.getProjects(
-      signer,
+      ethSigner,
       pageSize,
       cursor,
       orderBy,
@@ -205,8 +209,8 @@ export class ImmutableX {
     return this.mintsApi.listMints(requestParameters);
   }
 
-  public mint(signer: EthSigner, request: UnsignedMintRequest) {
-    return this.workflows.mint(signer, request);
+  public mint(ethSigner: EthSigner, request: UnsignedMintRequest) {
+    return this.workflows.mint(ethSigner, request);
   }
 
   /**
@@ -232,11 +236,11 @@ export class ImmutableX {
   }
 
   public completeWithdrawal(
-    signer: EthSigner,
+    ethSigner: EthSigner,
     starkPublicKey: string,
     token: AnyToken,
   ) {
-    return this.workflows.completeWithdrawal(signer, starkPublicKey, token);
+    return this.workflows.completeWithdrawal(ethSigner, starkPublicKey, token);
   }
 
   /**
