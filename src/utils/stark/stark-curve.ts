@@ -28,15 +28,6 @@ G = (874739451078007766457464989774322083649278607533249481151382481072868806602
 https://docs.starkware.co/starkex-v4/crypto/stark-curve
 */
 
-const prime = new BN(
-  '800000000000011000000000000000000000000000000000000000000000001',
-  16,
-);
-const order = new BN(
-  '08000000 00000010 ffffffff ffffffff b781126d cae7b232 1e66a241 adc64d2f',
-  16,
-);
-
 const constantPointsHex = [
   [
     '49ee3eba8c1600700ee1b87eb599f16716b0b1022947733551fde4050ca6804',
@@ -52,10 +43,10 @@ export const starkEc = new ec(
   new curves.PresetCurve({
     type: 'short',
     prime: null,
-    p: prime as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    p: '08000000 00000011 00000000 00000000 00000000 00000000 00000000 00000001',
     a: '00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000001',
     b: '06f21413 efbe40de 150e596d 72f7a8c5 609ad26c 15c915c1 f4cdfcb9 9cee9e89',
-    n: order as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    n: '08000000 00000010 ffffffff ffffffff b781126d cae7b232 1e66a241 adc64d2f',
     hash: hashJS.sha256,
     gRed: false,
     g: constantPointsHex[1],
