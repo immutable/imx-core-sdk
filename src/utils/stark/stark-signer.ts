@@ -1,8 +1,26 @@
 import { ec } from 'elliptic';
 import * as encUtils from 'enc-utils';
 import { StarkSigner } from '../../types';
-import { fixMessage, starkEc } from './stark-curve';
+import { starkEc } from './stark-curve';
 import { getStarkPublicKey } from './stark-curve';
+import BN from 'bn.js';
+import { Errors } from '../../workflows/errors';
+
+function fixMessage(msg: string) {
+  msg = encUtils.removeHexPrefix(msg);
+  msg = new BN(msg, 16).toString(16);
+
+  if (msg.length <= 62) {
+    // In this case, msg should not be transformed, as the byteLength() is at most 31,
+    // so delta < 0 (see _truncateToN).
+    return msg;
+  }
+  if (msg.length !== 63) {
+    throw new Error(Errors.StarkCurveInvalidMessageLength);
+  }
+  // In this case delta will be 4 so we perform a shift-left of 4 bits by adding a ZERO_BN.
+  return `${msg}0`;
+}
 
 class StandardStarkSigner implements StarkSigner {
   constructor(private keyPair: ec.KeyPair) {}
