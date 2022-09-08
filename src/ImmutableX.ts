@@ -11,7 +11,6 @@ import {
 } from './types';
 import { Workflows } from './workflows';
 import * as API from './api';
-import { generateIMXAuthorisationHeaders } from './utils';
 
 export class ImmutableX {
   private depositsApi: API.DepositsApi;
@@ -87,9 +86,10 @@ export class ImmutableX {
    * Collections
    */
   public createCollection(
-    requestParameters: API.CollectionsApiCreateCollectionRequest,
+    signer: EthSigner,
+    requestParameters: API.CreateCollectionRequest,
   ) {
-    return this.collectionApi.createCollection(requestParameters);
+    return this.workflows.createCollection(signer, requestParameters);
   }
 
   public getCollection(
@@ -111,18 +111,26 @@ export class ImmutableX {
   }
 
   public updateCollection(
-    requestParameters: API.CollectionsApiUpdateCollectionRequest,
+    signer: EthSigner,
+    address: string,
+    requestParameters: API.UpdateCollectionRequest,
   ) {
-    return this.collectionApi.updateCollection(requestParameters);
+    return this.workflows.updateCollection(signer, address, requestParameters);
   }
 
   /**
    * /metadata
    */
   public addMetadataSchemaToCollection(
-    requestParameters: API.MetadataApiAddMetadataSchemaToCollectionRequest,
+    signer: EthSigner,
+    address: string,
+    requestParameters: API.AddMetadataSchemaToCollectionRequest,
   ) {
-    return this.metadataApi.addMetadataSchemaToCollection(requestParameters);
+    return this.workflows.addMetadataSchemaToCollection(
+      signer,
+      address,
+      requestParameters,
+    );
   }
 
   public getMetadataSchema(
@@ -132,59 +140,47 @@ export class ImmutableX {
   }
 
   public updateMetadataSchemaByName(
-    requestParameters: API.MetadataApiUpdateMetadataSchemaByNameRequest,
+    signer: EthSigner,
+    address: string,
+    name: string,
+    requestParameters: API.MetadataSchemaRequest,
   ) {
-    return this.metadataApi.updateMetadataSchemaByName(requestParameters);
+    return this.workflows.updateMetadataSchemaByName(
+      signer,
+      address,
+      name,
+      requestParameters,
+    );
   }
 
   /**
    * Projects
    */
-  // Alternative createProject & getProject that handle auth headers internally.
-  // WHY:
-  // - hides the unnecessary complexity around generating IMX signature from the user
-  // - unlocks the possibility to change the auth mechanics without breaking the interface
-  // - AxiosOptions not exposed, can be easily added later if needed
   public async createProject(
-    createProjectRequest: API.CreateProjectRequest,
-    ethSigner: EthSigner,
+    signer: EthSigner,
+    requestParameters: API.CreateProjectRequest,
   ) {
-    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
-
-    return this.projectsApi.createProject({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-      createProjectRequest: createProjectRequest,
-    });
+    return this.workflows.createProject(signer, requestParameters);
   }
 
-  public async getProject(id: string, ethSigner: EthSigner) {
-    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
-
-    return this.projectsApi.getProject({
-      id: id,
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-    });
+  public async getProject(signer: EthSigner, id: string) {
+    return this.workflows.getProject(signer, id);
   }
 
   public async getProjects(
-    ethSigner: EthSigner,
+    signer: EthSigner,
     pageSize?: number,
     cursor?: string,
     orderBy?: string,
     direction?: string,
   ) {
-    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
-
-    return this.projectsApi.getProjects({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-      pageSize: pageSize,
-      cursor: cursor,
-      orderBy: orderBy,
-      direction: direction,
-    });
+    return this.workflows.getProjects(
+      signer,
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+    );
   }
 
   /**
