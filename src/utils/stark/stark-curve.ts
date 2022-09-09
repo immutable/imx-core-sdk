@@ -1,6 +1,4 @@
 import * as encUtils from 'enc-utils';
-import BN from 'bn.js';
-import { Errors } from '../../workflows/errors';
 import hashJS from 'hash.js';
 import { curves, ec } from 'elliptic';
 
@@ -28,17 +26,6 @@ G = (874739451078007766457464989774322083649278607533249481151382481072868806602
 https://docs.starkware.co/starkex-v4/crypto/stark-curve
 */
 
-const constantPointsHex = [
-  [
-    '49ee3eba8c1600700ee1b87eb599f16716b0b1022947733551fde4050ca6804',
-    '3ca0cfe4b3bc6ddf346d49d06ea0ed34e621062c0e056c1d0405d266e10268a',
-  ],
-  [
-    '1ef15c18599971b7beced415a40f0c7deacfd9b0d1819e03d723d8bc943cfca',
-    '5668060aa49730b7be4801df46ec62de53ecd11abe43a32873000c36e8dc1f',
-  ],
-];
-
 export const starkEc = new ec(
   new curves.PresetCurve({
     type: 'short',
@@ -49,25 +36,12 @@ export const starkEc = new ec(
     n: '08000000 00000010 ffffffff ffffffff b781126d cae7b232 1e66a241 adc64d2f',
     hash: hashJS.sha256,
     gRed: false,
-    g: constantPointsHex[1],
+    g: [
+      '1ef15c18599971b7beced415a40f0c7deacfd9b0d1819e03d723d8bc943cfca',
+      '5668060aa49730b7be4801df46ec62de53ecd11abe43a32873000c36e8dc1f',
+    ],
   }),
 );
-
-export function fixMessage(msg: string) {
-  msg = encUtils.removeHexPrefix(msg);
-  msg = new BN(msg, 16).toString(16);
-
-  if (msg.length <= 62) {
-    // In this case, msg should not be transformed, as the byteLength() is at most 31,
-    // so delta < 0 (see _truncateToN).
-    return msg;
-  }
-  if (msg.length !== 63) {
-    throw new Error(Errors.StarkCurveInvalidMessageLength);
-  }
-  // In this case delta will be 4 so we perform a shift-left of 4 bits by adding a ZERO_BN.
-  return `${msg}0`;
-}
 
 function getXCoordinate(publicKey: string): string {
   const keyPair = starkEc.keyFromPublic(encUtils.hexToArray(publicKey));
