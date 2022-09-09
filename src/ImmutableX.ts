@@ -112,12 +112,12 @@ export class ImmutableX {
 
   public updateCollection(
     ethSigner: EthSigner,
-    address: string,
+    collectionAddress: string,
     requestParameters: API.UpdateCollectionRequest,
   ) {
     return this.workflows.updateCollection(
       ethSigner,
-      address,
+      collectionAddress,
       requestParameters,
     );
   }
