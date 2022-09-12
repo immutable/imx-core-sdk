@@ -78,7 +78,7 @@ export class ImmutableX {
     return this.assetApi.getAsset(requestParameters);
   }
 
-  public listAsset(requestParameters?: API.AssetsApiListAssetsRequest) {
+  public listAssets(requestParameters?: API.AssetsApiListAssetsRequest) {
     return this.assetApi.listAssets(requestParameters);
   }
 
