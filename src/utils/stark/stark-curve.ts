@@ -43,7 +43,7 @@ export const starkEc = new ec(
 );
 
 // Generates a new private key on the Stark-friendly elliptic curve.
-export function generatePrivateKey(): string {
+export function generateStarkPrivateKey(): string {
   const keyPair = starkEc.genKeyPair();
   return keyPair.getPrivate('hex');
 }

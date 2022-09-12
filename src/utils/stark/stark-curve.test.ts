@@ -1,7 +1,7 @@
-import { generatePrivateKey } from './stark-curve';
+import { generateStarkPrivateKey } from './stark-curve';
 
 describe('Key generation', () => {
   it('should generate random Stark key', async () => {
-    expect(generatePrivateKey()).not.toEqual(generatePrivateKey());
+    expect(generateStarkPrivateKey()).not.toEqual(generateStarkPrivateKey());
   });
 });
