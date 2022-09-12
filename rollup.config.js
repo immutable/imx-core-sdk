@@ -60,6 +60,7 @@ export default [
       }),
       terser(),
     ],
+    context: 'window',
   },
   {
     input: './dist/src/index.d.ts',
