@@ -2,15 +2,19 @@ import { ec } from 'elliptic';
 import * as encUtils from 'enc-utils';
 import { StarkSigner } from '../../types';
 import { starkEc } from './stark-curve';
-import { getStarkPublicKey } from './stark-curve';
 import BN from 'bn.js';
 import { Errors } from '../../workflows/errors';
 
-class StandardStarkSigner implements StarkSigner {
-  constructor(private keyPair: ec.KeyPair) {}
+export class StandardStarkSigner implements StarkSigner {
+  private keyPair: ec.KeyPair;
+
+  constructor(private privateKey: string) {
+    this.keyPair = starkEc.keyFromPrivate(privateKey, 'hex');
+  }
 
   public getAddress(): string {
-    return getStarkPublicKey(this.keyPair);
+    const xCoordinate = this.keyPair.getPublic().getX().toString('hex');
+    return encUtils.sanitizeHex(xCoordinate);
   }
 
   public async signMessage(msg: string): Promise<string> {
@@ -19,14 +23,14 @@ class StandardStarkSigner implements StarkSigner {
 
   private serialize(sig: ec.Signature): string {
     return encUtils.addHexPrefix(
-      encUtils.padLeft(sig.r.toString(16), 64) +
-        encUtils.padLeft(sig.s.toString(16), 64),
+      encUtils.padLeft(sig.r.toString('hex'), 64) +
+        encUtils.padLeft(sig.s.toString('hex'), 64),
     );
   }
 
   private fixMessage(msg: string) {
     msg = encUtils.removeHexPrefix(msg);
-    msg = new BN(msg, 16).toString(16);
+    msg = new BN(msg, 'hex').toString('hex');
 
     if (msg.length <= 62) {
       // In this case, msg should not be transformed, as the byteLength() is at most 31,
@@ -41,7 +45,6 @@ class StandardStarkSigner implements StarkSigner {
   }
 }
 
-export function createStarkSigner(privateKey: string): StarkSigner {
-  const keyPair = starkEc.keyFromPrivate(privateKey, 'hex');
-  return new StandardStarkSigner(keyPair);
+export function createStarkSigner(starkPrivateKey: string): StarkSigner {
+  return new StandardStarkSigner(starkPrivateKey);
 }

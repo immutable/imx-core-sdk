@@ -1,4 +1,3 @@
-import * as encUtils from 'enc-utils';
 import hashJS from 'hash.js';
 import { curves, ec } from 'elliptic';
 
@@ -42,16 +41,6 @@ export const starkEc = new ec(
     ],
   }),
 );
-
-function getXCoordinate(publicKey: string): string {
-  const keyPair = starkEc.keyFromPublic(encUtils.hexToArray(publicKey));
-  return encUtils.sanitizeBytes(keyPair.getPublic().getX().toString(16), 2);
-}
-
-export function getStarkPublicKey(keyPair: ec.KeyPair): string {
-  const pub = keyPair.getPublic(true, 'hex');
-  return encUtils.sanitizeHex(getXCoordinate(pub));
-}
 
 // Generates a new private key on the Stark-friendly elliptic curve.
 export function generatePrivateKey(): string {
