@@ -127,12 +127,12 @@ export class ImmutableX {
    */
   public addMetadataSchemaToCollection(
     ethSigner: EthSigner,
-    address: string,
+    collectionAddress: string,
     requestParameters: API.AddMetadataSchemaToCollectionRequest,
   ) {
     return this.workflows.addMetadataSchemaToCollection(
       ethSigner,
-      address,
+      collectionAddress,
       requestParameters,
     );
   }
@@ -145,13 +145,13 @@ export class ImmutableX {
 
   public updateMetadataSchemaByName(
     ethSigner: EthSigner,
-    address: string,
+    collectionAddress: string,
     name: string,
     requestParameters: API.MetadataSchemaRequest,
   ) {
     return this.workflows.updateMetadataSchemaByName(
       ethSigner,
-      address,
+      collectionAddress,
       name,
       requestParameters,
     );
