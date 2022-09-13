@@ -18,7 +18,7 @@ export class StandardStarkSigner implements StarkSigner {
   }
 
   public async signMessage(msg: string): Promise<string> {
-    return this.serialize(this.keyPair.sign(this.fixMessage(msg)));
+    return this.serialize(this.keyPair.sign(this.fixMsgHashLen(msg)));
   }
 
   private serialize(sig: ec.Signature): string {
@@ -28,7 +28,14 @@ export class StandardStarkSigner implements StarkSigner {
     );
   }
 
-  private fixMessage(msg: string) {
+  /*
+ The function _truncateToN in lib/elliptic/ec/index.js does a shift-right of delta bits,
+ if delta is positive, where
+   delta = msgHash.byteLength() * 8 - starkEx.n.bitLength().
+ This function does the opposite operation so that
+   _truncateToN(fixMsgHashLen(msgHash)) == msgHash.
+*/
+  private fixMsgHashLen(msg: string) {
     msg = encUtils.removeHexPrefix(msg);
     msg = new BN(msg, 'hex').toString('hex');
 

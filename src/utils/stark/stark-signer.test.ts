@@ -1,3 +1,4 @@
+import { Errors } from '../../workflows/errors';
 import { createStarkSigner } from './stark-signer';
 
 describe('StarkSigner', () => {
@@ -24,5 +25,18 @@ describe('StarkSigner', () => {
     const signature = await signer.signMessage(encodedMessage);
 
     expect(signature).toEqual(expectedSignature);
+  });
+
+  it('should throw an error if message is too long', async () => {
+    const privateKey =
+      '7CEFD165C3A374AC3E05170D699BF6549E371522883B447B284A3C16FC04CCC';
+    const encodedMessage =
+      'e2919c6f19f93d3b9e40c1eef10660bd12240a1520793a28ef21a7457037dd02';
+
+    const signer = createStarkSigner(privateKey);
+
+    expect(signer.signMessage(encodedMessage)).rejects.toThrow(
+      new Error(Errors.StarkCurveInvalidMessageLength),
+    );
   });
 });
