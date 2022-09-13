@@ -10,38 +10,82 @@ import {
   WalletConnection,
 } from './types';
 import { Workflows } from './workflows';
-import * as API from './api';
+import {
+  DepositsApi,
+  MintsApi,
+  OrdersApi,
+  TokensApi,
+  TradesApi,
+  TransfersApi,
+  UsersApi,
+  WithdrawalsApi,
+  BalancesApi,
+  AssetsApi,
+  CollectionsApi,
+  MetadataApi,
+  ProjectsApi,
+  DepositsApiGetDepositRequest,
+  DepositsApiListDepositsRequest,
+  AssetsApiGetAssetRequest,
+  AssetsApiListAssetsRequest,
+  CreateCollectionRequest,
+  CollectionsApiGetCollectionRequest,
+  CollectionsApiListCollectionFiltersRequest,
+  CollectionsApiListCollectionsRequest,
+  UpdateCollectionRequest,
+  AddMetadataSchemaToCollectionRequest,
+  MetadataApiGetMetadataSchemaRequest,
+  MetadataSchemaRequest,
+  CreateProjectRequest,
+  BalancesApiGetBalanceRequest,
+  BalancesApiListBalancesRequest,
+  MintsApiGetMintRequest,
+  MintsApiListMintsRequest,
+  WithdrawalsApiListWithdrawalsRequest,
+  WithdrawalsApiGetWithdrawalRequest,
+  UsersApiGetUsersRequest,
+  OrdersApiGetOrderRequest,
+  OrdersApiListOrdersRequest,
+  GetSignableCancelOrderRequest,
+  TradesApiGetTradeRequest,
+  TradesApiListTradesRequest,
+  GetSignableTradeRequest,
+  TokensApiGetTokenRequest,
+  TokensApiListTokensRequest,
+  TransfersApiGetTransferRequest,
+  TransfersApiListTransfersRequest,
+} from './api';
 
 export class ImmutableX {
-  private depositsApi: API.DepositsApi;
-  private mintsApi: API.MintsApi;
-  private ordersApi: API.OrdersApi;
-  private tokensApi: API.TokensApi;
-  private tradesApi: API.TradesApi;
-  private transfersApi: API.TransfersApi;
-  private usersApi: API.UsersApi;
-  private withdrawalsApi: API.WithdrawalsApi;
-  private balanceApi: API.BalancesApi;
-  private assetApi: API.AssetsApi;
-  private collectionApi: API.CollectionsApi;
-  private metadataApi: API.MetadataApi;
-  private projectsApi: API.ProjectsApi;
+  private depositsApi: DepositsApi;
+  private mintsApi: MintsApi;
+  private ordersApi: OrdersApi;
+  private tokensApi: TokensApi;
+  private tradesApi: TradesApi;
+  private transfersApi: TransfersApi;
+  private usersApi: UsersApi;
+  private withdrawalsApi: WithdrawalsApi;
+  private balanceApi: BalancesApi;
+  private assetApi: AssetsApi;
+  private collectionApi: CollectionsApi;
+  private metadataApi: MetadataApi;
+  private projectsApi: ProjectsApi;
   private workflows: Workflows;
 
   constructor(config: ImmutableXConfiguration) {
-    this.depositsApi = new API.DepositsApi(config.apiConfiguration);
-    this.mintsApi = new API.MintsApi(config.apiConfiguration);
-    this.ordersApi = new API.OrdersApi(config.apiConfiguration);
-    this.tokensApi = new API.TokensApi(config.apiConfiguration);
-    this.tradesApi = new API.TradesApi(config.apiConfiguration);
-    this.transfersApi = new API.TransfersApi(config.apiConfiguration);
-    this.usersApi = new API.UsersApi(config.apiConfiguration);
-    this.withdrawalsApi = new API.WithdrawalsApi(config.apiConfiguration);
-    this.balanceApi = new API.BalancesApi(config.apiConfiguration);
-    this.assetApi = new API.AssetsApi(config.apiConfiguration);
-    this.collectionApi = new API.CollectionsApi(config.apiConfiguration);
-    this.metadataApi = new API.MetadataApi(config.apiConfiguration);
-    this.projectsApi = new API.ProjectsApi(config.apiConfiguration);
+    this.depositsApi = new DepositsApi(config.apiConfiguration);
+    this.mintsApi = new MintsApi(config.apiConfiguration);
+    this.ordersApi = new OrdersApi(config.apiConfiguration);
+    this.tokensApi = new TokensApi(config.apiConfiguration);
+    this.tradesApi = new TradesApi(config.apiConfiguration);
+    this.transfersApi = new TransfersApi(config.apiConfiguration);
+    this.usersApi = new UsersApi(config.apiConfiguration);
+    this.withdrawalsApi = new WithdrawalsApi(config.apiConfiguration);
+    this.balanceApi = new BalancesApi(config.apiConfiguration);
+    this.assetApi = new AssetsApi(config.apiConfiguration);
+    this.collectionApi = new CollectionsApi(config.apiConfiguration);
+    this.metadataApi = new MetadataApi(config.apiConfiguration);
+    this.projectsApi = new ProjectsApi(config.apiConfiguration);
     this.workflows = new Workflows(config);
   }
 
@@ -52,11 +96,11 @@ export class ImmutableX {
     return this.workflows.deposit(ethSigner, deposit);
   }
 
-  public getDeposit(requestParameters: API.DepositsApiGetDepositRequest) {
+  public getDeposit(requestParameters: DepositsApiGetDepositRequest) {
     return this.depositsApi.getDeposit(requestParameters);
   }
 
-  public listDeposits(requestParameters?: API.DepositsApiListDepositsRequest) {
+  public listDeposits(requestParameters?: DepositsApiListDepositsRequest) {
     return this.depositsApi.listDeposits(requestParameters);
   }
 
@@ -74,11 +118,11 @@ export class ImmutableX {
   /**
    * Assets
    */
-  public getAsset(requestParameters: API.AssetsApiGetAssetRequest) {
+  public getAsset(requestParameters: AssetsApiGetAssetRequest) {
     return this.assetApi.getAsset(requestParameters);
   }
 
-  public listAssets(requestParameters?: API.AssetsApiListAssetsRequest) {
+  public listAssets(requestParameters?: AssetsApiListAssetsRequest) {
     return this.assetApi.listAssets(requestParameters);
   }
 
@@ -87,25 +131,23 @@ export class ImmutableX {
    */
   public createCollection(
     ethSigner: EthSigner,
-    requestParameters: API.CreateCollectionRequest,
+    requestParameters: CreateCollectionRequest,
   ) {
     return this.workflows.createCollection(ethSigner, requestParameters);
   }
 
-  public getCollection(
-    requestParameters: API.CollectionsApiGetCollectionRequest,
-  ) {
+  public getCollection(requestParameters: CollectionsApiGetCollectionRequest) {
     return this.collectionApi.getCollection(requestParameters);
   }
 
   public listCollectionFilters(
-    requestParameters: API.CollectionsApiListCollectionFiltersRequest,
+    requestParameters: CollectionsApiListCollectionFiltersRequest,
   ) {
     return this.collectionApi.listCollectionFilters(requestParameters);
   }
 
   public listCollections(
-    requestParameters?: API.CollectionsApiListCollectionsRequest,
+    requestParameters?: CollectionsApiListCollectionsRequest,
   ) {
     return this.collectionApi.listCollections(requestParameters);
   }
@@ -113,7 +155,7 @@ export class ImmutableX {
   public updateCollection(
     ethSigner: EthSigner,
     collectionAddress: string,
-    requestParameters: API.UpdateCollectionRequest,
+    requestParameters: UpdateCollectionRequest,
   ) {
     return this.workflows.updateCollection(
       ethSigner,
@@ -128,7 +170,7 @@ export class ImmutableX {
   public addMetadataSchemaToCollection(
     ethSigner: EthSigner,
     collectionAddress: string,
-    requestParameters: API.AddMetadataSchemaToCollectionRequest,
+    requestParameters: AddMetadataSchemaToCollectionRequest,
   ) {
     return this.workflows.addMetadataSchemaToCollection(
       ethSigner,
@@ -138,7 +180,7 @@ export class ImmutableX {
   }
 
   public getMetadataSchema(
-    requestParameters: API.MetadataApiGetMetadataSchemaRequest,
+    requestParameters: MetadataApiGetMetadataSchemaRequest,
   ) {
     return this.metadataApi.getMetadataSchema(requestParameters);
   }
@@ -147,7 +189,7 @@ export class ImmutableX {
     ethSigner: EthSigner,
     collectionAddress: string,
     name: string,
-    requestParameters: API.MetadataSchemaRequest,
+    requestParameters: MetadataSchemaRequest,
   ) {
     return this.workflows.updateMetadataSchemaByName(
       ethSigner,
@@ -162,7 +204,7 @@ export class ImmutableX {
    */
   public async createProject(
     ethSigner: EthSigner,
-    requestParameters: API.CreateProjectRequest,
+    requestParameters: CreateProjectRequest,
   ) {
     return this.workflows.createProject(ethSigner, requestParameters);
   }
@@ -190,22 +232,22 @@ export class ImmutableX {
   /**
    * Balances
    */
-  public getBalance(requestParameters: API.BalancesApiGetBalanceRequest) {
+  public getBalance(requestParameters: BalancesApiGetBalanceRequest) {
     return this.balanceApi.getBalance(requestParameters);
   }
 
-  public listBalances(requestParameters: API.BalancesApiListBalancesRequest) {
+  public listBalances(requestParameters: BalancesApiListBalancesRequest) {
     return this.balanceApi.listBalances(requestParameters);
   }
 
   /**
    * Mints
    */
-  public getMint(requestParameters: API.MintsApiGetMintRequest) {
+  public getMint(requestParameters: MintsApiGetMintRequest) {
     return this.mintsApi.getMint(requestParameters);
   }
 
-  public listMints(requestParameters?: API.MintsApiListMintsRequest) {
+  public listMints(requestParameters?: MintsApiListMintsRequest) {
     return this.mintsApi.listMints(requestParameters);
   }
 
@@ -217,14 +259,12 @@ export class ImmutableX {
    * Withdrawal
    */
   public listWithdrawals(
-    requestParameters?: API.WithdrawalsApiListWithdrawalsRequest,
+    requestParameters?: WithdrawalsApiListWithdrawalsRequest,
   ) {
     return this.withdrawalsApi.listWithdrawals(requestParameters);
   }
 
-  public getWithdrawal(
-    requestParameters: API.WithdrawalsApiGetWithdrawalRequest,
-  ) {
+  public getWithdrawal(requestParameters: WithdrawalsApiGetWithdrawalRequest) {
     return this.withdrawalsApi.getWithdrawal(requestParameters);
   }
 
@@ -246,18 +286,18 @@ export class ImmutableX {
   /**
    * Users
    */
-  public getUsers(requestParameters: API.UsersApiGetUsersRequest) {
+  public getUsers(requestParameters: UsersApiGetUsersRequest) {
     return this.usersApi.getUsers(requestParameters);
   }
 
   /**
    * Order
    */
-  public getOrder(requestParameters: API.OrdersApiGetOrderRequest) {
+  public getOrder(requestParameters: OrdersApiGetOrderRequest) {
     return this.ordersApi.getOrder(requestParameters);
   }
 
-  public listOrders(requestParameters?: API.OrdersApiListOrdersRequest) {
+  public listOrders(requestParameters?: OrdersApiListOrdersRequest) {
     return this.ordersApi.listOrders(requestParameters);
   }
 
@@ -270,7 +310,7 @@ export class ImmutableX {
 
   public cancelOrder(
     walletConnection: WalletConnection,
-    request: API.GetSignableCancelOrderRequest,
+    request: GetSignableCancelOrderRequest,
   ) {
     return this.workflows.cancelOrder(walletConnection, request);
   }
@@ -278,17 +318,17 @@ export class ImmutableX {
   /**
    * Trades
    */
-  public getTrade(requestParameters: API.TradesApiGetTradeRequest) {
+  public getTrade(requestParameters: TradesApiGetTradeRequest) {
     return this.tradesApi.getTrade(requestParameters);
   }
 
-  public listTrades(requestParameters?: API.TradesApiListTradesRequest) {
+  public listTrades(requestParameters?: TradesApiListTradesRequest) {
     return this.tradesApi.listTrades(requestParameters);
   }
 
   public createTrade(
     walletConnection: WalletConnection,
-    request: API.GetSignableTradeRequest,
+    request: GetSignableTradeRequest,
   ) {
     return this.workflows.createTrade(walletConnection, request);
   }
@@ -296,24 +336,22 @@ export class ImmutableX {
   /**
    * Tokens
    */
-  public getToken(requestParameters: API.TokensApiGetTokenRequest) {
+  public getToken(requestParameters: TokensApiGetTokenRequest) {
     return this.tokensApi.getToken(requestParameters);
   }
 
-  public listTokens(requestParameters?: API.TokensApiListTokensRequest) {
+  public listTokens(requestParameters?: TokensApiListTokensRequest) {
     return this.tokensApi.listTokens(requestParameters);
   }
 
   /**
    * Transfers
    */
-  public getTransfer(requestParameters: API.TransfersApiGetTransferRequest) {
+  public getTransfer(requestParameters: TransfersApiGetTransferRequest) {
     return this.transfersApi.getTransfer(requestParameters);
   }
 
-  public listTransfers(
-    requestParameters?: API.TransfersApiListTransfersRequest,
-  ) {
+  public listTransfers(requestParameters?: TransfersApiListTransfersRequest) {
     return this.transfersApi.listTransfers(requestParameters);
   }
 
