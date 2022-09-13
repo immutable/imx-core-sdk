@@ -43,6 +43,9 @@ export default [
         exports: 'named',
       },
     ],
+    onwarn(warning) {
+      if (warning.code === 'THIS_IS_UNDEFINED') return;
+    },
     plugins: [
       externals(),
       json(),
@@ -60,7 +63,6 @@ export default [
       }),
       terser(),
     ],
-    context: 'window',
   },
   {
     input: './dist/src/index.d.ts',
