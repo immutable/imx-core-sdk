@@ -24,37 +24,14 @@ import {
   CollectionsApi,
   MetadataApi,
   ProjectsApi,
-  GetDepositRequest,
-  ListDepositsRequest,
-  GetAssetRequest,
-  ListAssetsRequest,
   CreateCollectionRequest,
-  GetCollectionRequest,
-  ListCollectionFiltersRequest,
-  ListCollectionsRequest,
   UpdateCollectionRequest,
   AddMetadataSchemaToCollectionRequest,
-  GetMetadataSchemaRequest,
   MetadataSchemaRequest,
   CreateProjectRequest,
-  GetBalanceRequest,
-  ListBalancesRequest,
-  GetMintRequest,
-  ListMintsRequest,
-  ListWithdrawalsRequest,
-  GetWithdrawalRequest,
-  GetUsersRequest,
-  GetOrderRequest,
-  ListOrdersRequest,
-  GetSignableCancelOrderRequest,
-  GetTradeRequest,
-  ListTradesRequest,
   GetSignableTradeRequest,
-  GetTokenRequest,
-  ListTokensRequest,
-  GetTransferRequest,
-  ListTransfersRequest,
-} from './api/api';
+} from './api';
+import { AxiosRequestConfig } from 'axios';
 
 export class ImmutableX {
   private depositsApi: DepositsApi;
@@ -96,12 +73,48 @@ export class ImmutableX {
     return this.workflows.deposit(ethSigner, deposit);
   }
 
-  public getDeposit(requestParameters: GetDepositRequest) {
-    return this.depositsApi.getDeposit(requestParameters);
+  public getDeposit(id: string, options?: AxiosRequestConfig) {
+    return this.depositsApi.getDeposit(id, options);
   }
 
-  public listDeposits(requestParameters?: ListDepositsRequest) {
-    return this.depositsApi.listDeposits(requestParameters);
+  public listDeposits(
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: string,
+    direction?: string,
+    user?: string,
+    status?: string,
+    updatedMinTimestamp?: string,
+    updatedMaxTimestamp?: string,
+    tokenType?: string,
+    tokenId?: string,
+    assetId?: string,
+    tokenAddress?: string,
+    tokenName?: string,
+    minQuantity?: string,
+    maxQuantity?: string,
+    metadata?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.depositsApi.listDeposits(
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      user,
+      status,
+      updatedMinTimestamp,
+      updatedMaxTimestamp,
+      tokenType,
+      tokenId,
+      assetId,
+      tokenAddress,
+      tokenName,
+      minQuantity,
+      maxQuantity,
+      metadata,
+      options,
+    );
   }
 
   /**
@@ -118,12 +131,53 @@ export class ImmutableX {
   /**
    * Assets
    */
-  public getAsset(requestParameters: GetAssetRequest) {
-    return this.assetApi.getAsset(requestParameters);
+  public getAsset(
+    tokenAddress: string,
+    tokenId: string,
+    includeFees?: boolean,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.assetApi.getAsset(tokenAddress, tokenId, includeFees, options);
   }
 
-  public listAssets(requestParameters?: ListAssetsRequest) {
-    return this.assetApi.listAssets(requestParameters);
+  public listAssets(
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: 'updated_at' | 'name',
+    direction?: string,
+    user?: string,
+    status?: string,
+    name?: string,
+    metadata?: string,
+    sellOrders?: boolean,
+    buyOrders?: boolean,
+    includeFees?: boolean,
+    collection?: string,
+    updatedMinTimestamp?: string,
+    updatedMaxTimestamp?: string,
+    auxiliaryFeePercentages?: string,
+    auxiliaryFeeRecipients?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.assetApi.listAssets(
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      user,
+      status,
+      name,
+      metadata,
+      sellOrders,
+      buyOrders,
+      includeFees,
+      collection,
+      updatedMinTimestamp,
+      updatedMaxTimestamp,
+      auxiliaryFeePercentages,
+      auxiliaryFeeRecipients,
+      options,
+    );
   }
 
   /**
@@ -136,18 +190,44 @@ export class ImmutableX {
     return this.workflows.createCollection(ethSigner, requestParameters);
   }
 
-  public getCollection(requestParameters: GetCollectionRequest) {
-    return this.collectionApi.getCollection(requestParameters);
+  public getCollection(address: string, options?: AxiosRequestConfig) {
+    return this.collectionApi.getCollection(address, options);
   }
 
   public listCollectionFilters(
-    requestParameters: ListCollectionFiltersRequest,
+    address: string,
+    pageSize?: number,
+    nextPageToken?: string,
+    options?: AxiosRequestConfig,
   ) {
-    return this.collectionApi.listCollectionFilters(requestParameters);
+    return this.collectionApi.listCollectionFilters(
+      address,
+      pageSize,
+      nextPageToken,
+      options,
+    );
   }
 
-  public listCollections(requestParameters?: ListCollectionsRequest) {
-    return this.collectionApi.listCollections(requestParameters);
+  public listCollections(
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: 'name' | 'address' | 'project_id' | 'created_at' | 'updated_at',
+    direction?: string,
+    blacklist?: string,
+    whitelist?: string,
+    keyword?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.collectionApi.listCollections(
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      blacklist,
+      whitelist,
+      keyword,
+      options,
+    );
   }
 
   public updateCollection(
@@ -177,8 +257,8 @@ export class ImmutableX {
     );
   }
 
-  public getMetadataSchema(requestParameters: GetMetadataSchemaRequest) {
-    return this.metadataApi.getMetadataSchema(requestParameters);
+  public getMetadataSchema(address: string, options?: AxiosRequestConfig) {
+    return this.metadataApi.getMetadataSchema(address, options);
   }
 
   public updateMetadataSchemaByName(
@@ -228,23 +308,63 @@ export class ImmutableX {
   /**
    * Balances
    */
-  public getBalance(requestParameters: GetBalanceRequest) {
-    return this.balanceApi.getBalance(requestParameters);
+  public getBalance(
+    owner: string,
+    address: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.balanceApi.getBalance(owner, address, options);
   }
 
-  public listBalances(requestParameters: ListBalancesRequest) {
-    return this.balanceApi.listBalances(requestParameters);
+  public listBalances(owner: string, options?: AxiosRequestConfig) {
+    return this.balanceApi.listBalances(owner, options);
   }
 
   /**
    * Mints
    */
-  public getMint(requestParameters: GetMintRequest) {
-    return this.mintsApi.getMint(requestParameters);
+  public getMint(id: string, options?: AxiosRequestConfig) {
+    return this.mintsApi.getMint(id, options);
   }
 
-  public listMints(requestParameters?: ListMintsRequest) {
-    return this.mintsApi.listMints(requestParameters);
+  public listMints(
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: 'transaction_id' | 'token_id' | 'created_at' | 'updated_at',
+    direction?: string,
+    user?: string,
+    status?: string,
+    minTimestamp?: string,
+    maxTimestamp?: string,
+    tokenType?: string,
+    tokenId?: string,
+    assetId?: string,
+    tokenName?: string,
+    tokenAddress?: string,
+    minQuantity?: string,
+    maxQuantity?: string,
+    metadata?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.mintsApi.listMints(
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      user,
+      status,
+      minTimestamp,
+      maxTimestamp,
+      tokenType,
+      tokenId,
+      assetId,
+      tokenName,
+      tokenAddress,
+      minQuantity,
+      maxQuantity,
+      metadata,
+      options,
+    );
   }
 
   public mint(ethSigner: EthSigner, request: UnsignedMintRequest) {
@@ -254,12 +374,52 @@ export class ImmutableX {
   /**
    * Withdrawal
    */
-  public listWithdrawals(requestParameters?: ListWithdrawalsRequest) {
-    return this.withdrawalsApi.listWithdrawals(requestParameters);
+  public listWithdrawals(
+    withdrawnToWallet?: boolean,
+    rollupStatus?: string,
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: string,
+    direction?: string,
+    user?: string,
+    status?: string,
+    minTimestamp?: string,
+    maxTimestamp?: string,
+    tokenType?: string,
+    tokenId?: string,
+    assetId?: string,
+    tokenAddress?: string,
+    tokenName?: string,
+    minQuantity?: string,
+    maxQuantity?: string,
+    metadata?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.withdrawalsApi.listWithdrawals(
+      withdrawnToWallet,
+      rollupStatus,
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      user,
+      status,
+      minTimestamp,
+      maxTimestamp,
+      tokenType,
+      tokenId,
+      assetId,
+      tokenAddress,
+      tokenName,
+      minQuantity,
+      maxQuantity,
+      metadata,
+      options,
+    );
   }
 
-  public getWithdrawal(requestParameters: GetWithdrawalRequest) {
-    return this.withdrawalsApi.getWithdrawal(requestParameters);
+  public getWithdrawal(id: string, options?: AxiosRequestConfig) {
+    return this.withdrawalsApi.getWithdrawal(id, options);
   }
 
   public prepareWithdrawal(
@@ -280,19 +440,99 @@ export class ImmutableX {
   /**
    * Users
    */
-  public getUsers(requestParameters: GetUsersRequest) {
-    return this.usersApi.getUsers(requestParameters);
+  public getUsers(user: string, options?: AxiosRequestConfig) {
+    return this.usersApi.getUsers(user, options);
   }
 
   /**
    * Order
    */
-  public getOrder(requestParameters: GetOrderRequest) {
-    return this.ordersApi.getOrder(requestParameters);
+  public getOrder(
+    id: string,
+    includeFees?: boolean,
+    auxiliaryFeePercentages?: string,
+    auxiliaryFeeRecipients?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.ordersApi.getOrder(
+      id,
+      includeFees,
+      auxiliaryFeePercentages,
+      auxiliaryFeeRecipients,
+      options,
+    );
   }
 
-  public listOrders(requestParameters?: ListOrdersRequest) {
-    return this.ordersApi.listOrders(requestParameters);
+  public listOrders(
+    pageSize?: number,
+    cursor?: string,
+    orderBy?:
+      | 'created_at'
+      | 'expired_at'
+      | 'sell_quantity'
+      | 'buy_quantity'
+      | 'buy_quantity_with_fees'
+      | 'updated_at',
+    direction?: string,
+    user?: string,
+    status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive',
+    minTimestamp?: string,
+    maxTimestamp?: string,
+    updatedMinTimestamp?: string,
+    updatedMaxTimestamp?: string,
+    buyTokenType?: string,
+    buyTokenId?: string,
+    buyAssetId?: string,
+    buyTokenAddress?: string,
+    buyTokenName?: string,
+    buyMinQuantity?: string,
+    buyMaxQuantity?: string,
+    buyMetadata?: string,
+    sellTokenType?: string,
+    sellTokenId?: string,
+    sellAssetId?: string,
+    sellTokenAddress?: string,
+    sellTokenName?: string,
+    sellMinQuantity?: string,
+    sellMaxQuantity?: string,
+    sellMetadata?: string,
+    auxiliaryFeePercentages?: string,
+    auxiliaryFeeRecipients?: string,
+    includeFees?: boolean,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.ordersApi.listOrders(
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      user,
+      status,
+      minTimestamp,
+      maxTimestamp,
+      updatedMinTimestamp,
+      updatedMaxTimestamp,
+      buyTokenType,
+      buyTokenId,
+      buyAssetId,
+      buyTokenAddress,
+      buyTokenName,
+      buyMinQuantity,
+      buyMaxQuantity,
+      buyMetadata,
+      sellTokenType,
+      sellTokenId,
+      sellAssetId,
+      sellTokenAddress,
+      sellTokenName,
+      sellMinQuantity,
+      sellMaxQuantity,
+      sellMetadata,
+      auxiliaryFeePercentages,
+      auxiliaryFeeRecipients,
+      includeFees,
+      options,
+    );
   }
 
   public createOrder(
@@ -302,22 +542,45 @@ export class ImmutableX {
     return this.workflows.createOrder(walletConnection, request);
   }
 
-  public cancelOrder(
-    walletConnection: WalletConnection,
-    request: GetSignableCancelOrderRequest,
-  ) {
-    return this.workflows.cancelOrder(walletConnection, request);
+  public cancelOrder(walletConnection: WalletConnection, orderId: number) {
+    return this.workflows.cancelOrder(walletConnection, { order_id: orderId });
   }
 
   /**
    * Trades
    */
-  public getTrade(requestParameters: GetTradeRequest) {
-    return this.tradesApi.getTrade(requestParameters);
+  public getTrade(id: string, options?: AxiosRequestConfig) {
+    return this.tradesApi.getTrade(id, options);
   }
 
-  public listTrades(requestParameters?: ListTradesRequest) {
-    return this.tradesApi.listTrades(requestParameters);
+  public listTrades(
+    partyATokenType?: string,
+    partyATokenAddress?: string,
+    partyBTokenType?: string,
+    partyBTokenAddress?: string,
+    partyBTokenId?: string,
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: string,
+    direction?: string,
+    minTimestamp?: string,
+    maxTimestamp?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.tradesApi.listTrades(
+      partyATokenType,
+      partyATokenAddress,
+      partyBTokenType,
+      partyBTokenAddress,
+      partyBTokenId,
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      minTimestamp,
+      maxTimestamp,
+      options,
+    );
   }
 
   public createTrade(
@@ -330,23 +593,82 @@ export class ImmutableX {
   /**
    * Tokens
    */
-  public getToken(requestParameters: GetTokenRequest) {
-    return this.tokensApi.getToken(requestParameters);
+  public getToken(address: string, options?: AxiosRequestConfig) {
+    return this.tokensApi.getToken(address, options);
   }
 
-  public listTokens(requestParameters?: ListTokensRequest) {
-    return this.tokensApi.listTokens(requestParameters);
+  public listTokens(
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: 'contract_address' | 'name' | 'symbol',
+    direction?: string,
+    address?: string,
+    symbols?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.tokensApi.listTokens(
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      address,
+      symbols,
+      options,
+    );
   }
 
   /**
    * Transfers
    */
-  public getTransfer(requestParameters: GetTransferRequest) {
-    return this.transfersApi.getTransfer(requestParameters);
+  public getTransfer(id: string, options?: AxiosRequestConfig) {
+    return this.transfersApi.getTransfer(id, options);
   }
 
-  public listTransfers(requestParameters?: ListTransfersRequest) {
-    return this.transfersApi.listTransfers(requestParameters);
+  public listTransfers(
+    pageSize?: number,
+    cursor?: string,
+    orderBy?:
+      | 'transaction_id'
+      | 'updated_at'
+      | 'created_at'
+      | 'sender_ether_key'
+      | 'receiver_ether_key',
+    direction?: string,
+    user?: string,
+    receiver?: string,
+    status?: 'success' | 'failure',
+    minTimestamp?: string,
+    maxTimestamp?: string,
+    tokenType?: string,
+    tokenId?: string,
+    assetId?: string,
+    tokenAddress?: string,
+    tokenName?: string,
+    minQuantity?: string,
+    maxQuantity?: string,
+    metadata?: string,
+    options?: AxiosRequestConfig,
+  ) {
+    return this.transfersApi.listTransfers(
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+      user,
+      receiver,
+      status,
+      minTimestamp,
+      maxTimestamp,
+      tokenType,
+      tokenId,
+      assetId,
+      tokenAddress,
+      tokenName,
+      minQuantity,
+      maxQuantity,
+      metadata,
+      options,
+    );
   }
 
   public transfer(
