@@ -1,3 +1,5 @@
+GENERATOR_TEMPLATES_DIR=generator-templates
+
 .PHONY: generate-openapi-prod
 generate-openapi-prod: get-openapi-prod generate-api
 
@@ -24,6 +26,7 @@ generate-api:
     mkdir src/api && \
 	docker run --rm -v $(shell pwd):/app openapitools/openapi-generator-cli generate \
     -i ./app/openapi.json \
+    -t ./app/generator-templates/templates \
     -g typescript-axios \
     --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true,withSeparateModelsAndApi=true,modelPackage=models,apiPackage=domain,useSingleRequestParameter=true \
     -o /app/src/api
