@@ -22,11 +22,9 @@ export async function prepareWithdrawalWorkflow(
   const { ethSigner, starkSigner, withdrawalsApi } = params;
   const withdrawalAmount = params.type === 'ERC721' ? '1' : params.amount;
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
-    getSignableWithdrawalRequest: {
-      user: await ethSigner.getAddress(),
-      token: convertToSignableToken(params),
-      amount: withdrawalAmount,
-    },
+    user: await ethSigner.getAddress(),
+    token: convertToSignableToken(params),
+    amount: withdrawalAmount,
   });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
@@ -39,8 +37,10 @@ export async function prepareWithdrawalWorkflow(
     ethSigner,
   );
 
-  const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal({
-    createWithdrawalRequest: {
+  const prepareWithdrawalResponse = await withdrawalsApi.createWithdrawal(
+    ethAddress,
+    ethSignature,
+    {
       stark_key: assertIsDefined(signableWithdrawalResult.data.stark_key),
       amount: withdrawalAmount,
       asset_id: assertIsDefined(signableWithdrawalResult.data.asset_id),
@@ -48,9 +48,7 @@ export async function prepareWithdrawalWorkflow(
       nonce: assertIsDefined(signableWithdrawalResult.data.nonce),
       stark_signature: starkSignature,
     },
-    xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature,
-  });
+  );
 
   return prepareWithdrawalResponse.data;
 }

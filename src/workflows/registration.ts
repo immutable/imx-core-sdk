@@ -12,7 +12,7 @@ async function isUserRegistered(
   usersApi: UsersApi,
 ): Promise<boolean> {
   try {
-    await usersApi.getUsers({ user: userAddress });
+    await usersApi.getUsers(userAddress);
     return true;
   } catch (error) {
     return false;
@@ -32,10 +32,8 @@ export async function registerOffchainWorkflow({
   }
 
   const signableResult = await usersApi.getSignableRegistrationOffchain({
-    getSignableRegistrationRequest: {
-      ether_key: userAddress,
-      stark_key: starkPublicKey,
-    },
+    ether_key: userAddress,
+    stark_key: starkPublicKey,
   });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
@@ -46,12 +44,10 @@ export async function registerOffchainWorkflow({
   const starkSignature = await starkSigner.signMessage(payloadHash);
 
   await usersApi.registerUser({
-    registerUserRequest: {
-      eth_signature: ethSignature,
-      ether_key: userAddress,
-      stark_signature: starkSignature,
-      stark_key: starkPublicKey,
-    },
+    eth_signature: ethSignature,
+    ether_key: userAddress,
+    stark_signature: starkSignature,
+    stark_key: starkPublicKey,
   });
 
   return;
@@ -70,10 +66,8 @@ export async function getSignableRegistrationOnchain(
   usersApi: UsersApi,
 ): Promise<GetSignableRegistrationResponse> {
   const response = await usersApi.getSignableRegistration({
-    getSignableRegistrationRequest: {
-      ether_key: etherKey,
-      stark_key: starkPublicKey,
-    },
+    ether_key: etherKey,
+    stark_key: starkPublicKey,
   });
   return {
     operator_signature: response.data.operator_signature,

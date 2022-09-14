@@ -31,12 +31,10 @@ export async function transfersWorkflow({
 
   const transferAmount = request.type === 'ERC721' ? '1' : request.amount;
   const signableResult = await transfersApi.getSignableTransferV1({
-    getSignableTransferRequest: {
-      sender: ethAddress,
-      token: convertToSignableToken(request),
-      amount: transferAmount,
-      receiver: request.receiver,
-    },
+    sender: ethAddress,
+    token: convertToSignableToken(request),
+    amount: transferAmount,
+    receiver: request.receiver,
   });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
@@ -59,11 +57,11 @@ export async function transfersWorkflow({
     stark_signature: starkSignature,
   };
 
-  const response = await transfersApi.createTransferV1({
-    createTransferRequest: transferSigningParams,
-    xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature,
-  });
+  const response = await transfersApi.createTransferV1(
+    ethAddress,
+    ethSignature,
+    transferSigningParams,
+  );
 
   return {
     sent_signature: response?.data.sent_signature,
@@ -94,10 +92,8 @@ export async function batchTransfersWorkflow({
   });
 
   const signableResult = await transfersApi.getSignableTransfer({
-    getSignableTransferRequestV2: {
-      sender_ether_key: ethAddress,
-      signable_requests: signableRequests,
-    },
+    sender_ether_key: ethAddress,
+    signable_requests: signableRequests,
   });
 
   const signableMessage = signableResult.data.signable_message;
@@ -130,11 +126,11 @@ export async function batchTransfersWorkflow({
     requests,
   };
 
-  const response = await transfersApi.createTransfer({
-    createTransferRequestV2: transferSigningParams,
-    xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature,
-  });
+  const response = await transfersApi.createTransfer(
+    ethAddress,
+    ethSignature,
+    transferSigningParams,
+  );
 
   return {
     transfer_ids: response?.data.transfer_ids,

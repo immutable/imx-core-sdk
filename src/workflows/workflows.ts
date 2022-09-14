@@ -330,21 +330,21 @@ export class Workflows {
   ) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
-    return this.projectsApi.createProject({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
+    return this.projectsApi.createProject(
+      imxAuthHeaders.signature,
+      imxAuthHeaders.timestamp,
       createProjectRequest,
-    });
+    );
   }
 
   public async getProject(ethSigner: EthSigner, id: string) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
-    return this.projectsApi.getProject({
+    return this.projectsApi.getProject(
       id,
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-    });
+      imxAuthHeaders.signature,
+      imxAuthHeaders.timestamp,
+    );
   }
 
   public async getProjects(
@@ -356,14 +356,14 @@ export class Workflows {
   ) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
-    return this.projectsApi.getProjects({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
+    return this.projectsApi.getProjects(
+      imxAuthHeaders.signature,
+      imxAuthHeaders.timestamp,
       pageSize,
       cursor,
       orderBy,
       direction,
-    });
+    );
   }
 
   public async createCollection(
@@ -372,11 +372,11 @@ export class Workflows {
   ) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
-    return this.collectionsApi.createCollection({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
+    return this.collectionsApi.createCollection(
+      imxAuthHeaders.signature,
+      imxAuthHeaders.timestamp,
       createCollectionRequest,
-    });
+    );
   }
 
   public async updateCollection(
@@ -386,12 +386,12 @@ export class Workflows {
   ) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
-    return this.collectionsApi.updateCollection({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
+    return this.collectionsApi.updateCollection(
       address,
+      imxAuthHeaders.signature,
+      imxAuthHeaders.timestamp,
       updateCollectionRequest,
-    });
+    );
   }
 
   public async addMetadataSchemaToCollection(
@@ -401,12 +401,12 @@ export class Workflows {
   ) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
-    return this.metadataApi.addMetadataSchemaToCollection({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-      addMetadataSchemaToCollectionRequest,
+    return this.metadataApi.addMetadataSchemaToCollection(
       address,
-    });
+      imxAuthHeaders.signature,
+      imxAuthHeaders.timestamp,
+      addMetadataSchemaToCollectionRequest,
+    );
   }
 
   public async updateMetadataSchemaByName(
@@ -417,12 +417,12 @@ export class Workflows {
   ) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
-    return this.metadataApi.updateMetadataSchemaByName({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
+    return this.metadataApi.updateMetadataSchemaByName(
       address,
       name,
+      imxAuthHeaders.signature,
+      imxAuthHeaders.timestamp,
       metadataSchemaRequest,
-    });
+    );
   }
 }

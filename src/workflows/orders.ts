@@ -1,6 +1,5 @@
 import {
   OrdersApi,
-  OrdersApiCreateOrderRequest,
   GetSignableCancelOrderRequest,
   GetSignableOrderRequest,
 } from '../api';
@@ -41,9 +40,9 @@ export async function createOrderWorkflow({
     expiration_timestamp: request.expiration_timestamp,
   };
 
-  const getSignableOrderResponse = await ordersApi.getSignableOrder({
-    getSignableOrderRequestV3: getSignableOrderRequest,
-  });
+  const getSignableOrderResponse = await ordersApi.getSignableOrder(
+    getSignableOrderRequest,
+  );
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableOrderResponse.data;
@@ -54,8 +53,10 @@ export async function createOrderWorkflow({
 
   const resp = getSignableOrderResponse.data;
 
-  const orderParams: OrdersApiCreateOrderRequest = {
-    createOrderRequest: {
+  const createOrderResponse = await ordersApi.createOrder(
+    ethAddress,
+    ethSignature,
+    {
       amount_buy: resp.amount_buy,
       amount_sell: resp.amount_sell,
       asset_id_buy: resp.asset_id_buy,
@@ -69,11 +70,7 @@ export async function createOrderWorkflow({
       vault_id_buy: resp.vault_id_buy,
       vault_id_sell: resp.vault_id_sell,
     },
-    xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature,
-  };
-
-  const createOrderResponse = await ordersApi.createOrder(orderParams);
+  );
 
   return {
     ...createOrderResponse.data,
@@ -88,9 +85,7 @@ export async function cancelOrderWorkflow({
 }: CancelOrderWorkflowParams) {
   const getSignableCancelOrderResponse = await ordersApi.getSignableCancelOrder(
     {
-      getSignableCancelOrderRequest: {
-        order_id: request.order_id,
-      },
+      order_id: request.order_id,
     },
   );
 
@@ -103,15 +98,15 @@ export async function cancelOrderWorkflow({
 
   const ethAddress = await ethSigner.getAddress();
 
-  const cancelOrderResponse = await ordersApi.cancelOrder({
-    id: request.order_id.toString(),
-    cancelOrderRequest: {
+  const cancelOrderResponse = await ordersApi.cancelOrder(
+    ethAddress,
+    ethSignature,
+    request.order_id.toString(),
+    {
       order_id: request.order_id,
       stark_signature: starkSignature,
     },
-    xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature,
-  });
+  );
 
   return {
     order_id: cancelOrderResponse.data.order_id,

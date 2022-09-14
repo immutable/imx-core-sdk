@@ -1,10 +1,5 @@
 import { Signer } from '@ethersproject/abstract-signer';
-import {
-  MintRequest,
-  MintsApi,
-  MintsApiMintTokensRequest,
-  MintTokensResponse,
-} from '../api';
+import { MintRequest, MintsApi, MintTokensResponse } from '../api';
 import { UnsignedMintRequest } from '../types';
 import { signRaw } from '../utils';
 import { keccak256 } from '@ethersproject/keccak256';
@@ -59,11 +54,7 @@ export async function mintingWorkflow(
     auth_signature: authSignature,
   };
 
-  const apiRequest: MintsApiMintTokensRequest = {
-    mintTokensRequestV2: [apiPayload],
-  };
-
+  const apiRequest: MintRequest[] = [apiPayload];
   const response = await mintsApi.mintTokens(apiRequest);
-
   return response.data;
 }

@@ -232,10 +232,7 @@ export async function completeERC721WithdrawalWorkflow(
   const tokenAddress = token.tokenAddress;
   const tokenId = token.tokenId;
   return await mintsApi
-    .getMintableTokenDetailsByClientTokenId({
-      tokenAddress,
-      tokenId,
-    })
+    .getMintableTokenDetailsByClientTokenId(tokenAddress, tokenId)
     .then(mintableToken =>
       completeMintableERC721Withdrawal(
         signer,

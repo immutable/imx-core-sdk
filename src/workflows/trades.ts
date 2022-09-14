@@ -20,11 +20,9 @@ export async function createTradeWorkflow({
   const ethAddress = await ethSigner.getAddress();
 
   const signableResult = await tradesApi.getSignableTrade({
-    getSignableTradeRequest: {
-      user: ethAddress,
-      order_id: request.order_id,
-      fees: request.fees,
-    },
+    user: ethAddress,
+    order_id: request.order_id,
+    fees: request.fees,
   });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
@@ -34,8 +32,10 @@ export async function createTradeWorkflow({
 
   const starkSignature = await starkSigner.signMessage(payloadHash);
 
-  const createTradeResponse = await tradesApi.createTrade({
-    createTradeRequest: {
+  const createTradeResponse = await tradesApi.createTrade(
+    ethAddress,
+    ethSignature,
+    {
       amount_buy: signableResult.data.amount_buy,
       amount_sell: signableResult.data.amount_sell,
       asset_id_buy: signableResult.data.asset_id_buy,
@@ -51,9 +51,7 @@ export async function createTradeWorkflow({
       vault_id_sell: signableResult.data.vault_id_sell,
       stark_signature: starkSignature,
     },
-    xImxEthAddress: ethAddress,
-    xImxEthSignature: ethSignature,
-  });
+  );
 
   return createTradeResponse.data;
 }

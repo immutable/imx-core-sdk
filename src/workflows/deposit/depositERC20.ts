@@ -80,7 +80,7 @@ export async function depositERC20Workflow(
   const user = await signer.getAddress();
 
   // Get decimals for this specific ERC20
-  const token = await tokensApi.getToken({ address: deposit.tokenAddress });
+  const token = await tokensApi.getToken(deposit.tokenAddress);
   const decimals = parseInt(token.data.decimals);
 
   const data: ERC20TokenData = {
@@ -107,19 +107,16 @@ export async function depositERC20Workflow(
     amount: amount.toString(),
   };
 
-  const signableDepositResult = await depositsApi.getSignableDeposit({
+  const signableDepositResult = await depositsApi.getSignableDeposit(
     getSignableDepositRequest,
-  });
+  );
 
   // Perform encoding on asset details to get an assetType (required for stark contract request)
-  const encodingResult = await encodingApi.encodeAsset({
-    assetType: 'asset',
-    encodeAssetRequest: {
-      token: {
-        type: deposit.type,
-        data: {
-          token_address: deposit.tokenAddress,
-        },
+  const encodingResult = await encodingApi.encodeAsset('asset', {
+    token: {
+      type: deposit.type,
+      data: {
+        token_address: deposit.tokenAddress,
       },
     },
   });

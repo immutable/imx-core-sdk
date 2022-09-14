@@ -102,20 +102,17 @@ export async function depositERC721Workflow(
     amount: amount.toString(),
   };
 
-  const signableDepositResult = await depositsApi.getSignableDeposit({
+  const signableDepositResult = await depositsApi.getSignableDeposit(
     getSignableDepositRequest,
-  });
+  );
 
   // Perform encoding on asset details to get an assetType (required for stark contract request)
-  const encodingResult = await encodingApi.encodeAsset({
-    assetType: 'asset',
-    encodeAssetRequest: {
-      token: {
-        type: deposit.type,
-        data: {
-          token_address: deposit.tokenAddress,
-          token_id: deposit.tokenId,
-        },
+  const encodingResult = await encodingApi.encodeAsset('asset', {
+    token: {
+      type: deposit.type,
+      data: {
+        token_address: deposit.tokenAddress,
+        token_id: deposit.tokenId,
       },
     },
   });

@@ -81,16 +81,13 @@ export async function depositEthWorkflow(
     amount: amount.toString(),
   };
 
-  const signableDepositResult = await depositsApi.getSignableDeposit({
+  const signableDepositResult = await depositsApi.getSignableDeposit(
     getSignableDepositRequest,
-  });
+  );
 
-  const encodingResult = await encodingApi.encodeAsset({
-    assetType: 'asset',
-    encodeAssetRequest: {
-      token: {
-        type: deposit.type,
-      },
+  const encodingResult = await encodingApi.encodeAsset('asset', {
+    token: {
+      type: deposit.type,
     },
   });
 

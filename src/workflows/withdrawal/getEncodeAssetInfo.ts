@@ -11,13 +11,10 @@ export async function getEncodeAssetInfo(
   encodingApi: EncodingApi,
   tokenData?: EncodeAssetTokenData,
 ): Promise<EncodeAssetResponse> {
-  const result = await encodingApi.encodeAsset({
-    assetType,
-    encodeAssetRequest: {
-      token: {
-        type: tokenType,
-        ...(tokenData && { data: tokenData }),
-      },
+  const result = await encodingApi.encodeAsset(assetType, {
+    token: {
+      type: tokenType,
+      ...(tokenData && { data: tokenData }),
     },
   });
   return result.data;
