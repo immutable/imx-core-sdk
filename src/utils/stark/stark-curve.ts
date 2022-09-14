@@ -1,5 +1,7 @@
 import hashJS from 'hash.js';
 import { curves, ec } from 'elliptic';
+import * as encUtils from 'enc-utils';
+import BN from 'bn.js';
 
 /* 
 Stark-friendly elliptic curve
@@ -42,8 +44,40 @@ export const starkEc = new ec(
   }),
 );
 
+// Create a hash from a key + an index
+function hashKeyWithIndex(key: string, index: number): BN {
+  return new BN(
+    hash
+      .sha256()
+      .update(
+        encUtils.hexToBuffer(
+          encUtils.removeHexPrefix(key) +
+            encUtils.sanitizeBytes(encUtils.numberToHex(index), 2),
+        ),
+      )
+      .digest('hex'),
+    16,
+  );
+}
+
+function grindKey(key: BN, keyValLimit: BN) {
+  const sha256EcMaxDigest = new BN(
+    '1 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000',
+    16,
+  );
+  const maxAllowedVal = sha256EcMaxDigest.sub(
+    sha256EcMaxDigest.mod(keyValLimit),
+  );
+  for (let i = 0; !key.lt(maxAllowedVal); i++) {
+    // Make sure the produced key is devided by the Stark EC order, and falls within the range
+    // [0, maxAllowedVal).
+    key = hashKeyWithIndex(key.toString('hex'), i);
+  }
+  return key.umod(keyValLimit).toString('hex');
+}
+
 // Generates a new private key on the Stark-friendly elliptic curve.
 export function generateStarkPrivateKey(): string {
   const keyPair = starkEc.genKeyPair();
-  return keyPair.getPrivate('hex');
+  return grindKey(keyPair.getPrivate(), starkEc.n!); // eslint-disable-line @typescript-eslint/no-non-null-assertion
 }
