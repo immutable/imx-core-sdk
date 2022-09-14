@@ -424,195 +424,6 @@ export const WithdrawalsApiFactory = function (configuration?: Configuration, ba
 };
 
 /**
- * Request parameters for createWithdrawal operation in WithdrawalsApi.
- * @export
- * @interface CreateWithdrawalRequest
- */
-export interface CreateWithdrawalRequest {
-    /**
-     * eth address
-     * @type {string}
-     * @memberof WithdrawalsApiCreateWithdrawal
-     */
-    readonly xImxEthAddress: string
-
-    /**
-     * eth signature
-     * @type {string}
-     * @memberof WithdrawalsApiCreateWithdrawal
-     */
-    readonly xImxEthSignature: string
-
-    /**
-     * create a withdrawal
-     * @type {CreateWithdrawalRequest}
-     * @memberof WithdrawalsApiCreateWithdrawal
-     */
-    readonly createWithdrawalRequest: CreateWithdrawalRequest
-}
-
-/**
- * Request parameters for getSignableWithdrawal operation in WithdrawalsApi.
- * @export
- * @interface GetSignableWithdrawalRequest
- */
-export interface GetSignableWithdrawalRequest {
-    /**
-     * get details of signable withdrawal
-     * @type {GetSignableWithdrawalRequest}
-     * @memberof WithdrawalsApiGetSignableWithdrawal
-     */
-    readonly getSignableWithdrawalRequest: GetSignableWithdrawalRequest
-}
-
-/**
- * Request parameters for getWithdrawal operation in WithdrawalsApi.
- * @export
- * @interface GetWithdrawalRequest
- */
-export interface GetWithdrawalRequest {
-    /**
-     * Withdrawal ID
-     * @type {string}
-     * @memberof WithdrawalsApiGetWithdrawal
-     */
-    readonly id: string
-}
-
-/**
- * Request parameters for listWithdrawals operation in WithdrawalsApi.
- * @export
- * @interface ListWithdrawalsRequest
- */
-export interface ListWithdrawalsRequest {
-    /**
-     * Withdrawal has been transferred to user\&#39;s Layer 1 wallet
-     * @type {boolean}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly withdrawnToWallet?: boolean
-
-    /**
-     * Status of the on-chain batch confirmation for this withdrawal
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly rollupStatus?: string
-
-    /**
-     * Page size of the result
-     * @type {number}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly pageSize?: number
-
-    /**
-     * Cursor
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly cursor?: string
-
-    /**
-     * Property to sort by
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly orderBy?: string
-
-    /**
-     * Direction to sort (asc/desc)
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly direction?: string
-
-    /**
-     * Ethereum address of the user who submitted this withdrawal
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly user?: string
-
-    /**
-     * Status of this withdrawal
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly status?: string
-
-    /**
-     * Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly minTimestamp?: string
-
-    /**
-     * Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly maxTimestamp?: string
-
-    /**
-     * Token type of the withdrawn asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly tokenType?: string
-
-    /**
-     * ERC721 Token ID of the minted asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly tokenId?: string
-
-    /**
-     * Internal IMX ID of the minted asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly assetId?: string
-
-    /**
-     * Token address of the withdrawn asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly tokenAddress?: string
-
-    /**
-     * Token name of the withdrawn asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly tokenName?: string
-
-    /**
-     * Min quantity for the withdrawn asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly minQuantity?: string
-
-    /**
-     * Max quantity for the withdrawn asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly maxQuantity?: string
-
-    /**
-     * JSON-encoded metadata filters for the withdrawn asset
-     * @type {string}
-     * @memberof WithdrawalsApiListWithdrawals
-     */
-    readonly metadata?: string
-}
-
-/**
  * WithdrawalsApi - object-oriented interface
  * @export
  * @class WithdrawalsApi
@@ -622,48 +433,67 @@ export class WithdrawalsApi extends BaseAPI {
     /**
      * Creates a withdrawal
      * @summary Creates a withdrawal of a token
-     * @param {CreateWithdrawalRequest} requestParameters Request parameters.
+     * @param {string} xImxEthAddress eth address
+     * @param {string} xImxEthSignature eth signature
+     * @param {CreateWithdrawalRequest} createWithdrawalRequest create a withdrawal
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalsApi
      */
-    public createWithdrawal(requestParameters: CreateWithdrawalRequest, options?: AxiosRequestConfig) {
-        return WithdrawalsApiFp(this.configuration).createWithdrawal(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
+    public createWithdrawal(xImxEthAddress: string, xImxEthSignature: string, createWithdrawalRequest: CreateWithdrawalRequest, options?: AxiosRequestConfig) {
+        return WithdrawalsApiFp(this.configuration).createWithdrawal(xImxEthAddress, xImxEthSignature, createWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of a signable withdrawal
      * @summary Gets details of a signable withdrawal
-     * @param {GetSignableWithdrawalRequest} requestParameters Request parameters.
+     * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalsApi
      */
-    public getSignableWithdrawal(requestParameters: GetSignableWithdrawalRequest, options?: AxiosRequestConfig) {
-        return WithdrawalsApiFp(this.configuration).getSignableWithdrawal(requestParameters.getSignableWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableWithdrawal(getSignableWithdrawalRequest: GetSignableWithdrawalRequest, options?: AxiosRequestConfig) {
+        return WithdrawalsApiFp(this.configuration).getSignableWithdrawal(getSignableWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Gets details of withdrawal with the given ID
      * @summary Gets details of withdrawal with the given ID
-     * @param {GetWithdrawalRequest} requestParameters Request parameters.
+     * @param {string} id Withdrawal ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalsApi
      */
-    public getWithdrawal(requestParameters: GetWithdrawalRequest, options?: AxiosRequestConfig) {
-        return WithdrawalsApiFp(this.configuration).getWithdrawal(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    public getWithdrawal(id: string, options?: AxiosRequestConfig) {
+        return WithdrawalsApiFp(this.configuration).getWithdrawal(id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of withdrawals
      * @summary Get a list of withdrawals
-     * @param {ListWithdrawalsRequest} requestParameters Request parameters.
+     * @param {boolean} [withdrawnToWallet] Withdrawal has been transferred to user\&#39;s Layer 1 wallet
+     * @param {string} [rollupStatus] Status of the on-chain batch confirmation for this withdrawal
+     * @param {number} [pageSize] Page size of the result
+     * @param {string} [cursor] Cursor
+     * @param {string} [orderBy] Property to sort by
+     * @param {string} [direction] Direction to sort (asc/desc)
+     * @param {string} [user] Ethereum address of the user who submitted this withdrawal
+     * @param {string} [status] Status of this withdrawal
+     * @param {string} [minTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+     * @param {string} [maxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+     * @param {string} [tokenType] Token type of the withdrawn asset
+     * @param {string} [tokenId] ERC721 Token ID of the minted asset
+     * @param {string} [assetId] Internal IMX ID of the minted asset
+     * @param {string} [tokenAddress] Token address of the withdrawn asset
+     * @param {string} [tokenName] Token name of the withdrawn asset
+     * @param {string} [minQuantity] Min quantity for the withdrawn asset
+     * @param {string} [maxQuantity] Max quantity for the withdrawn asset
+     * @param {string} [metadata] JSON-encoded metadata filters for the withdrawn asset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WithdrawalsApi
      */
-    public listWithdrawals(requestParameters: ListWithdrawalsRequest = {}, options?: AxiosRequestConfig) {
-        return WithdrawalsApiFp(this.configuration).listWithdrawals(requestParameters.withdrawnToWallet, requestParameters.rollupStatus, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
+    public listWithdrawals(withdrawnToWallet?: boolean, rollupStatus?: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig) {
+        return WithdrawalsApiFp(this.configuration).listWithdrawals(withdrawnToWallet, rollupStatus, pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(this.axios, this.basePath));
     }
 }

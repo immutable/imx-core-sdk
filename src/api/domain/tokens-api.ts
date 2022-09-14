@@ -200,69 +200,6 @@ export const TokensApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * Request parameters for getToken operation in TokensApi.
- * @export
- * @interface GetTokenRequest
- */
-export interface GetTokenRequest {
-    /**
-     * Token Contract Address
-     * @type {string}
-     * @memberof TokensApiGetToken
-     */
-    readonly address: string
-}
-
-/**
- * Request parameters for listTokens operation in TokensApi.
- * @export
- * @interface ListTokensRequest
- */
-export interface ListTokensRequest {
-    /**
-     * Page size of the result
-     * @type {number}
-     * @memberof TokensApiListTokens
-     */
-    readonly pageSize?: number
-
-    /**
-     * Cursor
-     * @type {string}
-     * @memberof TokensApiListTokens
-     */
-    readonly cursor?: string
-
-    /**
-     * Property to sort by
-     * @type {'contract_address' | 'name' | 'symbol'}
-     * @memberof TokensApiListTokens
-     */
-    readonly orderBy?: 'contract_address' | 'name' | 'symbol'
-
-    /**
-     * Direction to sort (asc/desc)
-     * @type {string}
-     * @memberof TokensApiListTokens
-     */
-    readonly direction?: string
-
-    /**
-     * Contract address of the token
-     * @type {string}
-     * @memberof TokensApiListTokens
-     */
-    readonly address?: string
-
-    /**
-     * Token symbols for the token, e.g. ?symbols&#x3D;IMX,ETH
-     * @type {string}
-     * @memberof TokensApiListTokens
-     */
-    readonly symbols?: string
-}
-
-/**
  * TokensApi - object-oriented interface
  * @export
  * @class TokensApi
@@ -272,24 +209,29 @@ export class TokensApi extends BaseAPI {
     /**
      * Get details of a token
      * @summary Get details of a token
-     * @param {GetTokenRequest} requestParameters Request parameters.
+     * @param {string} address Token Contract Address
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TokensApi
      */
-    public getToken(requestParameters: GetTokenRequest, options?: AxiosRequestConfig) {
-        return TokensApiFp(this.configuration).getToken(requestParameters.address, options).then((request) => request(this.axios, this.basePath));
+    public getToken(address: string, options?: AxiosRequestConfig) {
+        return TokensApiFp(this.configuration).getToken(address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of tokens
      * @summary Get a list of tokens
-     * @param {ListTokensRequest} requestParameters Request parameters.
+     * @param {number} [pageSize] Page size of the result
+     * @param {string} [cursor] Cursor
+     * @param {'contract_address' | 'name' | 'symbol'} [orderBy] Property to sort by
+     * @param {string} [direction] Direction to sort (asc/desc)
+     * @param {string} [address] Contract address of the token
+     * @param {string} [symbols] Token symbols for the token, e.g. ?symbols&#x3D;IMX,ETH
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof TokensApi
      */
-    public listTokens(requestParameters: ListTokensRequest = {}, options?: AxiosRequestConfig) {
-        return TokensApiFp(this.configuration).listTokens(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.address, requestParameters.symbols, options).then((request) => request(this.axios, this.basePath));
+    public listTokens(pageSize?: number, cursor?: string, orderBy?: 'contract_address' | 'name' | 'symbol', direction?: string, address?: string, symbols?: string, options?: AxiosRequestConfig) {
+        return TokensApiFp(this.configuration).listTokens(pageSize, cursor, orderBy, direction, address, symbols, options).then((request) => request(this.axios, this.basePath));
     }
 }

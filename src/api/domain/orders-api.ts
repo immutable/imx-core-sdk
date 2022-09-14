@@ -668,342 +668,6 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
 };
 
 /**
- * Request parameters for cancelOrder operation in OrdersApi.
- * @export
- * @interface CancelOrderRequest
- */
-export interface CancelOrderRequest {
-    /**
-     * eth address
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly xImxEthAddress: string
-
-    /**
-     * eth signature
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly xImxEthSignature: string
-
-    /**
-     * Order ID to cancel
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly id: string
-
-    /**
-     * cancel an order
-     * @type {CancelOrderRequest}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly cancelOrderRequest: CancelOrderRequest
-}
-
-/**
- * Request parameters for createOrder operation in OrdersApi.
- * @export
- * @interface CreateOrderRequest
- */
-export interface CreateOrderRequest {
-    /**
-     * eth address
-     * @type {string}
-     * @memberof OrdersApiCreateOrder
-     */
-    readonly xImxEthAddress: string
-
-    /**
-     * eth signature
-     * @type {string}
-     * @memberof OrdersApiCreateOrder
-     */
-    readonly xImxEthSignature: string
-
-    /**
-     * create an order
-     * @type {CreateOrderRequest}
-     * @memberof OrdersApiCreateOrder
-     */
-    readonly createOrderRequest: CreateOrderRequest
-}
-
-/**
- * Request parameters for getOrder operation in OrdersApi.
- * @export
- * @interface GetOrderRequest
- */
-export interface GetOrderRequest {
-    /**
-     * Order ID
-     * @type {string}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly id: string
-
-    /**
-     * Set flag to true to include fee body for the order
-     * @type {boolean}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly includeFees?: boolean
-
-    /**
-     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @type {string}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly auxiliaryFeePercentages?: string
-
-    /**
-     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-     * @type {string}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly auxiliaryFeeRecipients?: string
-}
-
-/**
- * Request parameters for getSignableCancelOrder operation in OrdersApi.
- * @export
- * @interface GetSignableCancelOrderRequest
- */
-export interface GetSignableCancelOrderRequest {
-    /**
-     * get a signable cancel order
-     * @type {GetSignableCancelOrderRequest}
-     * @memberof OrdersApiGetSignableCancelOrder
-     */
-    readonly getSignableCancelOrderRequest: GetSignableCancelOrderRequest
-}
-
-/**
- * Request parameters for getSignableOrder operation in OrdersApi.
- * @export
- * @interface GetSignableOrderRequest
- */
-export interface GetSignableOrderRequest {
-    /**
-     * get a signable order
-     * @type {GetSignableOrderRequest}
-     * @memberof OrdersApiGetSignableOrder
-     */
-    readonly getSignableOrderRequestV3: GetSignableOrderRequest
-}
-
-/**
- * Request parameters for listOrders operation in OrdersApi.
- * @export
- * @interface ListOrdersRequest
- */
-export interface ListOrdersRequest {
-    /**
-     * Page size of the result
-     * @type {number}
-     * @memberof OrdersApiListOrders
-     */
-    readonly pageSize?: number
-
-    /**
-     * Cursor
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly cursor?: string
-
-    /**
-     * Property to sort by
-     * @type {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'}
-     * @memberof OrdersApiListOrders
-     */
-    readonly orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'
-
-    /**
-     * Direction to sort (asc/desc)
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly direction?: string
-
-    /**
-     * Ethereum address of the user who submitted this order
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly user?: string
-
-    /**
-     * Status of this order
-     * @type {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'}
-     * @memberof OrdersApiListOrders
-     */
-    readonly status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'
-
-    /**
-     * Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly minTimestamp?: string
-
-    /**
-     * Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly maxTimestamp?: string
-
-    /**
-     * Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly updatedMinTimestamp?: string
-
-    /**
-     * Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly updatedMaxTimestamp?: string
-
-    /**
-     * Token type of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenType?: string
-
-    /**
-     * ERC721 Token ID of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenId?: string
-
-    /**
-     * Internal IMX ID of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyAssetId?: string
-
-    /**
-     * Token address of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenAddress?: string
-
-    /**
-     * Token name of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenName?: string
-
-    /**
-     * Min quantity for the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyMinQuantity?: string
-
-    /**
-     * Max quantity for the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyMaxQuantity?: string
-
-    /**
-     * JSON-encoded metadata filters for the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyMetadata?: string
-
-    /**
-     * Token type of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenType?: string
-
-    /**
-     * ERC721 Token ID of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenId?: string
-
-    /**
-     * Internal IMX ID of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellAssetId?: string
-
-    /**
-     * Token address of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenAddress?: string
-
-    /**
-     * Token name of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenName?: string
-
-    /**
-     * Min quantity for the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellMinQuantity?: string
-
-    /**
-     * Max quantity for the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellMaxQuantity?: string
-
-    /**
-     * JSON-encoded metadata filters for the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellMetadata?: string
-
-    /**
-     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly auxiliaryFeePercentages?: string
-
-    /**
-     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly auxiliaryFeeRecipients?: string
-
-    /**
-     * Set flag to true to include fee object for orders
-     * @type {boolean}
-     * @memberof OrdersApiListOrders
-     */
-    readonly includeFees?: boolean
-}
-
-/**
  * OrdersApi - object-oriented interface
  * @export
  * @class OrdersApi
@@ -1013,72 +677,108 @@ export class OrdersApi extends BaseAPI {
     /**
      * Cancel an order
      * @summary Cancel an order
-     * @param {CancelOrderRequest} requestParameters Request parameters.
+     * @param {string} xImxEthAddress eth address
+     * @param {string} xImxEthSignature eth signature
+     * @param {string} id Order ID to cancel
+     * @param {CancelOrderRequest} cancelOrderRequest cancel an order
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public cancelOrder(requestParameters: CancelOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).cancelOrder(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.id, requestParameters.cancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    public cancelOrder(xImxEthAddress: string, xImxEthSignature: string, id: string, cancelOrderRequest: CancelOrderRequest, options?: AxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).cancelOrder(xImxEthAddress, xImxEthSignature, id, cancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Create an order
      * @summary Create an order
-     * @param {CreateOrderRequest} requestParameters Request parameters.
+     * @param {string} xImxEthAddress eth address
+     * @param {string} xImxEthSignature eth signature
+     * @param {CreateOrderRequest} createOrderRequest create an order
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public createOrder(requestParameters: CreateOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).createOrder(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    public createOrder(xImxEthAddress: string, xImxEthSignature: string, createOrderRequest: CreateOrderRequest, options?: AxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).createOrder(xImxEthAddress, xImxEthSignature, createOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details of an order with the given ID
      * @summary Get details of an order with the given ID
-     * @param {GetOrderRequest} requestParameters Request parameters.
+     * @param {string} id Order ID
+     * @param {boolean} [includeFees] Set flag to true to include fee body for the order
+     * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
+     * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public getOrder(requestParameters: GetOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).getOrder(requestParameters.id, requestParameters.includeFees, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
+    public getOrder(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).getOrder(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get details a signable cancel order
      * @summary Get details a signable cancel order
-     * @param {GetSignableCancelOrderRequest} requestParameters Request parameters.
+     * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public getSignableCancelOrder(requestParameters: GetSignableCancelOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).getSignableCancelOrder(requestParameters.getSignableCancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableCancelOrder(getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options?: AxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).getSignableCancelOrder(getSignableCancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a signable order request (V3)
      * @summary Get a signable order request (V3)
-     * @param {GetSignableOrderRequest} requestParameters Request parameters.
+     * @param {GetSignableOrderRequest} getSignableOrderRequestV3 get a signable order
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public getSignableOrder(requestParameters: GetSignableOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).getSignableOrder(requestParameters.getSignableOrderRequestV3, options).then((request) => request(this.axios, this.basePath));
+    public getSignableOrder(getSignableOrderRequestV3: GetSignableOrderRequest, options?: AxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).getSignableOrder(getSignableOrderRequestV3, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of orders
      * @summary Get a list of orders
-     * @param {ListOrdersRequest} requestParameters Request parameters.
+     * @param {number} [pageSize] Page size of the result
+     * @param {string} [cursor] Cursor
+     * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
+     * @param {string} [direction] Direction to sort (asc/desc)
+     * @param {string} [user] Ethereum address of the user who submitted this order
+     * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
+     * @param {string} [minTimestamp] Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+     * @param {string} [maxTimestamp] Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+     * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+     * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+     * @param {string} [buyTokenType] Token type of the asset this order buys
+     * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
+     * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
+     * @param {string} [buyTokenAddress] Token address of the asset this order buys
+     * @param {string} [buyTokenName] Token name of the asset this order buys
+     * @param {string} [buyMinQuantity] Min quantity for the asset this order buys
+     * @param {string} [buyMaxQuantity] Max quantity for the asset this order buys
+     * @param {string} [buyMetadata] JSON-encoded metadata filters for the asset this order buys
+     * @param {string} [sellTokenType] Token type of the asset this order sells
+     * @param {string} [sellTokenId] ERC721 Token ID of the asset this order sells
+     * @param {string} [sellAssetId] Internal IMX ID of the asset this order sells
+     * @param {string} [sellTokenAddress] Token address of the asset this order sells
+     * @param {string} [sellTokenName] Token name of the asset this order sells
+     * @param {string} [sellMinQuantity] Min quantity for the asset this order sells
+     * @param {string} [sellMaxQuantity] Max quantity for the asset this order sells
+     * @param {string} [sellMetadata] JSON-encoded metadata filters for the asset this order sells
+     * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
+     * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+     * @param {boolean} [includeFees] Set flag to true to include fee object for orders
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
-    public listOrders(requestParameters: ListOrdersRequest = {}, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).listOrders(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.buyTokenType, requestParameters.buyTokenId, requestParameters.buyAssetId, requestParameters.buyTokenAddress, requestParameters.buyTokenName, requestParameters.buyMinQuantity, requestParameters.buyMaxQuantity, requestParameters.buyMetadata, requestParameters.sellTokenType, requestParameters.sellTokenId, requestParameters.sellAssetId, requestParameters.sellTokenAddress, requestParameters.sellTokenName, requestParameters.sellMinQuantity, requestParameters.sellMaxQuantity, requestParameters.sellMetadata, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, requestParameters.includeFees, options).then((request) => request(this.axios, this.basePath));
+    public listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options?: AxiosRequestConfig) {
+        return OrdersApiFp(this.configuration).listOrders(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, updatedMinTimestamp, updatedMaxTimestamp, buyTokenType, buyTokenId, buyAssetId, buyTokenAddress, buyTokenName, buyMinQuantity, buyMaxQuantity, buyMetadata, sellTokenType, sellTokenId, sellAssetId, sellTokenAddress, sellTokenName, sellMinQuantity, sellMaxQuantity, sellMetadata, auxiliaryFeePercentages, auxiliaryFeeRecipients, includeFees, options).then((request) => request(this.axios, this.basePath));
     }
 }

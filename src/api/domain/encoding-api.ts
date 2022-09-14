@@ -117,27 +117,6 @@ export const EncodingApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
- * Request parameters for encodeAsset operation in EncodingApi.
- * @export
- * @interface EncodeAssetRequest
- */
-export interface EncodeAssetRequest {
-    /**
-     * Asset type to be encoded. (asset/mintable-asset)
-     * @type {string}
-     * @memberof EncodingApiEncodeAsset
-     */
-    readonly assetType: string
-
-    /**
-     * Encode Asset
-     * @type {EncodeAssetRequest}
-     * @memberof EncodingApiEncodeAsset
-     */
-    readonly encodeAssetRequest: EncodeAssetRequest
-}
-
-/**
  * EncodingApi - object-oriented interface
  * @export
  * @class EncodingApi
@@ -147,12 +126,13 @@ export class EncodingApi extends BaseAPI {
     /**
      * Retrieves the Starkex Encoded format for a given asset so that it can be used as parameter for Starkex smart contracts
      * @summary Retrieves the Starkex Encoded format for a given asset
-     * @param {EncodeAssetRequest} requestParameters Request parameters.
+     * @param {string} assetType Asset type to be encoded. (asset/mintable-asset)
+     * @param {EncodeAssetRequest} encodeAssetRequest Encode Asset
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof EncodingApi
      */
-    public encodeAsset(requestParameters: EncodeAssetRequest, options?: AxiosRequestConfig) {
-        return EncodingApiFp(this.configuration).encodeAsset(requestParameters.assetType, requestParameters.encodeAssetRequest, options).then((request) => request(this.axios, this.basePath));
+    public encodeAsset(assetType: string, encodeAssetRequest: EncodeAssetRequest, options?: AxiosRequestConfig) {
+        return EncodingApiFp(this.configuration).encodeAsset(assetType, encodeAssetRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }

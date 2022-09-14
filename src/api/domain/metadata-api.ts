@@ -283,97 +283,6 @@ export const MetadataApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
- * Request parameters for addMetadataSchemaToCollection operation in MetadataApi.
- * @export
- * @interface AddMetadataSchemaToCollectionRequest
- */
-export interface AddMetadataSchemaToCollectionRequest {
-    /**
-     * Collection contract address
-     * @type {string}
-     * @memberof MetadataApiAddMetadataSchemaToCollection
-     */
-    readonly address: string
-
-    /**
-     * String created by signing wallet address and timestamp
-     * @type {string}
-     * @memberof MetadataApiAddMetadataSchemaToCollection
-     */
-    readonly iMXSignature: string
-
-    /**
-     * Unix Epoc timestamp
-     * @type {string}
-     * @memberof MetadataApiAddMetadataSchemaToCollection
-     */
-    readonly iMXTimestamp: string
-
-    /**
-     * add metadata schema to a collection
-     * @type {AddMetadataSchemaToCollectionRequest}
-     * @memberof MetadataApiAddMetadataSchemaToCollection
-     */
-    readonly addMetadataSchemaToCollectionRequest: AddMetadataSchemaToCollectionRequest
-}
-
-/**
- * Request parameters for getMetadataSchema operation in MetadataApi.
- * @export
- * @interface GetMetadataSchemaRequest
- */
-export interface GetMetadataSchemaRequest {
-    /**
-     * Collection contract address
-     * @type {string}
-     * @memberof MetadataApiGetMetadataSchema
-     */
-    readonly address: string
-}
-
-/**
- * Request parameters for updateMetadataSchemaByName operation in MetadataApi.
- * @export
- * @interface UpdateMetadataSchemaByNameRequest
- */
-export interface UpdateMetadataSchemaByNameRequest {
-    /**
-     * Collection contract address
-     * @type {string}
-     * @memberof MetadataApiUpdateMetadataSchemaByName
-     */
-    readonly address: string
-
-    /**
-     * Metadata schema name
-     * @type {string}
-     * @memberof MetadataApiUpdateMetadataSchemaByName
-     */
-    readonly name: string
-
-    /**
-     * String created by signing wallet address and timestamp
-     * @type {string}
-     * @memberof MetadataApiUpdateMetadataSchemaByName
-     */
-    readonly iMXSignature: string
-
-    /**
-     * Unix Epoc timestamp
-     * @type {string}
-     * @memberof MetadataApiUpdateMetadataSchemaByName
-     */
-    readonly iMXTimestamp: string
-
-    /**
-     * update metadata schema
-     * @type {MetadataSchemaRequest}
-     * @memberof MetadataApiUpdateMetadataSchemaByName
-     */
-    readonly metadataSchemaRequest: MetadataSchemaRequest
-}
-
-/**
  * MetadataApi - object-oriented interface
  * @export
  * @class MetadataApi
@@ -383,36 +292,43 @@ export class MetadataApi extends BaseAPI {
     /**
      * Add metadata schema to collection
      * @summary Add metadata schema to collection
-     * @param {AddMetadataSchemaToCollectionRequest} requestParameters Request parameters.
+     * @param {string} address Collection contract address
+     * @param {string} iMXSignature String created by signing wallet address and timestamp
+     * @param {string} iMXTimestamp Unix Epoc timestamp
+     * @param {AddMetadataSchemaToCollectionRequest} addMetadataSchemaToCollectionRequest add metadata schema to a collection
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetadataApi
      */
-    public addMetadataSchemaToCollection(requestParameters: AddMetadataSchemaToCollectionRequest, options?: AxiosRequestConfig) {
-        return MetadataApiFp(this.configuration).addMetadataSchemaToCollection(requestParameters.address, requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.addMetadataSchemaToCollectionRequest, options).then((request) => request(this.axios, this.basePath));
+    public addMetadataSchemaToCollection(address: string, iMXSignature: string, iMXTimestamp: string, addMetadataSchemaToCollectionRequest: AddMetadataSchemaToCollectionRequest, options?: AxiosRequestConfig) {
+        return MetadataApiFp(this.configuration).addMetadataSchemaToCollection(address, iMXSignature, iMXTimestamp, addMetadataSchemaToCollectionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get collection metadata schema
      * @summary Get collection metadata schema
-     * @param {GetMetadataSchemaRequest} requestParameters Request parameters.
+     * @param {string} address Collection contract address
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetadataApi
      */
-    public getMetadataSchema(requestParameters: GetMetadataSchemaRequest, options?: AxiosRequestConfig) {
-        return MetadataApiFp(this.configuration).getMetadataSchema(requestParameters.address, options).then((request) => request(this.axios, this.basePath));
+    public getMetadataSchema(address: string, options?: AxiosRequestConfig) {
+        return MetadataApiFp(this.configuration).getMetadataSchema(address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Update metadata schema by name
      * @summary Update metadata schema by name
-     * @param {UpdateMetadataSchemaByNameRequest} requestParameters Request parameters.
+     * @param {string} address Collection contract address
+     * @param {string} name Metadata schema name
+     * @param {string} iMXSignature String created by signing wallet address and timestamp
+     * @param {string} iMXTimestamp Unix Epoc timestamp
+     * @param {MetadataSchemaRequest} metadataSchemaRequest update metadata schema
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MetadataApi
      */
-    public updateMetadataSchemaByName(requestParameters: UpdateMetadataSchemaByNameRequest, options?: AxiosRequestConfig) {
-        return MetadataApiFp(this.configuration).updateMetadataSchemaByName(requestParameters.address, requestParameters.name, requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.metadataSchemaRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateMetadataSchemaByName(address: string, name: string, iMXSignature: string, iMXTimestamp: string, metadataSchemaRequest: MetadataSchemaRequest, options?: AxiosRequestConfig) {
+        return MetadataApiFp(this.configuration).updateMetadataSchemaByName(address, name, iMXSignature, iMXTimestamp, metadataSchemaRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }

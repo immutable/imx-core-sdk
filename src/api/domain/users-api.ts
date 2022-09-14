@@ -290,62 +290,6 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
 };
 
 /**
- * Request parameters for getSignableRegistration operation in UsersApi.
- * @export
- * @interface GetSignableRegistrationRequest
- */
-export interface GetSignableRegistrationRequest {
-    /**
-     * Register User
-     * @type {GetSignableRegistrationRequest}
-     * @memberof UsersApiGetSignableRegistration
-     */
-    readonly getSignableRegistrationRequest: GetSignableRegistrationRequest
-}
-
-/**
- * Request parameters for getSignableRegistrationOffchain operation in UsersApi.
- * @export
- * @interface GetSignableRegistrationOffchainRequest
- */
-export interface GetSignableRegistrationOffchainRequest {
-    /**
-     * Register User Offchain
-     * @type {GetSignableRegistrationRequest}
-     * @memberof UsersApiGetSignableRegistrationOffchain
-     */
-    readonly getSignableRegistrationRequest: GetSignableRegistrationRequest
-}
-
-/**
- * Request parameters for getUsers operation in UsersApi.
- * @export
- * @interface GetUsersRequest
- */
-export interface GetUsersRequest {
-    /**
-     * User
-     * @type {string}
-     * @memberof UsersApiGetUsers
-     */
-    readonly user: string
-}
-
-/**
- * Request parameters for registerUser operation in UsersApi.
- * @export
- * @interface RegisterUserRequest
- */
-export interface RegisterUserRequest {
-    /**
-     * Register User
-     * @type {RegisterUserRequest}
-     * @memberof UsersApiRegisterUser
-     */
-    readonly registerUserRequest: RegisterUserRequest
-}
-
-/**
  * UsersApi - object-oriented interface
  * @export
  * @class UsersApi
@@ -355,48 +299,48 @@ export class UsersApi extends BaseAPI {
     /**
      * Get operator signature to allow clients to register the user
      * @summary Get operator signature to allow clients to register the user
-     * @param {GetSignableRegistrationRequest} requestParameters Request parameters.
+     * @param {GetSignableRegistrationRequest} getSignableRegistrationRequest Register User
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getSignableRegistration(requestParameters: GetSignableRegistrationRequest, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getSignableRegistration(requestParameters.getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableRegistration(getSignableRegistrationRequest: GetSignableRegistrationRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getSignableRegistration(getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get encoded details to allow clients to register the user offchain
      * @summary Get encoded details to allow clients to register the user offchain
-     * @param {GetSignableRegistrationOffchainRequest} requestParameters Request parameters.
+     * @param {GetSignableRegistrationRequest} getSignableRegistrationRequest Register User Offchain
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getSignableRegistrationOffchain(requestParameters: GetSignableRegistrationOffchainRequest, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getSignableRegistrationOffchain(requestParameters.getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
+    public getSignableRegistrationOffchain(getSignableRegistrationRequest: GetSignableRegistrationRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getSignableRegistrationOffchain(getSignableRegistrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get stark keys for a registered user
      * @summary Get stark keys for a registered user
-     * @param {GetUsersRequest} requestParameters Request parameters.
+     * @param {string} user User
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public getUsers(requestParameters: GetUsersRequest, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).getUsers(requestParameters.user, options).then((request) => request(this.axios, this.basePath));
+    public getUsers(user: string, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).getUsers(user, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Registers a user
      * @summary Registers a user
-     * @param {RegisterUserRequest} requestParameters Request parameters.
+     * @param {RegisterUserRequest} registerUserRequest Register User
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsersApi
      */
-    public registerUser(requestParameters: RegisterUserRequest, options?: AxiosRequestConfig) {
-        return UsersApiFp(this.configuration).registerUser(requestParameters.registerUserRequest, options).then((request) => request(this.axios, this.basePath));
+    public registerUser(registerUserRequest: RegisterUserRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).registerUser(registerUserRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }

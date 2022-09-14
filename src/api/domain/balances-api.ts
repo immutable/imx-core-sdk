@@ -170,41 +170,6 @@ export const BalancesApiFactory = function (configuration?: Configuration, baseP
 };
 
 /**
- * Request parameters for getBalance operation in BalancesApi.
- * @export
- * @interface GetBalanceRequest
- */
-export interface GetBalanceRequest {
-    /**
-     * Address of the owner/user
-     * @type {string}
-     * @memberof BalancesApiGetBalance
-     */
-    readonly owner: string
-
-    /**
-     * Token address
-     * @type {string}
-     * @memberof BalancesApiGetBalance
-     */
-    readonly address: string
-}
-
-/**
- * Request parameters for listBalances operation in BalancesApi.
- * @export
- * @interface ListBalancesRequest
- */
-export interface ListBalancesRequest {
-    /**
-     * Ethereum wallet address for user
-     * @type {string}
-     * @memberof BalancesApiListBalances
-     */
-    readonly owner: string
-}
-
-/**
  * BalancesApi - object-oriented interface
  * @export
  * @class BalancesApi
@@ -214,24 +179,25 @@ export class BalancesApi extends BaseAPI {
     /**
      * Fetches the token balances of the user
      * @summary Fetches the token balances of the user
-     * @param {GetBalanceRequest} requestParameters Request parameters.
+     * @param {string} owner Address of the owner/user
+     * @param {string} address Token address
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BalancesApi
      */
-    public getBalance(requestParameters: GetBalanceRequest, options?: AxiosRequestConfig) {
-        return BalancesApiFp(this.configuration).getBalance(requestParameters.owner, requestParameters.address, options).then((request) => request(this.axios, this.basePath));
+    public getBalance(owner: string, address: string, options?: AxiosRequestConfig) {
+        return BalancesApiFp(this.configuration).getBalance(owner, address, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * Get a list of balances for given user
      * @summary Get a list of balances for given user
-     * @param {ListBalancesRequest} requestParameters Request parameters.
+     * @param {string} owner Ethereum wallet address for user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof BalancesApi
      */
-    public listBalances(requestParameters: ListBalancesRequest, options?: AxiosRequestConfig) {
-        return BalancesApiFp(this.configuration).listBalances(requestParameters.owner, options).then((request) => request(this.axios, this.basePath));
+    public listBalances(owner: string, options?: AxiosRequestConfig) {
+        return BalancesApiFp(this.configuration).listBalances(owner, options).then((request) => request(this.axios, this.basePath));
     }
 }
