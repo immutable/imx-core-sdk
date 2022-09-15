@@ -85,15 +85,6 @@
     "typedoc": "^0.23.10"
   },
   "dependencies": {
-    "@ethersproject/abi": "^5.7.0",
-    "@ethersproject/abstract-signer": "^5.7.0",
-    "@ethersproject/bignumber": "^5.6.2",
-    "@ethersproject/bytes": "^5.7.0",
-    "@ethersproject/keccak256": "^5.7.0",
-    "@ethersproject/providers": "^5.6.4",
-    "@ethersproject/strings": "^5.7.0",
-    "@ethersproject/units": "^5.6.1",
-    "@ethersproject/wallet": "^5.6.2",
     "axios": "^0.26.1",
     "bn.js": "^5.2.0",
     "elliptic": "^6.5.4",
