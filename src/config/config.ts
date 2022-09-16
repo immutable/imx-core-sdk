@@ -48,6 +48,15 @@ export const Config = {
 
   get SANDBOX() {
     return createConfig({
+      basePath: 'https://api.sandbox.x.immutable.com',
+      chainID: 5,
+      coreContractAddress: '0x7917eDb51ecD6CdB3F9854c3cc593F33de10c623',
+      registrationContractAddress: '0x1C97Ada273C9A52253f463042f29117090Cd7D83',
+    });
+  },
+
+  get ROPSTEN() {
+    return createConfig({
       basePath: 'https://api.ropsten.x.immutable.com',
       chainID: 3,
       coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
