@@ -43,7 +43,6 @@ import {
   MintsApiListMintsRequest,
   WithdrawalsApiListWithdrawalsRequest,
   WithdrawalsApiGetWithdrawalRequest,
-  UsersApiGetUsersRequest,
   OrdersApiGetOrderRequest,
   OrdersApiListOrdersRequest,
   GetSignableCancelOrderRequest,
@@ -105,7 +104,7 @@ export class ImmutableX {
   }
 
   /**
-   * Registration
+   * User Registration
    */
   public registerOffchain(walletConnection: WalletConnection) {
     return this.workflows.registerOffchain(walletConnection);
@@ -113,6 +112,12 @@ export class ImmutableX {
 
   public isRegisteredOnchain(walletConnection: WalletConnection) {
     return this.workflows.isRegisteredOnchain(walletConnection);
+  }
+
+  public getUser(ethAddress: string) {
+    return this.usersApi.getUsers({
+      user: ethAddress,
+    });
   }
 
   /**
@@ -281,13 +286,6 @@ export class ImmutableX {
     token: AnyToken,
   ) {
     return this.workflows.completeWithdrawal(ethSigner, starkPublicKey, token);
-  }
-
-  /**
-   * Users
-   */
-  public getUsers(requestParameters: UsersApiGetUsersRequest) {
-    return this.usersApi.getUsers(requestParameters);
   }
 
   /**
