@@ -57,11 +57,22 @@ export async function registerOffchainWorkflow({
   return;
 }
 
+interface IsRegisteredCheckError {
+  reason: string;
+}
+
 export async function isRegisteredOnChainWorkflow(
   starkPublicKey: string,
   contract: Registration,
 ): Promise<boolean> {
-  return await contract.isRegistered(starkPublicKey);
+  try {
+    return await contract.isRegistered(starkPublicKey);
+  } catch (ex) {
+    if ((ex as IsRegisteredCheckError).reason === 'USER_UNREGISTERED') {
+      return false;
+    }
+    throw ex;
+  }
 }
 
 export async function getSignableRegistrationOnchain(
