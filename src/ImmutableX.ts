@@ -95,7 +95,7 @@ export class ImmutableX {
    * Deposit based on a token type
    * @param ethSigner - the L1 signer
    * @param deposit - the token type amount in its corresponding unit
-   * @returns the transaction
+   * @returns the response of the resulting transaction
    */
   public deposit(ethSigner: EthSigner, deposit: TokenAmount) {
     return this.workflows.deposit(ethSigner, deposit);
