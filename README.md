@@ -54,7 +54,8 @@ Check out how the [Release Process](https://github.com/immutable/imx-core-sdk/#r
 A configuration object is required to be passed into Core SDK requests. This can be obtained by using the `getConfig` function available within the Core SDK. You are required to provide the correct contract addresses, Chain ID, and api base path of the network you wish to use. The Immutable X platform currently supports `ropsten` for testing and `mainnet` for production.
 
 | Network   | Chain ID | API Base Path                       | Core Contract Address                        | Registration Contract Address                |
-|-----------|----------|-------------------------------------|----------------------------------------------|----------------------------------------------|
+| --------- | -------- | ----------------------------------- | -------------------------------------------- | -------------------------------------------- |
+| `goerli`  | 5        | https://api.sandbox.x.immutable.com | `0x7917eDb51ecD6CdB3F9854c3cc593F33de10c623` | `0x1C97Ada273C9A52253f463042f29117090Cd7D83` |
 | `ropsten` | 3        | https://api.ropsten.x.immutable.com | `0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef` | `0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864` |
 | `mainnet` | 1        | https://api.x.immutable.com         | `0x5FDCCA53617f4d2b9134B29090C87D01058e27e9` | `0x72a06bf2a1CE5e39cBA06c0CAb824960B587d64c` |
 
@@ -67,10 +68,10 @@ const ethNetwork = 'ropsten'; // or mainnet;
 
 // Use the helper function to get the config
 const config = getConfig({
-  coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
-  registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
-  chainID: 3,
-  basePath:  'https://api.ropsten.x.immutable.com',
+  coreContractAddress: '0x7917eDb51ecD6CdB3F9854c3cc593F33de10c623',
+  registrationContractAddress: '0x1C97Ada273C9A52253f463042f29117090Cd7D83',
+  chainID: 5,
+  basePath:  'https://api.sandbox.x.immutable.com',
   headers: { 'x-api-custom-header': '...' } // headers are optional unless specified otherwise
 });
 
@@ -115,10 +116,10 @@ import { getConfig, AssetsApi } from '@imtbl/core-sdk';
 
 const getYourAsset = async (tokenAddress: string, tokenId: string) => {
   const config = getConfig({
-    coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
-    registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
-    chainID: 3,
-    basePath:  'https://api.ropsten.x.immutable.com',
+    coreContractAddress: '0x7917eDb51ecD6CdB3F9854c3cc593F33de10c623',
+    registrationContractAddress: '0x1C97Ada273C9A52253f463042f29117090Cd7D83',
+    chainID: 5,
+    basePath:  'https://api.sandbox.x.immutable.com',
   });
   const assetsApi = new AssetsApi(config.apiConfiguration);
 
@@ -249,10 +250,10 @@ const l2Signer = new BaseSigner(l2Wallet.starkKeyPair);
 
 // Sets up the Core SDK workflows
 const coreSdkConfig = getConfig({
-  coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
-  registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
-  chainID: 3,
-  basePath:  'https://api.ropsten.x.immutable.com',
+  coreContractAddress: '0x7917eDb51ecD6CdB3F9854c3cc593F33de10c623',
+  registrationContractAddress: '0x1C97Ada273C9A52253f463042f29117090Cd7D83',
+  chainID: 5,
+  basePath:  'https://api.sandbox.x.immutable.com',
 });
 const coreSdkWorkflows = new Workflows(coreSdkConfig);
 
