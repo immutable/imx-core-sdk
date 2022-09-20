@@ -52,8 +52,9 @@ export class StandardStarkSigner implements StarkSigner {
   }
 }
 
-/**x
+/**
  * Creates a new Stark Signer
+ * @params starkPrivateKey - the private key as a hex string
  * @returns a StarkSigner
  */
 export function createStarkSigner(starkPrivateKey: string): StarkSigner {
