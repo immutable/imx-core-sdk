@@ -56,7 +56,9 @@ Examples of information applications may want to get data on are:
 * Orders or details about a particular order
 * Historical trades and transfers
 
-### Example: Get all collections and get assets from a particular collection:
+### Examples
+
+#### Get all collections and get assets from a particular collection:
 ```ts
 const listCollectionsResponse = await client.listCollections({
   // Limit results to 2 per page
@@ -73,9 +75,11 @@ const collectionAssetsResponse = await client.listAssets({
 
 ## Transactions requiring user signatures
 
-Some transactions require users to approve (sign) them. This is because they involve some kind of state update to the blockchain, like changing asset ownership.
+A transaction is an instruction to update the state on the blockchain, like transferring asset ownership. They require users to sign (approve) them to prove that they are valid.
 
-In order to generate a signature, a user's private key is required. However, for security reasons, applications don't usually ask users to enter their private key into the application. Instead, they create a prompt for a connection to the user's wallet application (ie. mobile or browser wallet) where the user can approve the transaction. This is also known as getting a "signer".
+In order to generate a signature, a user’s private key is required. However, a user directly giving an application a private key is risky as private keys allow anyone who has them full control of an account. 
+
+Instead, an app can get an interface to the user's account which is called a Signer. To do this a prompt is shown which will allow the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages that they can choose to approve or deny.
 
 ### How do applications generate and use signers?
 
@@ -83,7 +87,7 @@ There are two ways to get signers in your application:
 1. Use our [Wallet SDK](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview)
 2. Generate your own
 
-Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2). As such, signers are required for both these layers.
+As Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2), signers are required for both these layers.
 
 ### Generate signers using the Wallet SDK
 The [Wallet SDK Web](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview) provides connections to Metamask and WalletConnect browser wallets.
@@ -233,13 +237,13 @@ make generate-openapi-prod
 This repository is using [release-it](https://github.com/release-it/release-it) to manage the CHANGELOG.md.
 
 The following headings should be used as appropriate
-* Added
-* Changed
-* Deprecated
-* Removed
-* Fixed
+* **Added**
+* **Changed**
+* **Deprecated**
+* **Removed**
+* **Fixed**
 
-This is an example with all the change headings. For actual usage, only use headings when appropriate. This goes at the top of the CHANGELOG.md above the most recent release.
+This is an example with all the change headings. For actual usage, use only the one heading that is relevant. This goes at the top of the CHANGELOG.md above the most recent release.
 
 ```markdown
 ...
@@ -283,10 +287,10 @@ The `package.json` will contain the value of the previous release:
 1. Merge your changes
 2. Check and update your local main branch
 3. Run `yarn release`
-   - Choose release type (patch|minor|major)
-   - Choose `yes` to use changelog and `package.json`
-   - Add a tag if required - this step can be skipped by replying `no`
-   - Push to remote by using `yes`
+    * Choose release type (patch|minor|major)
+    * Choose `yes` to use changelog and `package.json`
+    * Add a tag if required * this step can be skipped by replying `no`
+    * Push to remote by using `yes`
 
 #### Alpha release:
 1. Go to https://github.com/immutable/imx-core-sdk/actions/workflows/publish.yaml and find the "Run workflow" button on the left.
