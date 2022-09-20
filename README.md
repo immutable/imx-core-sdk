@@ -35,9 +35,9 @@ yarn add @imtbl/core-sdk
 Initialize the Core SDK client with the network on which you want your application to run (see [all networks available](./src/config/config.ts)):
 | Param | Description |
 | -- | -- |
-| `Config.SANDBOX` | The default test network (currently, it is Goërli)  |
+| `Config.SANDBOX` | The default test network (currently, it is Goërli) |
 | `Config.ROPSTEN` | Ropsten test network (to be deprecated soon) |
-| `Config.PRODUCTION` | Ethereum network  |
+| `Config.PRODUCTION` | Ethereum network |
 
 ```ts
 import { ImmutableX, Config } from '@imtbl/core-sdk';
@@ -48,9 +48,9 @@ const client = new ImmutableX(config);
 
 ## Get data (on assets, orders, past transactions, etc.)
 
-Getting data from Immutable X involves reading data from the blockchain. It does not require any user authentication because no state is being updated.
+This involves reading data about events, transactions or current state on Immutable X (layer 2). It does not require any user authentication because no state is being changed.
 
-Examples of information applications may want to get data on are:
+Examples of the types of data that is typically retrieved include:
 * Assets or details of a particular asset
 * Token balances for a particular user
 * Orders or details about a particular order
@@ -77,9 +77,9 @@ const collectionAssetsResponse = await client.listAssets({
 
 A transaction is an instruction to update the state on the blockchain, like transferring asset ownership. They require users to sign (approve) them to prove that they are valid.
 
-In order to generate a signature, a user’s private key is required. However, a user directly giving an application a private key is risky as private keys allow anyone who has them full control of an account. 
+In order to generate a signature, a user’s private key is required. However, a user directly giving an application a private key is risky as private keys allow anyone in possession of them full control of an account. 
 
-Instead, an app can get an interface to the user's account which is called a Signer. To do this a prompt is shown which will allow the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages that they can choose to approve or deny.
+Instead, an app can get an interface to the user's account which is called a "signer". To do this a prompt is shown which will allow the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages that they can choose to approve or deny.
 
 ### How do applications generate and use signers?
 
@@ -194,7 +194,7 @@ The Core contract is Immutable's main interface with the Ethereum blockchain, ba
 
 #### Registration
 
-The Registration contract is a proxy smart contract for the Core contract that combines transactions related to onchain registration, deposits and withdrawals. When a user who is not registered onchain attempts to perform a deposit or a withdrawal, the Registration combines requests to the Core contract in order to register the user first. - users who are not registered onchain are not able to perform a deposit or withdrawal.
+The Registration contract is a proxy smart contract for the Core contract that combines transactions related to onchain registration, deposits and withdrawals. When a user who is not registered onchain attempts to perform a deposit or a withdrawal, the Registration combines requests to the Core contract in order to register the user first. Users who are not registered onchain are not able to perform a deposit or withdrawal.
 
 For example, instead of making subsequent transaction requests to the Core contract, i.e. `registerUser` and `depositNft`, a single transaction request can be made to the proxy Registration contract - `registerAndWithdrawNft`.
 
