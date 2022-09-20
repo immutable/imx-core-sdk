@@ -1,7 +1,7 @@
 import { ec } from 'elliptic';
 import * as encUtils from 'enc-utils';
 import { StarkSigner } from '../../types';
-import { starkEc } from './stark-curve';
+import { starkEc } from './starkCurve';
 import BN from 'bn.js';
 import { Errors } from '../../workflows/errors';
 
@@ -52,6 +52,10 @@ export class StandardStarkSigner implements StarkSigner {
   }
 }
 
+/**x
+ * Creates a new Stark Signer
+ * @returns a StarkSigner
+ */
 export function createStarkSigner(starkPrivateKey: string): StarkSigner {
   return new StandardStarkSigner(starkPrivateKey);
 }

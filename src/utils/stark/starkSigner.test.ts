@@ -1,5 +1,5 @@
 import { Errors } from '../../workflows/errors';
-import { createStarkSigner } from './stark-signer';
+import { createStarkSigner } from './starkSigner';
 
 describe('StarkSigner', () => {
   it('should return correct address', async () => {

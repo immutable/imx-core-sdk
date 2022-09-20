@@ -1,5 +1,5 @@
-export * as Contracts from './exportcontracts';
-export * as Utils from './exportutils';
+export * as Contracts from './exportContracts';
+export * as Utils from './exportUtils';
 export * from './types';
 export * from './api';
 export { Config } from './config';

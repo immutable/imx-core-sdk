@@ -92,7 +92,10 @@ export function grindKey(keySeed: BN, keyValLimit: BN) {
   return key.umod(keyValLimit).toString('hex');
 }
 
-// Generates a new private key on the Stark-friendly elliptic curve.
+/**
+ * Generates a new Stark private key
+ * @returns the private key as a hex string
+ */
 export function generateStarkPrivateKey(): string {
   const keyPair = starkEc.genKeyPair();
   return grindKey(keyPair.getPrivate(), starkEcOrder);
