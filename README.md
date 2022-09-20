@@ -8,7 +8,7 @@
 
 ---
 
-# Immutable Core SDK
+# Immutable Core SDK in Typescript
 
 [![npm version](https://badge.fury.io/js/@imtbl%2Fcore-sdk.svg)](https://www.npmjs.com/package/@imtbl/core-sdk) [![Maintainability](https://api.codeclimate.com/v1/badges/219466ee5269620167e5/maintainability)](https://codeclimate.com/repos/62848fd8d4420d01b6002210/maintainability)
 
@@ -18,9 +18,9 @@ Currently, our SDK supports interactions with our application-specific rollup ba
 
 ## Documentation
 
-See the [developer guides](https://docs.x.immutable.com) for information on building on Immutable X.
+See our [developer documentation](https://docs.x.immutable.com) for information on building on Immutable X.
 
-See the [API reference documentation](https://docs.x.immutable.com/reference) for more information on our API's.
+See our [API reference](https://docs.x.immutable.com/reference) for more information on our APIs.
 
 ## Installation
 
@@ -30,19 +30,39 @@ npm install @imtbl/core-sdk --save
 yarn add @imtbl/core-sdk
 ```
 
-## Quickstart
+## Initialization
 
-TODO: explain initialisation of the SDK.
+Initialize the Core SDK client with the network on which you want your application to run (see [all networks available](./src/config/config.ts)):
+| Param | Description |
+| -- | -- |
+| `Config.SANDBOX` | The default test network (currently, it is Goërli)  |
+| `Config.ROPSTEN` | Ropsten test network (to be deprecated soon) |
+| `Config.PRODUCTION` | Ethereum network  |
 
 ```ts
 import { ImmutableX, Config } from '@imtbl/core-sdk';
 
-const config = Config.ROPSTEN; // or PRODUCTION
+const config = Config.ROPSTEN; // Or PRODUCTION or SANDBOX
 const client = new ImmutableX(config);
+```
 
+## Get data (on assets, orders, past transactions, etc.)
+
+Getting data from Immutable X involves reading data from the blockchain. It does not require any user authentication because no state is being updated.
+
+Examples of information applications may want to get data on are:
+* Assets or details of a particular asset
+* Token balances for a particular user
+* Orders or details about a particular order
+* Historical trades and transfers
+
+### Example: Get all collections and get assets from a particular collection:
+```ts
 const listCollectionsResponse = await client.listCollections({
+  // Limit results to 2 per page
   pageSize: 2,
 });
+
 const firstCollection = listCollectionsResponse.data.result[0];
 
 const collectionAssetsResponse = await client.listAssets({
@@ -51,25 +71,32 @@ const collectionAssetsResponse = await client.listAssets({
 });
 ```
 
-TODO: what other read only calls can be made? Segueway to transactions requiring user's signatures
+## Transactions requiring user signatures
 
-## Transactions requiring user's signatures
+Some transactions require users to approve (sign) them. This is because they involve some kind of state update to the blockchain, like changing asset ownership.
 
-In order to get user's signature eth and stark signers need to be created.
-If you build a frontend app it's recommended to use Wallet/Link SDKs.
+In order to generate a signature, a user's private key is required. However, for security reasons, applications don't usually ask users to enter their private key into the application. Instead, they create a prompt for a connection to the user's wallet application (ie. mobile or browser wallet) where the user can approve the transaction. This is also known as getting a "signer".
 
-TODO: insert code reference to Wallet SDK.
+### How do applications generate and use signers?
 
-Creating signers without Wallet/Link SDK.
+There are two ways to get signers in your application:
+1. Use our [Wallet SDK](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview)
+2. Generate your own
 
-###
+Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2). As such, signers are required for both these layers.
 
+### Generate signers using the Wallet SDK
+The [Wallet SDK Web](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview) provides connections to Metamask and WalletConnect browser wallets.
+
+See [this guide](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/quickstart) for how to set this up.
+
+### Generate your own signers
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { Utils, ImmutableX, Config } from '@imtbl/core-sdk';
 
-// Setup a provider
+// Set up a provider
 const ethNetwork = 'ropsten'; // or mainnet;
 const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
 
@@ -79,36 +106,39 @@ const ethSigner = ethWallet.connect(provider);
 const starkSigner = Utils.createStarkSigner(YOUR_PRIVATE_STARK_KEY);
 ```
 
-Signers are used to authenticate certain IMX operations (e.g. create Project/Collection)
+### Examples of signed transactions
 
+#### Create a project and collection (requires an Ethereum layer 1 signer)
 ```ts
-const createProjectResponse = await imxClient.createProject(ethSigner, {
+const createProjectResponse = await client.createProject(ethSigner, {
   company_name: 'My Company',
   contact_email: 'project@company.com',
   name: 'Project name',
 });
 
 const projectId = createProjectResponse.data.id.toString();
-const getProjectResponse = await imxClient.getProject(ethSigner, projectId);
+
+const getProjectResponse = await client.getProject(ethSigner, projectId);
 ```
 
-Signers are also reuired to move assets between L1 and L2 (deposit/withdraw)
+#### Deposit tokens from L1 to L2 (requires an Ethereum layer 1 signer)
 
 ```ts
 const depositResponse = await client.deposit(ethSigner, {
   type: 'ETH',
-  amount: '500000000000000000', // amount in Wei
+  amount: '500000000000000000', // Amount in wei
 });
 ```
 
-and to sign transaction that update ownership of assets
+#### Create an order (requires an Ethereum layer 1 and StarkEx layer 2 signer)
 
 ```ts
 const signers = { ethSigner, starkSigner };
+
 const orderResponse = await client.createOrder(signers, {
   buy: {
     type: 'ETH',
-    amount: '1230000000000000000', // amount to buy the NFT (asset)
+    amount: '1230000000000000000', // Sale price in wei
   },
   sell: {
     type: 'ERC721',
@@ -118,7 +148,7 @@ const orderResponse = await client.createOrder(signers, {
 });
 ```
 
-### Contract Requests
+### Contract requests
 
 Immutable X is built as a ZK-rollup in partnership with StarkWare. We chose the ZK-rollups because it is the only solution capable of scale without compromise. This means whenever you mint or trade an NFT on Immutable X, you pay zero gas, and the validity of all transactions are directly enforced by Ethereum’s security using zero-knowledge proofs -- the first “layer 2” for NFTs on Ethereum.
 
@@ -174,13 +204,103 @@ Standard interface for interacting with ERC20 contracts, taken from [OpenZeppeli
 
 Standard interface for interacting with ERC721 contracts, taken from [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721).
 
-## Getting Help
+## Contributing
+
+### Set up local developer environment
+```sh
+# Install dependencies
+yarn install
+
+yarn build
+
+# Run tests
+yarn test
+```
+
+Check out how the [Release process](https://github.com/immutable/imx-core-sdk/#release-process) works
+
+### API autogenerated code
+
+We use OpenAPI (formally known as Swagger) to auto-generate the API clients that connect to the [public APIs](https://docs.x.immutable.com/reference). The OpenAPI spec is retrieved from https://api.x.immutable.com/openapi and also saved in the repo. 
+
+To re-generate the API client, run:
+```make
+make generate-openapi-prod
+```
+
+### Changelog management
+
+This repository is using [release-it](https://github.com/release-it/release-it) to manage the CHANGELOG.md.
+
+The following headings should be used as appropriate
+* Added
+* Changed
+* Deprecated
+* Removed
+* Fixed
+
+This is an example with all the change headings. For actual usage, only use headings when appropriate. This goes at the top of the CHANGELOG.md above the most recent release.
+
+```markdown
+...
+
+### [Unreleased]
+
+#### Added
+
+For new features.
+
+#### Changed
+
+For changes in existing functionality.
+
+#### Deprecated
+
+For soon-to-be removed features.
+
+#### Removed
+
+For now removed features.
+
+#### Fixed
+
+For any bug fixes.
+
+...
+```
+
+The `package.json` will contain the value of the previous release:
+
+```json
+
+"version": "0.3.0",
+
+```
+
+### Release process
+
+#### Main release:
+1. Merge your changes
+2. Check and update your local main branch
+3. Run `yarn release`
+   - Choose release type (patch|minor|major)
+   - Choose `yes` to use changelog and `package.json`
+   - Add a tag if required - this step can be skipped by replying `no`
+   - Push to remote by using `yes`
+
+#### Alpha release:
+1. Go to https://github.com/immutable/imx-core-sdk/actions/workflows/publish.yaml and find the "Run workflow" button on the left.
+2. Click the button and select the branch from dropdown.
+3. Add a tag that is greater than last published main tag and append with `-alpha.x`. The `x` is the version for this particular alpha release. For example, if the last published is `1.2.0`, use `1.2.1-alpha.1` or `1.3.0-alpha.1` depending on type of your changes.
+4. Click "run workflow" button. This will trigger a "NPM Publish" action for alpha release 🎉
+
+## Getting help
 
 Immutable X is open to all to build on, with no approvals required. If you want to talk to us to learn more, or apply for developer grants, click below:
 
 [Contact us](https://www.immutable.com/contact)
 
-### Project Support
+### Project support
 
 To get help from other developers, discuss ideas, and stay up-to-date on what's happening, become a part of our community on Discord.
 
@@ -202,96 +322,3 @@ Webpack 5 no longer uses NodeJS polyfills, such as `crypto`, which in turn break
 `Module not found: Error: Can't resolve 'crypto'`.
 
 To fix this, you can use a webpack polyfill plugin like [node-polyfill-webpack-plugin](https://www.npmjs.com/package/node-polyfill-webpack-plugin), or if you're using `create-react-app` in your project which hides the Webpack config, [this blog post](https://alchemy.com/blog/how-to-polyfill-node-core-modules-in-webpack-5) explains how to add polyfills to your CRA project.
-
-## Contributing
-
-### Setup local developer environment
-
-```sh
-# install dependencies
-yarn install
-yarn build
-# run tests
-yarn test
-```
-
-Check out how the [Release Process](https://github.com/immutable/imx-core-sdk/#release-process) works
-
-### API Autogenerated Code
-
-We use OpenAPI (formally known as Swagger) to auto-generate the API clients that connect to the [public APIs](https://docs.x.immutable.com/reference).
-The OpenAPI spec is retrieved from https://api.x.immutable.com/openapi and also saved in the repo. To re-generate the API client run
-
-```make
-make generate-openapi-prod
-```
-
-### Changelog Management
-
-This repository is using release-it to manage the CHANGELOG.md
-
-The following headings should be used as appropriate
-
-- Added
-- Changed
-- Deprecated
-- Removed
-- Fixed
-
-What follows is an example with all the change headings, for real world use only use headings when appropriate.
-This goes at the top of the CHANGELOG.md above the most recent release.
-
-```markdown
-...
-
-### [Unreleased]
-
-#### Added
-
-for new features.
-
-#### Changed
-
-for changes in existing functionality.
-
-#### Deprecated
-
-for soon-to-be removed features.
-
-#### Removed
-
-for now removed features.
-
-#### Fixed
-
-for any bug fixes.
-
-...
-```
-
-The package.json will hold the value of the previous release
-
-```json
-
-"version": "0.3.0",
-
-```
-
-### Release Process
-
-#### Main Release
-
-1. Merge your changes
-2. Check and update your local main branch
-3. Run `yarn release`
-   - Choose release type (patch|minor|major)
-   - Choose `yes` to use changelog and `package.json`
-   - Add a tag if required - this step can be skipped by replying `no`
-   - Push to remote by using `yes`
-
-#### Alpha Release
-
-1. Go to https://github.com/immutable/imx-core-sdk/actions/workflows/publish.yaml and find the "Run workflow" button on the left.
-2. Click the button and select the branch from dropdown.
-3. Add a tag that is greater than last published main tag and append with `-alpha.x`. The `x` is the version for this particular alpha release. For example, if the last published is `1.2.0`, use `1.2.1-alpha.1` or `1.3.0-alpha.1` depending on type of your changes.
-4. Click "run workflow" button. This will trigger a "NPM Publish" action for alpha release 🎉
