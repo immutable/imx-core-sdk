@@ -49,7 +49,7 @@ export interface EthConfiguration {
  */
 export interface ImmutableXConfiguration {
   /**
-   * The configuration for L2
+   * The configuration for the API client
    */
   apiConfiguration: APIConfiguration;
   /**

@@ -39,7 +39,7 @@ export interface ETHAmount extends ETHToken {
  */
 export interface ERC20Amount extends ERC20Token {
   /**
-   * An amount in ERC20 unit
+   * An amount in units for the given ERC20 token
    */
   amount: string;
 }

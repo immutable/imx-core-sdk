@@ -38,6 +38,6 @@ export type UnsignedTransferRequest = TokenAmount & {
 };
 
 /**
- * Parameter required to mint tokens
+ * Parameter required to Mint tokens
  */
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;
