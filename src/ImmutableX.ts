@@ -55,6 +55,9 @@ import {
   TransfersApiListTransfersRequest,
 } from './api';
 
+/**
+ * The main entry point for the Core SDK
+ */
 export class ImmutableX {
   private depositsApi: DepositsApi;
   private mintsApi: MintsApi;
@@ -89,31 +92,56 @@ export class ImmutableX {
   }
 
   /**
-   * Deposits
+   * Deposit based on a token type
+   * @param ethSigner - the L1 signer
+   * @param deposit - the token type amount in its corresponding unit
+   * @returns the transaction
    */
   public deposit(ethSigner: EthSigner, deposit: TokenAmount) {
     return this.workflows.deposit(ethSigner, deposit);
   }
 
+  /**
+   * Get details of a Deposit with the given ID
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Deposit
+   */
   public getDeposit(requestParameters: DepositsApiGetDepositRequest) {
     return this.depositsApi.getDeposit(requestParameters);
   }
 
+  /**
+   * Get a list of Deposits
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Deposits
+   */
   public listDeposits(requestParameters?: DepositsApiListDepositsRequest) {
     return this.depositsApi.listDeposits(requestParameters);
   }
 
   /**
-   * User Registration
+   * Register a User to Immutable X if they are not already
+   * @param walletConnection - the pair of Signers for the wallet
+   * @returns void if successful
    */
   public registerOffchain(walletConnection: WalletConnection) {
     return this.workflows.registerOffchain(walletConnection);
   }
 
+  /**
+   * Checks if a User is registered on on-chain
+   * @param walletConnection - the pair of Signers for the wallet
+   * @returns true if the User is registered, false otherwise
+   */
   public isRegisteredOnchain(walletConnection: WalletConnection) {
     return this.workflows.isRegisteredOnchain(walletConnection);
   }
 
+  /**
+   * Get stark keys for a registered User
+   * @param ethAddress - the eth address of the User
+   * @returns the requested User
+   */
   public getUser(ethAddress: string) {
     return this.usersApi.getUsers({
       user: ethAddress,
@@ -121,42 +149,74 @@ export class ImmutableX {
   }
 
   /**
-   * Assets
+   * Get details of an Asset
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Asset
    */
   public getAsset(requestParameters: AssetsApiGetAssetRequest) {
     return this.assetApi.getAsset(requestParameters);
   }
 
+  /**
+   * Get a list of Assets
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Assets
+   */
   public listAssets(requestParameters?: AssetsApiListAssetsRequest) {
     return this.assetApi.listAssets(requestParameters);
   }
 
   /**
-   * Collections
+   * Create a Collection
+   * @param ethSigner - the L1 signer
+   * @param request - the request object to be provided in the API request
+   * @returns the created Collection
    */
   public createCollection(
     ethSigner: EthSigner,
-    requestParameters: CreateCollectionRequest,
+    request: CreateCollectionRequest,
   ) {
-    return this.workflows.createCollection(ethSigner, requestParameters);
+    return this.workflows.createCollection(ethSigner, request);
   }
 
+  /**
+   * Get details of a Collection at the given address
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Collection
+   */
   public getCollection(requestParameters: CollectionsApiGetCollectionRequest) {
     return this.collectionApi.getCollection(requestParameters);
   }
 
+  /**
+   * Get a list of Collection filters
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Collection Filters
+   */
   public listCollectionFilters(
     requestParameters: CollectionsApiListCollectionFiltersRequest,
   ) {
     return this.collectionApi.listCollectionFilters(requestParameters);
   }
 
+  /**
+   * Get a list of Collections
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Collections
+   */
   public listCollections(
     requestParameters?: CollectionsApiListCollectionsRequest,
   ) {
     return this.collectionApi.listCollections(requestParameters);
   }
 
+  /**
+   * Update a Collection
+   * @param ethSigner - the L1 signer
+   * @param collectionAddress - the Collection contract address
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the updated Collection
+   */
   public updateCollection(
     ethSigner: EthSigner,
     collectionAddress: string,
@@ -170,7 +230,11 @@ export class ImmutableX {
   }
 
   /**
-   * /metadata
+   * Add metadata schema to Collection
+   * @param ethSigner - the L1 signer
+   * @param collectionAddress - the Collection contract address
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the SuccessResponse if successful
    */
   public addMetadataSchemaToCollection(
     ethSigner: EthSigner,
@@ -184,12 +248,25 @@ export class ImmutableX {
     );
   }
 
+  /**
+   * Get Metadata schema
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Metadata schema
+   */
   public getMetadataSchema(
     requestParameters: MetadataApiGetMetadataSchemaRequest,
   ) {
     return this.metadataApi.getMetadataSchema(requestParameters);
   }
 
+  /**
+   * Update metadata schema by name
+   * @param ethSigner - the L1 signer
+   * @param collectionAddress - the Collection contract address
+   * @param name - the Metadata schema name
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the SuccessResponse if successful
+   */
   public updateMetadataSchemaByName(
     ethSigner: EthSigner,
     collectionAddress: string,
@@ -205,7 +282,10 @@ export class ImmutableX {
   }
 
   /**
-   * Projects
+   * Create a Project
+   * @param ethSigner - the L1 signer
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the created Project
    */
   public async createProject(
     ethSigner: EthSigner,
@@ -214,10 +294,25 @@ export class ImmutableX {
     return this.workflows.createProject(ethSigner, requestParameters);
   }
 
+  /**
+   * Get a Project
+   * @param ethSigner - the L1 signer
+   * @param id - the Project ID
+   * @returns the requested Project
+   */
   public async getProject(ethSigner: EthSigner, id: string) {
     return this.workflows.getProject(ethSigner, id);
   }
 
+  /**
+   * Get Projects
+   * @param ethSigner - the L1 signer
+   * @param pageSize - the page size of the result
+   * @param cursor - the cursor
+   * @param orderBy - the property to sort by
+   * @param direction - direction to sort (asc/desc)
+   * @returns the requested Projects
+   */
   public async getProjects(
     ethSigner: EthSigner,
     pageSize?: number,
@@ -235,33 +330,55 @@ export class ImmutableX {
   }
 
   /**
-   * Balances
+   * Get the token Balances of the User
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Balance
    */
   public getBalance(requestParameters: BalancesApiGetBalanceRequest) {
     return this.balanceApi.getBalance(requestParameters);
   }
 
+  /**
+   * Get a list of Balances for given User
+   * @param requestParameters the request object containing the parameters to be provided in the API request
+   * @return the requested list of Balances
+   */
   public listBalances(requestParameters: BalancesApiListBalancesRequest) {
     return this.balanceApi.listBalances(requestParameters);
   }
 
   /**
-   * Mints
+   * Get details of a Mint with the given ID
+   * @param requestParameters the request object containing the parameters to be provided in the API request
+   * @returns the requested Mint
    */
   public getMint(requestParameters: MintsApiGetMintRequest) {
     return this.mintsApi.getMint(requestParameters);
   }
 
+  /**
+   * Get a list of Mints
+   * @param requestParameters the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Mints
+   */
   public listMints(requestParameters?: MintsApiListMintsRequest) {
     return this.mintsApi.listMints(requestParameters);
   }
 
+  /**
+   * Mint tokens in a batch with fees
+   * @param ethSigner - the L1 signer
+   * @param request - the request object to be provided in the API request
+   * @returns the minted tokens
+   */
   public mint(ethSigner: EthSigner, request: UnsignedMintRequest) {
     return this.workflows.mint(ethSigner, request);
   }
 
   /**
-   * Withdrawal
+   * Get a list of Withdrawals
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Withdrawals
    */
   public listWithdrawals(
     requestParameters?: WithdrawalsApiListWithdrawalsRequest,
@@ -269,10 +386,21 @@ export class ImmutableX {
     return this.withdrawalsApi.listWithdrawals(requestParameters);
   }
 
+  /**
+   * Get details of Withdrawal with the given ID
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Withdrawal
+   */
   public getWithdrawal(requestParameters: WithdrawalsApiGetWithdrawalRequest) {
     return this.withdrawalsApi.getWithdrawal(requestParameters);
   }
 
+  /**
+   * Create a Withdrawal
+   * @param walletConnection - the pair of Signers for the wallet
+   * @param request - the token type amount in its corresponding unit
+   * @returns the created Withdrawal
+   */
   public prepareWithdrawal(
     walletConnection: WalletConnection,
     request: TokenAmount,
@@ -280,6 +408,13 @@ export class ImmutableX {
     return this.workflows.prepareWithdrawal(walletConnection, request);
   }
 
+  /**
+   * Completes a Withdrawal
+   * @param ethSigner - the L1 signer
+   * @param starkPublicKey - the Signer address
+   * @param token - the token
+   * @returns the transaction
+   */
   public completeWithdrawal(
     ethSigner: EthSigner,
     starkPublicKey: string,
@@ -289,16 +424,29 @@ export class ImmutableX {
   }
 
   /**
-   * Order
+   * Get details of an Order with the given ID
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Order
    */
   public getOrder(requestParameters: OrdersApiGetOrderRequest) {
     return this.ordersApi.getOrder(requestParameters);
   }
 
+  /**
+   * Get a list of Orders
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Orders
+   */
   public listOrders(requestParameters?: OrdersApiListOrdersRequest) {
     return this.ordersApi.listOrders(requestParameters);
   }
 
+  /**
+   * Create an Order
+   * @param walletConnection - the pair of Signers for the wallet
+   * @param request - the request object to be provided in the API request
+   * @returns the created Order
+   */
   public createOrder(
     walletConnection: WalletConnection,
     request: UnsignedOrderRequest,
@@ -306,6 +454,12 @@ export class ImmutableX {
     return this.workflows.createOrder(walletConnection, request);
   }
 
+  /**
+   * Cancel an Order
+   * @param walletConnection - the pair of Signers for the wallet
+   * @param request - the request object to be provided in the API request
+   * @returns the cancelled Order
+   */
   public cancelOrder(
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
@@ -314,16 +468,29 @@ export class ImmutableX {
   }
 
   /**
-   * Trades
+   * Get details of a Trade with the given ID
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Trade
    */
   public getTrade(requestParameters: TradesApiGetTradeRequest) {
     return this.tradesApi.getTrade(requestParameters);
   }
 
+  /**
+   * Get a list of Trades
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Trades
+   */
   public listTrades(requestParameters?: TradesApiListTradesRequest) {
     return this.tradesApi.listTrades(requestParameters);
   }
 
+  /**
+   * Create a Trade
+   * @param walletConnection - the pair of Signers for the wallet
+   * @param request - the request object to be provided in the API request
+   * @returns the created Trade
+   */
   public createTrade(
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
@@ -332,27 +499,47 @@ export class ImmutableX {
   }
 
   /**
-   * Tokens
+   * Get details of a Token
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Token
    */
   public getToken(requestParameters: TokensApiGetTokenRequest) {
     return this.tokensApi.getToken(requestParameters);
   }
 
+  /**
+   * Get a list of Tokens
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Tokens
+   */
   public listTokens(requestParameters?: TokensApiListTokensRequest) {
     return this.tokensApi.listTokens(requestParameters);
   }
 
   /**
-   * Transfers
+   * Get details of a Transfer with the given ID
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested Transfer
    */
   public getTransfer(requestParameters: TransfersApiGetTransferRequest) {
     return this.transfersApi.getTransfer(requestParameters);
   }
 
+  /**
+   * Get a list of Transfers
+   * @param requestParameters - the request object containing the parameters to be provided in the API request
+   * @returns the requested list of Transfers
+   */
   public listTransfers(requestParameters?: TransfersApiListTransfersRequest) {
     return this.transfersApi.listTransfers(requestParameters);
   }
 
+  /**
+   * Create a new Transfer request
+   * @param walletConnection - the pair of Signers for the wallet
+   * @param request - the request object to be provided in the API request
+   * @returns the created Transfer
+   */
   public transfer(
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
@@ -360,6 +547,12 @@ export class ImmutableX {
     return this.workflows.transfer(walletConnection, request);
   }
 
+  /**
+   * Create a batch of transfer requests
+   * @param walletConnection - the pair of Signers for the wallet
+   * @param request - the request object to be provided in the API request
+   * @returns the list of Transfer IDs
+   */
   public batchNftTransfer(
     walletConnection: WalletConnection,
     request: Array<NftTransferDetails>,
