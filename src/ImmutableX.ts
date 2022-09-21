@@ -542,7 +542,7 @@ export class ImmutableX {
   }
 
   /**
-   * Create a batch of transfer requests
+   * Create a batch of NFT transfer requests
    * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
    * @returns the list of Transfer IDs
