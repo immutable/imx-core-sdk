@@ -190,11 +190,12 @@ export class ImmutableX {
    * @throws IMXError
    */
   public getAsset(request: AssetsApiGetAssetRequest) {
-    try {
-      return this.assetApi.getAsset(request).then(res => res.data);
-    } catch (err: unknown) {
-      throw formatError(err);
-    }
+    return this.assetApi
+      .getAsset(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
