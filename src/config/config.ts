@@ -4,7 +4,7 @@ import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
-export interface Environment extends EthConfiguration {
+interface Environment extends EthConfiguration {
   basePath: string;
   headers?: Record<string, string>;
 }
@@ -36,6 +36,10 @@ const createConfig = ({
   };
 };
 
+/**
+ * Creates a Configuration for the specified environment
+ * @returns an ImmutableXConfiguration
+ */
 export const Config = {
   get PRODUCTION() {
     return createConfig({
