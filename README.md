@@ -42,13 +42,13 @@ Initialize the Core SDK client with the network on which you want your applicati
 ```ts
 import { ImmutableX, Config } from '@imtbl/core-sdk';
 
-const config = Config.ROPSTEN; // Or PRODUCTION or SANDBOX
+const config = Config.SANDBOX; // Or PRODUCTION or ROPSTEN
 const client = new ImmutableX(config);
 ```
 
 ## Get data (on assets, orders, past transactions, etc.)
 
-This involves reading data about events, transactions or current state on Immutable X (layer 2). It does not require any user authentication because no state is being changed.
+These methods allow you to read data about events, transactions or current state on Immutable X (layer 2). It does not require any user authentication because no state is being changed.
 
 Examples of the types of data that is typically retrieved include:
 
@@ -74,15 +74,26 @@ const collectionAssetsResponse = await client.listAssets({
 });
 ```
 
-## Transactions requiring user signatures
+## Operations requiring user signatures
 
-A transaction is an instruction to update the state on the blockchain, like transferring asset ownership. They require users to sign (approve) them to prove that they are valid.
+There are two types of operations requiring user signatures:
+1. Transactions that update blockchain state
+2. Operations that Immutable X require authorization for
+
+In order to get user signatures, applications need to [generate "signers"](#how-do-applications-generate-and-use-signers).
+
+#### What are transactions that update blockchain state?
+A common transaction type is the transfer of asset ownership from one user to another (ie. asset sale). These operations require users to sign (approve) them to prove that they are valid.
+
+#### What are operations that require authorization?
+
+These operations add to or update data in Immutable's databases and typically require the authorization of an object's owner (ie. a user creating a project on Immutable X).
+
+### How do applications generate and use signers?
 
 In order to generate a signature, a user’s private key is required. However, a user directly giving an application a private key is risky as private keys allow anyone in possession of them full control of an account.
 
 Instead, an app can get an interface to the user's account which is called a "signer". To do this a prompt is shown which will allow the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages that they can choose to approve or deny.
-
-### How do applications generate and use signers?
 
 There are two ways to get signers in your application:
 
@@ -91,13 +102,13 @@ There are two ways to get signers in your application:
 
 As Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2), signers are required for both these layers.
 
-### Generate signers using the Wallet SDK
+### 1. Generate signers using the Wallet SDK
 
 The [Wallet SDK Web](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview) provides connections to Metamask and WalletConnect browser wallets.
 
 See [this guide](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/quickstart) for how to set this up.
 
-### Generate your own signers
+### 2. Generate your own signers
 
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
@@ -114,9 +125,12 @@ const ethSigner = ethWallet.connect(provider);
 const starkSigner = Utils.createStarkSigner(YOUR_PRIVATE_STARK_KEY);
 ```
 
-### Examples of signed transactions
+> **Warning**
+> If you generate your own signers, you will have to persist the Stark private key. The key ***cannot*** be deterministically retrieved using the Wallet SDK.
 
-#### Create a project and collection (requires an Ethereum layer 1 signer)
+### Examples
+
+#### Create a project (requires an Ethereum layer 1 signer)
 
 ```ts
 const createProjectResponse = await client.createProject(ethSigner, {
@@ -157,13 +171,13 @@ const orderResponse = await client.createOrder(signers, {
 });
 ```
 
-### Contract requests
+## Contract requests
 
 Immutable X is built as a ZK-rollup in partnership with StarkWare. We chose the ZK-rollups because it is the only solution capable of scale without compromise. This means whenever you mint or trade an NFT on Immutable X, you pay zero gas, and the validity of all transactions are directly enforced by Ethereum’s security using zero-knowledge proofs -- the first “layer 2” for NFTs on Ethereum.
 
 The Core SDK provides interfaces for all smart contracts required to interact with the Immutable X platform.
 
-[See all smart contract available in the Core SDK](#smart-contract-autogeneration)
+[See all smart contracts available in the Core SDK](#smart-contract-autogeneration).
 
 ```ts
 import { Contracts } from '@imtbl/core-sdk';
@@ -187,17 +201,17 @@ const populatedTransaction = await contract.populateTransaction.depositNft(
 const transactionResponse = await signer.sendTransaction(populatedTransaction);
 ```
 
-### Smart contract autogeneration
+## Smart contract autogeneration
 
 The Immutable solidity contracts can be found under `contracts` folder. Contract bindings in typescript is generated using [hardhat](https://hardhat.org/guides/compile-contracts.html).
 
-#### Core
+### Core
 
 The Core contract is Immutable's main interface with the Ethereum blockchain, based on [StarkEx](https://docs.starkware.co/starkex-v4).
 
 [View contract](contracts/Core.sol)
 
-#### Registration
+### Registration
 
 The Registration contract is a proxy smart contract for the Core contract that combines transactions related to onchain registration, deposits and withdrawals. When a user who is not registered onchain attempts to perform a deposit or a withdrawal, the Registration combines requests to the Core contract in order to register the user first. Users who are not registered onchain are not able to perform a deposit or withdrawal.
 
@@ -205,11 +219,11 @@ For example, instead of making subsequent transaction requests to the Core contr
 
 [View contract](contracts/Registration.sol)
 
-#### IERC20
+### IERC20
 
 Standard interface for interacting with ERC20 contracts, taken from [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#IERC20).
 
-#### IERC721
+### IERC721
 
 Standard interface for interacting with ERC721 contracts, taken from [OpenZeppelin](https://docs.openzeppelin.com/contracts/4.x/api/token/erc721#IERC721).
 
