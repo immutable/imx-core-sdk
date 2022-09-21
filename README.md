@@ -180,7 +180,9 @@ The Core SDK provides interfaces for all smart contracts required to interact wi
 [See all smart contracts available in the Core SDK](#smart-contract-autogeneration).
 
 ```ts
-import { Contracts } from '@imtbl/core-sdk';
+import { Contracts, Config } from '@imtbl/core-sdk';
+
+const config = Config.SANDBOX;
 
 // Get instance of core contract
 const contract = Contracts.Core.connect(
