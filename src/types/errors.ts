@@ -7,7 +7,7 @@ import { APIError } from '../api';
 export const UnknownErrorCode = 'unknown_error_code';
 
 /**
- * Custom error that is returned from the API when a request fails
+ * Custom Error class that is returned from the API when a request fails
  */
 export class IMXError extends Error {
   /**
@@ -25,28 +25,20 @@ export class IMXError extends Error {
 
 /**
  * [Formats an error in the IMXError shape](https://axios-http.com/docs/handling_errors)
- * @param err - The Error object thrown by the request
+ * @param error - The Error object thrown by the request
  * @returns IMXError
  */
-export function formatError(err: unknown): IMXError {
-  if (axios.isAxiosError(err)) {
-    if (axios.isAxiosError(err) && err.response) {
-      const error: APIError = err.response.data;
-      return new IMXError({
-        code: error.code,
-        details: error.details,
-        message: error.message,
-      });
-    } else {
-      return new IMXError({
-        code: UnknownErrorCode,
-        message: String(err),
-      });
-    }
-  } else {
+export function formatError(error: unknown): IMXError {
+  if (axios.isAxiosError(error) && error.response) {
+    const apiError: APIError = error.response.data;
     return new IMXError({
-      code: UnknownErrorCode,
-      message: String(err),
+      code: apiError.code,
+      details: apiError.details,
+      message: apiError.message,
     });
   }
+  return new IMXError({
+    code: UnknownErrorCode,
+    message: String(error),
+  });
 }

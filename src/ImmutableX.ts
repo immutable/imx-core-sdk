@@ -96,22 +96,19 @@ export class ImmutableX {
    * Deposit based on a token type. For unregistered Users, the Deposit will be combined with a registration in order to register the User first
    * @param ethSigner - the L1 signer
    * @param deposit - the token type amount in its corresponding unit
-   * @returns the response of the resulting transaction
+   * @returns a promise that resolves with the resulting transaction
    * @throws IMXError
    */
   public deposit(ethSigner: EthSigner, deposit: TokenAmount) {
-    return this.workflows
-      .deposit(ethSigner, deposit)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.deposit(ethSigner, deposit).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Get details of a Deposit with the given ID
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Deposit
+   * @returns a promise that resolves with the requested Deposit
    * @throws IMXError
    */
   public getDeposit(request: DepositsApiGetDepositRequest) {
@@ -126,7 +123,7 @@ export class ImmutableX {
   /**
    * Get a list of Deposits
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Deposits
+   * @returns a promise that resolves with the requested list of Deposits
    * @throws IMXError
    */
   public listDeposits(request?: DepositsApiListDepositsRequest) {
@@ -141,37 +138,31 @@ export class ImmutableX {
   /**
    * Register a User to Immutable X if they are not already
    * @param walletConnection - the pair of L1/L2 signers
-   * @returns void if successful
+   * @returns a promise that resolves with void if successful
    * @throws IMXError
    */
   public registerOffchain(walletConnection: WalletConnection) {
-    return this.workflows
-      .registerOffchain(walletConnection)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.registerOffchain(walletConnection).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Checks if a User is registered on on-chain
    * @param walletConnection - the pair of L1/L2 signers
-   * @returns true if the User is registered, false otherwise
+   * @returns a promise that resolves with true if the User is registered, false otherwise
    * @throws IMXError
    */
   public isRegisteredOnchain(walletConnection: WalletConnection) {
-    return this.workflows
-      .isRegisteredOnchain(walletConnection)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.isRegisteredOnchain(walletConnection).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Get Stark keys for a registered User
    * @param ethAddress - the eth address of the User
-   * @returns the requested User
+   * @returns a promise that resolves with the requested User
    * @throws IMXError
    */
   public getUser(ethAddress: string) {
@@ -186,7 +177,7 @@ export class ImmutableX {
   /**
    * Get details of an Asset
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Asset
+   * @returns a promise that resolves with the requested Asset
    * @throws IMXError
    */
   public getAsset(request: AssetsApiGetAssetRequest) {
@@ -201,7 +192,7 @@ export class ImmutableX {
   /**
    * Get a list of Assets
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Assets
+   * @returns a promise that resolves with the requested list of Assets
    * @throws IMXError
    */
   public listAssets(request?: AssetsApiListAssetsRequest) {
@@ -217,7 +208,7 @@ export class ImmutableX {
    * Create a Collection
    * @param ethSigner - the L1 signer
    * @param request - the request object to be provided in the API request
-   * @returns the created Collection
+   * @returns a promise that resolves with the created Collection
    * @throws IMXError
    */
   public createCollection(
@@ -235,7 +226,7 @@ export class ImmutableX {
   /**
    * Get details of a Collection at the given address
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Collection
+   * @returns a promise that resolves with the requested Collection
    * @throws IMXError
    */
   public getCollection(request: CollectionsApiGetCollectionRequest) {
@@ -250,7 +241,7 @@ export class ImmutableX {
   /**
    * Get a list of Collection filters
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Collection Filters
+   * @returns a promise that resolves with the requested list of Collection Filters
    * @throws IMXError
    */
   public listCollectionFilters(
@@ -267,7 +258,7 @@ export class ImmutableX {
   /**
    * Get a list of Collections
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Collections
+   * @returns a promise that resolves with the requested list of Collections
    * @throws IMXError
    */
   public listCollections(request?: CollectionsApiListCollectionsRequest) {
@@ -284,7 +275,7 @@ export class ImmutableX {
    * @param ethSigner - the L1 signer
    * @param collectionAddress - the Collection contract address
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the updated Collection
+   * @returns a promise that resolves with the updated Collection
    * @throws IMXError
    */
   public updateCollection(
@@ -305,7 +296,7 @@ export class ImmutableX {
    * @param ethSigner - the L1 signer
    * @param collectionAddress - the Collection contract address
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the SuccessResponse if successful
+   * @returns a promise that resolves with the SuccessResponse if successful
    * @throws IMXError
    */
   public addMetadataSchemaToCollection(
@@ -324,7 +315,7 @@ export class ImmutableX {
   /**
    * Get Metadata schema
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Metadata schema
+   * @returns a promise that resolves with the requested Metadata schema
    * @throws IMXError
    */
   public getMetadataSchema(request: MetadataApiGetMetadataSchemaRequest) {
@@ -342,7 +333,7 @@ export class ImmutableX {
    * @param collectionAddress - the Collection contract address
    * @param name - the Metadata schema name
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the SuccessResponse if successful
+   * @returns a promise that resolves with the SuccessResponse if successful
    * @throws IMXError
    */
   public updateMetadataSchemaByName(
@@ -363,7 +354,7 @@ export class ImmutableX {
    * Create a Project
    * @param ethSigner - the L1 signer
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the created Project
+   * @returns a promise that resolves with the created Project
    * @throws IMXError
    */
   public async createProject(
@@ -382,7 +373,7 @@ export class ImmutableX {
    * Get a Project
    * @param ethSigner - the L1 signer
    * @param id - the Project ID
-   * @returns the requested Project
+   * @returns a promise that resolves with the requested Project
    * @throws IMXError
    */
   public async getProject(ethSigner: EthSigner, id: string) {
@@ -401,7 +392,7 @@ export class ImmutableX {
    * @param cursor - the cursor
    * @param orderBy - the property to sort by
    * @param direction - direction to sort (asc/desc)
-   * @returns the requested Projects
+   * @returns a promise that resolves with the requested Projects
    * @throws IMXError
    */
   public async getProjects(
@@ -437,7 +428,7 @@ export class ImmutableX {
   /**
    * Get a list of Balances for given User
    * @param request the request object containing the parameters to be provided in the API request
-   * @return the requested list of Balances
+   * @returns a promise that resolves with the requested list of Balances
    * @throws IMXError
    */
   public listBalances(request: BalancesApiListBalancesRequest) {
@@ -452,7 +443,7 @@ export class ImmutableX {
   /**
    * Get details of a Mint with the given ID
    * @param request the request object containing the parameters to be provided in the API request
-   * @returns the requested Mint
+   * @returns a promise that resolves with the requested Mint
    * @throws IMXError
    */
   public getMint(request: MintsApiGetMintRequest) {
@@ -467,7 +458,7 @@ export class ImmutableX {
   /**
    * Get a list of Mints
    * @param request the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Mints
+   * @returns a promise that resolves with the requested list of Mints
    * @throws IMXError
    */
   public listMints(request?: MintsApiListMintsRequest) {
@@ -483,22 +474,19 @@ export class ImmutableX {
    * Mint tokens in a batch with fees
    * @param ethSigner - the L1 signer
    * @param request - the request object to be provided in the API request
-   * @returns the minted tokens
+   * @returns a promise that resolves with the minted tokens
    * @throws IMXError
    */
   public mint(ethSigner: EthSigner, request: UnsignedMintRequest) {
-    return this.workflows
-      .mint(ethSigner, request)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.mint(ethSigner, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Get a list of Withdrawals
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Withdrawals
+   * @returns a promise that resolves with the requested list of Withdrawals
    * @throws IMXError
    */
   public listWithdrawals(request?: WithdrawalsApiListWithdrawalsRequest) {
@@ -513,7 +501,7 @@ export class ImmutableX {
   /**
    * Get details of Withdrawal with the given ID
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Withdrawal
+   * @returns a promise that resolves with the requested Withdrawal
    * @throws IMXError
    */
   public getWithdrawal(request: WithdrawalsApiGetWithdrawalRequest) {
@@ -529,7 +517,7 @@ export class ImmutableX {
    * Create a Withdrawal
    * @param walletConnection - the pair of L1/L2 signers
    * @param request - the token type amount in its corresponding unit
-   * @returns the created Withdrawal
+   * @returns a promise that resolves with the created Withdrawal
    * @throws IMXError
    */
   public prepareWithdrawal(
@@ -538,7 +526,6 @@ export class ImmutableX {
   ) {
     return this.workflows
       .prepareWithdrawal(walletConnection, request)
-      .then(res => res)
       .catch(err => {
         throw formatError(err);
       });
@@ -549,7 +536,7 @@ export class ImmutableX {
    * @param ethSigner - the L1 signer
    * @param starkPublicKey - the Signer address
    * @param token - the token
-   * @returns the transaction
+   * @returns a promise that resolves with the transaction
    * @throws IMXError
    */
   public completeWithdrawal(
@@ -559,7 +546,6 @@ export class ImmutableX {
   ) {
     return this.workflows
       .completeWithdrawal(ethSigner, starkPublicKey, token)
-      .then(res => res)
       .catch(err => {
         throw formatError(err);
       });
@@ -568,7 +554,7 @@ export class ImmutableX {
   /**
    * Get details of an Order with the given ID
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Order
+   * @returns a promise that resolves with the requested Order
    * @throws IMXError
    */
   public getOrder(request: OrdersApiGetOrderRequest) {
@@ -583,7 +569,7 @@ export class ImmutableX {
   /**
    * Get a list of Orders
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Orders
+   * @returns a promise that resolves with the requested list of Orders
    * @throws IMXError
    */
   public listOrders(request?: OrdersApiListOrdersRequest) {
@@ -599,44 +585,38 @@ export class ImmutableX {
    * Create an Order
    * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
-   * @returns the created Order
+   * @returns a promise that resolves with the created Order
    * @throws IMXError
    */
   public createOrder(
     walletConnection: WalletConnection,
     request: UnsignedOrderRequest,
   ) {
-    return this.workflows
-      .createOrder(walletConnection, request)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.createOrder(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Cancel an Order
    * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
-   * @returns the cancelled Order
+   * @returns a promise that resolves with the cancelled Order
    * @throws IMXError
    */
   public cancelOrder(
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
-    return this.workflows
-      .cancelOrder(walletConnection, request)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.cancelOrder(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Get details of a Trade with the given ID
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Trade
+   * @returns a promise that resolves with the requested Trade
    * @throws IMXError
    */
   public getTrade(request: TradesApiGetTradeRequest) {
@@ -651,7 +631,7 @@ export class ImmutableX {
   /**
    * Get a list of Trades
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Trades
+   * @returns a promise that resolves with the requested list of Trades
    * @throws IMXError
    */
   public listTrades(request?: TradesApiListTradesRequest) {
@@ -667,25 +647,22 @@ export class ImmutableX {
    * Create a Trade
    * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
-   * @returns the created Trade
+   * @returns a promise that resolves with the created Trade
    * @throws IMXError
    */
   public createTrade(
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    return this.workflows
-      .createTrade(walletConnection, request)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.createTrade(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Get details of a Token
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Token
+   * @returns a promise that resolves with the requested Token
    * @throws IMXError
    */
   public getToken(request: TokensApiGetTokenRequest) {
@@ -700,7 +677,7 @@ export class ImmutableX {
   /**
    * Get a list of Tokens
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Tokens
+   * @returns a promise that resolves with the requested list of Tokens
    * @throws IMXError
    */
   public listTokens(request?: TokensApiListTokensRequest) {
@@ -715,7 +692,7 @@ export class ImmutableX {
   /**
    * Get details of a Transfer with the given ID
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested Transfer
+   * @returns a promise that resolves with the requested Transfer
    * @throws IMXError
    */
   public getTransfer(request: TransfersApiGetTransferRequest) {
@@ -730,7 +707,7 @@ export class ImmutableX {
   /**
    * Get a list of Transfers
    * @param request - the request object containing the parameters to be provided in the API request
-   * @returns the requested list of Transfers
+   * @returns a promise that resolves with the requested list of Transfers
    * @throws IMXError
    */
   public listTransfers(request?: TransfersApiListTransfersRequest) {
@@ -746,26 +723,23 @@ export class ImmutableX {
    * Create a new Transfer request
    * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
-   * @returns the created Transfer
+   * @returns a promise that resolves with the created Transfer
    * @throws IMXError
    */
   public transfer(
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
-    return this.workflows
-      .transfer(walletConnection, request)
-      .then(res => res)
-      .catch(err => {
-        throw formatError(err);
-      });
+    return this.workflows.transfer(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
    * Create a batch of NFT transfer requests
    * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
-   * @returns the list of Transfer IDs
+   * @returns a promise that resolves with the list of Transfer IDs
    * @throws IMXError
    */
   public batchNftTransfer(
@@ -774,7 +748,6 @@ export class ImmutableX {
   ) {
     return this.workflows
       .batchNftTransfer(walletConnection, request)
-      .then(res => res)
       .catch(err => {
         throw formatError(err);
       });
