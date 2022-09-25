@@ -365,19 +365,14 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested metadata refreshes
    * @throws IMXError
    */
-  public getAListOfMetadataRefreshes(
+  public listMetadataRefreshes(
     ethSigner: EthSigner,
     collectionAddress?: string,
     pageSize?: number,
     cursor?: string,
   ) {
     return this.workflows
-      .getAListOfMetadataRefreshes(
-        ethSigner,
-        collectionAddress,
-        pageSize,
-        cursor,
-      )
+      .listMetadataRefreshes(ethSigner, collectionAddress, pageSize, cursor)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -430,12 +425,12 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested metadata refresh ID
    * @throws IMXError
    */
-  public requestAMetadataRefresh(
+  public requestMetadataRefresh(
     ethSigner: EthSigner,
     request: CreateMetadataRefreshRequest,
   ) {
     return this.workflows
-      .requestAMetadataRefresh(ethSigner, request)
+      .requestMetadataRefresh(ethSigner, request)
       .then(res => res.data.refresh_id)
       .catch(err => {
         throw formatError(err);

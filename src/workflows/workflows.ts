@@ -430,7 +430,7 @@ export class Workflows {
     });
   }
 
-  public async getAListOfMetadataRefreshes(
+  public async listMetadataRefreshes(
     ethSigner: EthSigner,
     collectionAddress?: string,
     pageSize?: number,
@@ -483,7 +483,7 @@ export class Workflows {
     });
   }
 
-  public async requestAMetadataRefresh(
+  public async requestMetadataRefresh(
     ethSigner: EthSigner,
     request: CreateMetadataRefreshRequest,
   ) {
