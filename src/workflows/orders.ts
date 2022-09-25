@@ -3,6 +3,8 @@ import {
   OrdersApiCreateOrderRequest,
   GetSignableCancelOrderRequest,
   GetSignableOrderRequest,
+  CancelOrderResponse,
+  CreateOrderResponse,
 } from '../api';
 import {
   convertToSignableToken,
@@ -26,7 +28,7 @@ export async function createOrderWorkflow({
   starkSigner,
   request,
   ordersApi,
-}: CreateOrderWorkflowParams) {
+}: CreateOrderWorkflowParams): Promise<CreateOrderResponse> {
   const ethAddress = await ethSigner.getAddress();
 
   const amountSell = request.sell.type === 'ERC721' ? '1' : request.sell.amount;
@@ -85,7 +87,7 @@ export async function cancelOrderWorkflow({
   starkSigner,
   request,
   ordersApi,
-}: CancelOrderWorkflowParams) {
+}: CancelOrderWorkflowParams): Promise<CancelOrderResponse> {
   const getSignableCancelOrderResponse = await ordersApi.getSignableCancelOrder(
     {
       getSignableCancelOrderRequest: {

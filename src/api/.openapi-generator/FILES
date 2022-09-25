@@ -11,6 +11,7 @@ domain/collections-api.ts
 domain/deposits-api.ts
 domain/encoding-api.ts
 domain/metadata-api.ts
+domain/metadata-refreshes-api.ts
 domain/mints-api.ts
 domain/orders-api.ts
 domain/projects-api.ts
@@ -22,6 +23,7 @@ domain/withdrawals-api.ts
 git_push.sh
 index.ts
 models/add-metadata-schema-to-collection-request.ts
+models/apierror.ts
 models/asset-properties.ts
 models/asset-with-orders.ts
 models/asset.ts
@@ -32,6 +34,8 @@ models/collection-details.ts
 models/collection-filter.ts
 models/collection.ts
 models/create-collection-request.ts
+models/create-metadata-refresh-request.ts
+models/create-metadata-refresh-response.ts
 models/create-order-request.ts
 models/create-order-response.ts
 models/create-project-request.ts
@@ -54,6 +58,9 @@ models/fee-entry.ts
 models/fee-info.ts
 models/fee-token.ts
 models/fee.ts
+models/get-metadata-refresh-errors-response.ts
+models/get-metadata-refresh-response.ts
+models/get-metadata-refreshes.ts
 models/get-projects-response.ts
 models/get-signable-cancel-order-request.ts
 models/get-signable-cancel-order-response.ts
@@ -84,6 +91,9 @@ models/list-tokens-response.ts
 models/list-trades-response.ts
 models/list-transfers-response.ts
 models/list-withdrawals-response.ts
+models/metadata-refresh-errors.ts
+models/metadata-refresh-excluding-summary.ts
+models/metadata-refresh-summary.ts
 models/metadata-schema-property.ts
 models/metadata-schema-request.ts
 models/mint-fee.ts

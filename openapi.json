@@ -9,7 +9,7 @@
       "name": "Immutable API Support",
       "email": "support@immutable.com"
     },
-    "version": "0.1"
+    "version": "3.0"
   },
   "host": "api.ropsten.x.immutable.com",
   "basePath": "/",
@@ -133,6 +133,18 @@
             "schema": {
               "$ref": "#/definitions/ListAssetsResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -179,6 +191,18 @@
             "schema": {
               "$ref": "#/definitions/Asset"
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -209,11 +233,11 @@
           },
           {
             "enum": [
-              "\"name\"",
-              "\"address\"",
-              "\"project_id\"",
-              "\"created_at\"",
-              "\"updated_at\""
+              "name",
+              "address",
+              "project_id",
+              "created_at",
+              "updated_at"
             ],
             "type": "string",
             "description": "Property to sort by",
@@ -250,6 +274,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/ListCollectionsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -312,6 +348,30 @@
                 "description": "The amount of collections remaining for current four-week window."
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -341,6 +401,12 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Collection"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -395,6 +461,36 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Collection"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -471,6 +567,18 @@
                 "$ref": "#/definitions/MetadataSchemaProperty"
               }
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       },
@@ -524,6 +632,36 @@
             "description": "Created",
             "schema": {
               "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -587,6 +725,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -783,6 +945,360 @@
         }
       }
     },
+    "/v1/metadata-refreshes": {
+      "get": {
+        "description": "Get a list of metadata refreshes",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metadata-refreshes"
+        ],
+        "operationId": "Get a list of metadata refreshes",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Collection address",
+            "name": "collection_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature",
+            "name": "x-imx-eth-signature",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Unix Epoc timestamp",
+            "name": "x-imx-eth-timestamp",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet Address that signed the signature",
+            "name": "x-imx-eth-address",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetMetadataRefreshes"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Request metadata refresh for provided tokens",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metadata-refreshes"
+        ],
+        "operationId": "Request a metadata refresh",
+        "parameters": [
+          {
+            "description": "Create metadata refresh request",
+            "name": "CreateMetadataRefreshRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateMetadataRefreshRequest"
+            }
+          },
+          {
+            "type": "string",
+            "description": "String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature",
+            "name": "x-imx-eth-signature",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Unix Epoc timestamp",
+            "name": "x-imx-eth-timestamp",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet Address that signed the signature",
+            "name": "x-imx-eth-address",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "schema": {
+              "$ref": "#/definitions/CreateMetadataRefreshResponse"
+            },
+            "headers": {
+              "Refresh_Limit_Reset": {
+                "type": "string",
+                "description": "The expiry date of the current one-hour window."
+              },
+              "Refreshes_Limit": {
+                "type": "string",
+                "description": "The refresh request limit available to the project for each one-hour window."
+              },
+              "Remaining_Refreshes": {
+                "type": "string",
+                "description": "The amount of refresh requests remaining for current one-hour window."
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v1/metadata-refreshes/{refresh_id}": {
+      "get": {
+        "description": "Get metadata refresh results",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metadata-refreshes"
+        ],
+        "operationId": "Get metadata refresh results",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "The metadata refresh ID",
+            "name": "refresh_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature",
+            "name": "x-imx-eth-signature",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Unix Epoc timestamp",
+            "name": "x-imx-eth-timestamp",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet Address that signed the signature",
+            "name": "x-imx-eth-address",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetMetadataRefreshResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v1/metadata-refreshes/{refresh_id}/errors": {
+      "get": {
+        "description": "Get metadata refresh errors",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "metadata-refreshes"
+        ],
+        "operationId": "Get metadata refresh errors",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "The metadata refresh ID",
+            "name": "refresh_id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature",
+            "name": "x-imx-eth-signature",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Unix Epoc timestamp",
+            "name": "x-imx-eth-timestamp",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Wallet Address that signed the signature",
+            "name": "x-imx-eth-address",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetMetadataRefreshErrorsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
     "/v1/mintable-token/{token_address}/{token_id}": {
       "get": {
         "description": "Get details of a mintable token with the given token address and token ID",
@@ -816,6 +1332,18 @@
             "schema": {
               "$ref": "#/definitions/MintableTokenDetails"
             }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -845,6 +1373,12 @@
             "in": "query"
           },
           {
+            "enum": [
+              "transaction_id",
+              "token_id",
+              "created_at",
+              "updated_at"
+            ],
             "type": "string",
             "description": "Property to sort by",
             "name": "order_by",
@@ -935,6 +1469,18 @@
             "schema": {
               "$ref": "#/definitions/ListMintsResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -964,6 +1510,24 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Mint"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -1336,6 +1900,9 @@
         "consumes": [
           "application/json"
         ],
+        "produces": [
+          "application/json"
+        ],
         "tags": [
           "projects"
         ],
@@ -1387,12 +1954,39 @@
             "schema": {
               "$ref": "#/definitions/GetProjectsResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       },
       "post": {
         "description": "Create a project",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "tags": [
@@ -1431,6 +2025,30 @@
             "schema": {
               "$ref": "#/definitions/CreateProjectResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -1439,6 +2057,9 @@
       "get": {
         "description": "Get a project",
         "consumes": [
+          "application/json"
+        ],
+        "produces": [
           "application/json"
         ],
         "tags": [
@@ -1474,6 +2095,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Project"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -1580,6 +2225,18 @@
             "schema": {
               "$ref": "#/definitions/GetSignableRegistrationResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -1614,6 +2271,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetSignableRegistrationOffchainResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -1702,6 +2371,35 @@
         "operationId": "listTokens",
         "parameters": [
           {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "contract_address",
+              "name",
+              "symbol"
+            ],
+            "type": "string",
+            "description": "Property to sort by",
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Direction to sort (asc/desc)",
+            "name": "direction",
+            "in": "query"
+          },
+          {
             "type": "string",
             "description": "Contract address of the token",
             "name": "address",
@@ -1768,12 +2466,6 @@
         "parameters": [
           {
             "type": "string",
-            "description": "Party A's (buy order) order id",
-            "name": "party_a_order_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
             "description": "Party A's (buy order) token type of currency used to buy",
             "name": "party_a_token_type",
             "in": "query"
@@ -1782,12 +2474,6 @@
             "type": "string",
             "description": "Party A's (buy order) token address of currency used to buy",
             "name": "party_a_token_address",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Party B's (sell order) order id",
-            "name": "party_b_order_id",
             "in": "query"
           },
           {
@@ -2064,6 +2750,18 @@
             "schema": {
               "$ref": "#/definitions/ListTransfersResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       },
@@ -2111,6 +2809,30 @@
             "schema": {
               "$ref": "#/definitions/CreateTransferResponseV1"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -2143,6 +2865,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Transfer"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2179,6 +2913,24 @@
             "schema": {
               "$ref": "#/definitions/RegisterUserResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -2211,6 +2963,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetUsersApiResponse"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2539,6 +3303,30 @@
                 "description": "The amount of mints remaining for current four-week window."
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       }
@@ -2573,6 +3361,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetSignableTransferResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2622,6 +3434,30 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/CreateTransferResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -2699,6 +3535,27 @@
     }
   },
   "definitions": {
+    "APIError": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "description": "The error code",
+          "type": "string"
+        },
+        "details": {
+          "description": "The error details",
+          "type": "string"
+        },
+        "message": {
+          "description": "The error message",
+          "type": "string"
+        }
+      }
+    },
     "AddMetadataSchemaToCollectionRequest": {
       "type": "object",
       "required": [
@@ -2985,12 +3842,14 @@
       "required": [
         "address",
         "collection_image_url",
+        "created_at",
         "description",
         "icon_url",
         "metadata_api_url",
         "name",
         "project_id",
-        "project_owner_address"
+        "project_owner_address",
+        "updated_at"
       ],
       "properties": {
         "address": {
@@ -2999,6 +3858,11 @@
         },
         "collection_image_url": {
           "description": "URL of the tile image for this collection",
+          "type": "string",
+          "x-nullable": true
+        },
+        "created_at": {
+          "description": "Timestamp of when the collection was created",
           "type": "string",
           "x-nullable": true
         },
@@ -3028,6 +3892,11 @@
         "project_owner_address": {
           "description": "Project owner address",
           "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp of when the collection was updated",
+          "type": "string",
+          "x-nullable": true
         }
       }
     },
@@ -3116,6 +3985,38 @@
         }
       }
     },
+    "CreateMetadataRefreshRequest": {
+      "type": "object",
+      "required": [
+        "collection_address",
+        "token_ids"
+      ],
+      "properties": {
+        "collection_address": {
+          "description": "The collection contract address",
+          "type": "string"
+        },
+        "token_ids": {
+          "description": "The tokens to refresh",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CreateMetadataRefreshResponse": {
+      "type": "object",
+      "required": [
+        "refresh_id"
+      ],
+      "properties": {
+        "refresh_id": {
+          "description": "The metadata refresh ID",
+          "type": "string"
+        }
+      }
+    },
     "CreateOrderRequest": {
       "type": "object",
       "required": [
@@ -3195,6 +4096,10 @@
         "order_id": {
           "description": "ID of the created order",
           "type": "integer"
+        },
+        "request_id": {
+          "description": "Request ID as a reference for an asynchronous order creation request",
+          "type": "string"
         },
         "status": {
           "description": "Status of the created order",
@@ -3325,7 +4230,7 @@
       ],
       "properties": {
         "request_id": {
-          "description": "Request ID that returns when a trade initiated through risk-manager",
+          "description": "Request ID as a reference for an asynchronous trade creation request",
           "type": "string"
         },
         "status": {
@@ -3675,6 +4580,101 @@
             "ETH",
             "ERC20"
           ]
+        }
+      }
+    },
+    "GetMetadataRefreshErrorsResponse": {
+      "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
+      "properties": {
+        "cursor": {
+          "description": "Generated cursor returned by previous query",
+          "type": "string"
+        },
+        "remaining": {
+          "description": "Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results",
+          "type": "integer"
+        },
+        "result": {
+          "description": "Metadata refresh errors matching query parameters",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MetadataRefreshErrors"
+          }
+        }
+      }
+    },
+    "GetMetadataRefreshResponse": {
+      "type": "object",
+      "required": [
+        "refresh_id",
+        "status",
+        "collection_address",
+        "started_at",
+        "summary"
+      ],
+      "properties": {
+        "collection_address": {
+          "description": "The collection address",
+          "type": "string"
+        },
+        "completed_at": {
+          "description": "When the metadata refresh completed",
+          "type": "string",
+          "x-nullable": true
+        },
+        "refresh_id": {
+          "description": "The metadata refresh ID",
+          "type": "string"
+        },
+        "started_at": {
+          "description": "When the metadata refresh started",
+          "type": "string"
+        },
+        "status": {
+          "description": "The metadata refresh status",
+          "type": "string",
+          "enum": [
+            "queued",
+            "in_progress",
+            "completed"
+          ]
+        },
+        "summary": {
+          "description": "The current metadata refresh summary. The summary continue to update until metadata refresh is completed",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MetadataRefreshSummary"
+          }
+        }
+      }
+    },
+    "GetMetadataRefreshes": {
+      "type": "object",
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
+      "properties": {
+        "cursor": {
+          "description": "Generated cursor returned by previous query",
+          "type": "string"
+        },
+        "remaining": {
+          "description": "Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results",
+          "type": "integer"
+        },
+        "result": {
+          "description": "Metadata refresh errors matching query parameters",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/MetadataRefreshExcludingSummary"
+          }
         }
       }
     },
@@ -4492,6 +5492,102 @@
         }
       }
     },
+    "MetadataRefreshErrors": {
+      "required": [
+        "collection_address",
+        "token_id",
+        "error_code",
+        "client_token_metadata_url",
+        "client_response_body",
+        "client_response_status_code",
+        "created_at"
+      ],
+      "properties": {
+        "client_response_body": {
+          "description": "Metadata API response for the token",
+          "type": "string",
+          "x-nullable": true
+        },
+        "client_response_status_code": {
+          "description": "Metadata API response code for the token",
+          "type": "string",
+          "x-nullable": true
+        },
+        "client_token_metadata_url": {
+          "description": "Requested metadata url for the token",
+          "type": "string"
+        },
+        "collection_address": {
+          "description": "The collection contract address",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "When the error was created",
+          "type": "string"
+        },
+        "error_code": {
+          "description": "Metadata refresh error code",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "The token ID",
+          "type": "string"
+        }
+      }
+    },
+    "MetadataRefreshExcludingSummary": {
+      "type": "object",
+      "required": [
+        "refresh_id",
+        "status",
+        "collection_address",
+        "started_at"
+      ],
+      "properties": {
+        "collection_address": {
+          "description": "The collection address",
+          "type": "string"
+        },
+        "completed_at": {
+          "description": "When the metadata refresh completed",
+          "type": "string",
+          "x-nullable": true
+        },
+        "refresh_id": {
+          "description": "The metadata refresh ID",
+          "type": "string"
+        },
+        "started_at": {
+          "description": "When the metadata refresh started",
+          "type": "string"
+        },
+        "status": {
+          "description": "The metadata refresh status",
+          "type": "string",
+          "enum": [
+            "queued",
+            "in_progress",
+            "completed"
+          ]
+        }
+      }
+    },
+    "MetadataRefreshSummary": {
+      "properties": {
+        "failed": {
+          "description": "The number of tokens with failed metadata refreshes",
+          "type": "integer"
+        },
+        "pending": {
+          "description": "The number of tokens that has not been refreshed yet",
+          "type": "integer"
+        },
+        "succeeded": {
+          "description": "The number of tokens with successful metadata refreshes",
+          "type": "integer"
+        }
+      }
+    },
     "MetadataSchemaProperty": {
       "type": "object",
       "required": [
@@ -5080,11 +6176,15 @@
           "$ref": "#/definitions/AssetProperties"
         },
         "quantity": {
-          "description": "Quantity of this asset",
+          "description": "Quantity of this asset - inclusive of fees for buy order in v1 API and exclusive of fees in v3 API",
           "type": "string"
         },
         "quantity_with_fees": {
           "description": "Quantity of this asset with the sum of all fees applied to the asset",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "Symbol of a token",
           "type": "string"
         },
         "token_address": {
