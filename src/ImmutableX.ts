@@ -422,16 +422,16 @@ export class ImmutableX {
    * Request a metadata refresh
    * @param ethSigner - the L1 signer
    * @param request the request object containing the parameters to be provided in the API request
-   * @returns a promise that resolves with the requested metadata refresh ID
+   * @returns a promise that resolves with the requested metadata refresh
    * @throws IMXError
    */
-  public requestMetadataRefresh(
+  public createMetadataRefresh(
     ethSigner: EthSigner,
     request: CreateMetadataRefreshRequest,
   ) {
     return this.workflows
-      .requestMetadataRefresh(ethSigner, request)
-      .then(res => res.data.refresh_id)
+      .createMetadataRefresh(ethSigner, request)
+      .then(res => res.data)
       .catch(err => {
         throw formatError(err);
       });

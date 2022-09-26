@@ -483,7 +483,7 @@ export class Workflows {
     });
   }
 
-  public async requestMetadataRefresh(
+  public async createMetadataRefresh(
     ethSigner: EthSigner,
     request: CreateMetadataRefreshRequest,
   ) {
