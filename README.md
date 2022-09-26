@@ -51,6 +51,7 @@ const client = new ImmutableX(config);
 These methods allow you to read data about events, transactions or current state on Immutable X (layer 2). They do not require any user authentication because no state is being changed.
 
 Examples of the types of data that are typically retrieved include:
+
 - Assets or details of a particular asset
 - Token balances for a particular user
 - Orders or details about a particular order
@@ -95,6 +96,7 @@ These operations add to or update data in Immutable's databases and typically re
 Signers are abstractions of user accounts that can be used to sign transactions. A user's private key is required to generate them.
 
 There are two ways to get signers in your application:
+
 1. Generate your own by obtaining and using the user's private keys
 2. Use our [Wallet SDK](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview) to connect to a user's wallet application
 
@@ -111,27 +113,24 @@ import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { generateStarkPrivateKey, createStarkSigner } from '@imtbl/core-sdk';
 
-// Set up a provider
+// Create Ethereum signer
 const ethNetwork = 'goerli'; // Or 'mainnet'
 const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
+const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 
-// Create signers
+// Create Stark signer
 const starkPrivateKey = generateStarkPrivateKey(); // Or retrieve previously generated key
-const ethWallet = new Wallet(YOUR_PRIVATE_ETH_KEY);
-const ethSigner = ethWallet.connect(provider);
 const starkSigner = createStarkSigner(starkPrivateKey);
 ```
 
 > **Warning**
 > If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L99) so **_cannot_** be deterministically re-generated.
 
-
 ### 2. Generate signers using the Wallet SDK
 
 The [Wallet SDK Web](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview) provides connections to Metamask and WalletConnect browser wallets.
 
 See [this guide](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/quickstart) for how to set this up.
-
 
 ### Examples
 
