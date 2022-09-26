@@ -1,5 +1,5 @@
 import BN from 'bn.js';
-import { generateStarkPrivateKey, grindKey, starkEcOrder } from './stark-curve';
+import { generateStarkPrivateKey, grindKey, starkEcOrder } from './starkCurve';
 
 describe('Key generation', () => {
   it('should generate random Stark key', async () => {

@@ -1,6 +1,7 @@
 import {
   AnyToken,
   EthSigner,
+  formatError,
   ImmutableXConfiguration,
   NftTransferDetails,
   TokenAmount,
@@ -55,6 +56,9 @@ import {
   TransfersApiListTransfersRequest,
 } from './api';
 
+/**
+ * The main entry point for the Core SDK
+ */
 export class ImmutableX {
   private depositsApi: DepositsApi;
   private mintsApi: MintsApi;
@@ -89,135 +93,308 @@ export class ImmutableX {
   }
 
   /**
-   * Deposits
+   * Deposit based on a token type. For unregistered Users, the Deposit will be combined with a registration in order to register the User first
+   * @param ethSigner - the L1 signer
+   * @param deposit - the token type amount in its corresponding unit
+   * @returns a promise that resolves with the resulting transaction
+   * @throws IMXError
    */
   public deposit(ethSigner: EthSigner, deposit: TokenAmount) {
-    return this.workflows.deposit(ethSigner, deposit);
-  }
-
-  public getDeposit(requestParameters: DepositsApiGetDepositRequest) {
-    return this.depositsApi.getDeposit(requestParameters);
-  }
-
-  public listDeposits(requestParameters?: DepositsApiListDepositsRequest) {
-    return this.depositsApi.listDeposits(requestParameters);
-  }
-
-  /**
-   * User Registration
-   */
-  public registerOffchain(walletConnection: WalletConnection) {
-    return this.workflows.registerOffchain(walletConnection);
-  }
-
-  public isRegisteredOnchain(walletConnection: WalletConnection) {
-    return this.workflows.isRegisteredOnchain(walletConnection);
-  }
-
-  public getUser(ethAddress: string) {
-    return this.usersApi.getUsers({
-      user: ethAddress,
+    return this.workflows.deposit(ethSigner, deposit).catch(err => {
+      throw formatError(err);
     });
   }
 
   /**
-   * Assets
+   * Get details of a Deposit with the given ID
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Deposit
+   * @throws IMXError
    */
-  public getAsset(requestParameters: AssetsApiGetAssetRequest) {
-    return this.assetApi.getAsset(requestParameters);
-  }
-
-  public listAssets(requestParameters?: AssetsApiListAssetsRequest) {
-    return this.assetApi.listAssets(requestParameters);
+  public getDeposit(request: DepositsApiGetDepositRequest) {
+    return this.depositsApi
+      .getDeposit(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
-   * Collections
+   * Get a list of Deposits
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Deposits
+   * @throws IMXError
+   */
+  public listDeposits(request?: DepositsApiListDepositsRequest) {
+    return this.depositsApi
+      .listDeposits(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Register a User to Immutable X if they are not already
+   * @param walletConnection - the pair of L1/L2 signers
+   * @returns a promise that resolves with void if successful
+   * @throws IMXError
+   */
+  public registerOffchain(walletConnection: WalletConnection) {
+    return this.workflows.registerOffchain(walletConnection).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Checks if a User is registered on on-chain
+   * @param walletConnection - the pair of L1/L2 signers
+   * @returns a promise that resolves with true if the User is registered, false otherwise
+   * @throws IMXError
+   */
+  public isRegisteredOnchain(walletConnection: WalletConnection) {
+    return this.workflows.isRegisteredOnchain(walletConnection).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Get Stark keys for a registered User
+   * @param ethAddress - the eth address of the User
+   * @returns a promise that resolves with the requested User
+   * @throws IMXError
+   */
+  public getUser(ethAddress: string) {
+    return this.usersApi
+      .getUsers({ user: ethAddress })
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get details of an Asset
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Asset
+   * @throws IMXError
+   */
+  public getAsset(request: AssetsApiGetAssetRequest) {
+    return this.assetApi
+      .getAsset(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a list of Assets
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Assets
+   * @throws IMXError
+   */
+  public listAssets(request?: AssetsApiListAssetsRequest) {
+    return this.assetApi
+      .listAssets(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a Collection
+   * @param ethSigner - the L1 signer
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Collection
+   * @throws IMXError
    */
   public createCollection(
     ethSigner: EthSigner,
-    requestParameters: CreateCollectionRequest,
+    request: CreateCollectionRequest,
   ) {
-    return this.workflows.createCollection(ethSigner, requestParameters);
-  }
-
-  public getCollection(requestParameters: CollectionsApiGetCollectionRequest) {
-    return this.collectionApi.getCollection(requestParameters);
-  }
-
-  public listCollectionFilters(
-    requestParameters: CollectionsApiListCollectionFiltersRequest,
-  ) {
-    return this.collectionApi.listCollectionFilters(requestParameters);
-  }
-
-  public listCollections(
-    requestParameters?: CollectionsApiListCollectionsRequest,
-  ) {
-    return this.collectionApi.listCollections(requestParameters);
-  }
-
-  public updateCollection(
-    ethSigner: EthSigner,
-    collectionAddress: string,
-    requestParameters: UpdateCollectionRequest,
-  ) {
-    return this.workflows.updateCollection(
-      ethSigner,
-      collectionAddress,
-      requestParameters,
-    );
+    return this.workflows
+      .createCollection(ethSigner, request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
-   * /metadata
+   * Get details of a Collection at the given address
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Collection
+   * @throws IMXError
+   */
+  public getCollection(request: CollectionsApiGetCollectionRequest) {
+    return this.collectionApi
+      .getCollection(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a list of Collection filters
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Collection Filters
+   * @throws IMXError
+   */
+  public listCollectionFilters(
+    request: CollectionsApiListCollectionFiltersRequest,
+  ) {
+    return this.collectionApi
+      .listCollectionFilters(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a list of Collections
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Collections
+   * @throws IMXError
+   */
+  public listCollections(request?: CollectionsApiListCollectionsRequest) {
+    return this.collectionApi
+      .listCollections(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Update a Collection
+   * @param ethSigner - the L1 signer
+   * @param collectionAddress - the Collection contract address
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the updated Collection
+   * @throws IMXError
+   */
+  public updateCollection(
+    ethSigner: EthSigner,
+    collectionAddress: string,
+    request: UpdateCollectionRequest,
+  ) {
+    return this.workflows
+      .updateCollection(ethSigner, collectionAddress, request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Add metadata schema to Collection
+   * @param ethSigner - the L1 signer
+   * @param collectionAddress - the Collection contract address
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the SuccessResponse if successful
+   * @throws IMXError
    */
   public addMetadataSchemaToCollection(
     ethSigner: EthSigner,
     collectionAddress: string,
-    requestParameters: AddMetadataSchemaToCollectionRequest,
+    request: AddMetadataSchemaToCollectionRequest,
   ) {
-    return this.workflows.addMetadataSchemaToCollection(
-      ethSigner,
-      collectionAddress,
-      requestParameters,
-    );
+    return this.workflows
+      .addMetadataSchemaToCollection(ethSigner, collectionAddress, request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
-  public getMetadataSchema(
-    requestParameters: MetadataApiGetMetadataSchemaRequest,
-  ) {
-    return this.metadataApi.getMetadataSchema(requestParameters);
+  /**
+   * Get Metadata schema
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Metadata schema
+   * @throws IMXError
+   */
+  public getMetadataSchema(request: MetadataApiGetMetadataSchemaRequest) {
+    return this.metadataApi
+      .getMetadataSchema(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Update metadata schema by name
+   * @param ethSigner - the L1 signer
+   * @param collectionAddress - the Collection contract address
+   * @param name - the Metadata schema name
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the SuccessResponse if successful
+   * @throws IMXError
+   */
   public updateMetadataSchemaByName(
     ethSigner: EthSigner,
     collectionAddress: string,
     name: string,
-    requestParameters: MetadataSchemaRequest,
+    request: MetadataSchemaRequest,
   ) {
-    return this.workflows.updateMetadataSchemaByName(
-      ethSigner,
-      collectionAddress,
-      name,
-      requestParameters,
-    );
+    return this.workflows
+      .updateMetadataSchemaByName(ethSigner, collectionAddress, name, request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
-   * Projects
+   * Create a Project
+   * @param ethSigner - the L1 signer
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the created Project
+   * @throws IMXError
    */
   public async createProject(
     ethSigner: EthSigner,
-    requestParameters: CreateProjectRequest,
+    request: CreateProjectRequest,
   ) {
-    return this.workflows.createProject(ethSigner, requestParameters);
+    return this.workflows
+      .createProject(ethSigner, request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Get a Project
+   * @param ethSigner - the L1 signer
+   * @param id - the Project ID
+   * @returns a promise that resolves with the requested Project
+   * @throws IMXError
+   */
   public async getProject(ethSigner: EthSigner, id: string) {
-    return this.workflows.getProject(ethSigner, id);
+    return this.workflows
+      .getProject(ethSigner, id)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Get Projects owned by the given User
+   * @param ethSigner - the L1 signer
+   * @param pageSize - the page size of the result
+   * @param cursor - the cursor
+   * @param orderBy - the property to sort by
+   * @param direction - direction to sort (asc/desc)
+   * @returns a promise that resolves with the requested Projects
+   * @throws IMXError
+   */
   public async getProjects(
     ethSigner: EthSigner,
     pageSize?: number,
@@ -225,145 +402,354 @@ export class ImmutableX {
     orderBy?: string,
     direction?: string,
   ) {
-    return this.workflows.getProjects(
-      ethSigner,
-      pageSize,
-      cursor,
-      orderBy,
-      direction,
-    );
+    return this.workflows
+      .getProjects(ethSigner, pageSize, cursor, orderBy, direction)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
-   * Balances
+   * Get the token Balances of the User
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Balance
+   * @throws IMXError
    */
-  public getBalance(requestParameters: BalancesApiGetBalanceRequest) {
-    return this.balanceApi.getBalance(requestParameters);
-  }
-
-  public listBalances(requestParameters: BalancesApiListBalancesRequest) {
-    return this.balanceApi.listBalances(requestParameters);
+  public getBalance(request: BalancesApiGetBalanceRequest) {
+    return this.balanceApi
+      .getBalance(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
-   * Mints
+   * Get a list of Balances for given User
+   * @param request the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Balances
+   * @throws IMXError
    */
-  public getMint(requestParameters: MintsApiGetMintRequest) {
-    return this.mintsApi.getMint(requestParameters);
+  public listBalances(request: BalancesApiListBalancesRequest) {
+    return this.balanceApi
+      .listBalances(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
-  public listMints(requestParameters?: MintsApiListMintsRequest) {
-    return this.mintsApi.listMints(requestParameters);
+  /**
+   * Get details of a Mint with the given ID
+   * @param request the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Mint
+   * @throws IMXError
+   */
+  public getMint(request: MintsApiGetMintRequest) {
+    return this.mintsApi
+      .getMint(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Get a list of Mints
+   * @param request the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Mints
+   * @throws IMXError
+   */
+  public listMints(request?: MintsApiListMintsRequest) {
+    return this.mintsApi
+      .listMints(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Mint tokens in a batch with fees
+   * @param ethSigner - the L1 signer
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the minted tokens
+   * @throws IMXError
+   */
   public mint(ethSigner: EthSigner, request: UnsignedMintRequest) {
-    return this.workflows.mint(ethSigner, request);
+    return this.workflows.mint(ethSigner, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
-   * Withdrawal
+   * Get a list of Withdrawals
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Withdrawals
+   * @throws IMXError
    */
-  public listWithdrawals(
-    requestParameters?: WithdrawalsApiListWithdrawalsRequest,
-  ) {
-    return this.withdrawalsApi.listWithdrawals(requestParameters);
+  public listWithdrawals(request?: WithdrawalsApiListWithdrawalsRequest) {
+    return this.withdrawalsApi
+      .listWithdrawals(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
-  public getWithdrawal(requestParameters: WithdrawalsApiGetWithdrawalRequest) {
-    return this.withdrawalsApi.getWithdrawal(requestParameters);
+  /**
+   * Get details of Withdrawal with the given ID
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Withdrawal
+   * @throws IMXError
+   */
+  public getWithdrawal(request: WithdrawalsApiGetWithdrawalRequest) {
+    return this.withdrawalsApi
+      .getWithdrawal(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Create a Withdrawal
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the token type amount in its corresponding unit
+   * @returns a promise that resolves with the created Withdrawal
+   * @throws IMXError
+   */
   public prepareWithdrawal(
     walletConnection: WalletConnection,
     request: TokenAmount,
   ) {
-    return this.workflows.prepareWithdrawal(walletConnection, request);
+    return this.workflows
+      .prepareWithdrawal(walletConnection, request)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Completes a Withdrawal
+   * @param ethSigner - the L1 signer
+   * @param starkPublicKey - the Signer address
+   * @param token - the token
+   * @returns a promise that resolves with the transaction
+   * @throws IMXError
+   */
   public completeWithdrawal(
     ethSigner: EthSigner,
     starkPublicKey: string,
     token: AnyToken,
   ) {
-    return this.workflows.completeWithdrawal(ethSigner, starkPublicKey, token);
+    return this.workflows
+      .completeWithdrawal(ethSigner, starkPublicKey, token)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
-   * Order
+   * Get details of an Order with the given ID
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Order
+   * @throws IMXError
    */
-  public getOrder(requestParameters: OrdersApiGetOrderRequest) {
-    return this.ordersApi.getOrder(requestParameters);
+  public getOrder(request: OrdersApiGetOrderRequest) {
+    return this.ordersApi
+      .getOrder(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
-  public listOrders(requestParameters?: OrdersApiListOrdersRequest) {
-    return this.ordersApi.listOrders(requestParameters);
+  /**
+   * Get a list of Orders
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Orders
+   * @throws IMXError
+   */
+  public listOrders(request?: OrdersApiListOrdersRequest) {
+    return this.ordersApi
+      .listOrders(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Create an Order
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Order
+   * @throws IMXError
+   */
   public createOrder(
     walletConnection: WalletConnection,
     request: UnsignedOrderRequest,
   ) {
-    return this.workflows.createOrder(walletConnection, request);
+    return this.workflows.createOrder(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
+  /**
+   * Cancel an Order
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the cancelled Order
+   * @throws IMXError
+   */
   public cancelOrder(
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
-    return this.workflows.cancelOrder(walletConnection, request);
+    return this.workflows.cancelOrder(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
-   * Trades
+   * Get details of a Trade with the given ID
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Trade
+   * @throws IMXError
    */
-  public getTrade(requestParameters: TradesApiGetTradeRequest) {
-    return this.tradesApi.getTrade(requestParameters);
+  public getTrade(request: TradesApiGetTradeRequest) {
+    return this.tradesApi
+      .getTrade(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
-  public listTrades(requestParameters?: TradesApiListTradesRequest) {
-    return this.tradesApi.listTrades(requestParameters);
+  /**
+   * Get a list of Trades
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Trades
+   * @throws IMXError
+   */
+  public listTrades(request?: TradesApiListTradesRequest) {
+    return this.tradesApi
+      .listTrades(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Create a Trade
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Trade
+   * @throws IMXError
+   */
   public createTrade(
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    return this.workflows.createTrade(walletConnection, request);
+    return this.workflows.createTrade(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
   /**
-   * Tokens
+   * Get details of a Token
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Token
+   * @throws IMXError
    */
-  public getToken(requestParameters: TokensApiGetTokenRequest) {
-    return this.tokensApi.getToken(requestParameters);
-  }
-
-  public listTokens(requestParameters?: TokensApiListTokensRequest) {
-    return this.tokensApi.listTokens(requestParameters);
+  public getToken(request: TokensApiGetTokenRequest) {
+    return this.tokensApi
+      .getToken(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
   /**
-   * Transfers
+   * Get a list of Tokens
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Tokens
+   * @throws IMXError
    */
-  public getTransfer(requestParameters: TransfersApiGetTransferRequest) {
-    return this.transfersApi.getTransfer(requestParameters);
+  public listTokens(request?: TokensApiListTokensRequest) {
+    return this.tokensApi
+      .listTokens(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
-  public listTransfers(requestParameters?: TransfersApiListTransfersRequest) {
-    return this.transfersApi.listTransfers(requestParameters);
+  /**
+   * Get details of a Transfer with the given ID
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested Transfer
+   * @throws IMXError
+   */
+  public getTransfer(request: TransfersApiGetTransferRequest) {
+    return this.transfersApi
+      .getTransfer(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 
+  /**
+   * Get a list of Transfers
+   * @param request - the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested list of Transfers
+   * @throws IMXError
+   */
+  public listTransfers(request?: TransfersApiListTransfersRequest) {
+    return this.transfersApi
+      .listTransfers(request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a new Transfer request
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Transfer
+   * @throws IMXError
+   */
   public transfer(
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
-    return this.workflows.transfer(walletConnection, request);
+    return this.workflows.transfer(walletConnection, request).catch(err => {
+      throw formatError(err);
+    });
   }
 
+  /**
+   * Create a batch of NFT transfer requests
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the list of Transfer IDs
+   * @throws IMXError
+   */
   public batchNftTransfer(
     walletConnection: WalletConnection,
     request: Array<NftTransferDetails>,
   ) {
-    return this.workflows.batchNftTransfer(walletConnection, request);
+    return this.workflows
+      .batchNftTransfer(walletConnection, request)
+      .catch(err => {
+        throw formatError(err);
+      });
   }
 }
