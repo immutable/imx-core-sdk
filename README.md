@@ -66,7 +66,7 @@ const listCollectionsResponse = await client.listCollections({
   pageSize: 2,
 });
 
-const collection = listCollectionsResponse.data.result[0];
+const collection = listCollectionsResponse.result[0];
 
 const collectionAssetsResponse = await client.listAssets({
   collection: collection.address,
@@ -77,12 +77,14 @@ const collectionAssetsResponse = await client.listAssets({
 ## Operations requiring user signatures
 
 There are two types of operations requiring user signatures:
+
 1. Transactions that update blockchain state
 2. Operations that Immutable X require authorization for
 
 In order to get user signatures, applications need to [generate "signers"](#how-do-applications-generate-and-use-signers).
 
 #### What are transactions that update blockchain state?
+
 A common transaction type is the transfer of asset ownership from one user to another (ie. asset sale). These operations require users to sign (approve) them to prove that they are valid.
 
 #### What are operations that require authorization?
@@ -113,20 +115,21 @@ See [this guide](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/quickstart
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { Utils, ImmutableX, Config } from '@imtbl/core-sdk';
+import { generateStarkPrivateKey, createStarkSigner } from '@imtbl/core-sdk';
 
 // Set up a provider
-const ethNetwork = 'ropsten'; // or mainnet;
+const ethNetwork = 'goerli'; // or mainnet;
 const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
 
 // Create signers
+const starkPrivateKey = generateStarkPrivateKey(); // or retrieve previously generated key
 const ethWallet = new Wallet(YOUR_PRIVATE_ETH_KEY);
 const ethSigner = ethWallet.connect(provider);
-const starkSigner = Utils.createStarkSigner(YOUR_PRIVATE_STARK_KEY);
+const starkSigner = createStarkSigner(starkPrivateKey);
 ```
 
 > **Warning**
-> If you generate your own signers, you will have to persist the Stark private key. The key ***cannot*** be deterministically retrieved using the Wallet SDK.
+> If you generate your own Stark private key, you will have to persist it. The key **_cannot_** be recovered or deterministically derived.
 
 ### Examples
 
@@ -139,7 +142,7 @@ const createProjectResponse = await client.createProject(ethSigner, {
   name: 'Project name',
 });
 
-const projectId = createProjectResponse.data.id.toString();
+const projectId = createProjectResponse.id.toString();
 
 const getProjectResponse = await client.getProject(ethSigner, projectId);
 ```
