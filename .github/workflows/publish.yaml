@@ -56,8 +56,8 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Update package.json version for alpha releases
-        if: ${{ contains(github.event.inputs.tag, 'alpha') }}
+      - name: Update package.json version for alpha, beta releases
+        if: ${{ contains(github.event.inputs.tag, 'alpha') || contains(github.event.inputs.tag, 'beta') }}
         run: |
           tmp=$(mktemp)
           jq '.version = "${{github.event.inputs.tag}}"' ./package.json > "$tmp" && mv "$tmp" ./package.json
@@ -67,4 +67,4 @@ jobs:
         with:
           token: ${{ secrets.PLATFORM_SA_NPM_TOKEN }}
           access: public
-          tag: ${{ contains(github.event.inputs.tag, 'alpha') && 'alpha' || 'latest' }}
+          tag: ${{ (contains(github.event.inputs.tag, 'alpha') || contains(github.event.inputs.tag, 'beta')) && 'alpha' || 'beta' || 'latest' }}

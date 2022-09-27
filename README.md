@@ -278,25 +278,25 @@ This is an example with all the change headings. For actual usage, use only the 
 ```markdown
 ...
 
-### [Unreleased]
+## [Unreleased]
 
-#### Added
+### Added
 
 For new features.
 
-#### Changed
+### Changed
 
 For changes in existing functionality.
 
-#### Deprecated
+### Deprecated
 
 For soon-to-be removed features.
 
-#### Removed
+### Removed
 
 For now removed features.
 
-#### Fixed
+### Fixed
 
 For any bug fixes.
 
@@ -323,12 +323,12 @@ The `package.json` will contain the value of the previous release:
    - Add a tag if required \* this step can be skipped by replying `no`
    - Push to remote by using `yes`
 
-#### Alpha release:
+#### Alpha/Beta release:
 
 1. Go to https://github.com/immutable/imx-core-sdk/actions/workflows/publish.yaml and find the "Run workflow" button on the left.
 2. Click the button and select the branch from dropdown.
-3. Add a tag that is greater than last published main tag and append with `-alpha.x`. The `x` is the version for this particular alpha release. For example, if the last published is `1.2.0`, use `1.2.1-alpha.1` or `1.3.0-alpha.1` depending on type of your changes.
-4. Click "run workflow" button. This will trigger a "NPM Publish" action for alpha release 🎉
+3. Add a tag that is greater than last published main tag and append with `-alpha.x` or `-beta.x`. The `x` is the version for this particular release. For example, if the last published is `1.2.0`, use `1.2.1-alpha.1` or `1.3.0-alpha.1` depending on type of your changes.
+4. Click "run workflow" button. This will trigger a "NPM Publish" action for alpha or beta release 🎉
 
 ## Getting help
 
