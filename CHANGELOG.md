@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Significant changes to public interface: [ImmutableX](./src/ImmutableX.ts)
+- Significant changes to public interface: ImmutableX
 
 ## [0.7.0] - 2022-08-03
 
