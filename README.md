@@ -97,8 +97,8 @@ Signers are abstractions of user accounts that can be used to sign transactions.
 
 There are two ways to get signers in your application:
 
-1. Generate your own by obtaining and using the user's private keys
-2. Use our [Wallet SDK](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview) to connect to a user's wallet application
+1. [Generate your own by obtaining and using the user's private keys](#1-generate-your-own-signers)
+2. [Use our Wallet SDK to connect to a user's wallet application](#2-generate-signers-using-the-wallet-sdk)
 
 The first option, where an application obtains a user's private key directly, is risky because these keys allow anyone in possession of them full control of an account.
 
@@ -107,6 +107,11 @@ The second option provides an application with an interface to the user's accoun
 As Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2), signers are required for both these layers.
 
 ### 1. Generate your own signers
+
+The Core SDK provides functionality for applications to generate Stark (L2) [private keys](/src/utils/stark/starkCurve.ts#L99) and [signers](/src/utils/stark/starkSigner.ts#L60).
+
+#### 🚨🚨🚨 Warning 🚨🚨🚨
+> If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L99) so **_cannot_** be deterministically re-generated.
 
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
@@ -122,9 +127,6 @@ const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 const starkPrivateKey = generateStarkPrivateKey(); // Or retrieve previously generated key
 const starkSigner = createStarkSigner(starkPrivateKey);
 ```
-
-> **Warning**
-> If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L99) so **_cannot_** be deterministically re-generated.
 
 ### 2. Generate signers using the Wallet SDK
 
