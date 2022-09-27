@@ -1,4 +1,8 @@
-import { UsersApi, GetSignableRegistrationResponse } from '../api';
+import {
+  UsersApi,
+  GetSignableRegistrationResponse,
+  RegisterUserResponse,
+} from '../api';
 import { WalletConnection } from '../types';
 import { signRaw } from '../utils';
 import { Registration } from '../contracts';
@@ -7,29 +11,13 @@ type registerOffchainWorkflowParams = WalletConnection & {
   usersApi: UsersApi;
 };
 
-async function isUserRegistered(
-  userAddress: string,
-  usersApi: UsersApi,
-): Promise<boolean> {
-  try {
-    await usersApi.getUsers({ user: userAddress });
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
 export async function registerOffchainWorkflow({
   ethSigner,
   starkSigner,
   usersApi,
-}: registerOffchainWorkflowParams): Promise<void> {
+}: registerOffchainWorkflowParams): Promise<RegisterUserResponse> {
   const userAddress = await ethSigner.getAddress();
   const starkPublicKey = await starkSigner.getAddress();
-
-  if (await isUserRegistered(userAddress, usersApi)) {
-    return;
-  }
 
   const signableResult = await usersApi.getSignableRegistrationOffchain({
     getSignableRegistrationRequest: {
@@ -45,7 +33,7 @@ export async function registerOffchainWorkflow({
 
   const starkSignature = await starkSigner.signMessage(payloadHash);
 
-  await usersApi.registerUser({
+  const registeredUser = await usersApi.registerUser({
     registerUserRequest: {
       eth_signature: ethSignature,
       ether_key: userAddress,
@@ -54,7 +42,7 @@ export async function registerOffchainWorkflow({
     },
   });
 
-  return;
+  return registeredUser.data;
 }
 
 interface IsRegisteredCheckError {
