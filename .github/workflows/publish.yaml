@@ -67,4 +67,4 @@ jobs:
         with:
           token: ${{ secrets.PLATFORM_SA_NPM_TOKEN }}
           access: public
-          tag: ${{ (contains(github.event.inputs.tag, 'alpha') && 'alpha') || contains(github.event.inputs.tag, 'beta') && 'beta') || 'latest' }}
+          tag: ${{ (contains(github.event.inputs.tag, 'alpha') && 'alpha') || (contains(github.event.inputs.tag, 'beta') && 'beta') || 'latest' }}
