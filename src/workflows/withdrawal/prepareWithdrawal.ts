@@ -1,10 +1,7 @@
 import { WithdrawalsApi, CreateWithdrawalResponse } from '../../api';
-import {
-  convertToSignableToken,
-  TokenAmount,
-  WalletConnection,
-} from '../../types';
+import { TokenAmount, WalletConnection } from '../../types';
 import { signMessage } from '../../utils';
+import { convertToSignableToken } from '../../utils/convertToSignableToken';
 
 const assertIsDefined = <T>(value?: T): T => {
   if (value !== undefined) return value;
