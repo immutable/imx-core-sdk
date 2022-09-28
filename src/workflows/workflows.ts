@@ -19,6 +19,8 @@ import {
   MetadataApi,
   AddMetadataSchemaToCollectionRequest,
   MetadataSchemaRequest,
+  MetadataRefreshesApi,
+  CreateMetadataRefreshRequest,
 } from '../api';
 import {
   UnsignedMintRequest,
@@ -70,6 +72,7 @@ export class Workflows {
   private readonly projectsApi: ProjectsApi;
   private readonly collectionsApi: CollectionsApi;
   private readonly metadataApi: MetadataApi;
+  private readonly metadataRefreshesApi: MetadataRefreshesApi;
 
   private isChainValid(chainID: number) {
     return chainID === this.config.ethConfiguration.chainID;
@@ -91,6 +94,7 @@ export class Workflows {
     this.projectsApi = new ProjectsApi(apiConfiguration);
     this.collectionsApi = new CollectionsApi(apiConfiguration);
     this.metadataApi = new MetadataApi(apiConfiguration);
+    this.metadataRefreshesApi = new MetadataRefreshesApi(apiConfiguration);
   }
 
   private async validateChain(signer: Signer) {
@@ -423,6 +427,74 @@ export class Workflows {
       address,
       name,
       metadataSchemaRequest,
+    });
+  }
+
+  public async listMetadataRefreshes(
+    ethSigner: EthSigner,
+    collectionAddress?: string,
+    pageSize?: number,
+    cursor?: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.getAListOfMetadataRefreshes({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      collectionAddress,
+      pageSize,
+      cursor,
+    });
+  }
+
+  public async getMetadataRefreshErrors(
+    ethSigner: EthSigner,
+    refreshId: string,
+    pageSize?: number,
+    cursor?: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.getMetadataRefreshErrors({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      refreshId,
+      pageSize,
+      cursor,
+    });
+  }
+
+  public async getMetadataRefreshResults(
+    ethSigner: EthSigner,
+    refreshId: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.getMetadataRefreshResults({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      refreshId,
+    });
+  }
+
+  public async createMetadataRefresh(
+    ethSigner: EthSigner,
+    request: CreateMetadataRefreshRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.requestAMetadataRefresh({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      createMetadataRefreshRequest: request,
     });
   }
 }

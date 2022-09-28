@@ -53,6 +53,8 @@ import {
   TokensApiListTokensRequest,
   TransfersApiGetTransferRequest,
   TransfersApiListTransfersRequest,
+  MetadataRefreshesApi,
+  CreateMetadataRefreshRequest,
 } from './api';
 import { formatError } from './utils/formatError';
 
@@ -72,6 +74,7 @@ export class ImmutableX {
   private assetApi: AssetsApi;
   private collectionApi: CollectionsApi;
   private metadataApi: MetadataApi;
+  private metadataRefreshesApi: MetadataRefreshesApi;
   private projectsApi: ProjectsApi;
   private workflows: Workflows;
 
@@ -88,6 +91,9 @@ export class ImmutableX {
     this.assetApi = new AssetsApi(config.apiConfiguration);
     this.collectionApi = new CollectionsApi(config.apiConfiguration);
     this.metadataApi = new MetadataApi(config.apiConfiguration);
+    this.metadataRefreshesApi = new MetadataRefreshesApi(
+      config.apiConfiguration,
+    );
     this.projectsApi = new ProjectsApi(config.apiConfiguration);
     this.workflows = new Workflows(config);
   }
@@ -344,6 +350,87 @@ export class ImmutableX {
   ) {
     return this.workflows
       .updateMetadataSchemaByName(ethSigner, collectionAddress, name, request)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a list of metadata refreshes
+   * @param ethSigner - the L1 signer
+   * @param collectionAddress - the Collection contract address
+   * @param pageSize - the page size of the result
+   * @param cursor - the cursor
+   * @returns a promise that resolves with the requested metadata refreshes
+   * @throws IMXError
+   */
+  public listMetadataRefreshes(
+    ethSigner: EthSigner,
+    collectionAddress?: string,
+    pageSize?: number,
+    cursor?: string,
+  ) {
+    return this.workflows
+      .listMetadataRefreshes(ethSigner, collectionAddress, pageSize, cursor)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a list of metadata refresh errors
+   * @param ethSigner - the L1 signer
+   * @param refreshId - the metadata refresh ID
+   * @param pageSize - the page size of the result
+   * @param cursor - the cursor
+   * @returns a promise that resolves with the requested metadata refresh errors
+   * @throws IMXError
+   */
+  public getMetadataRefreshErrors(
+    ethSigner: EthSigner,
+    refreshId: string,
+    pageSize?: number,
+    cursor?: string,
+  ) {
+    return this.workflows
+      .getMetadataRefreshErrors(ethSigner, refreshId, pageSize, cursor)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a list of metadata refresh results
+   * @param ethSigner - the L1 signer
+   * @param refreshId - the metadata refresh ID
+   * @returns a promise that resolves with the requested metadata refresh results
+   * @throws IMXError
+   */
+  public getMetadataRefreshResults(ethSigner: EthSigner, refreshId: string) {
+    return this.workflows
+      .getMetadataRefreshResults(ethSigner, refreshId)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Request a metadata refresh
+   * @param ethSigner - the L1 signer
+   * @param request the request object containing the parameters to be provided in the API request
+   * @returns a promise that resolves with the requested metadata refresh
+   * @throws IMXError
+   */
+  public createMetadataRefresh(
+    ethSigner: EthSigner,
+    request: CreateMetadataRefreshRequest,
+  ) {
+    return this.workflows
+      .createMetadataRefresh(ethSigner, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
