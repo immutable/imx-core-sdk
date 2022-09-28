@@ -1,7 +1,6 @@
 import {
   AnyToken,
   EthSigner,
-  formatError,
   ImmutableXConfiguration,
   NftTransferDetails,
   TokenAmount,
@@ -55,6 +54,7 @@ import {
   TransfersApiGetTransferRequest,
   TransfersApiListTransfersRequest,
 } from './api';
+import { formatError } from './utils/formatError';
 
 /**
  * The main entry point for the Core SDK

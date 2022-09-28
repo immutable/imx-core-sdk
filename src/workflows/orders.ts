@@ -6,12 +6,9 @@ import {
   CancelOrderResponse,
   CreateOrderResponse,
 } from '../api';
-import {
-  convertToSignableToken,
-  UnsignedOrderRequest,
-  WalletConnection,
-} from '../types';
+import { UnsignedOrderRequest, WalletConnection } from '../types';
 import { signRaw } from '../utils';
+import { convertToSignableToken } from '../utils/convertToSignableToken';
 
 type CreateOrderWorkflowParams = WalletConnection & {
   request: UnsignedOrderRequest;

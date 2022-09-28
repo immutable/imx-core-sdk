@@ -4,12 +4,12 @@ import {
   CreateTransferResponse,
 } from '../api';
 import {
-  convertToSignableToken,
   NftTransferDetails,
   UnsignedTransferRequest,
   WalletConnection,
 } from '../types';
 import { signRaw } from '../utils';
+import { convertToSignableToken } from '../utils/convertToSignableToken';
 
 type TransfersWorkflowParams = WalletConnection & {
   request: UnsignedTransferRequest;
