@@ -1,4 +1,3 @@
-import { Configuration as APIConfiguration } from '../api';
 import { Signer as EthSigner } from '@ethersproject/abstract-signer';
 
 export { EthSigner };
@@ -33,27 +32,4 @@ export interface WalletConnection {
    * The L2 signer
    */
   starkSigner: StarkSigner;
-}
-
-/**
- * The configuration for the Ethereum network
- */
-export interface EthConfiguration {
-  coreContractAddress: string;
-  registrationContractAddress: string;
-  chainID: number;
-}
-
-/**
- * The configuration for the ImmutableX client
- */
-export interface ImmutableXConfiguration {
-  /**
-   * The configuration for the API client
-   */
-  apiConfiguration: APIConfiguration;
-  /**
-   * The configuration for the Ethereum network
-   */
-  ethConfiguration: EthConfiguration;
 }

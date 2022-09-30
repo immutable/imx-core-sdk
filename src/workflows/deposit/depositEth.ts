@@ -7,8 +7,9 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ETHAmount } from '../../types';
+import { ETHAmount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
+import { ImmutableXConfiguration } from '../../config';
 
 interface ETHTokenData {
   decimals: number;

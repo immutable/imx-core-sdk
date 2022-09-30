@@ -1,7 +1,6 @@
 import {
   AnyToken,
   EthSigner,
-  ImmutableXConfiguration,
   NftTransferDetails,
   TokenAmount,
   UnsignedMintRequest,
@@ -57,6 +56,7 @@ import {
   CreateMetadataRefreshRequest,
 } from './api';
 import { formatError } from './utils/formatError';
+import { ImmutableXConfiguration } from './config';
 
 /**
  * The main entry point for the Core SDK

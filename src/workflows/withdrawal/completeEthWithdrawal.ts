@@ -1,13 +1,13 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { EncodingApi, UsersApi } from '../../api';
+import { ImmutableXConfiguration } from '../../config';
 import {
   Core,
   Core__factory,
   Registration,
   Registration__factory,
 } from '../../contracts';
-import { ImmutableXConfiguration } from '../../types';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,

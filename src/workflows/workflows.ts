@@ -25,7 +25,6 @@ import {
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
-  ImmutableXConfiguration,
   WalletConnection,
   ERC721Token,
   UnsignedOrderRequest,
@@ -58,6 +57,7 @@ import {
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
 import { generateIMXAuthorisationHeaders } from '../utils';
+import { ImmutableXConfiguration } from '../config';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;

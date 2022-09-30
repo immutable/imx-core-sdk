@@ -1,6 +1,5 @@
-import { Config } from './config';
+import { Config, ImmutableXConfiguration } from './config';
 import { version } from '../../package.json';
-import { ImmutableXConfiguration } from '../types';
 import { Configuration } from '../api';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };

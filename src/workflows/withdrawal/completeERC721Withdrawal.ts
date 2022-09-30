@@ -7,13 +7,14 @@ import {
   Registration__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import { ERC721Token, ImmutableXConfiguration } from '../../types';
+import { ERC721Token } from '../../types';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
 import { TransactionResponse } from '@ethersproject/providers';
+import { ImmutableXConfiguration } from '../../config';
 
 interface MintableERC721Withdrawal {
   type: 'ERC721';

@@ -12,8 +12,9 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ERC20Amount } from '../../types';
+import { ERC20Amount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
+import { ImmutableXConfiguration } from '../../config';
 
 interface ERC20TokenData {
   decimals: number;

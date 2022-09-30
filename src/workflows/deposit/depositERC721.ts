@@ -12,7 +12,8 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ERC721Token } from '../../types';
+import { ERC721Token } from '../../types';
+import { ImmutableXConfiguration } from '../../config';
 
 interface ERC721TokenData {
   token_id: string;

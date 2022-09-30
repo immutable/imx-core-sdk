@@ -1,8 +1,33 @@
-import { Configuration, ConfigurationParameters } from '../api';
-import { ImmutableXConfiguration, EthConfiguration } from '../types';
+import {
+  Configuration as APIConfiguration,
+  ConfigurationParameters,
+} from '../api';
 import { version } from '../../package.json';
 
 const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
+
+/**
+ * The configuration for the Ethereum network
+ */
+export interface EthConfiguration {
+  coreContractAddress: string;
+  registrationContractAddress: string;
+  chainID: number;
+}
+
+/**
+ * The configuration for the ImmutableX client
+ */
+export interface ImmutableXConfiguration {
+  /**
+   * The configuration for the API client
+   */
+  apiConfiguration: APIConfiguration;
+  /**
+   * The configuration for the Ethereum network
+   */
+  ethConfiguration: EthConfiguration;
+}
 
 interface Environment extends EthConfiguration {
   basePath: string;
@@ -27,7 +52,7 @@ const createConfig = ({
   };
 
   return {
-    apiConfiguration: new Configuration(apiConfigOptions),
+    apiConfiguration: new APIConfiguration(apiConfigOptions),
     ethConfiguration: {
       coreContractAddress,
       registrationContractAddress,
