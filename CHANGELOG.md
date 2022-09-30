@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Significant changes to public interface: ImmutableX
 - Expose fewer public methods to make it easier for us to maintain the SDK.
 - Introduced a [single entry point](https://github.com/immutable/imx-core-sdk/blob/34629c169f2c0fc6e38e73ec75a814f36b680620/src/ImmutableX.ts#L64) for the SDK to improve discoverability
 - Clear response and error types, no more Axios wrappers
