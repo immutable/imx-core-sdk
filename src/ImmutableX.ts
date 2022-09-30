@@ -363,7 +363,7 @@ export class ImmutableX {
    * @param pageSize - the page size of the result
    * @param cursor - the cursor
    * @returns a promise that resolves with the requested metadata refreshes
-   * @throws IMXError
+   * @throws {@link index.IMXError}
    */
   public listMetadataRefreshes(
     ethSigner: EthSigner,
@@ -386,7 +386,7 @@ export class ImmutableX {
    * @param pageSize - the page size of the result
    * @param cursor - the cursor
    * @returns a promise that resolves with the requested metadata refresh errors
-   * @throws IMXError
+   * @throws {@link index.IMXError}
    */
   public getMetadataRefreshErrors(
     ethSigner: EthSigner,
@@ -407,7 +407,7 @@ export class ImmutableX {
    * @param ethSigner - the L1 signer
    * @param refreshId - the metadata refresh ID
    * @returns a promise that resolves with the requested metadata refresh results
-   * @throws IMXError
+   * @throws {@link index.IMXError}
    */
   public getMetadataRefreshResults(ethSigner: EthSigner, refreshId: string) {
     return this.workflows
@@ -423,7 +423,7 @@ export class ImmutableX {
    * @param ethSigner - the L1 signer
    * @param request the request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested metadata refresh
-   * @throws IMXError
+   * @throws {@link index.IMXError}
    */
   public createMetadataRefresh(
     ethSigner: EthSigner,
