@@ -81,15 +81,15 @@ export async function batchTransfersWorkflow({
 }: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
   const ethAddress = await ethSigner.getAddress();
 
-  const signableRequests = request.map(x => {
+  const signableRequests = request.map(nftTransfer => {
     return {
       amount: '1',
       token: convertToSignableToken({
         type: 'ERC721',
-        tokenId: x.tokenId,
-        tokenAddress: x.tokenAddress,
+        tokenId: nftTransfer.tokenId,
+        tokenAddress: nftTransfer.tokenAddress,
       }),
-      receiver: x.receiver,
+      receiver: nftTransfer.receiver,
     };
   });
 
