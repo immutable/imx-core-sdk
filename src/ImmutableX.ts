@@ -128,7 +128,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Deposits
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Deposits
    * @throws {@link index.IMXError}
    */
@@ -197,7 +197,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Assets
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Assets
    * @throws {@link index.IMXError}
    */
@@ -263,7 +263,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Collections
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Collections
    * @throws {@link index.IMXError}
    */
@@ -544,7 +544,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Mints
-   * @param request the request object containing the parameters to be provided in the API request
+   * @param request optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Mints
    * @throws {@link index.IMXError}
    */
@@ -572,7 +572,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Withdrawals
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Withdrawals
    * @throws {@link index.IMXError}
    */
@@ -655,7 +655,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Orders
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Orders
    * @throws {@link index.IMXError}
    */
@@ -717,7 +717,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Trades
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Trades
    * @throws {@link index.IMXError}
    */
@@ -763,7 +763,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Tokens
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Tokens
    * @throws {@link index.IMXError}
    */
@@ -793,7 +793,7 @@ export class ImmutableX {
 
   /**
    * Get a list of Transfers
-   * @param request - the request object containing the parameters to be provided in the API request
+   * @param request - optional request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested list of Transfers
    * @throws {@link index.IMXError}
    */

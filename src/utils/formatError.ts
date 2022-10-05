@@ -7,7 +7,6 @@ import { IMXError } from '../types/errors';
  * @param error - The Error object thrown by the request
  * @returns IMXError
  */
-
 export function formatError(error: unknown): IMXError {
   if (axios.isAxiosError(error) && error.response) {
     const apiError: APIError = error.response.data;

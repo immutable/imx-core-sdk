@@ -6,7 +6,6 @@ import { TokenAmount } from '../types/tokens';
  * @param token - the token type to convert to a SignableToken type
  * @returns the converted SignableToken
  */
-
 export function convertToSignableToken(token: TokenAmount): SignableToken {
   switch (token.type) {
     case 'ERC721':

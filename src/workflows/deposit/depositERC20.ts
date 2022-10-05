@@ -89,7 +89,7 @@ export async function depositERC20Workflow(
     token_address: deposit.tokenAddress,
   };
 
-  const amount = parseUnits(deposit.amount, 0); // 0 to always use undecimilised value
+  const amount = parseUnits(deposit.amount, 0); // 0 to always use undecimilized value
 
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
