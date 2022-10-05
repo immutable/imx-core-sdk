@@ -6,6 +6,7 @@ import typescript from '@rollup/plugin-typescript';
 import { externals } from 'rollup-plugin-node-externals';
 import json from '@rollup/plugin-json';
 import { terser } from 'rollup-plugin-terser';
+import dts from 'rollup-plugin-dts';
 
 import pkg from './package.json';
 import path from 'path';
@@ -42,6 +43,10 @@ export default [
         exports: 'named',
       },
     ],
+    onwarn(warning, warn) {
+      if (warning.code === 'THIS_IS_UNDEFINED') return;
+      warn(warning);
+    },
     plugins: [
       externals(),
       json(),
@@ -59,5 +64,10 @@ export default [
       }),
       terser(),
     ],
+  },
+  {
+    input: './dist/src/index.d.ts',
+    output: [{ file: 'dist/index.d.ts', format: 'es' }],
+    plugins: [dts()],
   },
 ];

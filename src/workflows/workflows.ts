@@ -1,5 +1,4 @@
 import { Signer } from '@ethersproject/abstract-signer';
-
 import {
   DepositsApi,
   EncodingApi,
@@ -8,29 +7,34 @@ import {
   TokensApi,
   UsersApi,
   TransfersApi,
-  TransfersApiGetTransferRequest,
   WithdrawalsApi,
-  GetSignableOrderRequest,
   GetSignableCancelOrderRequest,
   GetSignableTradeRequest,
   TradesApi,
+  ProjectsApi,
+  CreateProjectRequest,
+  CollectionsApi,
+  CreateCollectionRequest,
+  UpdateCollectionRequest,
+  MetadataApi,
+  AddMetadataSchemaToCollectionRequest,
+  MetadataSchemaRequest,
+  MetadataRefreshesApi,
+  CreateMetadataRefreshRequest,
 } from '../api';
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
-  UnsignedBatchNftTransferRequest,
-  ERC20Deposit,
-  ERC721Deposit,
-  ETHDeposit,
-  TokenDeposit,
-  TokenType,
-  UnsignedBurnRequest,
-  ImmutableXConfiguration,
-  ERC721Withdrawal,
-  ERC20Withdrawal,
-  TokenWithdrawal,
-  PrepareWithdrawalRequest,
   WalletConnection,
+  ERC721Token,
+  UnsignedOrderRequest,
+  NftTransferDetails,
+  TokenAmount,
+  ETHAmount,
+  ERC20Amount,
+  AnyToken,
+  ERC20Token,
+  EthSigner,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import {
@@ -44,15 +48,16 @@ import {
   depositERC721Workflow,
   depositEthWorkflow,
 } from './deposit';
-import { getBurnWorkflow, burnWorkflow } from './burn';
 import {
-  completeERC20WithdrawalWorfklow,
+  completeERC20WithdrawalWorkflow,
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
+import { generateIMXAuthorisationHeaders } from '../utils';
+import { ImmutableXConfiguration } from '../config';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -64,22 +69,32 @@ export class Workflows {
   private readonly transfersApi: TransfersApi;
   private readonly usersApi: UsersApi;
   private readonly withdrawalsApi: WithdrawalsApi;
+  private readonly projectsApi: ProjectsApi;
+  private readonly collectionsApi: CollectionsApi;
+  private readonly metadataApi: MetadataApi;
+  private readonly metadataRefreshesApi: MetadataRefreshesApi;
 
   private isChainValid(chainID: number) {
-    return chainID === this.config.l1Configuration.chainID;
+    return chainID === this.config.ethConfiguration.chainID;
   }
 
   constructor(protected config: ImmutableXConfiguration) {
+    const { apiConfiguration } = config;
+
     this.config = config;
-    this.depositsApi = new DepositsApi(config.apiConfiguration);
-    this.encodingApi = new EncodingApi(config.apiConfiguration);
-    this.mintsApi = new MintsApi(config.apiConfiguration);
-    this.ordersApi = new OrdersApi(config.apiConfiguration);
-    this.tokensApi = new TokensApi(config.apiConfiguration);
-    this.tradesApi = new TradesApi(config.apiConfiguration);
-    this.transfersApi = new TransfersApi(config.apiConfiguration);
-    this.usersApi = new UsersApi(config.apiConfiguration);
-    this.withdrawalsApi = new WithdrawalsApi(config.apiConfiguration);
+    this.depositsApi = new DepositsApi(apiConfiguration);
+    this.encodingApi = new EncodingApi(apiConfiguration);
+    this.mintsApi = new MintsApi(apiConfiguration);
+    this.ordersApi = new OrdersApi(apiConfiguration);
+    this.tokensApi = new TokensApi(apiConfiguration);
+    this.tradesApi = new TradesApi(apiConfiguration);
+    this.transfersApi = new TransfersApi(apiConfiguration);
+    this.usersApi = new UsersApi(apiConfiguration);
+    this.withdrawalsApi = new WithdrawalsApi(apiConfiguration);
+    this.projectsApi = new ProjectsApi(apiConfiguration);
+    this.collectionsApi = new CollectionsApi(apiConfiguration);
+    this.metadataApi = new MetadataApi(apiConfiguration);
+    this.metadataRefreshesApi = new MetadataRefreshesApi(apiConfiguration);
   }
 
   private async validateChain(signer: Signer) {
@@ -92,7 +107,7 @@ export class Workflows {
   }
 
   public async registerOffchain(walletConnection: WalletConnection) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return registerOffchainWorkflow({
       ...walletConnection,
@@ -101,14 +116,14 @@ export class Workflows {
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     const registrationContract = Registration__factory.connect(
-      this.config.l1Configuration.registrationContractAddress,
-      walletConnection.l1Signer,
+      this.config.ethConfiguration.registrationContractAddress,
+      walletConnection.ethSigner,
     );
 
-    const l2Address = await walletConnection.l2Signer.getAddress();
+    const l2Address = await walletConnection.starkSigner.getAddress();
 
     return isRegisteredOnChainWorkflow(l2Address, registrationContract);
   }
@@ -123,7 +138,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return transfersWorkflow({
       ...walletConnection,
@@ -134,9 +149,9 @@ export class Workflows {
 
   public async batchNftTransfer(
     walletConnection: WalletConnection,
-    request: UnsignedBatchNftTransferRequest,
+    request: Array<NftTransferDetails>,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return batchTransfersWorkflow({
       ...walletConnection,
@@ -145,35 +160,18 @@ export class Workflows {
     });
   }
 
-  public async burn(
-    walletConnection: WalletConnection,
-    request: UnsignedBurnRequest,
-  ) {
-    await this.validateChain(walletConnection.l1Signer);
-
-    return burnWorkflow({
-      ...walletConnection,
-      request,
-      transfersApi: this.transfersApi,
-    });
-  }
-
-  public async getBurn(request: TransfersApiGetTransferRequest) {
-    return getBurnWorkflow(request, this.transfersApi);
-  }
-
-  public async deposit(signer: Signer, deposit: TokenDeposit) {
+  public async deposit(signer: Signer, deposit: TokenAmount) {
     switch (deposit.type) {
-      case TokenType.ETH:
+      case 'ETH':
         return this.depositEth(signer, deposit);
-      case TokenType.ERC20:
+      case 'ERC20':
         return this.depositERC20(signer, deposit);
-      case TokenType.ERC721:
+      case 'ERC721':
         return this.depositERC721(signer, deposit);
     }
   }
 
-  public async depositEth(signer: Signer, deposit: ETHDeposit) {
+  private async depositEth(signer: Signer, deposit: ETHAmount) {
     await this.validateChain(signer);
 
     return depositEthWorkflow(
@@ -186,7 +184,7 @@ export class Workflows {
     );
   }
 
-  public async depositERC20(signer: Signer, deposit: ERC20Deposit) {
+  private async depositERC20(signer: Signer, deposit: ERC20Amount) {
     await this.validateChain(signer);
 
     return depositERC20Workflow(
@@ -200,7 +198,7 @@ export class Workflows {
     );
   }
 
-  public async depositERC721(signer: Signer, deposit: ERC721Deposit) {
+  private async depositERC721(signer: Signer, deposit: ERC721Token) {
     await this.validateChain(signer);
 
     return depositERC721Workflow(
@@ -215,9 +213,9 @@ export class Workflows {
 
   public async prepareWithdrawal(
     walletConnection: WalletConnection,
-    request: PrepareWithdrawalRequest,
+    request: TokenAmount,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return prepareWithdrawalWorkflow({
       ...walletConnection,
@@ -229,19 +227,19 @@ export class Workflows {
   public completeWithdrawal(
     signer: Signer,
     starkPublicKey: string,
-    token: TokenWithdrawal,
+    token: AnyToken,
   ) {
     switch (token.type) {
-      case TokenType.ETH:
+      case 'ETH':
         return this.completeEthWithdrawal(signer, starkPublicKey);
-      case TokenType.ERC20:
+      case 'ERC20':
         return this.completeERC20Withdrawal(signer, starkPublicKey, token);
-      case TokenType.ERC721:
+      case 'ERC721':
         return this.completeERC721Withdrawal(signer, starkPublicKey, token);
     }
   }
 
-  public async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+  private async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
     await this.validateChain(signer);
 
     return completeEthWithdrawalWorkflow(
@@ -253,14 +251,14 @@ export class Workflows {
     );
   }
 
-  public async completeERC20Withdrawal(
+  private async completeERC20Withdrawal(
     signer: Signer,
     starkPublicKey: string,
-    token: ERC20Withdrawal,
+    token: ERC20Token,
   ) {
     await this.validateChain(signer);
 
-    return completeERC20WithdrawalWorfklow(
+    return completeERC20WithdrawalWorkflow(
       signer,
       starkPublicKey,
       token,
@@ -270,10 +268,10 @@ export class Workflows {
     );
   }
 
-  public async completeERC721Withdrawal(
+  private async completeERC721Withdrawal(
     signer: Signer,
     starkPublicKey: string,
-    token: ERC721Withdrawal,
+    token: ERC721Token,
   ) {
     await this.validateChain(signer);
 
@@ -290,9 +288,9 @@ export class Workflows {
 
   public async createOrder(
     walletConnection: WalletConnection,
-    request: GetSignableOrderRequest,
+    request: UnsignedOrderRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return createOrderWorkflow({
       ...walletConnection,
@@ -305,7 +303,7 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return cancelOrderWorkflow({
       ...walletConnection,
@@ -318,12 +316,185 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    await this.validateChain(walletConnection.l1Signer);
+    await this.validateChain(walletConnection.ethSigner);
 
     return createTradeWorkflow({
       ...walletConnection,
       request,
       tradesApi: this.tradesApi,
+    });
+  }
+
+  /**
+   * IMX authorisation header functions
+   */
+  public async createProject(
+    ethSigner: EthSigner,
+    createProjectRequest: CreateProjectRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.projectsApi.createProject({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      createProjectRequest,
+    });
+  }
+
+  public async getProject(ethSigner: EthSigner, id: string) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.projectsApi.getProject({
+      id,
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+    });
+  }
+
+  public async getProjects(
+    ethSigner: EthSigner,
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: string,
+    direction?: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.projectsApi.getProjects({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      pageSize,
+      cursor,
+      orderBy,
+      direction,
+    });
+  }
+
+  public async createCollection(
+    ethSigner: EthSigner,
+    createCollectionRequest: CreateCollectionRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.collectionsApi.createCollection({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      createCollectionRequest,
+    });
+  }
+
+  public async updateCollection(
+    ethSigner: EthSigner,
+    address: string,
+    updateCollectionRequest: UpdateCollectionRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.collectionsApi.updateCollection({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      address,
+      updateCollectionRequest,
+    });
+  }
+
+  public async addMetadataSchemaToCollection(
+    ethSigner: EthSigner,
+    address: string,
+    addMetadataSchemaToCollectionRequest: AddMetadataSchemaToCollectionRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.metadataApi.addMetadataSchemaToCollection({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      addMetadataSchemaToCollectionRequest,
+      address,
+    });
+  }
+
+  public async updateMetadataSchemaByName(
+    ethSigner: EthSigner,
+    address: string,
+    name: string,
+    metadataSchemaRequest: MetadataSchemaRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+
+    return this.metadataApi.updateMetadataSchemaByName({
+      iMXSignature: imxAuthHeaders.signature,
+      iMXTimestamp: imxAuthHeaders.timestamp,
+      address,
+      name,
+      metadataSchemaRequest,
+    });
+  }
+
+  public async listMetadataRefreshes(
+    ethSigner: EthSigner,
+    collectionAddress?: string,
+    pageSize?: number,
+    cursor?: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.getAListOfMetadataRefreshes({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      collectionAddress,
+      pageSize,
+      cursor,
+    });
+  }
+
+  public async getMetadataRefreshErrors(
+    ethSigner: EthSigner,
+    refreshId: string,
+    pageSize?: number,
+    cursor?: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.getMetadataRefreshErrors({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      refreshId,
+      pageSize,
+      cursor,
+    });
+  }
+
+  public async getMetadataRefreshResults(
+    ethSigner: EthSigner,
+    refreshId: string,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.getMetadataRefreshResults({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      refreshId,
+    });
+  }
+
+  public async createMetadataRefresh(
+    ethSigner: EthSigner,
+    request: CreateMetadataRefreshRequest,
+  ) {
+    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
+    const ethAddress = await ethSigner.getAddress();
+
+    return this.metadataRefreshesApi.requestAMetadataRefresh({
+      xImxEthSignature: imxAuthHeaders.signature,
+      xImxEthTimestamp: imxAuthHeaders.timestamp,
+      xImxEthAddress: ethAddress,
+      createMetadataRefreshRequest: request,
     });
   }
 }

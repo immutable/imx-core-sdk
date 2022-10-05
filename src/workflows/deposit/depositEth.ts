@@ -1,14 +1,15 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
-import { parseEther } from '@ethersproject/units';
+import { parseUnits } from '@ethersproject/units';
 import { Core, Core__factory, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ETHDeposit } from '../../types';
+import { ETHAmount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
+import { ImmutableXConfiguration } from '../../config';
 
 interface ETHTokenData {
   decimals: number;
@@ -60,7 +61,7 @@ async function executeDepositEth(
 
 export async function depositEthWorkflow(
   signer: Signer,
-  deposit: ETHDeposit,
+  deposit: ETHAmount,
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   encodingApi: EncodingApi,
@@ -70,7 +71,7 @@ export async function depositEthWorkflow(
   const data: ETHTokenData = {
     decimals: 18,
   };
-  const amount = parseEther(deposit.amount);
+  const amount = parseUnits(deposit.amount, 'wei');
 
   const getSignableDepositRequest = {
     user,
@@ -99,12 +100,12 @@ export async function depositEthWorkflow(
   const vaultId = signableDepositResult.data.vault_id;
 
   const coreContract = Core__factory.connect(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.l1Configuration.registrationContractAddress,
+    config.ethConfiguration.registrationContractAddress,
     signer,
   );
 
