@@ -1,17 +1,14 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { EncodingApi, UsersApi } from '../../api';
+import { ImmutableXConfiguration } from '../../config';
 import {
   Core,
   Core__factory,
   Registration,
   Registration__factory,
 } from '../../contracts';
-import {
-  ImmutableXConfiguration,
-  ERC20Withdrawal,
-  TokenType,
-} from '../../types';
+import { ERC20Token } from '../../types';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -58,31 +55,25 @@ async function executeWithdrawERC20(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function completeERC20WithdrawalWorfklow(
+export async function completeERC20WithdrawalWorkflow(
   signer: Signer,
   starkPublicKey: string,
-  token: ERC20Withdrawal,
+  token: ERC20Token,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
-  const assetType = await getEncodeAssetInfo(
-    'asset',
-    TokenType.ERC20,
-    encodingApi,
-    {
-      token_id: token.data.tokenId,
-      token_address: token.data.tokenAddress,
-    },
-  );
+  const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
+    token_address: token.tokenAddress,
+  });
 
   const coreContract = Core__factory.connect(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.l1Configuration.registrationContractAddress,
+    config.ethConfiguration.registrationContractAddress,
     signer,
   );
 

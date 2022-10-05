@@ -4,7 +4,7 @@
   "description": "Immutable Core SDK",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/immutable/imx-core-sdk.git"
@@ -13,7 +13,11 @@
     "immutable"
   ],
   "files": [
-    "dist"
+    "dist/index.d.ts",
+    "dist/index.es.js",
+    "dist/index.es.js.map",
+    "dist/index.cjs.js",
+    "dist/index.cjs.js.map"
   ],
   "author": "Immutable",
   "license": "Apache-2.0",
@@ -31,7 +35,9 @@
     "typecheck-staged": "tsc-files --noEmit",
     "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
     "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docs:build": "yarn typedoc --cleanOutputDir ./src/ImmutableX.ts ./src/index.ts --excludePrivate --excludeProtected",
+    "docs:serve": "http-server -c-1 ./docs"
   },
   "lint-staged": {
     "src/**/*.ts": "yarn run lint-fix",
@@ -43,7 +49,6 @@
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-typescript": "^7.12.7",
-    "@ethersproject/providers": "^5.6.4",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@openzeppelin/contracts": "^4.6.0",
     "@release-it/keep-a-changelog": "^3.0.0",
@@ -59,32 +64,35 @@
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "babel-jest": "^27.5.1",
+    "dts-bundle-generator": "^6.12.0",
     "eslint": "^8.13.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "hardhat": "^2.9.9",
+    "http-server": "^14.1.1",
     "husky": "^8.0.0",
     "jest": "^28.1.1",
     "lint-staged": "^13.0.3",
+    "prettier": "2.7.1",
     "release-it": "^15.0.0",
     "rollup": "^2.71.1",
+    "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-node-externals": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "ts-jest": "^28.0.5",
     "tsc-files": "^1.1.3",
     "typechain": "^8.1.0",
+    "typedoc": "^0.23.10",
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "@ethersproject/bignumber": "^5.6.2",
-    "@ethersproject/providers": "^5.6.4",
-    "@ethersproject/units": "^5.6.1",
-    "@ethersproject/wallet": "^5.6.2",
+    "@ethersproject/abi": "^5.0.0",
+    "@ethersproject/bytes": "^5.0.0",
+    "@ethersproject/providers": "^5.0.0",
     "axios": "^0.26.1",
     "bn.js": "^5.2.0",
     "elliptic": "^6.5.4",
     "enc-utils": "^3.0.0",
-    "ethereumjs-wallet": "^1.0.2",
     "ethers": "^5.6.9",
     "hash.js": "^1.1.7"
   }

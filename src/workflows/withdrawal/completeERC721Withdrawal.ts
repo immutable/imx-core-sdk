@@ -7,20 +7,17 @@ import {
   Registration__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import {
-  ImmutableXConfiguration,
-  ERC721Withdrawal,
-  TokenType,
-} from '../../types';
+import { ERC721Token } from '../../types';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
 import { TransactionResponse } from '@ethersproject/providers';
+import { ImmutableXConfiguration } from '../../config';
 
 interface MintableERC721Withdrawal {
-  type: TokenType.ERC721;
+  type: 'ERC721';
   data: {
     id: string;
     blueprint?: string;
@@ -88,7 +85,7 @@ async function completeMintableERC721Withdrawal(
 ) {
   const assetType = await getEncodeAssetInfo(
     'mintable-asset',
-    TokenType.ERC721,
+    'ERC721',
     encodingApi,
     {
       id: token.data.id,
@@ -99,12 +96,12 @@ async function completeMintableERC721Withdrawal(
   const mintingBlob = getMintingBlob(token);
 
   const coreContract = Core__factory.connect(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.l1Configuration.registrationContractAddress,
+    config.ethConfiguration.registrationContractAddress,
     signer,
   );
 
@@ -179,28 +176,23 @@ async function executeWithdrawERC721(
 async function completeERC721Withdrawal(
   signer: Signer,
   starkPublicKey: string,
-  token: ERC721Withdrawal,
+  token: ERC721Token,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
-  const assetType = await getEncodeAssetInfo(
-    'asset',
-    TokenType.ERC721,
-    encodingApi,
-    {
-      token_id: token.data.tokenId,
-      token_address: token.data.tokenAddress,
-    },
-  );
+  const assetType = await getEncodeAssetInfo('asset', 'ERC721', encodingApi, {
+    token_id: token.tokenId,
+    token_address: token.tokenAddress,
+  });
 
   const coreContract = Core__factory.connect(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.l1Configuration.registrationContractAddress,
+    config.ethConfiguration.registrationContractAddress,
     signer,
   );
 
@@ -214,7 +206,7 @@ async function completeERC721Withdrawal(
       signer,
       assetType.asset_type,
       starkPublicKey,
-      token.data.tokenId,
+      token.tokenId,
       registrationContract,
       usersApi,
     );
@@ -223,7 +215,7 @@ async function completeERC721Withdrawal(
       signer,
       assetType.asset_type,
       starkPublicKey,
-      token.data.tokenId,
+      token.tokenId,
       coreContract,
     );
   }
@@ -232,14 +224,14 @@ async function completeERC721Withdrawal(
 export async function completeERC721WithdrawalWorkflow(
   signer: Signer,
   starkPublicKey: string,
-  token: ERC721Withdrawal,
+  token: ERC721Token,
   encodingApi: EncodingApi,
   mintsApi: MintsApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
 ) {
-  const tokenAddress = token.data.tokenAddress;
-  const tokenId = token.data.tokenId;
+  const tokenAddress = token.tokenAddress;
+  const tokenId = token.tokenId;
   return await mintsApi
     .getMintableTokenDetailsByClientTokenId({
       tokenAddress,
@@ -250,7 +242,7 @@ export async function completeERC721WithdrawalWorkflow(
         signer,
         starkPublicKey,
         {
-          type: TokenType.ERC721,
+          type: 'ERC721',
           data: {
             id: tokenId,
             tokenAddress: tokenAddress,
@@ -263,8 +255,8 @@ export async function completeERC721WithdrawalWorkflow(
       ),
     )
     .catch(error => {
-      if (error.response.status === 404) {
-        console.log(error.response); // token is already minted on L1
+      if (error.response?.status === 404) {
+        // token is already minted on L1
         return completeERC721Withdrawal(
           signer,
           starkPublicKey,

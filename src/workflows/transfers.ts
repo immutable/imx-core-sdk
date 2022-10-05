@@ -1,33 +1,40 @@
 import {
   TransfersApi,
-  GetSignableTransferRequest,
-  GetSignableTransferRequestV1,
-  CreateTransferResponse,
   CreateTransferResponseV1,
+  CreateTransferResponse,
 } from '../api';
-import { WalletConnection } from '../types';
+import {
+  NftTransferDetails,
+  UnsignedTransferRequest,
+  WalletConnection,
+} from '../types';
 import { signRaw } from '../utils';
+import { convertToSignableToken } from '../utils/convertToSignableToken';
 
 type TransfersWorkflowParams = WalletConnection & {
-  request: GetSignableTransferRequestV1;
+  request: UnsignedTransferRequest;
   transfersApi: TransfersApi;
 };
+
 type BatchTransfersWorkflowParams = WalletConnection & {
-  request: GetSignableTransferRequest;
+  request: Array<NftTransferDetails>;
   transfersApi: TransfersApi;
 };
 
 export async function transfersWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   transfersApi,
 }: TransfersWorkflowParams): Promise<CreateTransferResponseV1> {
+  const ethAddress = await ethSigner.getAddress();
+
+  const transferAmount = request.type === 'ERC721' ? '1' : request.amount;
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
-      sender: request.sender,
-      token: request.token,
-      amount: request.amount,
+      sender: ethAddress,
+      token: convertToSignableToken(request),
+      amount: transferAmount,
       receiver: request.receiver,
     },
   });
@@ -35,11 +42,9 @@ export async function transfersWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await l2Signer.signMessage(payloadHash);
-
-  const ethAddress = await l1Signer.getAddress();
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
   const transferSigningParams = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -69,15 +74,29 @@ export async function transfersWorkflow({
 }
 
 export async function batchTransfersWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   transfersApi,
 }: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
+  const ethAddress = await ethSigner.getAddress();
+
+  const signableRequests = request.map(nftTransfer => {
+    return {
+      amount: '1',
+      token: convertToSignableToken({
+        type: 'ERC721',
+        tokenId: nftTransfer.tokenId,
+        tokenAddress: nftTransfer.tokenAddress,
+      }),
+      receiver: nftTransfer.receiver,
+    };
+  });
+
   const signableResult = await transfersApi.getSignableTransfer({
     getSignableTransferRequestV2: {
-      sender_ether_key: request.sender_ether_key,
-      signable_requests: request.signable_requests,
+      sender_ether_key: ethAddress,
+      signable_requests: signableRequests,
     },
   });
 
@@ -87,13 +106,11 @@ export async function batchTransfersWorkflow({
     throw new Error('Invalid response from Signable registration offchain');
   }
 
-  const ethAddress = await l1Signer.getAddress();
-
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
   const requests = [];
   for (const resp of signableResult.data.signable_responses) {
-    const starkSignature = await l2Signer.signMessage(resp.payload_hash);
+    const starkSignature = await starkSigner.signMessage(resp.payload_hash);
     const req = {
       sender_vault_id: resp.sender_vault_id,
       receiver_stark_key: resp.receiver_stark_key,
