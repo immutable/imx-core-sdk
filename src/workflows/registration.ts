@@ -1,4 +1,8 @@
-import { UsersApi, GetSignableRegistrationResponse } from '../api';
+import {
+  UsersApi,
+  GetSignableRegistrationResponse,
+  RegisterUserResponse,
+} from '../api';
 import { WalletConnection } from '../types';
 import { signRaw } from '../utils';
 import { Registration } from '../contracts';
@@ -7,29 +11,13 @@ type registerOffchainWorkflowParams = WalletConnection & {
   usersApi: UsersApi;
 };
 
-async function isUserRegistered(
-  userAddress: string,
-  usersApi: UsersApi,
-): Promise<boolean> {
-  try {
-    await usersApi.getUsers({ user: userAddress });
-    return true;
-  } catch (error) {
-    return false;
-  }
-}
-
 export async function registerOffchainWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   usersApi,
-}: registerOffchainWorkflowParams): Promise<void> {
-  const userAddress = await l1Signer.getAddress();
-  const starkPublicKey = await l2Signer.getAddress();
-
-  if (await isUserRegistered(userAddress, usersApi)) {
-    return;
-  }
+}: registerOffchainWorkflowParams): Promise<RegisterUserResponse> {
+  const userAddress = await ethSigner.getAddress();
+  const starkPublicKey = await starkSigner.getAddress();
 
   const signableResult = await usersApi.getSignableRegistrationOffchain({
     getSignableRegistrationRequest: {
@@ -41,11 +29,11 @@ export async function registerOffchainWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await l2Signer.signMessage(payloadHash);
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
-  await usersApi.registerUser({
+  const registeredUser = await usersApi.registerUser({
     registerUserRequest: {
       eth_signature: ethSignature,
       ether_key: userAddress,
@@ -54,14 +42,25 @@ export async function registerOffchainWorkflow({
     },
   });
 
-  return;
+  return registeredUser.data;
+}
+
+interface IsRegisteredCheckError {
+  reason: string;
 }
 
 export async function isRegisteredOnChainWorkflow(
   starkPublicKey: string,
   contract: Registration,
 ): Promise<boolean> {
-  return await contract.isRegistered(starkPublicKey);
+  try {
+    return await contract.isRegistered(starkPublicKey);
+  } catch (ex) {
+    if ((ex as IsRegisteredCheckError).reason === 'USER_UNREGISTERED') {
+      return false;
+    }
+    throw ex;
+  }
 }
 
 export async function getSignableRegistrationOnchain(

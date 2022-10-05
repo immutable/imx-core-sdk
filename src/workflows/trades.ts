@@ -12,12 +12,12 @@ type createTradeWorkflowParams = WalletConnection & {
 };
 
 export async function createTradeWorkflow({
-  l1Signer,
-  l2Signer,
+  ethSigner,
+  starkSigner,
   request,
   tradesApi,
 }: createTradeWorkflowParams): Promise<CreateTradeResponse> {
-  const ethAddress = await l1Signer.getAddress();
+  const ethAddress = await ethSigner.getAddress();
 
   const signableResult = await tradesApi.getSignableTrade({
     getSignableTradeRequest: {
@@ -30,9 +30,9 @@ export async function createTradeWorkflow({
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableResult.data;
 
-  const ethSignature = await signRaw(signableMessage, l1Signer);
+  const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await l2Signer.signMessage(payloadHash);
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
   const createTradeResponse = await tradesApi.createTrade({
     createTradeRequest: {

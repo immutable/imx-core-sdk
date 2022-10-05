@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- Expose fewer public methods to make it easier for us to maintain the SDK.
+- Introduced a [single entry point](https://github.com/immutable/imx-core-sdk/blob/34629c169f2c0fc6e38e73ec75a814f36b680620/src/ImmutableX.ts#L64) for the SDK to improve discoverability
+- Clear response and error types, no more Axios wrappers
+- Simplified complex types required for creating trades, orders and transfers, no more SignableToken in the interface
+- Make the deposit method on SDK consistent with the API and industry norms.
+- SDK now handles L1 signature-protected APIs; no need to generate imx-signature separately for authentication headers
+- Removed wallet-specific logic
+- Removed the `ethereumjs-wallet` dependency.
+
 ## [0.7.0] - 2022-08-03
 
 ### Added

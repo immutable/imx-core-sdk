@@ -1,5 +1,6 @@
-export * from './api';
-export * from './contracts';
+export * as Contracts from './exportContracts';
+export * from './exportUtils';
+export * from './exportApiModels';
 export * from './types';
-export * from './utils';
-export * from './workflows';
+export { Config, EthConfiguration, ImmutableXConfiguration } from './config';
+export { ImmutableX } from './ImmutableX';

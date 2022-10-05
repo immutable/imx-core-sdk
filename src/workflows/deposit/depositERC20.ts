@@ -12,8 +12,9 @@ import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
-import { ImmutableXConfiguration, ERC20Deposit } from '../../types';
+import { ERC20Amount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
+import { ImmutableXConfiguration } from '../../config';
 
 interface ERC20TokenData {
   decimals: number;
@@ -70,7 +71,7 @@ async function executeRegisterAndDepositERC20(
 
 export async function depositERC20Workflow(
   signer: Signer,
-  deposit: ERC20Deposit,
+  deposit: ERC20Amount,
   depositsApi: DepositsApi,
   usersApi: UsersApi,
   tokensApi: TokensApi,
@@ -88,12 +89,12 @@ export async function depositERC20Workflow(
     token_address: deposit.tokenAddress,
   };
 
-  const amount = parseUnits(deposit.amount, BigNumber.from(decimals));
+  const amount = parseUnits(deposit.amount, 0); // 0 to always use undecimalized value
 
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC20__factory.connect(deposit.tokenAddress, signer);
   const approveTransaction = await tokenContract.populateTransaction.approve(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     amount,
   );
   await signer.sendTransaction(approveTransaction);
@@ -130,12 +131,12 @@ export async function depositERC20Workflow(
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount);
 
   const coreContract = Core__factory.connect(
-    config.l1Configuration.coreContractAddress,
+    config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const registrationContract = Registration__factory.connect(
-    config.l1Configuration.registrationContractAddress,
+    config.ethConfiguration.registrationContractAddress,
     signer,
   );
 
