@@ -11,7 +11,7 @@
     },
     "version": "3.0"
   },
-  "host": "api.ropsten.x.immutable.com",
+  "host": "api.sandbox.x.immutable.com",
   "basePath": "/",
   "paths": {
     "/v1/assets": {
@@ -1080,15 +1080,15 @@
               "$ref": "#/definitions/CreateMetadataRefreshResponse"
             },
             "headers": {
-              "Refresh_Limit_Reset": {
+              "x-imx-refresh-limit-reset": {
                 "type": "string",
                 "description": "The expiry date of the current one-hour window."
               },
-              "Refreshes_Limit": {
+              "x-imx-refreshes-limit": {
                 "type": "string",
                 "description": "The refresh request limit available to the project for each one-hour window."
               },
-              "Remaining_Refreshes": {
+              "x-imx-remaining-refreshes": {
                 "type": "string",
                 "description": "The amount of refresh requests remaining for current one-hour window."
               }
@@ -1116,6 +1116,20 @@
             "description": "Too Many Requests",
             "schema": {
               "$ref": "#/definitions/APIError"
+            },
+            "headers": {
+              "x-imx-refresh-limit-reset": {
+                "type": "string",
+                "description": "The expiry date of the current one-hour window."
+              },
+              "x-imx-refreshes-limit": {
+                "type": "string",
+                "description": "The refresh request limit available to the project for each one-hour window."
+              },
+              "x-imx-remaining-refreshes": {
+                "type": "string",
+                "description": "The amount of refresh requests remaining for current one-hour window."
+              }
             }
           },
           "500": {
@@ -3255,6 +3269,116 @@
         }
       }
     },
+    "/v2/exchanges/{id}/signable-transfer-details": {
+      "post": {
+        "description": "Send a request for signable-transfer-details (offramp)",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "exchanges"
+        ],
+        "summary": "Send a request for signable-transfer-details (offramp)",
+        "operationId": "getExchangeSignableTransfer",
+        "parameters": [
+          {
+            "description": "get details of signable transfer",
+            "name": "GetSignableTransferRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetSignableTransferRequestV1"
+            }
+          },
+          {
+            "type": "string",
+            "description": "Transaction ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetSignableTransferResponseV1"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/exchanges/{id}/transfers": {
+      "post": {
+        "description": "Accepts a transfer request and updates the transfer_status after processing transfer (offramp)",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "exchanges"
+        ],
+        "summary": "Accepts a transfer request and updates the transfer_status after processing transfer (offramp)",
+        "operationId": "createExchangeTransfer",
+        "parameters": [
+          {
+            "description": "Create a transfer",
+            "name": "CreateTransferRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateTransferRequestV1"
+            }
+          },
+          {
+            "type": "string",
+            "description": "Transaction ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "eth address",
+            "name": "x-imx-eth-address",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "eth signature",
+            "name": "x-imx-eth-signature",
+            "in": "header",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateTransferResponseV1"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
     "/v2/mints": {
       "post": {
         "description": "Mint tokens in a batch with fees",
@@ -3458,6 +3582,256 @@
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v3/exchanges": {
+      "get": {
+        "description": "Returns a list of exchanges based on the request",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "exchanges"
+        ],
+        "summary": "Returns a list of exchanges based on the request",
+        "operationId": "getExchanges",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "id",
+              "status",
+              "exchange",
+              "amount",
+              "transfer_id"
+            ],
+            "type": "string",
+            "description": "Property to sort by",
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "type": "string",
+            "description": "Direction to sort",
+            "name": "direction",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Transaction ID",
+            "name": "id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Ethereum address of the user who created transaction",
+            "name": "wallet_address",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "created",
+              "pending",
+              "completed",
+              "failed",
+              "waitingPayment",
+              "timedOut"
+            ],
+            "type": "string",
+            "description": "Transaction status",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "moonpay"
+            ],
+            "type": "string",
+            "description": "Provider name",
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Transfer ID",
+            "name": "transfer_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetTransactionsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Receive wallet_address, provider, type and widget information to create a base exchange transaction and return widget URL",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "exchanges"
+        ],
+        "summary": "Create an exchange with URL",
+        "operationId": "createExchange",
+        "parameters": [
+          {
+            "description": "req",
+            "name": "CreateExchangeAPIRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateExchangeAndURLAPIRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/exchange.CreateExchangeAndURLResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v3/exchanges/currencies/{type}": {
+      "get": {
+        "description": "Returns a list of supported currencies and their limits",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "exchanges"
+        ],
+        "summary": "Get currencies with limits",
+        "operationId": "getCurrencies",
+        "parameters": [
+          {
+            "enum": [
+              "onramp",
+              "offramp"
+            ],
+            "type": "string",
+            "description": "Exchange type",
+            "name": "type",
+            "in": "path",
+            "required": true
+          },
+          {
+            "enum": [
+              "moonpay"
+            ],
+            "type": "string",
+            "description": "Provider name",
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "description": "Flag if limits should be included in the response or not",
+            "name": "include_limits",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CurrencyWithLimits"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v3/exchanges/{id}": {
+      "get": {
+        "description": "Get an exchange by ID",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "exchanges"
+        ],
+        "summary": "Get an exchange by ID",
+        "operationId": "getExchange",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Exchange ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Exchange"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
             }
           }
         }
@@ -3985,6 +4359,32 @@
         }
       }
     },
+    "CreateExchangeAndURLAPIRequest": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "description": "Provider name",
+          "type": "string",
+          "example": "moonpay"
+        },
+        "type": {
+          "description": "Transaction type",
+          "type": "string",
+          "enum": [
+            "onramp",
+            "offramp"
+          ]
+        },
+        "wallet_address": {
+          "description": "Ethereum address of the user who wants to create transaction",
+          "type": "string"
+        },
+        "widget": {
+          "description": "Optional widget params",
+          "$ref": "#/definitions/WidgetParams"
+        }
+      }
+    },
     "CreateMetadataRefreshRequest": {
       "type": "object",
       "required": [
@@ -4416,6 +4816,30 @@
         }
       }
     },
+    "CurrencyWithLimits": {
+      "type": "object",
+      "properties": {
+        "currency_code": {
+          "description": "Provider currency code",
+          "type": "string",
+          "example": "eth_immutable"
+        },
+        "limits": {
+          "description": "Currency limits will be null by default",
+          "$ref": "#/definitions/aggregate.Limit"
+        },
+        "provider": {
+          "description": "Provider name (e.g. moonpay)",
+          "type": "string",
+          "example": "moonpay"
+        },
+        "symbol": {
+          "description": "Currency Symbol",
+          "type": "string",
+          "example": "ETH"
+        }
+      }
+    },
     "Deposit": {
       "type": "object",
       "required": [
@@ -4493,6 +4917,46 @@
         },
         "token_id": {
           "description": "TokenId of the token to be encoded. Used if token is non-mintable",
+          "type": "string"
+        }
+      }
+    },
+    "Exchange": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "description": "Time this transaction was created",
+          "type": "string"
+        },
+        "data": {
+          "description": "Additional transaction data",
+          "$ref": "#/definitions/OptionalExchangeData"
+        },
+        "id": {
+          "description": "Transaction ID",
+          "type": "integer"
+        },
+        "provider": {
+          "description": "Provider name",
+          "type": "string",
+          "example": "moonpay"
+        },
+        "status": {
+          "description": "Transaction status",
+          "type": "string",
+          "example": "created, pending, completed, failed, waitingPayment, timedOut"
+        },
+        "type": {
+          "description": "Transaction type",
+          "type": "string",
+          "example": "onramp"
+        },
+        "updated_at": {
+          "description": "Time this transaction was updates",
+          "type": "string"
+        },
+        "wallet_address": {
+          "description": "Ethereum address of the user who created transaction",
           "type": "string"
         }
       }
@@ -5237,6 +5701,26 @@
         }
       }
     },
+    "GetTransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "description": "Generated cursor returned by previous query",
+          "type": "string"
+        },
+        "remaining": {
+          "description": "Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results",
+          "type": "integer"
+        },
+        "result": {
+          "description": "Transactions matching query parameters",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Exchange"
+          }
+        }
+      }
+    },
     "GetUsersApiResponse": {
       "type": "object",
       "required": [
@@ -5759,7 +6243,7 @@
           "type": "string"
         },
         "id": {
-          "description": "Token ID",
+          "description": "Token ID\nNote: While the Token ID is required to be a string, it still needs to be a valid uint256 as per the ERC-721 token standard.",
           "type": "string"
         },
         "royalties": {
@@ -5824,6 +6308,43 @@
         },
         "token_id": {
           "description": "IMX Id of this token",
+          "type": "string"
+        }
+      }
+    },
+    "OptionalExchangeData": {
+      "type": "object",
+      "properties": {
+        "external_id": {
+          "description": "Provider transaction ID",
+          "type": "string"
+        },
+        "fees_amount": {
+          "description": "Fees amount",
+          "type": "number"
+        },
+        "from_amount": {
+          "description": "Amount that was exchanged from",
+          "type": "number"
+        },
+        "from_currency": {
+          "description": "Currency that was exchanged from",
+          "type": "string"
+        },
+        "provider_wallet_address": {
+          "description": "Provider wallet address that was used for transferring crypto",
+          "type": "string"
+        },
+        "to_amount": {
+          "description": "Amount that was exchanged to",
+          "type": "number"
+        },
+        "to_currency": {
+          "description": "Currency that was exchanged to",
+          "type": "string"
+        },
+        "transfer_id": {
+          "description": "Transfer ID",
           "type": "string"
         }
       }
@@ -6045,7 +6566,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "description": "Token data. See https://docs.x.immutable.com/docs/token-data-object\""
+          "description": "Token data. See https://docs.x.immutable.com/docs/token-data-object"
         },
         "type": {
           "description": "Type of token",
@@ -6407,6 +6928,31 @@
         }
       }
     },
+    "WidgetParams": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "description": "Amount that will be prefilled in the widget",
+          "type": "string"
+        },
+        "supported_currencies": {
+          "description": "Currencies that will be available in the widget. If not defined all available currencies will be shown",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "ETH",
+            "USDC"
+          ]
+        },
+        "theme": {
+          "description": "Widget theme dark by default",
+          "type": "string",
+          "example": "light"
+        }
+      }
+    },
     "Withdrawal": {
       "type": "object",
       "required": [
@@ -6449,6 +6995,19 @@
         }
       }
     },
+    "aggregate.Limit": {
+      "type": "object",
+      "properties": {
+        "max_amount": {
+          "description": "Max transaction amount",
+          "type": "number"
+        },
+        "min_amount": {
+          "description": "Min transaction amount",
+          "type": "number"
+        }
+      }
+    },
     "encodeAssetRequestToken": {
       "type": "object",
       "properties": {
@@ -6467,6 +7026,54 @@
         }
       },
       "x-go-gen-location": "models"
+    },
+    "exchange.CreateExchangeAndURLResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Created transaction ID",
+          "type": "integer"
+        },
+        "provider": {
+          "description": "Provider name (e.g. moonpay)",
+          "type": "string",
+          "example": "moonpay"
+        },
+        "type": {
+          "description": "Transaction type",
+          "type": "string",
+          "example": "onramp"
+        },
+        "url": {
+          "description": "Widget URL",
+          "type": "string"
+        },
+        "wallet_address": {
+          "description": "Ethereum address of the user who created transaction",
+          "type": "string"
+        }
+      }
+    },
+    "lambdas.APIError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "description": "The error code",
+          "type": "string"
+        },
+        "details": {
+          "description": "The error details",
+          "type": "string"
+        },
+        "message": {
+          "description": "The error message",
+          "type": "string"
+        },
+        "status_code": {
+          "description": "The error status code",
+          "type": "integer"
+        }
+      }
     }
   }
 }

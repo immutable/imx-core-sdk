@@ -10,6 +10,7 @@ domain/balances-api.ts
 domain/collections-api.ts
 domain/deposits-api.ts
 domain/encoding-api.ts
+domain/exchanges-api.ts
 domain/metadata-api.ts
 domain/metadata-refreshes-api.ts
 domain/mints-api.ts
@@ -23,6 +24,7 @@ domain/withdrawals-api.ts
 git_push.sh
 index.ts
 models/add-metadata-schema-to-collection-request.ts
+models/aggregate-limit.ts
 models/apierror.ts
 models/asset-properties.ts
 models/asset-with-orders.ts
@@ -34,6 +36,7 @@ models/collection-details.ts
 models/collection-filter.ts
 models/collection.ts
 models/create-collection-request.ts
+models/create-exchange-and-urlapirequest.ts
 models/create-metadata-refresh-request.ts
 models/create-metadata-refresh-response.ts
 models/create-order-request.ts
@@ -48,11 +51,14 @@ models/create-transfer-response-v1.ts
 models/create-transfer-response.ts
 models/create-withdrawal-request.ts
 models/create-withdrawal-response.ts
+models/currency-with-limits.ts
 models/deposit.ts
 models/encode-asset-request-token.ts
 models/encode-asset-request.ts
 models/encode-asset-response.ts
 models/encode-asset-token-data.ts
+models/exchange-create-exchange-and-urlresponse.ts
+models/exchange.ts
 models/fee-data.ts
 models/fee-entry.ts
 models/fee-info.ts
@@ -79,8 +85,10 @@ models/get-signable-transfer-response-v1.ts
 models/get-signable-transfer-response.ts
 models/get-signable-withdrawal-request.ts
 models/get-signable-withdrawal-response.ts
+models/get-transactions-response.ts
 models/get-users-api-response.ts
 models/index.ts
+models/lambdas-apierror.ts
 models/list-assets-response.ts
 models/list-balances-response.ts
 models/list-collections-response.ts
@@ -104,6 +112,7 @@ models/mint-tokens-response.ts
 models/mint-user.ts
 models/mint.ts
 models/mintable-token-details.ts
+models/optional-exchange-data.ts
 models/order-details.ts
 models/order-fee-info.ts
 models/order.ts
@@ -123,4 +132,5 @@ models/trade.ts
 models/transfer-request.ts
 models/transfer.ts
 models/update-collection-request.ts
+models/widget-params.ts
 models/withdrawal.ts

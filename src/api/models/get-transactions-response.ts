@@ -15,31 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { MintFee } from './mint-fee';
+import { Exchange } from './exchange';
 
 /**
  * 
  * @export
- * @interface MintTokenDataV2
+ * @interface GetTransactionsResponse
  */
-export interface MintTokenDataV2 {
+export interface GetTransactionsResponse {
     /**
-     * Token metadata blueprint
+     * Generated cursor returned by previous query
      * @type {string}
-     * @memberof MintTokenDataV2
+     * @memberof GetTransactionsResponse
      */
-    'blueprint'?: string;
+    'cursor'?: string;
     /**
-     * Token ID Note: While the Token ID is required to be a string, it still needs to be a valid uint256 as per the ERC-721 token standard.
-     * @type {string}
-     * @memberof MintTokenDataV2
+     * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
+     * @type {number}
+     * @memberof GetTransactionsResponse
      */
-    'id': string;
+    'remaining'?: number;
     /**
-     * List of mint fees
-     * @type {Array<MintFee>}
-     * @memberof MintTokenDataV2
+     * Transactions matching query parameters
+     * @type {Array<Exchange>}
+     * @memberof GetTransactionsResponse
      */
-    'royalties'?: Array<MintFee>;
+    'result'?: Array<Exchange>;
 }
 

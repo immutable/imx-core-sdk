@@ -3,6 +3,7 @@ import {
   EthSigner,
   NftTransferDetails,
   TokenAmount,
+  UnsignedExchangeTransferRequest,
   UnsignedMintRequest,
   UnsignedOrderRequest,
   UnsignedTransferRequest,
@@ -835,6 +836,24 @@ export class ImmutableX {
   ) {
     return this.workflows
       .batchNftTransfer(walletConnection, request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a new Transfer request
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Exchange Transfer
+   * @throws {@link index.IMXError}
+   */
+  public exchangeTransfer(
+    walletConnection: WalletConnection,
+    request: UnsignedExchangeTransferRequest,
+  ) {
+    return this.workflows
+      .exchangeTransfer(walletConnection, request)
       .catch(err => {
         throw formatError(err);
       });

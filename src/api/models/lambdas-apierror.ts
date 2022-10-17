@@ -17,20 +17,32 @@
 /**
  * 
  * @export
- * @interface SignableToken
+ * @interface LambdasAPIError
  */
-export interface SignableToken {
+export interface LambdasAPIError {
     /**
-     * Token data. See https://docs.x.immutable.com/docs/token-data-object
-     * @type {object}
-     * @memberof SignableToken
-     */
-    'data'?: object;
-    /**
-     * Type of token
+     * The error code
      * @type {string}
-     * @memberof SignableToken
+     * @memberof LambdasAPIError
      */
-    'type'?: string;
+    'code'?: string;
+    /**
+     * The error details
+     * @type {string}
+     * @memberof LambdasAPIError
+     */
+    'details'?: string;
+    /**
+     * The error message
+     * @type {string}
+     * @memberof LambdasAPIError
+     */
+    'message'?: string;
+    /**
+     * The error status code
+     * @type {number}
+     * @memberof LambdasAPIError
+     */
+    'status_code'?: number;
 }
 
