@@ -12,14 +12,9 @@ import { generateWalletConnection } from './libs/wallet-connection';
       walletConnection,
       [
         {
-          receiver: '0x84b58977513e340f6e51736d952ebc3b96760424',
-          tokenId: '6',
-          tokenAddress: '0x0fb969a08c7c39ba99c1628b59c0b7e5611bd396',
-        },
-        {
-          receiver: '0x84b58977513e340f6e51736d952ebc3b96760424',
-          tokenId: '7',
-          tokenAddress: '0x0fb969a08c7c39ba99c1628b59c0b7e5611bd396',
+          receiver: '',
+          tokenId: '',
+          tokenAddress: '',
         },
       ],
     );
