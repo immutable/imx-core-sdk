@@ -1,5 +1,5 @@
 import { Config, ImmutableX, TokenAmount } from '@imtbl/core-sdk';
-import { generateWalletConnection } from './libs/wallet-connection';
+import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
   try {
@@ -10,9 +10,12 @@ import { generateWalletConnection } from './libs/wallet-connection';
     const tokenAmount: TokenAmount = {
       type: 'ETH',
       amount: '',
-    }
+    };
 
-    const createWithdrawalResponse = await client.prepareWithdrawal(walletConnection, tokenAmount);
+    const createWithdrawalResponse = await client.prepareWithdrawal(
+      walletConnection,
+      tokenAmount,
+    );
 
     console.log('createWithdrawalResponse', createWithdrawalResponse);
   } catch (err) {

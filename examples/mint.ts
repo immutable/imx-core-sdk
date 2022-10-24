@@ -1,5 +1,5 @@
 import { ImmutableX, Config, UnsignedMintRequest } from '@imtbl/core-sdk';
-import { generateWalletConnection } from './libs/wallet-connection';
+import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
   const walletConnection = await generateWalletConnection('goerli');
@@ -23,7 +23,6 @@ import { generateWalletConnection } from './libs/wallet-connection';
     );
 
     console.log('mintResponse', JSON.stringify(mintResponse));
-
   } catch (error) {
     console.error(error);
     process.exit(1);

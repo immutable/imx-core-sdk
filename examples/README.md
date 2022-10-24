@@ -31,7 +31,7 @@ Once you have saved the necessary values in your `.env` file, follow the instruc
 
 ## Deposit Eth
 
-Update [deposit-eth.ts](./deposit-eth.ts#L14) with your deposit amount then run
+Update [depositEth.ts](./depositEth.ts#L14) with your deposit amount then run
 
 ```sh
 yarn deposit-eth
@@ -39,7 +39,7 @@ yarn deposit-eth
 
 ## Prepare Eth Withdrawal
 
-Update [create-eth-withdrawal.ts](./create-eth-withdrawal.ts#L12) with your withdrawal amount then run
+Update [createEthWithdrawal.ts](./createEthWithdrawal.ts#L12) with your withdrawal amount then run
 
 ```sh
 yarn create-eth-withdrawal
@@ -48,7 +48,7 @@ yarn create-eth-withdrawal
 
 ## Complete Eth Withdrawal
 
-Check [complete-eth-withdrawal.ts](./complete-eth-withdrawal.ts#L12) then run
+Check [completeEthWithdrawal.ts](./completeEthWithdrawal.ts#L12) then run
 
 ```sh
 yarn complete-eth-withdrawal
@@ -56,7 +56,7 @@ yarn complete-eth-withdrawal
 
 ## Create project
 
-Update [create-project.ts](./create-project.ts#L9) with your project details then run
+Update [createProject.ts](./createProject.ts#L9) with your project details then run
 
 ```sh
 yarn create-project
@@ -64,7 +64,7 @@ yarn create-project
 
 ## Create collection
 
-Update [create-collection.ts](./create-collection.ts#L15) with your collection details then run
+Update [createCollection.ts](./createCollection.ts#L15) with your collection details then run
 
 ```sh
 yarn create-collection
@@ -80,7 +80,7 @@ yarn mint
 
 ## Create order
 
-Update [create-order.ts](./create-order.ts#L9) with your order details then run
+Update [createOrder.ts](./createOrder.ts#L9) with your order details then run
 
 ```sh
 yarn create-order
@@ -88,7 +88,7 @@ yarn create-order
 
 ## Create trade
 
-Update [create-trade.ts](./create-trade.ts#L9) with your trade details then run
+Update [createTrade.ts](./createTrade.ts#L9) with your trade details then run
 
 ```sh
 yarn create-trade
@@ -96,7 +96,7 @@ yarn create-trade
 
 ## Transfer Nfts
 
-Update [transfer-nfts.ts](./transfer-nfts.ts#L13) with your transfer details then run
+Update [transferNfts.ts](./transferNfts.ts#L13) with your transfer details then run
 
 ```sh
 yarn transfer-nfts
@@ -104,7 +104,7 @@ yarn transfer-nfts
 
 ## Transfer Eth
 
-Update [transfer-eth.ts](./transfer-eth.ts#L12) with your transfer details then run
+Update [transferEth.ts](./transferEth.ts#L10) with your transfer details then run
 
 ```sh
 yarn transfer-eth
@@ -112,7 +112,7 @@ yarn transfer-eth
 
 ## Transfer ERC20
 
-Update [transfer-erc20.ts](./transfer-erc20.ts#L12) with your transfer details then run
+Update [transferErc20.ts](./transferErc20.ts#L10) with your transfer details then run
 
 ```sh
 yarn transfer-erc20

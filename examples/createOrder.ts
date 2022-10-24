@@ -1,5 +1,5 @@
 import { ImmutableX, Config, UnsignedOrderRequest } from '@imtbl/core-sdk';
-import { generateWalletConnection } from './libs/wallet-connection';
+import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
   const walletConnection = await generateWalletConnection('goerli');
@@ -20,7 +20,10 @@ import { generateWalletConnection } from './libs/wallet-connection';
 
   try {
     // Sell NFT
-    const orderResponse = await imxClient.createOrder(walletConnection, orderParams);
+    const orderResponse = await imxClient.createOrder(
+      walletConnection,
+      orderParams,
+    );
 
     console.log('orderResponse', orderResponse);
   } catch (error) {

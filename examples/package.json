@@ -4,17 +4,17 @@
   "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "create-order": "ts-node -r dotenv/config create-order.ts",
-    "create-trade": "ts-node -r dotenv/config create-trade.ts",
-    "deposit-eth": "ts-node -r dotenv/config deposit-eth.ts",
-    "create-eth-withdrawal": "ts-node -r dotenv/config create-eth-withdrawal.ts",
-    "complete-eth-withdrawal": "ts-node -r dotenv/config complete-eth-withdrawal.ts",
-    "create-project": "ts-node -r dotenv/config create-project.ts",
-    "create-collection": "ts-node -r dotenv/config create-collection.ts",
+    "create-order": "ts-node -r dotenv/config createOrder.ts",
+    "create-trade": "ts-node -r dotenv/config createTrade.ts",
+    "deposit-eth": "ts-node -r dotenv/config depositEth.ts",
+    "create-eth-withdrawal": "ts-node -r dotenv/config createEthWithdrawal.ts",
+    "complete-eth-withdrawal": "ts-node -r dotenv/config completeEthWithdrawal.ts",
+    "create-project": "ts-node -r dotenv/config createProject.ts",
+    "create-collection": "ts-node -r dotenv/config createCollection.ts",
     "mint": "ts-node -r dotenv/config mint.ts",
-    "transfer-nfts": "ts-node -r dotenv/config transfer-nfts.ts",
-    "transfer-eth": "ts-node -r dotenv/config transfer-eth.ts",
-    "transfer-erc20": "ts-node -r dotenv/config transfer-erc20.ts"
+    "transfer-nfts": "ts-node -r dotenv/config transferNfts.ts",
+    "transfer-eth": "ts-node -r dotenv/config transferEth.ts",
+    "transfer-erc20": "ts-node -r dotenv/config transferErc20.ts"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",

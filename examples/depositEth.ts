@@ -1,5 +1,5 @@
 import { Config, ImmutableX } from '@imtbl/core-sdk';
-import { generateWalletConnection } from './libs/wallet-connection';
+import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
   try {
