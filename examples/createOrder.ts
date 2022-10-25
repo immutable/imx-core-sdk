@@ -9,7 +9,7 @@ import { generateWalletConnection } from './libs/walletConnection';
   const orderParams: UnsignedOrderRequest = {
     buy: {
       type: 'ETH',
-      amount: '', // amount to buy the NFT (asset)
+      amount: '',
     },
     sell: {
       type: 'ERC721',
@@ -19,7 +19,6 @@ import { generateWalletConnection } from './libs/walletConnection';
   };
 
   try {
-    // Sell NFT
     const orderResponse = await imxClient.createOrder(
       walletConnection,
       orderParams,

@@ -9,7 +9,7 @@
 ---
 
 # Examples
-This folder contains code examples on usage of `@imtbl/core-sdk`
+This folder contains code examples for usage of `@imtbl/core-sdk`
 
 # How to run the sample code
 

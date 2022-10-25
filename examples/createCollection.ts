@@ -25,13 +25,13 @@ import { requireEnvironmentVariable } from './libs/utils';
       createCollectionParams,
     );
 
-    console.log('createCollection', JSON.stringify(createCollectionResponse));
+    console.log('createCollectionResponse', JSON.stringify(createCollectionResponse));
 
     const getCollectionResponse = await imxClient.getCollection({
       address: createCollectionResponse.address,
     });
 
-    console.log('getCollection', JSON.stringify(getCollectionResponse));
+    console.log('getCollectionResponse', JSON.stringify(getCollectionResponse));
   } catch (error) {
     console.error(error);
     process.exit(1);

@@ -18,14 +18,14 @@ import { generateWalletConnection } from './libs/walletConnection';
       projectParams,
     );
 
-    console.log('createProject', JSON.stringify(createProjectResponse));
+    console.log('createProjectResponse', JSON.stringify(createProjectResponse));
 
     const getProjectResponse = await imxClient.getProject(
       walletConnection.ethSigner,
       createProjectResponse.id.toString(),
     );
 
-    console.log('getProject', JSON.stringify(getProjectResponse));
+    console.log('getProjectResponse', JSON.stringify(getProjectResponse));
   } catch (error) {
     console.error(error);
     process.exit(1);
