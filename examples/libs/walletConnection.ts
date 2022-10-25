@@ -9,9 +9,9 @@ import { requireEnvironmentVariable } from './utils';
 export const generateWalletConnection = async (
   ethNetwork: string,
 ): Promise<WalletConnection> => {
-  const userPrivateKey = requireEnvironmentVariable('IMX_APP_USER_WALLET_PRIVATE_KEY');
-  const userStarkKey = requireEnvironmentVariable('IMX_APP_USER_STARK_PRIVATE_KEY')
-  const alchemyKey = requireEnvironmentVariable('IMX_APP_ALCHEMY_API_KEY');
+  const userPrivateKey = requireEnvironmentVariable('PRIVATE_KEY');
+  const userStarkKey = requireEnvironmentVariable('STARK_PRIVATE_KEY')
+  const alchemyKey = requireEnvironmentVariable('ALCHEMY_API_KEY');
 
   // connect provider
   const provider = new AlchemyProvider(ethNetwork, alchemyKey);

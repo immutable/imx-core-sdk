@@ -4,8 +4,8 @@ import { ImmutableX, Config, CreateCollectionRequest } from '@imtbl/core-sdk';
 import { requireEnvironmentVariable } from './libs/utils';
 
 (async () => {
-  const privateKey = requireEnvironmentVariable('IMX_APP_USER_WALLET_PRIVATE_KEY');
-  const alchemyKey = requireEnvironmentVariable('IMX_APP_ALCHEMY_API_KEY');
+  const privateKey = requireEnvironmentVariable('PRIVATE_KEY');
+  const alchemyKey = requireEnvironmentVariable('ALCHEMY_API_KEY');
   const wallet = new Wallet(privateKey);
   const provider = new AlchemyProvider('goerli', alchemyKey);
   const signer = wallet.connect(provider);
