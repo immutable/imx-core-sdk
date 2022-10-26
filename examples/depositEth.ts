@@ -11,7 +11,7 @@ import { generateWalletConnection } from './libs/walletConnection';
     // Deposit ETH
     const depositResponse = await client.deposit(walletConnection.ethSigner, {
       type: 'ETH',
-      amount: '',
+      amount: '', // 1 ETH = 1000000000000000000
     });
 
     console.log('depositResponse', depositResponse);
