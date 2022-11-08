@@ -1,0 +1,30 @@
+{
+  "name": "imx-core-sdk-examples",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "scripts": {
+    "create-order": "ts-node -r dotenv/config createOrder.ts",
+    "create-trade": "ts-node -r dotenv/config createTrade.ts",
+    "deposit-eth": "ts-node -r dotenv/config depositEth.ts",
+    "create-eth-withdrawal": "ts-node -r dotenv/config createEthWithdrawal.ts",
+    "complete-eth-withdrawal": "ts-node -r dotenv/config completeEthWithdrawal.ts",
+    "create-project": "ts-node -r dotenv/config createProject.ts",
+    "create-collection": "ts-node -r dotenv/config createCollection.ts",
+    "mint": "ts-node -r dotenv/config mint.ts",
+    "transfer-nfts": "ts-node -r dotenv/config transferNfts.ts",
+    "transfer-eth": "ts-node -r dotenv/config transferEth.ts",
+    "transfer-erc20": "ts-node -r dotenv/config transferErc20.ts"
+  },
+  "dependencies": {
+    "@ethersproject/providers": "^5.7.2",
+    "@ethersproject/wallet": "^5.7.0",
+    "@imtbl/core-sdk": "^1.0.0-beta.3",
+    "dotenv": "^16.0.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.3"
+  }
+}
