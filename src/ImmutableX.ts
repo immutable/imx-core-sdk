@@ -850,14 +850,11 @@ export class ImmutableX {
 
   /**
    * Create a new Exchange transaction
-   * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
    * @returns a promise that resolves with the created Exchange Transaction
    * @throws {@link index.IMXError}
    */
-  public createExchange(
-    request: ExchangesApiCreateExchangeRequest,
-  ) {
+  public createExchange(request: ExchangesApiCreateExchangeRequest) {
     return this.exchangeApi.createExchange(request).catch(err => {
       throw formatError(err);
     });
@@ -865,14 +862,11 @@ export class ImmutableX {
 
   /**
    * Get an Exchange transaction
-   * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
    * @returns a promise that resolves with the Exchange Transaction
    * @throws {@link index.IMXError}
    */
-  public getExchange(
-    request: ExchangesApiGetExchangeRequest,
-  ) {
+  public getExchange(request: ExchangesApiGetExchangeRequest) {
     return this.exchangeApi.getExchange(request).catch(err => {
       throw formatError(err);
     });
@@ -880,14 +874,11 @@ export class ImmutableX {
 
   /**
    * Get Exchange transactions
-   * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
    * @returns a promise that resolves with Exchange Transactions
    * @throws {@link index.IMXError}
    */
-  public getExchanges(
-    request: ExchangesApiGetExchangesRequest,
-  ) {
+  public getExchanges(request: ExchangesApiGetExchangesRequest) {
     return this.exchangeApi.getExchanges(request).catch(err => {
       throw formatError(err);
     });
@@ -895,14 +886,11 @@ export class ImmutableX {
 
   /**
    * Get Exchange currencies
-   * @param walletConnection - the pair of L1/L2 signers
    * @param request - the request object to be provided in the API request
    * @returns a promise that resolves with Exchange Currencies
    * @throws {@link index.IMXError}
    */
-  public getExchangeCurrencies(
-    request: ExchangesApiGetCurrenciesRequest,
-  ) {
+  public getExchangeCurrencies(request: ExchangesApiGetCurrenciesRequest) {
     return this.exchangeApi.getCurrencies(request).catch(err => {
       throw formatError(err);
     });
@@ -910,7 +898,7 @@ export class ImmutableX {
 
   /**
    * Create a new Transfer request
-   * @param walletConnection - the pair of L1/L2 signers
+   * @param walletConnection - the pair of Eth/Stark signers
    * @param request - the request object to be provided in the API request
    * @returns a promise that resolves with the created Exchange Transfer
    * @throws {@link index.IMXError}
