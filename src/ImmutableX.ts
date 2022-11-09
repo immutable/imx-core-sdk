@@ -856,7 +856,6 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public createExchange(
-    walletConnection: WalletConnection,
     request: ExchangesApiCreateExchangeRequest,
   ) {
     return this.exchangeApi.createExchange(request).catch(err => {
@@ -872,7 +871,6 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public getExchange(
-    walletConnection: WalletConnection,
     request: ExchangesApiGetExchangeRequest,
   ) {
     return this.exchangeApi.getExchange(request).catch(err => {
@@ -888,7 +886,6 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public getExchanges(
-    walletConnection: WalletConnection,
     request: ExchangesApiGetExchangesRequest,
   ) {
     return this.exchangeApi.getExchanges(request).catch(err => {
@@ -904,7 +901,6 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public getExchangeCurrencies(
-    walletConnection: WalletConnection,
     request: ExchangesApiGetCurrenciesRequest,
   ) {
     return this.exchangeApi.getCurrencies(request).catch(err => {
