@@ -7,8 +7,10 @@ import { generateWalletConnection } from './libs/walletConnection';
   const imxClient = new ImmutableX(Config.SANDBOX);
 
   const exchangeTransferParams: UnsignedExchangeTransferRequest = {
+    type: "ETH",
+    amount:'0.001',
     transactionID: '0',
-    receiver: '',
+    receiver: ''
   };
 
   try {
