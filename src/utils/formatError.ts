@@ -8,6 +8,7 @@ import { IMXError } from '../types/errors';
  * @returns IMXError
  */
 export function formatError(error: unknown): IMXError {
+  console.log('error:', error);
   if (axios.isAxiosError(error) && error.response) {
     const apiError: APIError = error.response.data;
     return new IMXError({
