@@ -17,20 +17,26 @@
 /**
  * 
  * @export
- * @interface SignableToken
+ * @interface WidgetParams
  */
-export interface SignableToken {
+export interface WidgetParams {
     /**
-     * Token data. See https://docs.x.immutable.com/docs/token-data-object
-     * @type {object}
-     * @memberof SignableToken
-     */
-    'data'?: object;
-    /**
-     * Type of token
+     * Amount that will be prefilled in the widget
      * @type {string}
-     * @memberof SignableToken
+     * @memberof WidgetParams
      */
-    'type'?: string;
+    'amount'?: string;
+    /**
+     * Currencies that will be available in the widget. If not defined all available currencies will be shown
+     * @type {Array<string>}
+     * @memberof WidgetParams
+     */
+    'supported_currencies'?: Array<string>;
+    /**
+     * Widget theme dark by default
+     * @type {string}
+     * @memberof WidgetParams
+     */
+    'theme'?: string;
 }
 

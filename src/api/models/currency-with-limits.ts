@@ -15,31 +15,37 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { MintFee } from './mint-fee';
+import { AggregateLimit } from './aggregate-limit';
 
 /**
  * 
  * @export
- * @interface MintTokenDataV2
+ * @interface CurrencyWithLimits
  */
-export interface MintTokenDataV2 {
+export interface CurrencyWithLimits {
     /**
-     * Token metadata blueprint
+     * Provider currency code
      * @type {string}
-     * @memberof MintTokenDataV2
+     * @memberof CurrencyWithLimits
      */
-    'blueprint'?: string;
+    'currency_code'?: string;
     /**
-     * Token ID Note: While the Token ID is required to be a string, it still needs to be a valid uint256 as per the ERC-721 token standard.
+     * 
+     * @type {AggregateLimit}
+     * @memberof CurrencyWithLimits
+     */
+    'limits'?: AggregateLimit;
+    /**
+     * Provider name (e.g. moonpay)
      * @type {string}
-     * @memberof MintTokenDataV2
+     * @memberof CurrencyWithLimits
      */
-    'id': string;
+    'provider'?: string;
     /**
-     * List of mint fees
-     * @type {Array<MintFee>}
-     * @memberof MintTokenDataV2
+     * Currency Symbol
+     * @type {string}
+     * @memberof CurrencyWithLimits
      */
-    'royalties'?: Array<MintFee>;
+    'symbol'?: string;
 }
 

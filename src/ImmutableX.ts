@@ -3,6 +3,7 @@ import {
   EthSigner,
   NftTransferDetails,
   TokenAmount,
+  UnsignedExchangeTransferRequest,
   UnsignedMintRequest,
   UnsignedOrderRequest,
   UnsignedTransferRequest,
@@ -54,6 +55,11 @@ import {
   TransfersApiListTransfersRequest,
   MetadataRefreshesApi,
   CreateMetadataRefreshRequest,
+  ExchangesApi,
+  ExchangesApiCreateExchangeRequest,
+  ExchangesApiGetExchangeRequest,
+  ExchangesApiGetExchangesRequest,
+  ExchangesApiGetCurrenciesRequest,
 } from './api';
 import { formatError } from './utils/formatError';
 import { ImmutableXConfiguration } from './config';
@@ -68,6 +74,7 @@ export class ImmutableX {
   private tokensApi: TokensApi;
   private tradesApi: TradesApi;
   private transfersApi: TransfersApi;
+  private exchangeApi: ExchangesApi;
   private usersApi: UsersApi;
   private withdrawalsApi: WithdrawalsApi;
   private balanceApi: BalancesApi;
@@ -85,6 +92,7 @@ export class ImmutableX {
     this.tokensApi = new TokensApi(config.apiConfiguration);
     this.tradesApi = new TradesApi(config.apiConfiguration);
     this.transfersApi = new TransfersApi(config.apiConfiguration);
+    this.exchangeApi = new ExchangesApi(config.apiConfiguration);
     this.usersApi = new UsersApi(config.apiConfiguration);
     this.withdrawalsApi = new WithdrawalsApi(config.apiConfiguration);
     this.balanceApi = new BalancesApi(config.apiConfiguration);
@@ -835,6 +843,72 @@ export class ImmutableX {
   ) {
     return this.workflows
       .batchNftTransfer(walletConnection, request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a new Exchange transaction
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Exchange Transaction
+   * @throws {@link index.IMXError}
+   */
+  public createExchange(request: ExchangesApiCreateExchangeRequest) {
+    return this.exchangeApi.createExchange(request).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Get an Exchange transaction
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the Exchange Transaction
+   * @throws {@link index.IMXError}
+   */
+  public getExchange(request: ExchangesApiGetExchangeRequest) {
+    return this.exchangeApi.getExchange(request).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Get Exchange transactions
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with Exchange Transactions
+   * @throws {@link index.IMXError}
+   */
+  public getExchanges(request: ExchangesApiGetExchangesRequest) {
+    return this.exchangeApi.getExchanges(request).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Get Exchange currencies
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with Exchange Currencies
+   * @throws {@link index.IMXError}
+   */
+  public getExchangeCurrencies(request: ExchangesApiGetCurrenciesRequest) {
+    return this.exchangeApi.getCurrencies(request).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Create a new Transfer request
+   * @param walletConnection - the pair of Eth/Stark signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Exchange Transfer
+   * @throws {@link index.IMXError}
+   */
+  public exchangeTransfer(
+    walletConnection: WalletConnection,
+    request: UnsignedExchangeTransferRequest,
+  ) {
+    return this.workflows
+      .exchangeTransfer(walletConnection, request)
       .catch(err => {
         throw formatError(err);
       });

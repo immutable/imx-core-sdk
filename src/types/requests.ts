@@ -1,4 +1,4 @@
-import { TokenAmount } from './tokens';
+import { TokenAmount, ExchangeTokenAmount } from './tokens';
 import { FeeEntry, MintRequest } from '../api';
 
 // These custom request interfaces are used because API.SignableToken is not yet a union type due to OAS 2.0 spec not supporting `OneOf`
@@ -41,3 +41,18 @@ export type UnsignedTransferRequest = TokenAmount & {
  * Parameter required to Mint tokens
  */
 export type UnsignedMintRequest = Omit<MintRequest, 'auth_signature'>;
+
+/**
+ * Parameter required to create a Transfer
+ */
+export type UnsignedExchangeTransferRequest = ExchangeTokenAmount & {
+  /**
+   * Ethereum address of the receiving user
+   */
+  receiver: string;
+
+  /**
+   * Exchange transaction ID
+   */
+  transactionID: string;
+};
