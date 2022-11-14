@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -83,9 +84,9 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {'updated_at' | 'name'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who owns these assets
-         * @param {string} [status] Status of these assets
+         * @param {'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned'} [status] Status of these assets
          * @param {string} [name] Name of the asset to search
-         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
+         * @param {string} [metadata] URL JSON-encoded metadata filters for these assets. Javascript example: encodeURI(JSON.stringify({\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}))
          * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
@@ -97,7 +98,7 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAssets: async (pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: string, name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listAssets: async (pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: 'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned', name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/assets`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -216,9 +217,9 @@ export const AssetsApiFp = function(configuration?: Configuration) {
          * @param {'updated_at' | 'name'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who owns these assets
-         * @param {string} [status] Status of these assets
+         * @param {'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned'} [status] Status of these assets
          * @param {string} [name] Name of the asset to search
-         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
+         * @param {string} [metadata] URL JSON-encoded metadata filters for these assets. Javascript example: encodeURI(JSON.stringify({\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}))
          * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
@@ -230,7 +231,7 @@ export const AssetsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: string, name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListAssetsResponse>> {
+        async listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: 'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned', name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListAssetsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listAssets(pageSize, cursor, orderBy, direction, user, status, name, metadata, sellOrders, buyOrders, includeFees, collection, updatedMinTimestamp, updatedMaxTimestamp, auxiliaryFeePercentages, auxiliaryFeeRecipients, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -264,9 +265,9 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
          * @param {'updated_at' | 'name'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who owns these assets
-         * @param {string} [status] Status of these assets
+         * @param {'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned'} [status] Status of these assets
          * @param {string} [name] Name of the asset to search
-         * @param {string} [metadata] JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
+         * @param {string} [metadata] URL JSON-encoded metadata filters for these assets. Javascript example: encodeURI(JSON.stringify({\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}))
          * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
          * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
          * @param {boolean} [includeFees] Set flag to include fees associated with the asset
@@ -278,7 +279,7 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: string, name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<ListAssetsResponse> {
+        listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: 'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned', name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<ListAssetsResponse> {
             return localVarFp.listAssets(pageSize, cursor, orderBy, direction, user, status, name, metadata, sellOrders, buyOrders, includeFees, collection, updatedMinTimestamp, updatedMaxTimestamp, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
         },
     };
@@ -355,10 +356,10 @@ export interface AssetsApiListAssetsRequest {
 
     /**
      * Status of these assets
-     * @type {string}
+     * @type {'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned'}
      * @memberof AssetsApiListAssets
      */
-    readonly status?: string
+    readonly status?: 'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned'
 
     /**
      * Name of the asset to search
@@ -368,7 +369,7 @@ export interface AssetsApiListAssetsRequest {
     readonly name?: string
 
     /**
-     * JSON-encoded metadata filters for these asset. Example: {\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}
+     * URL JSON-encoded metadata filters for these assets. Javascript example: encodeURI(JSON.stringify({\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}))
      * @type {string}
      * @memberof AssetsApiListAssets
      */

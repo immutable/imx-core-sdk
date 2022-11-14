@@ -15,37 +15,19 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeToken } from './fee-token';
+import { ProviderMintStatus } from './provider-mint-status';
 
 /**
  * 
  * @export
- * @interface OrderFeeInfo
+ * @interface ProviderGetMintStatusResponse
  */
-export interface OrderFeeInfo {
+export interface ProviderGetMintStatusResponse {
     /**
-     * Address of the fee recipient
-     * @type {string}
-     * @memberof OrderFeeInfo
+     * Mint status for requested transactions
+     * @type {Array<ProviderMintStatus>}
+     * @memberof ProviderGetMintStatusResponse
      */
-    'address'?: string;
-    /**
-     * Fee amount
-     * @type {string}
-     * @memberof OrderFeeInfo
-     */
-    'amount'?: string;
-    /**
-     * 
-     * @type {FeeToken}
-     * @memberof OrderFeeInfo
-     */
-    'token'?: FeeToken;
-    /**
-     * Fee type
-     * @type {string}
-     * @memberof OrderFeeInfo
-     */
-    'type'?: string;
+    'data'?: Array<ProviderMintStatus>;
 }
 

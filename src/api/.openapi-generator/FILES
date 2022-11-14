@@ -14,6 +14,7 @@ domain/exchanges-api.ts
 domain/metadata-api.ts
 domain/metadata-refreshes-api.ts
 domain/mints-api.ts
+domain/nft-checkout-primary-api.ts
 domain/orders-api.ts
 domain/projects-api.ts
 domain/tokens-api.ts
@@ -112,11 +113,19 @@ models/mint-tokens-response.ts
 models/mint-user.ts
 models/mint.ts
 models/mintable-token-details.ts
+models/nftprimarytransaction-create-apirequest.ts
+models/nftprimarytransaction-create-response.ts
+models/nftprimarytransaction-get-response.ts
+models/nftprimarytransaction-list-transactions-response.ts
+models/nftprimarytransaction-transaction-data.ts
+models/nftprimarytransaction-widget-params.ts
 models/optional-exchange-data.ts
 models/order-details.ts
 models/order-fee-info.ts
 models/order.ts
 models/project.ts
+models/provider-get-mint-status-response.ts
+models/provider-mint-status.ts
 models/range.ts
 models/register-user-request.ts
 models/register-user-response.ts

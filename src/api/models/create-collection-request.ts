@@ -57,7 +57,7 @@ export interface CreateCollectionRequest {
      */
     'name': string;
     /**
-     * Owner Public Key: The public key of the owner of the contract
+     * Owner Public Key: The uncompressed public key of the owner of the contract
      * @type {string}
      * @memberof CreateCollectionRequest
      */

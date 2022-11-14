@@ -15,31 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Balance } from './balance';
+import { NftprimarytransactionTransactionData } from './nftprimarytransaction-transaction-data';
 
 /**
  * 
  * @export
- * @interface ListBalancesResponse
+ * @interface NftprimarytransactionListTransactionsResponse
  */
-export interface ListBalancesResponse {
+export interface NftprimarytransactionListTransactionsResponse {
     /**
      * Generated cursor returned by previous query
      * @type {string}
-     * @memberof ListBalancesResponse
+     * @memberof NftprimarytransactionListTransactionsResponse
      */
-    'cursor': string;
+    'cursor'?: string;
     /**
      * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
      * @type {number}
-     * @memberof ListBalancesResponse
+     * @memberof NftprimarytransactionListTransactionsResponse
      */
-    'remaining': number;
+    'remaining'?: number;
     /**
-     * Dictionary of tokens
-     * @type {Array<Balance>}
-     * @memberof ListBalancesResponse
+     * Transactions matching query parameters
+     * @type {Array<NftprimarytransactionTransactionData>}
+     * @memberof NftprimarytransactionListTransactionsResponse
      */
-    'result': Array<Balance>;
+    'result'?: Array<NftprimarytransactionTransactionData>;
 }
 
