@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { APIError } from '../api';
-import { IMXError } from '../types/errors';
+import { APIError } from '../../api';
+import { IMXError } from '../../types/errors';
 
 /**
  * [Formats an error in the IMXError shape](https://axios-http.com/docs/handling_errors)

@@ -55,7 +55,7 @@ import {
   MetadataRefreshesApi,
   CreateMetadataRefreshRequest,
 } from './api';
-import { formatError } from './utils/formatError';
+import { formatError } from './utils/errors/formatError';
 import { ImmutableXConfiguration } from './config';
 
 /**
