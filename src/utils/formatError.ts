@@ -10,12 +10,21 @@ import { IMXError } from '../types/errors';
 export function formatError(error: unknown): IMXError {
   if (axios.isAxiosError(error) && error.response) {
     const apiError: APIError = error.response.data;
+    if (apiError.code && apiError.message) {
+      return new IMXError({
+        code: apiError.code,
+        details: apiError.details,
+        message: apiError.message,
+      });
+    }
+
     return new IMXError({
-      code: apiError.code,
-      details: apiError.details,
-      message: apiError.message,
+      code:
+        error.code ?? error.response?.status.toString() ?? 'unknown_error_code',
+      message: String(error),
     });
   }
+
   return new IMXError({
     code: 'unknown_error_code',
     message: String(error),
