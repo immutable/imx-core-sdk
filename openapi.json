@@ -3455,6 +3455,358 @@
         }
       }
     },
+    "/v2/nft/primary": {
+      "get": {
+        "description": "Returns a list of NFT primary transactions",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-primary"
+        ],
+        "summary": "Get a list of NFT primary transactions",
+        "operationId": "getNftPrimaryTransactions",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "transaction_id",
+              "status",
+              "amount",
+              "mint_id"
+            ],
+            "type": "string",
+            "description": "Property to sort by",
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Direction to sort (asc/desc)",
+            "name": "direction",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Contract address of the asset",
+            "name": "contract_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Ethereum address of the seller",
+            "name": "seller_wallet_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Ethereum address of the user who wants to create transaction",
+            "name": "wallet_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Transaction status",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "moonpay"
+            ],
+            "type": "string",
+            "description": "Provider name",
+            "name": "provider",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Mint id",
+            "name": "mint_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftprimarytransaction.ListTransactionsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "creates nft primary transaction",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-primary"
+        ],
+        "summary": "Create nft primary transaction",
+        "operationId": "createNftPrimary",
+        "parameters": [
+          {
+            "description": "req",
+            "name": "CreateAPIRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nftprimarytransaction.CreateAPIRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftprimarytransaction.CreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/nft/primary/{transaction_id}": {
+      "get": {
+        "description": "gets nft primary transaction by transaction id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-primary"
+        ],
+        "summary": "Get nft primary transaction by id",
+        "operationId": "getNftPrimaryTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "transaction_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftprimarytransaction.GetResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/nft/secondary": {
+      "get": {
+        "description": "Returns a list of NFT secondary transactions",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-secondary"
+        ],
+        "summary": "Get a list of NFT secondary transactions",
+        "operationId": "getNftSecondaryTransactions",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "transaction_id",
+              "status",
+              "amount",
+              "mint_id"
+            ],
+            "type": "string",
+            "description": "Property to sort by",
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Direction to sort (asc/desc)",
+            "name": "direction",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "transaction_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Order id",
+            "name": "order_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Ethereum address of the user who wants to create transaction",
+            "name": "wallet_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Transaction status",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "moonpay"
+            ],
+            "type": "string",
+            "description": "Provider name",
+            "name": "provider",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftsecondarytransaction.ListTransactionsResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "creates nft secondary transaction",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-secondary"
+        ],
+        "summary": "Create nft secondary transaction",
+        "operationId": "createNftSecondary",
+        "parameters": [
+          {
+            "description": "req",
+            "name": "CreateAPIRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/nftsecondarytransaction.CreateAPIRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftsecondarytransaction.CreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/nft/secondary/{transaction_id}": {
+      "get": {
+        "description": "gets nft secondary transaction by transaction id",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-secondary"
+        ],
+        "summary": "Get nft secondary transaction by id",
+        "operationId": "getNftSecondaryTransaction",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Transaction id",
+            "name": "transaction_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftsecondarytransaction.GetTransactionResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
     "/v2/signable-transfer-details": {
       "post": {
         "description": "Gets bulk details of a signable transfer",
@@ -3582,6 +3934,55 @@
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/{provider}/transaction_status": {
+      "get": {
+        "description": "gets mint status by transaction ids",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-primary"
+        ],
+        "summary": "Get mint status by transaction id",
+        "operationId": "getMintStatusById",
+        "parameters": [
+          {
+            "enum": [
+              "moonpay"
+            ],
+            "type": "string",
+            "description": "Provider name",
+            "name": "provider",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "transaction id",
+            "name": "id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/provider.GetMintStatusResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
             }
           }
         }
@@ -7072,6 +7473,395 @@
         "status_code": {
           "description": "The error status code",
           "type": "integer"
+        }
+      }
+    },
+    "nftprimarytransaction.CreateAPIRequest": {
+      "type": "object",
+      "properties": {
+        "contract_address": {
+          "description": "Contract address of the asset to be created",
+          "type": "string"
+        },
+        "offer_id": {
+          "description": "Temporary asset id",
+          "type": "string"
+        },
+        "provider": {
+          "description": "Provider name",
+          "type": "string",
+          "example": "moonpay"
+        },
+        "user_wallet_address": {
+          "description": "Ethereum address of the user who wants to create transaction",
+          "type": "string"
+        },
+        "widget": {
+          "description": "Optional widget params",
+          "$ref": "#/definitions/nftprimarytransaction.WidgetParams"
+        }
+      }
+    },
+    "nftprimarytransaction.CreateResponse": {
+      "type": "object",
+      "properties": {
+        "contract_address": {
+          "description": "Contract address of the asset to be created",
+          "type": "string"
+        },
+        "offer_id": {
+          "description": "Temporary asset id",
+          "type": "string"
+        },
+        "provider": {
+          "description": "Provider name",
+          "type": "string"
+        },
+        "seller_wallet_address": {
+          "description": "Ethereum address of the seller",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "Asset id",
+          "type": "string"
+        },
+        "transaction_id": {
+          "description": "Transaction id",
+          "type": "string"
+        },
+        "url": {
+          "description": "Widget Url signed by provider",
+          "type": "string"
+        },
+        "user_wallet_address": {
+          "description": "Ethereum address of the user who wants to create transaction",
+          "type": "string"
+        }
+      }
+    },
+    "nftprimarytransaction.GetResponse": {
+      "type": "object",
+      "properties": {
+        "contract_address": {
+          "description": "Contract address of the asset",
+          "type": "string"
+        },
+        "offer_id": {
+          "description": "Temporary asset id",
+          "type": "string"
+        },
+        "provider": {
+          "description": "Provider name",
+          "type": "string"
+        },
+        "seller_wallet_address": {
+          "description": "Ethereum address of the seller",
+          "type": "string"
+        },
+        "status": {
+          "description": "Transaction status",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "Asset id",
+          "type": "string"
+        },
+        "transaction_id": {
+          "description": "Transaction id",
+          "type": "string"
+        },
+        "user_wallet_address": {
+          "description": "Ethereum address of the user who wants to create transaction",
+          "type": "string"
+        }
+      }
+    },
+    "nftprimarytransaction.ListTransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "description": "Generated cursor returned by previous query",
+          "type": "string"
+        },
+        "remaining": {
+          "description": "Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results",
+          "type": "integer"
+        },
+        "result": {
+          "description": "Transactions matching query parameters",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/nftprimarytransaction.TransactionData"
+          }
+        }
+      }
+    },
+    "nftprimarytransaction.TransactionData": {
+      "type": "object",
+      "properties": {
+        "contract_address": {
+          "description": "Contract address of the asset",
+          "type": "string"
+        },
+        "created_at": {
+          "description": "Timestamp when the transaction was created",
+          "type": "string"
+        },
+        "external_id": {
+          "description": "External transaction id",
+          "type": "string"
+        },
+        "fees_amount": {
+          "description": "Fees to pay on this transaction",
+          "type": "number"
+        },
+        "from_amount": {
+          "description": "Amount of currency (from_currency) used for transaction",
+          "type": "number"
+        },
+        "from_currency": {
+          "description": "Currency used for transaction",
+          "type": "string"
+        },
+        "mint_id": {
+          "description": "Mint id",
+          "type": "string"
+        },
+        "mint_status": {
+          "description": "Mint status",
+          "type": "string"
+        },
+        "offer_id": {
+          "description": "Temporary asset id",
+          "type": "string"
+        },
+        "provider": {
+          "description": "Provider name",
+          "type": "string"
+        },
+        "seller_wallet_address": {
+          "description": "Ethereum address of the seller",
+          "type": "string"
+        },
+        "status": {
+          "description": "Transaction status",
+          "type": "string"
+        },
+        "to_amount": {
+          "description": "Amount of target currency (to_currency) bought",
+          "type": "number"
+        },
+        "to_currency": {
+          "description": "Target currency",
+          "type": "string"
+        },
+        "token_id": {
+          "description": "Asset id",
+          "type": "string"
+        },
+        "transaction_id": {
+          "description": "Transaction id",
+          "type": "string"
+        },
+        "updated_at": {
+          "description": "Timestamp when the transaction was updated",
+          "type": "string"
+        },
+        "user_wallet_address": {
+          "description": "Ethereum address of the user who wants to create transaction",
+          "type": "string"
+        }
+      }
+    },
+    "nftprimarytransaction.WidgetParams": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "example": "light"
+        }
+      }
+    },
+    "nftsecondarytransaction.CreateAPIRequest": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "integer"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "user_wallet_address": {
+          "type": "string"
+        },
+        "widget": {
+          "$ref": "#/definitions/nftsecondarytransaction.WidgetParams"
+        }
+      }
+    },
+    "nftsecondarytransaction.CreateResponse": {
+      "type": "object",
+      "properties": {
+        "contract_address": {
+          "type": "string"
+        },
+        "order_id": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "token_id": {
+          "type": "string"
+        },
+        "transaction_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "user_wallet_address": {
+          "type": "string"
+        }
+      }
+    },
+    "nftsecondarytransaction.GetTransactionResponse": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "token_address": {
+          "type": "string"
+        },
+        "token_id": {
+          "type": "string"
+        },
+        "transaction_id": {
+          "type": "string"
+        },
+        "user_wallet_address": {
+          "type": "string"
+        }
+      }
+    },
+    "nftsecondarytransaction.ListTransactionsResponse": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "type": "string"
+        },
+        "remaining": {
+          "type": "integer"
+        },
+        "result": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/nftsecondarytransaction.TransactionData"
+          }
+        }
+      }
+    },
+    "nftsecondarytransaction.TransactionData": {
+      "type": "object",
+      "properties": {
+        "created_at": {
+          "type": "string"
+        },
+        "external_id": {
+          "type": "string"
+        },
+        "fees_amount": {
+          "type": "number"
+        },
+        "from_amount": {
+          "type": "number"
+        },
+        "from_currency": {
+          "type": "string"
+        },
+        "order_id": {
+          "type": "string"
+        },
+        "provider": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "to_amount": {
+          "type": "number"
+        },
+        "to_currency": {
+          "type": "string"
+        },
+        "transaction_id": {
+          "type": "string"
+        },
+        "updated_at": {
+          "type": "string"
+        },
+        "user_wallet_address": {
+          "type": "string"
+        }
+      }
+    },
+    "nftsecondarytransaction.WidgetParams": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "example": "light"
+        }
+      }
+    },
+    "provider.GetMintStatusResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "description": "Mint status for requested transactions",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/provider.MintStatus"
+          }
+        }
+      }
+    },
+    "provider.MintStatus": {
+      "type": "object",
+      "properties": {
+        "failureReason": {
+          "description": "reason for mint failure",
+          "type": "string"
+        },
+        "id": {
+          "description": "External transaction id",
+          "type": "string"
+        },
+        "status": {
+          "description": "Mint status",
+          "type": "string"
+        },
+        "statusChangedAt": {
+          "description": "status updated-at timestamp",
+          "type": "string"
+        },
+        "tokenId": {
+          "description": "Asset id",
+          "type": "string"
+        },
+        "transactionHash": {
+          "description": "Transaction hash",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     }
