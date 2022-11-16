@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -111,7 +112,7 @@ export const MintsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * Get a list of mints
+         * Get information about token mints. If you want to get information about tokens that have already been minted, use the listAssets endpoint.
          * @summary Get a list of mints
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
@@ -123,7 +124,7 @@ export const MintsApiAxiosParamCreator = function (configuration?: Configuration
          * @param {string} [maxTimestamp] Maximum timestamp for this mint, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the minted asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
-         * @param {string} [assetId] Internal IMX ID of the minted asset
+         * @param {string} [assetId] [DEPRECATED] Internal IMX ID of the minted asset
          * @param {string} [tokenName] Token Name of the minted asset
          * @param {string} [tokenAddress] Token address of the minted asset
          * @param {string} [minQuantity] Min quantity for the minted asset
@@ -290,7 +291,7 @@ export const MintsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a list of mints
+         * Get information about token mints. If you want to get information about tokens that have already been minted, use the listAssets endpoint.
          * @summary Get a list of mints
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
@@ -302,7 +303,7 @@ export const MintsApiFp = function(configuration?: Configuration) {
          * @param {string} [maxTimestamp] Maximum timestamp for this mint, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the minted asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
-         * @param {string} [assetId] Internal IMX ID of the minted asset
+         * @param {string} [assetId] [DEPRECATED] Internal IMX ID of the minted asset
          * @param {string} [tokenName] Token Name of the minted asset
          * @param {string} [tokenAddress] Token address of the minted asset
          * @param {string} [minQuantity] Min quantity for the minted asset
@@ -358,7 +359,7 @@ export const MintsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.getMintableTokenDetailsByClientTokenId(tokenAddress, tokenId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a list of mints
+         * Get information about token mints. If you want to get information about tokens that have already been minted, use the listAssets endpoint.
          * @summary Get a list of mints
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
@@ -370,7 +371,7 @@ export const MintsApiFactory = function (configuration?: Configuration, basePath
          * @param {string} [maxTimestamp] Maximum timestamp for this mint, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the minted asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
-         * @param {string} [assetId] Internal IMX ID of the minted asset
+         * @param {string} [assetId] [DEPRECATED] Internal IMX ID of the minted asset
          * @param {string} [tokenName] Token Name of the minted asset
          * @param {string} [tokenAddress] Token address of the minted asset
          * @param {string} [minQuantity] Min quantity for the minted asset
@@ -507,7 +508,7 @@ export interface MintsApiListMintsRequest {
     readonly tokenId?: string
 
     /**
-     * Internal IMX ID of the minted asset
+     * [DEPRECATED] Internal IMX ID of the minted asset
      * @type {string}
      * @memberof MintsApiListMints
      */
@@ -595,7 +596,7 @@ export class MintsApi extends BaseAPI {
     }
 
     /**
-     * Get a list of mints
+     * Get information about token mints. If you want to get information about tokens that have already been minted, use the listAssets endpoint.
      * @summary Get a list of mints
      * @param {MintsApiListMintsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

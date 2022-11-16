@@ -21,7 +21,7 @@ export async function mintingWorkflow(
     ether_key: user.user,
     tokens: user.tokens.map(token => ({
       id: token.id,
-      ...(token.blueprint && { blueprint: token.blueprint }),
+      blueprint: token.blueprint,
       ...(token.royalties &&
         token.royalties.length > 0 && {
           royalties: token.royalties.map(royalty => ({

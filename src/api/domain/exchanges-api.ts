@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -26,8 +27,6 @@ import { CreateExchangeAndURLAPIRequest } from '../models';
 import { CreateTransferRequestV1 } from '../models';
 // @ts-ignore
 import { CreateTransferResponseV1 } from '../models';
-// @ts-ignore
-import { CurrencyWithLimits } from '../models';
 // @ts-ignore
 import { Exchange } from '../models';
 // @ts-ignore
@@ -137,50 +136,6 @@ export const ExchangesApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Returns a list of supported currencies and their limits
-         * @summary Get currencies with limits
-         * @param {'onramp' | 'offramp'} type Exchange type
-         * @param {'moonpay'} [provider] Provider name
-         * @param {boolean} [includeLimits] Flag if limits should be included in the response or not
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrencies: async (type: 'onramp' | 'offramp', provider?: 'moonpay', includeLimits?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'type' is not null or undefined
-            assertParamExists('getCurrencies', 'type', type)
-            const localVarPath = `/v3/exchanges/currencies/{type}`
-                .replace(`{${"type"}}`, encodeURIComponent(String(type)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (provider !== undefined) {
-                localVarQueryParameter['provider'] = provider;
-            }
-
-            if (includeLimits !== undefined) {
-                localVarQueryParameter['include_limits'] = includeLimits;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Get an exchange by ID
          * @summary Get an exchange by ID
          * @param {string} id Exchange ID
@@ -264,12 +219,12 @@ export const ExchangesApiAxiosParamCreator = function (configuration?: Configura
          * @param {number} [id] Transaction ID
          * @param {string} [walletAddress] Ethereum address of the user who created transaction
          * @param {'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut'} [status] Transaction status
-         * @param {'moonpay'} [provider] Provider name
+         * @param {'moonpay' | 'layerswap'} [provider] Provider name
          * @param {string} [transferId] Transfer ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExchanges: async (pageSize?: number, cursor?: string, orderBy?: 'id' | 'status' | 'exchange' | 'amount' | 'transfer_id', direction?: 'asc' | 'desc', id?: number, walletAddress?: string, status?: 'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut', provider?: 'moonpay', transferId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getExchanges: async (pageSize?: number, cursor?: string, orderBy?: 'id' | 'status' | 'exchange' | 'amount' | 'transfer_id', direction?: 'asc' | 'desc', id?: number, walletAddress?: string, status?: 'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut', provider?: 'moonpay' | 'layerswap', transferId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v3/exchanges`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -365,19 +320,6 @@ export const ExchangesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Returns a list of supported currencies and their limits
-         * @summary Get currencies with limits
-         * @param {'onramp' | 'offramp'} type Exchange type
-         * @param {'moonpay'} [provider] Provider name
-         * @param {boolean} [includeLimits] Flag if limits should be included in the response or not
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCurrencies(type: 'onramp' | 'offramp', provider?: 'moonpay', includeLimits?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurrencyWithLimits>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCurrencies(type, provider, includeLimits, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Get an exchange by ID
          * @summary Get an exchange by ID
          * @param {string} id Exchange ID
@@ -410,12 +352,12 @@ export const ExchangesApiFp = function(configuration?: Configuration) {
          * @param {number} [id] Transaction ID
          * @param {string} [walletAddress] Ethereum address of the user who created transaction
          * @param {'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut'} [status] Transaction status
-         * @param {'moonpay'} [provider] Provider name
+         * @param {'moonpay' | 'layerswap'} [provider] Provider name
          * @param {string} [transferId] Transfer ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getExchanges(pageSize?: number, cursor?: string, orderBy?: 'id' | 'status' | 'exchange' | 'amount' | 'transfer_id', direction?: 'asc' | 'desc', id?: number, walletAddress?: string, status?: 'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut', provider?: 'moonpay', transferId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTransactionsResponse>> {
+        async getExchanges(pageSize?: number, cursor?: string, orderBy?: 'id' | 'status' | 'exchange' | 'amount' | 'transfer_id', direction?: 'asc' | 'desc', id?: number, walletAddress?: string, status?: 'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut', provider?: 'moonpay' | 'layerswap', transferId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetTransactionsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExchanges(pageSize, cursor, orderBy, direction, id, walletAddress, status, provider, transferId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -453,18 +395,6 @@ export const ExchangesApiFactory = function (configuration?: Configuration, base
             return localVarFp.createExchangeTransfer(id, xImxEthAddress, xImxEthSignature, createTransferRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a list of supported currencies and their limits
-         * @summary Get currencies with limits
-         * @param {'onramp' | 'offramp'} type Exchange type
-         * @param {'moonpay'} [provider] Provider name
-         * @param {boolean} [includeLimits] Flag if limits should be included in the response or not
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCurrencies(type: 'onramp' | 'offramp', provider?: 'moonpay', includeLimits?: boolean, options?: any): AxiosPromise<CurrencyWithLimits> {
-            return localVarFp.getCurrencies(type, provider, includeLimits, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Get an exchange by ID
          * @summary Get an exchange by ID
          * @param {string} id Exchange ID
@@ -495,12 +425,12 @@ export const ExchangesApiFactory = function (configuration?: Configuration, base
          * @param {number} [id] Transaction ID
          * @param {string} [walletAddress] Ethereum address of the user who created transaction
          * @param {'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut'} [status] Transaction status
-         * @param {'moonpay'} [provider] Provider name
+         * @param {'moonpay' | 'layerswap'} [provider] Provider name
          * @param {string} [transferId] Transfer ID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExchanges(pageSize?: number, cursor?: string, orderBy?: 'id' | 'status' | 'exchange' | 'amount' | 'transfer_id', direction?: 'asc' | 'desc', id?: number, walletAddress?: string, status?: 'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut', provider?: 'moonpay', transferId?: string, options?: any): AxiosPromise<GetTransactionsResponse> {
+        getExchanges(pageSize?: number, cursor?: string, orderBy?: 'id' | 'status' | 'exchange' | 'amount' | 'transfer_id', direction?: 'asc' | 'desc', id?: number, walletAddress?: string, status?: 'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut', provider?: 'moonpay' | 'layerswap', transferId?: string, options?: any): AxiosPromise<GetTransactionsResponse> {
             return localVarFp.getExchanges(pageSize, cursor, orderBy, direction, id, walletAddress, status, provider, transferId, options).then((request) => request(axios, basePath));
         },
     };
@@ -553,34 +483,6 @@ export interface ExchangesApiCreateExchangeTransferRequest {
      * @memberof ExchangesApiCreateExchangeTransfer
      */
     readonly createTransferRequest: CreateTransferRequestV1
-}
-
-/**
- * Request parameters for getCurrencies operation in ExchangesApi.
- * @export
- * @interface ExchangesApiGetCurrenciesRequest
- */
-export interface ExchangesApiGetCurrenciesRequest {
-    /**
-     * Exchange type
-     * @type {'onramp' | 'offramp'}
-     * @memberof ExchangesApiGetCurrencies
-     */
-    readonly type: 'onramp' | 'offramp'
-
-    /**
-     * Provider name
-     * @type {'moonpay'}
-     * @memberof ExchangesApiGetCurrencies
-     */
-    readonly provider?: 'moonpay'
-
-    /**
-     * Flag if limits should be included in the response or not
-     * @type {boolean}
-     * @memberof ExchangesApiGetCurrencies
-     */
-    readonly includeLimits?: boolean
 }
 
 /**
@@ -675,10 +577,10 @@ export interface ExchangesApiGetExchangesRequest {
 
     /**
      * Provider name
-     * @type {'moonpay'}
+     * @type {'moonpay' | 'layerswap'}
      * @memberof ExchangesApiGetExchanges
      */
-    readonly provider?: 'moonpay'
+    readonly provider?: 'moonpay' | 'layerswap'
 
     /**
      * Transfer ID
@@ -717,18 +619,6 @@ export class ExchangesApi extends BaseAPI {
      */
     public createExchangeTransfer(requestParameters: ExchangesApiCreateExchangeTransferRequest, options?: AxiosRequestConfig) {
         return ExchangesApiFp(this.configuration).createExchangeTransfer(requestParameters.id, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createTransferRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Returns a list of supported currencies and their limits
-     * @summary Get currencies with limits
-     * @param {ExchangesApiGetCurrenciesRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ExchangesApi
-     */
-    public getCurrencies(requestParameters: ExchangesApiGetCurrenciesRequest, options?: AxiosRequestConfig) {
-        return ExchangesApiFp(this.configuration).getCurrencies(requestParameters.type, requestParameters.provider, requestParameters.includeLimits, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

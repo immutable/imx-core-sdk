@@ -7,6 +7,7 @@
     "create-order": "ts-node -r dotenv/config createOrder.ts",
     "create-trade": "ts-node -r dotenv/config createTrade.ts",
     "create-exchange-transfer": "ts-node -r dotenv/config createExchangeTransfer.ts",
+    "create-nft-primary-txn": "ts-node -r dotenv/config createNftPrimaryTransaction.ts",
     "deposit-eth": "ts-node -r dotenv/config depositEth.ts",
     "create-eth-withdrawal": "ts-node -r dotenv/config createEthWithdrawal.ts",
     "complete-eth-withdrawal": "ts-node -r dotenv/config completeEthWithdrawal.ts",
