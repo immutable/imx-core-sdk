@@ -13,39 +13,36 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { FeeToken } from './fee-token';
 
 /**
  * 
  * @export
- * @interface OrderFeeInfo
+ * @interface LambdasAPIError
  */
-export interface OrderFeeInfo {
+export interface LambdasAPIError {
     /**
-     * Address of the fee recipient
+     * The error code
      * @type {string}
-     * @memberof OrderFeeInfo
+     * @memberof LambdasAPIError
      */
-    'address'?: string;
+    'code'?: string;
     /**
-     * Fee amount
+     * The error details
      * @type {string}
-     * @memberof OrderFeeInfo
+     * @memberof LambdasAPIError
      */
-    'amount'?: string;
+    'details'?: string;
     /**
-     * 
-     * @type {FeeToken}
-     * @memberof OrderFeeInfo
-     */
-    'token'?: FeeToken;
-    /**
-     * Fee type
+     * The error message
      * @type {string}
-     * @memberof OrderFeeInfo
+     * @memberof LambdasAPIError
      */
-    'type'?: string;
+    'message'?: string;
+    /**
+     * The error status code
+     * @type {number}
+     * @memberof LambdasAPIError
+     */
+    'status_code'?: number;
 }
 

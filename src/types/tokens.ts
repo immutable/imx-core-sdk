@@ -51,3 +51,8 @@ export type AnyToken = ETHToken | ERC721Token | ERC20Token;
  * Union type that represents all token type amounts
  */
 export type TokenAmount = ETHAmount | ERC20Amount | ERC721Token;
+
+/**
+ * Union type that represents exchange token type amounts
+ */
+export type ExchangeTokenAmount = ETHAmount | ERC20Amount;

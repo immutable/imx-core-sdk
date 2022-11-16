@@ -13,12 +13,13 @@
  */
 
 
-import { Configuration } from "./configuration";
+import type { Configuration } from './configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 
-export const BASE_PATH = "https://api.ropsten.x.immutable.com".replace(/\/+$/, "");
+export const BASE_PATH = "https://api.sandbox.x.immutable.com".replace(/\/+$/, "");
 
 /**
  *

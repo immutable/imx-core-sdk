@@ -17,20 +17,20 @@
 /**
  * 
  * @export
- * @interface SignableToken
+ * @interface AggregateLimit
  */
-export interface SignableToken {
+export interface AggregateLimit {
     /**
-     * Token data. See https://docs.x.immutable.com/docs/token-data-object
-     * @type {object}
-     * @memberof SignableToken
+     * Max transaction amount
+     * @type {number}
+     * @memberof AggregateLimit
      */
-    'data'?: object;
+    'max_amount'?: number;
     /**
-     * Type of token
-     * @type {string}
-     * @memberof SignableToken
+     * Min transaction amount
+     * @type {number}
+     * @memberof AggregateLimit
      */
-    'type'?: string;
+    'min_amount'?: number;
 }
 

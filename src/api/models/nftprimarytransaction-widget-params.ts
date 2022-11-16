@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface SignableToken
+ * @interface NftprimarytransactionWidgetParams
  */
-export interface SignableToken {
+export interface NftprimarytransactionWidgetParams {
     /**
-     * Token data. See https://docs.x.immutable.com/docs/token-data-object
-     * @type {object}
-     * @memberof SignableToken
-     */
-    'data'?: object;
-    /**
-     * Type of token
+     * 
      * @type {string}
-     * @memberof SignableToken
+     * @memberof NftprimarytransactionWidgetParams
      */
-    'type'?: string;
+    'theme'?: string;
 }
 

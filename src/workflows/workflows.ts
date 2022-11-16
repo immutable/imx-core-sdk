@@ -21,6 +21,7 @@ import {
   MetadataSchemaRequest,
   MetadataRefreshesApi,
   CreateMetadataRefreshRequest,
+  ExchangesApi,
 } from '../api';
 import {
   UnsignedMintRequest,
@@ -35,6 +36,7 @@ import {
   AnyToken,
   ERC20Token,
   EthSigner,
+  UnsignedExchangeTransferRequest,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import {
@@ -58,6 +60,7 @@ import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
 import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
+import { exchangeTransfersWorkflow } from './exchangeTransfers';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -73,6 +76,7 @@ export class Workflows {
   private readonly collectionsApi: CollectionsApi;
   private readonly metadataApi: MetadataApi;
   private readonly metadataRefreshesApi: MetadataRefreshesApi;
+  private readonly exchangesApi: ExchangesApi;
 
   private isChainValid(chainID: number) {
     return chainID === this.config.ethConfiguration.chainID;
@@ -95,6 +99,7 @@ export class Workflows {
     this.collectionsApi = new CollectionsApi(apiConfiguration);
     this.metadataApi = new MetadataApi(apiConfiguration);
     this.metadataRefreshesApi = new MetadataRefreshesApi(apiConfiguration);
+    this.exchangesApi = new ExchangesApi(apiConfiguration);
   }
 
   private async validateChain(signer: Signer) {
@@ -144,6 +149,19 @@ export class Workflows {
       ...walletConnection,
       request,
       transfersApi: this.transfersApi,
+    });
+  }
+
+  public async exchangeTransfer(
+    walletConnection: WalletConnection,
+    request: UnsignedExchangeTransferRequest,
+  ) {
+    await this.validateChain(walletConnection.ethSigner);
+
+    return exchangeTransfersWorkflow({
+      ...walletConnection,
+      request,
+      exchangesApi: this.exchangesApi,
     });
   }
 

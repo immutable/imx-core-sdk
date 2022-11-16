@@ -13,39 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { FeeToken } from './fee-token';
 
 /**
  * 
  * @export
- * @interface OrderFeeInfo
+ * @interface WidgetParams
  */
-export interface OrderFeeInfo {
+export interface WidgetParams {
     /**
-     * Address of the fee recipient
+     * Amount that will be prefilled in the widget
      * @type {string}
-     * @memberof OrderFeeInfo
-     */
-    'address'?: string;
-    /**
-     * Fee amount
-     * @type {string}
-     * @memberof OrderFeeInfo
+     * @memberof WidgetParams
      */
     'amount'?: string;
     /**
-     * 
-     * @type {FeeToken}
-     * @memberof OrderFeeInfo
+     * Currencies that will be available in the widget. If not defined all available currencies will be shown
+     * @type {Array<string>}
+     * @memberof WidgetParams
      */
-    'token'?: FeeToken;
+    'supported_currencies'?: Array<string>;
     /**
-     * Fee type
+     * Widget theme dark by default
      * @type {string}
-     * @memberof OrderFeeInfo
+     * @memberof WidgetParams
      */
-    'type'?: string;
+    'theme'?: string;
 }
 
