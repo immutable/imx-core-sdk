@@ -24,13 +24,13 @@ import { FeeToken } from './fee-token';
  */
 export interface OrderFeeInfo {
     /**
-     * 
+     * Address of the fee recipient
      * @type {string}
      * @memberof OrderFeeInfo
      */
     'address'?: string;
     /**
-     * 
+     * Fee amount
      * @type {string}
      * @memberof OrderFeeInfo
      */

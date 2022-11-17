@@ -28,7 +28,7 @@ export interface MintTokenDataV2 {
      * @type {string}
      * @memberof MintTokenDataV2
      */
-    'blueprint'?: string;
+    'blueprint': string;
     /**
      * Token ID Note: While the Token ID is required to be a string, it still needs to be a valid uint256 as per the ERC-721 token standard.
      * @type {string}

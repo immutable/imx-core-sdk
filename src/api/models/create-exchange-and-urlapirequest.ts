@@ -28,7 +28,7 @@ export interface CreateExchangeAndURLAPIRequest {
      * @type {string}
      * @memberof CreateExchangeAndURLAPIRequest
      */
-    'provider'?: string;
+    'provider'?: CreateExchangeAndURLAPIRequestProviderEnum;
     /**
      * Transaction type
      * @type {string}
@@ -49,6 +49,12 @@ export interface CreateExchangeAndURLAPIRequest {
     'widget'?: WidgetParams;
 }
 
+export const CreateExchangeAndURLAPIRequestProviderEnum = {
+    Moonpay: 'moonpay',
+    Layerswap: 'layerswap'
+} as const;
+
+export type CreateExchangeAndURLAPIRequestProviderEnum = typeof CreateExchangeAndURLAPIRequestProviderEnum[keyof typeof CreateExchangeAndURLAPIRequestProviderEnum];
 export const CreateExchangeAndURLAPIRequestTypeEnum = {
     Onramp: 'onramp',
     Offramp: 'offramp'

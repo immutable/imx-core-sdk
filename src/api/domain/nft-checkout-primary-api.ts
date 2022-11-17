@@ -21,6 +21,8 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
 // @ts-ignore
+import { CurrencyWithLimits } from '../models';
+// @ts-ignore
 import { LambdasAPIError } from '../models';
 // @ts-ignore
 import { NftprimarytransactionCreateAPIRequest } from '../models';
@@ -68,6 +70,46 @@ export const NftCheckoutPrimaryApiAxiosParamCreator = function (configuration?: 
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(createAPIRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Returns a list of supported currencies and their limits
+         * @summary Get currencies with limits
+         * @param {'moonpay'} [provider] Provider name
+         * @param {boolean} [includeLimits] Flag if limits should be included in the response or not
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCurrenciesNFTCheckoutPrimary: async (provider?: 'moonpay', includeLimits?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v2/nft/primary/currencies`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (provider !== undefined) {
+                localVarQueryParameter['provider'] = provider;
+            }
+
+            if (includeLimits !== undefined) {
+                localVarQueryParameter['include_limits'] = includeLimits;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -256,6 +298,18 @@ export const NftCheckoutPrimaryApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Returns a list of supported currencies and their limits
+         * @summary Get currencies with limits
+         * @param {'moonpay'} [provider] Provider name
+         * @param {boolean} [includeLimits] Flag if limits should be included in the response or not
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCurrenciesNFTCheckoutPrimary(provider?: 'moonpay', includeLimits?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CurrencyWithLimits>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCurrenciesNFTCheckoutPrimary(provider, includeLimits, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * gets mint status by transaction ids
          * @summary Get mint status by transaction id
          * @param {'moonpay'} provider Provider name
@@ -320,6 +374,17 @@ export const NftCheckoutPrimaryApiFactory = function (configuration?: Configurat
             return localVarFp.createNftPrimary(createAPIRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Returns a list of supported currencies and their limits
+         * @summary Get currencies with limits
+         * @param {'moonpay'} [provider] Provider name
+         * @param {boolean} [includeLimits] Flag if limits should be included in the response or not
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCurrenciesNFTCheckoutPrimary(provider?: 'moonpay', includeLimits?: boolean, options?: any): AxiosPromise<CurrencyWithLimits> {
+            return localVarFp.getCurrenciesNFTCheckoutPrimary(provider, includeLimits, options).then((request) => request(axios, basePath));
+        },
+        /**
          * gets mint status by transaction ids
          * @summary Get mint status by transaction id
          * @param {'moonpay'} provider Provider name
@@ -375,6 +440,27 @@ export interface NftCheckoutPrimaryApiCreateNftPrimaryRequest {
      * @memberof NftCheckoutPrimaryApiCreateNftPrimary
      */
     readonly createAPIRequest: NftprimarytransactionCreateAPIRequest
+}
+
+/**
+ * Request parameters for getCurrenciesNFTCheckoutPrimary operation in NftCheckoutPrimaryApi.
+ * @export
+ * @interface NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest
+ */
+export interface NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest {
+    /**
+     * Provider name
+     * @type {'moonpay'}
+     * @memberof NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimary
+     */
+    readonly provider?: 'moonpay'
+
+    /**
+     * Flag if limits should be included in the response or not
+     * @type {boolean}
+     * @memberof NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimary
+     */
+    readonly includeLimits?: boolean
 }
 
 /**
@@ -513,6 +599,18 @@ export class NftCheckoutPrimaryApi extends BaseAPI {
      */
     public createNftPrimary(requestParameters: NftCheckoutPrimaryApiCreateNftPrimaryRequest, options?: AxiosRequestConfig) {
         return NftCheckoutPrimaryApiFp(this.configuration).createNftPrimary(requestParameters.createAPIRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Returns a list of supported currencies and their limits
+     * @summary Get currencies with limits
+     * @param {NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NftCheckoutPrimaryApi
+     */
+    public getCurrenciesNFTCheckoutPrimary(requestParameters: NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest = {}, options?: AxiosRequestConfig) {
+        return NftCheckoutPrimaryApiFp(this.configuration).getCurrenciesNFTCheckoutPrimary(requestParameters.provider, requestParameters.includeLimits, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

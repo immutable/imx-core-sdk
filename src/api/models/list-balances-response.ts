@@ -30,6 +30,12 @@ export interface ListBalancesResponse {
      */
     'cursor': string;
     /**
+     * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
+     * @type {number}
+     * @memberof ListBalancesResponse
+     */
+    'remaining': number;
+    /**
      * Dictionary of tokens
      * @type {Array<Balance>}
      * @memberof ListBalancesResponse
