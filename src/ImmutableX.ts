@@ -59,7 +59,12 @@ import {
   ExchangesApiCreateExchangeRequest,
   ExchangesApiGetExchangeRequest,
   ExchangesApiGetExchangesRequest,
-  ExchangesApiGetCurrenciesRequest,
+  NftCheckoutPrimaryApi,
+  NftCheckoutPrimaryApiCreateNftPrimaryRequest,
+  NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest,
+  NftCheckoutPrimaryApiGetMintStatusByIdRequest,
+  NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest,
+  NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest,
   NftCheckoutSecondaryApi,
   NftCheckoutSecondaryApiCreateNftSecondaryRequest,
   NftCheckoutSecondaryApiGetNftSecondaryTransactionRequest,
@@ -79,6 +84,8 @@ export class ImmutableX {
   private tradesApi: TradesApi;
   private transfersApi: TransfersApi;
   private exchangeApi: ExchangesApi;
+  private nftCheckoutPrimaryApi: NftCheckoutPrimaryApi;
+  private nftCheckoutSecondaryApi: NftCheckoutSecondaryApi;
   private usersApi: UsersApi;
   private withdrawalsApi: WithdrawalsApi;
   private balanceApi: BalancesApi;
@@ -87,7 +94,6 @@ export class ImmutableX {
   private metadataApi: MetadataApi;
   private metadataRefreshesApi: MetadataRefreshesApi;
   private projectsApi: ProjectsApi;
-  private nftCheckoutSecondaryApi: NftCheckoutSecondaryApi;
   private workflows: Workflows;
 
   constructor(config: ImmutableXConfiguration) {
@@ -107,10 +113,13 @@ export class ImmutableX {
     this.metadataRefreshesApi = new MetadataRefreshesApi(
       config.apiConfiguration,
     );
-    this.projectsApi = new ProjectsApi(config.apiConfiguration);
+    this.nftCheckoutPrimaryApi = new NftCheckoutPrimaryApi(
+      config.apiConfiguration,
+    );
     this.nftCheckoutSecondaryApi = new NftCheckoutSecondaryApi(
       config.apiConfiguration,
     );
+    this.projectsApi = new ProjectsApi(config.apiConfiguration);
     this.workflows = new Workflows(config);
   }
 
@@ -893,18 +902,6 @@ export class ImmutableX {
   }
 
   /**
-   * Get Exchange currencies
-   * @param request - the request object to be provided in the API request
-   * @returns a promise that resolves with Exchange Currencies
-   * @throws {@link index.IMXError}
-   */
-  public getExchangeCurrencies(request: ExchangesApiGetCurrenciesRequest) {
-    return this.exchangeApi.getCurrencies(request).catch(err => {
-      throw formatError(err);
-    });
-  }
-
-  /**
    * Create a new Transfer request
    * @param walletConnection - the pair of Eth/Stark signers
    * @param request - the request object to be provided in the API request
@@ -917,6 +914,82 @@ export class ImmutableX {
   ) {
     return this.workflows
       .exchangeTransfer(walletConnection, request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a new nft primary transaction
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created nft primary Transaction
+   * @throws {@link index.IMXError}
+   */
+  public createNftPrimary(
+    request: NftCheckoutPrimaryApiCreateNftPrimaryRequest,
+  ) {
+    return this.nftCheckoutPrimaryApi.createNftPrimary(request).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Get nft primary supported currencies and their limits
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with nft primary Currencies
+   * @throws {@link index.IMXError}
+   */
+  public getCurrenciesNFTCheckoutPrimary(
+    request: NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest,
+  ) {
+    return this.nftCheckoutPrimaryApi
+      .getCurrenciesNFTCheckoutPrimary(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get mint status by nft primary transaction id
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with nft primary mint status
+   * @throws {@link index.IMXError}
+   */
+  public getMintStatusById(
+    request: NftCheckoutPrimaryApiGetMintStatusByIdRequest,
+  ) {
+    return this.nftCheckoutPrimaryApi.getMintStatusById(request).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
+   * Get nft primary transaction by transaction id
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with nft primary transaction
+   * @throws {@link index.IMXError}
+   */
+  public getNftPrimaryTransaction(
+    request: NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest,
+  ) {
+    return this.nftCheckoutPrimaryApi
+      .getNftPrimaryTransaction(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get list of nft primary transactions
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with nft primary transaction
+   * @throws {@link index.IMXError}
+   */
+  public getNftPrimaryTransactions(
+    request: NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest,
+  ) {
+    return this.nftCheckoutPrimaryApi
+      .getNftPrimaryTransactions(request)
       .catch(err => {
         throw formatError(err);
       });
