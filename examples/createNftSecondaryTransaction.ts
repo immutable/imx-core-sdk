@@ -4,7 +4,7 @@ import { ImmutableX, Config } from '@imtbl/core-sdk';
     const imxClient = new ImmutableX(Config.SANDBOX);
 
     try {
-        const exchangeTransferResponse = await imxClient.createNftSecondaryTransaction({
+        const nftSecondaryTransaction = await imxClient.createNftSecondaryTransaction({
             createAPIRequest: {
                 "provider": "moonpay",
                 "user_wallet_address": "0x...",
@@ -12,7 +12,7 @@ import { ImmutableX, Config } from '@imtbl/core-sdk';
             }
         });
 
-        console.log('exchangeTransferResponse', exchangeTransferResponse);
+        console.log('nftSecondaryTransaction', nftSecondaryTransaction);
     } catch (error) {
         console.error(error);
         process.exit(1);
