@@ -65,6 +65,10 @@ import {
   NftCheckoutPrimaryApiGetMintStatusByIdRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest,
+  NftCheckoutSecondaryApi,
+  NftCheckoutSecondaryApiCreateNftSecondaryRequest,
+  NftCheckoutSecondaryApiGetNftSecondaryTransactionRequest,
+  NftCheckoutSecondaryApiGetNftSecondaryTransactionsRequest,
 } from './api';
 import { formatError } from './utils/formatError';
 import { ImmutableXConfiguration } from './config';
@@ -81,6 +85,7 @@ export class ImmutableX {
   private transfersApi: TransfersApi;
   private exchangeApi: ExchangesApi;
   private nftCheckoutPrimaryApi: NftCheckoutPrimaryApi;
+  private nftCheckoutSecondaryApi: NftCheckoutSecondaryApi;
   private usersApi: UsersApi;
   private withdrawalsApi: WithdrawalsApi;
   private balanceApi: BalancesApi;
@@ -109,6 +114,9 @@ export class ImmutableX {
       config.apiConfiguration,
     );
     this.nftCheckoutPrimaryApi = new NftCheckoutPrimaryApi(
+      config.apiConfiguration,
+    );
+    this.nftCheckoutSecondaryApi = new NftCheckoutSecondaryApi(
       config.apiConfiguration,
     );
     this.projectsApi = new ProjectsApi(config.apiConfiguration);
@@ -982,6 +990,54 @@ export class ImmutableX {
   ) {
     return this.nftCheckoutPrimaryApi
       .getNftPrimaryTransactions(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a new direct NFT sale transaction (secondary)
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created secondary nft sale transaction
+   * @throws {@link index.IMXError}
+   */
+  public createNftSecondaryTransaction(
+    request: NftCheckoutSecondaryApiCreateNftSecondaryRequest,
+  ) {
+    return this.nftCheckoutSecondaryApi
+      .createNftSecondary(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a secondary NFT sale transaction
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with a secondary NFT sale transaction
+   * @throws {@link index.IMXError}
+   */
+  public getNftSecondaryTransaction(
+    request: NftCheckoutSecondaryApiGetNftSecondaryTransactionRequest,
+  ) {
+    return this.nftCheckoutSecondaryApi
+      .getNftSecondaryTransaction(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a secondary NFT sale transactions
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with a secondary NFT sale transactions
+   * @throws {@link index.IMXError}
+   */
+  public getNftSecondaryTransactions(
+    request: NftCheckoutSecondaryApiGetNftSecondaryTransactionsRequest,
+  ) {
+    return this.nftCheckoutSecondaryApi
+      .getNftSecondaryTransactions(request)
       .catch(err => {
         throw formatError(err);
       });
