@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added Exchange transfers
+- Added Moonpay primary nft checkout
+
 ### Fixed
 - formatError to handle undefined error.response.data
 
