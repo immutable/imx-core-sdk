@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - formatError to handle undefined error.response.data
+- Deposit workflow for register and deposit NFT
 
 ## [1.0.0-beta.3] - 2022-10-18
 
