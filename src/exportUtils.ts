@@ -1,1 +1,5 @@
-export { generateStarkPrivateKey, createStarkSigner } from './utils';
+export {
+  generateStarkPrivateKey,
+  generateLegacyStarkPrivateKey,
+  createStarkSigner,
+} from './utils';
