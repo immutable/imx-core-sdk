@@ -1,9 +1,25 @@
 import BN from 'bn.js';
-import { generateStarkPrivateKey, grindKey, starkEcOrder } from './starkCurve';
+import { Wallet } from 'ethers';
+import {
+  generateLegacyStarkPrivateKey,
+  generateStarkPrivateKey,
+  grindKey,
+  starkEcOrder,
+} from './starkCurve';
 
 describe('Key generation', () => {
   it('should generate random Stark key', async () => {
     expect(generateStarkPrivateKey()).not.toEqual(generateStarkPrivateKey());
+  });
+
+  it('should generate Legacy Stark key', async () => {
+    const signer = new Wallet(
+      '5c7b4b5cad9a3fc7b1ba235a49cd74e615488a18b0d6a531739fd1062935104d',
+    );
+    const starkKey = await generateLegacyStarkPrivateKey(signer);
+    expect(starkKey).toEqual(
+      '0556413893a023efd75f62cd4eca825f2be7e918b5188f1db06cbec12d7d1b88',
+    );
   });
 });
 
