@@ -12,7 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Exchange transfers
 - Added Moonpay primary nft checkout
 
+### Changed
+
+- ImmutableX class now exposes apis for users who need access outside of basic workflows
+
 ### Fixed
+
 - formatError to handle undefined error.response.data
 - Deposit workflow for register and deposit NFT
 
