@@ -77,23 +77,23 @@ import { ImmutableXConfiguration } from './config';
  * The main entry point for the Core SDK
  */
 export class ImmutableX {
-  private depositsApi: DepositsApi;
-  private mintsApi: MintsApi;
-  private ordersApi: OrdersApi;
-  private tokensApi: TokensApi;
-  private tradesApi: TradesApi;
-  private transfersApi: TransfersApi;
-  private exchangeApi: ExchangesApi;
-  private nftCheckoutPrimaryApi: NftCheckoutPrimaryApi;
-  private nftCheckoutSecondaryApi: NftCheckoutSecondaryApi;
-  private usersApi: UsersApi;
-  private withdrawalsApi: WithdrawalsApi;
-  private balanceApi: BalancesApi;
-  private assetApi: AssetsApi;
-  private collectionApi: CollectionsApi;
-  private metadataApi: MetadataApi;
-  private metadataRefreshesApi: MetadataRefreshesApi;
-  private projectsApi: ProjectsApi;
+  public depositsApi: DepositsApi;
+  public mintsApi: MintsApi;
+  public ordersApi: OrdersApi;
+  public tokensApi: TokensApi;
+  public tradesApi: TradesApi;
+  public transfersApi: TransfersApi;
+  public exchangeApi: ExchangesApi;
+  public nftCheckoutPrimaryApi: NftCheckoutPrimaryApi;
+  public nftCheckoutSecondaryApi: NftCheckoutSecondaryApi;
+  public usersApi: UsersApi;
+  public withdrawalsApi: WithdrawalsApi;
+  public balanceApi: BalancesApi;
+  public assetApi: AssetsApi;
+  public collectionApi: CollectionsApi;
+  public metadataApi: MetadataApi;
+  public metadataRefreshesApi: MetadataRefreshesApi;
+  public projectsApi: ProjectsApi;
   private workflows: Workflows;
 
   constructor(config: ImmutableXConfiguration) {
