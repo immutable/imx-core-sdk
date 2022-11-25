@@ -118,3 +118,18 @@ Update [transferErc20.ts](./transferErc20.ts#L10) with your transfer details the
 yarn transfer-erc20
 ```
 
+## Create exchange transfer
+
+Update [createExchangeTransfer.ts](./createExchangeTransfer.ts#L10) with your exchange transfer details then run
+
+```sh
+yarn create-exchange-transfer
+```
+
+## Create primary nft checkout with moonpay
+
+Update [create-nft-primary-txn.ts](./create-nft-primary-txn.ts#L10) with your exchange transfer details then run
+
+```sh
+yarn create-nft-primary-txn
+```
