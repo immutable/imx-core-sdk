@@ -36,13 +36,12 @@ Initialize the Core SDK client with the network on which you want your applicati
 | Param | Description |
 | -- | -- |
 | `Config.SANDBOX` | The default test network (currently, it is Goërli) |
-| `Config.ROPSTEN` | Ropsten test network (to be deprecated soon) |
 | `Config.PRODUCTION` | Ethereum network |
 
 ```ts
 import { ImmutableX, Config } from '@imtbl/core-sdk';
 
-const config = Config.SANDBOX; // Or PRODUCTION or ROPSTEN
+const config = Config.SANDBOX; // Or PRODUCTION
 const client = new ImmutableX(config);
 ```
 
