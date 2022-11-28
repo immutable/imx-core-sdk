@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added Exchange transfers
 - Added Moonpay primary nft checkout
-- Added Moonpay secondary nft checkout
 
 ### Changed
 
@@ -55,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [listMints](https://docs.x.immutable.com/reference#/operations/listMints) endpoint accepts `max_timestamp`, `min_timestamp` instead of `updated_max_timestamp`, `updated_min_timestamp` respectively
 - [BREAKING CHANGE] `x-imx-eth-address`, and `x-imx-eth-signature` headers are now required for [createOrder](https://docs.x.immutable.com/reference#/operations/createOrder),
-[cancelOrder](https://docs.x.immutable.com/reference#/operations/cancelOrder), [createTransfer](https://docs.x.immutable.com/reference#/operations/createTransfer), [createTransferV1](https://docs.x.immutable.com/reference#/operations/createTransferV1), [createWithdrawal](https://docs.x.immutable.com/reference#/operations/createWithdrawal), and [createTrade](https://docs.x.immutable.com/reference#/operations/createTrade) endpoints.
+  [cancelOrder](https://docs.x.immutable.com/reference#/operations/cancelOrder), [createTransfer](https://docs.x.immutable.com/reference#/operations/createTransfer), [createTransferV1](https://docs.x.immutable.com/reference#/operations/createTransferV1), [createWithdrawal](https://docs.x.immutable.com/reference#/operations/createWithdrawal), and [createTrade](https://docs.x.immutable.com/reference#/operations/createTrade) endpoints.
 - [BREAKING CHANGE] Removed the `getKeyPairFromPrivateKey` function
 - [BREAKING CHANGE] Removed the `getStarkPublicKey` function
 - [BREAKING CHANGE] `getConfig` method now requires environment parameters and returns the new [ImmutableXConfiguration](https://github.com/immutable/imx-core-sdk/blob/cf33110d1dc6503c1e747dfced4fff0ec57bb536/src/types/index.ts#L35)
