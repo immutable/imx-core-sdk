@@ -2,8 +2,17 @@ import hash from 'hash.js';
 import { curves, ec } from 'elliptic';
 import * as encUtils from 'enc-utils';
 import BN from 'bn.js';
+import { Signer } from '@ethersproject/abstract-signer';
+import { splitSignature } from '@ethersproject/bytes';
+import { hdkey } from 'ethereumjs-wallet';
 
-/* 
+const DEFAULT_SIGNATURE_MESSAGE =
+  'Only sign this request if you’ve initiated an action with Immutable X.';
+const DEFAULT_ACCOUNT_APPLICATION = 'immutablex';
+const DEFAULT_ACCOUNT_LAYER = 'starkex';
+const DEFAULT_ACCOUNT_INDEX = '1';
+
+/*
 Stark-friendly elliptic curve
 
 The Stark-friendly elliptic curve used is defined as follows:
@@ -99,4 +108,59 @@ export function grindKey(keySeed: BN, keyValLimit: BN) {
 export function generateStarkPrivateKey(): string {
   const keyPair = starkEc.genKeyPair();
   return grindKey(keyPair.getPrivate(), starkEcOrder);
+}
+
+function getIntFromBits(
+  hex: string,
+  start: number,
+  end: number | undefined = undefined,
+): number {
+  const bin = encUtils.hexToBinary(hex);
+  const bits = bin.slice(start, end);
+  const int = encUtils.binaryToNumber(bits);
+  return int;
+}
+
+function getAccountPath(
+  layer: string,
+  application: string,
+  ethereumAddress: string,
+  index: string,
+): string {
+  const layerHash = hash.sha256().update(layer).digest('hex');
+  const applicationHash = hash.sha256().update(application).digest('hex');
+  const layerInt = getIntFromBits(layerHash, -31);
+  const applicationInt = getIntFromBits(applicationHash, -31);
+  const ethAddressInt1 = getIntFromBits(ethereumAddress, -31);
+  const ethAddressInt2 = getIntFromBits(ethereumAddress, -62, -31);
+  return `m/2645'/${layerInt}'/${applicationInt}'/${ethAddressInt1}'/${ethAddressInt2}'/${index}`;
+}
+
+function getKeyFromPath(seed: string, path: string): string {
+  const privateKey = hdkey
+    .fromMasterSeed(Buffer.from(seed.slice(2), 'hex')) // assuming seed is '0x...'
+    .derivePath(path)
+    .getWallet()
+    .getPrivateKey();
+  return grindKey(new BN(privateKey), starkEcOrder);
+}
+
+/**
+ * Generates a deterministic Stark private key from the provided signer.
+ * @returns the private key as a hex string
+ */
+export async function generateLegacyStarkPrivateKey(
+  signer: Signer,
+): Promise<string> {
+  const address = (await signer.getAddress()).toLowerCase();
+  const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
+  const seed = splitSignature(signature).s;
+  const path = getAccountPath(
+    DEFAULT_ACCOUNT_LAYER,
+    DEFAULT_ACCOUNT_APPLICATION,
+    address,
+    DEFAULT_ACCOUNT_INDEX,
+  );
+  const key = getKeyFromPath(seed, path);
+  return key.padStart(64, '0');
 }
