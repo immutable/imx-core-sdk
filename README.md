@@ -36,13 +36,12 @@ Initialize the Core SDK client with the network on which you want your applicati
 | Param | Description |
 | -- | -- |
 | `Config.SANDBOX` | The default test network (currently, it is Goërli) |
-| `Config.ROPSTEN` | Ropsten test network (to be deprecated soon) |
 | `Config.PRODUCTION` | Ethereum network |
 
 ```ts
 import { ImmutableX, Config } from '@imtbl/core-sdk';
 
-const config = Config.SANDBOX; // Or PRODUCTION or ROPSTEN
+const config = Config.SANDBOX; // Or PRODUCTION
 const client = new ImmutableX(config);
 ```
 
@@ -108,10 +107,10 @@ As Immutable X enables applications to execute signed transactions on both Ether
 
 ### 1. Generate your own signers
 
-The Core SDK provides functionality for applications to generate Stark (L2) [private keys](/src/utils/stark/starkCurve.ts#L99) and [signers](/src/utils/stark/starkSigner.ts#L60).
+The Core SDK provides functionality for applications to generate Stark (L2) [private keys](/src/utils/stark/starkCurve.ts#L108) and [signers](/src/utils/stark/starkSigner.ts#L60).
 
 #### 🚨🚨🚨 Warning 🚨🚨🚨
-> If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L99) so **_cannot_** be deterministically re-generated.
+> If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L108) so **_cannot_** be deterministically re-generated.
 
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';

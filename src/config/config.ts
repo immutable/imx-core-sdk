@@ -84,14 +84,5 @@ export const Config = {
     });
   },
 
-  get ROPSTEN() {
-    return createConfig({
-      basePath: 'https://api.ropsten.x.immutable.com',
-      chainID: 3,
-      coreContractAddress: '0x4527BE8f31E2ebFbEF4fCADDb5a17447B27d2aef',
-      registrationContractAddress: '0x6C21EC8DE44AE44D0992ec3e2d9f1aBb6207D864',
-    });
-  },
-
   createConfig: createConfig,
 };

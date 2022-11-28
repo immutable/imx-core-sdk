@@ -28,7 +28,7 @@ describe('createConfig', () => {
   });
 
   it('should return config', () => {
-    const basePath = 'https://api.ropsten.x.immutable.com';
+    const basePath = 'https://api.sandbox.x.immutable.com';
     const coreContractAddress = '0x1';
     const registrationContractAddress = '0x2';
     const chainID = 3;
