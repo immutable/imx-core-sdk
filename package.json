@@ -1,6 +1,6 @@
 {
   "name": "@imtbl/core-sdk",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0",
   "description": "Immutable Core SDK",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
