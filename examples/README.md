@@ -135,8 +135,14 @@ yarn create-nft-primary-txn
 ```
 ## Create Metadata Refresh
 
-Update [createMetadataRefresh.ts](./createMetadataRefresh.ts#L10) with your transfer details then run
+Update [createMetadataRefresh.ts](./createMetadataRefresh.ts#L10) with your refresh details then run
 
 ```sh
 yarn create-metadata-refresh
 ```
+## Get Metadata Refresh Results
+
+Update [getMetadataRefreshResults.ts](./getMetadataRefreshResults.ts#L10) with your refresh details then run
+
+```sh
+yarn get-metadata-refresh-results
