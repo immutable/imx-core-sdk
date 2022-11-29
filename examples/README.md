@@ -133,3 +133,10 @@ Update [create-nft-primary-txn.ts](./create-nft-primary-txn.ts#L10) with your ex
 ```sh
 yarn create-nft-primary-txn
 ```
+## Create Metadata Refresh
+
+Update [createMetadataRefresh.ts](./createMetadataRefresh.ts#L10) with your transfer details then run
+
+```sh
+yarn create-metadata-refresh
+```
