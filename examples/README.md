@@ -128,7 +128,7 @@ yarn create-exchange-transfer
 
 ## Create primary nft checkout with moonpay
 
-Update [create-nft-primary-txn.ts](./create-nft-primary-txn.ts#L10) with your exchange transfer details then run
+Update [create-nft-primary-transaction.ts](./createNftPrimaryTransaction.ts#L10) with your exchange transfer details then run
 
 ```sh
 yarn create-nft-primary-txn
