@@ -95,7 +95,6 @@ These operations add to or update data in Immutable's databases and typically re
 Signers are abstractions of user accounts that can be used to sign transactions. A user's private key is required to generate them.
 
 There are two ways to get signers in your application:
-
 1. [Generate your own by obtaining and using the user's private keys](#1-generate-your-own-signers)
 2. [Use our Wallet SDK to connect to a user's wallet application](#2-generate-signers-using-the-wallet-sdk)
 
@@ -103,27 +102,58 @@ The first option, where an application obtains a user's private key directly, is
 
 The second option provides an application with an interface to the user's account by prompting the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages without having to reveal their private key.
 
-As Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2), signers are required for both these layers.
+### Pre-requisite: User must have Ethereum (L1) and Stark (L2) keys
 
-### 1. Generate your own signers
+As Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2), signers are required for both these layers. In order to generate an Ethereum or Stark signer, a user's Ethereum or Stark private key is required.
 
-The Core SDK provides functionality for applications to generate Stark (L2) [private keys](/src/utils/stark/starkCurve.ts#L108) and [signers](/src/utils/stark/starkSigner.ts#L60).
+The Core SDK can be used to generate a Stark key for a user. Previously, this key was deterministically generated so that the same key could always be obtained using the user's Ethereum key. This meant that if someone had access to a user's L1 (Ethereum) private keys, they could also obtain the user's L2 (Stark) private keys. This was [changed in v1.0.0-beta3](https://docs.x.immutable.com/sdk-docs/core-sdk-ts/core-sdk-migration-guide/#what-has-changed-in-core-sdk-v100-beta3) of the Core SDK, so that Stark keys are now randomly generated and non-reproducible.
 
-#### 🚨🚨🚨 Warning 🚨🚨🚨
-> If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L108) so **_cannot_** be deterministically re-generated.
-
+If your user has a Stark key that was generated using the previous, deterministic method, you can still retrieve their Stark private key by using the [generateLegacyStarkPrivateKey()](https://github.com/immutable/imx-core-sdk/blob/83f800956f541f338b3267ec7cb16e039182dfa6/src/utils/stark/starkCurve.ts#L152) method:
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { generateStarkPrivateKey, createStarkSigner } from '@imtbl/core-sdk';
+import { generateLegacyStarkPrivateKey } from '@imtbl/core-sdk';
 
 // Create Ethereum signer
 const ethNetwork = 'goerli'; // Or 'mainnet'
 const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
 const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 
+// Get the legacy Stark private key
+const starkPrivateKey = generateLegacyStarkPrivateKey(ethSigner);
+```
+
+If they do not yet have a Stark key, you can use the Core SDK to generate one for them using [generateStarkPrivateKey()](/src/utils/stark/starkCurve.ts#L108):
+
+#### 🚨🚨🚨 Warning 🚨🚨🚨
+> If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L108) so **_cannot_** be deterministically re-generated.
+
+```ts
+import { generateStarkPrivateKey } from '@imtbl/core-sdk';
+
+const starkPrivateKey = generateStarkPrivateKey();
+```
+
+### 1. Generate your own signers
+
+The Core SDK provides functionality for applications to generate Stark (L2) [signers](/src/utils/stark/starkSigner.ts#L60).
+
+```ts
+import { AlchemyProvider } from '@ethersproject/providers';
+import { Wallet } from '@ethersproject/wallet';
+import { generateStarkPrivateKey, generateLegacyStarkPrivateKey, createStarkSigner } from '@imtbl/core-sdk';
+
+// Create Ethereum signer
+const ethNetwork = 'goerli'; // Or 'mainnet'
+const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
+const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
+
+// Generate Stark private key
+const starkPrivateKey = generateStarkPrivateKey();
+// Or retrieve previously legacy generated key:
+// const starkPrivateKey = generateLegacyStarkPrivateKey(ethSigner);
+
 // Create Stark signer
-const starkPrivateKey = generateStarkPrivateKey(); // Or retrieve previously generated key
 const starkSigner = createStarkSigner(starkPrivateKey);
 ```
 
