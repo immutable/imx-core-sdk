@@ -18,7 +18,7 @@ Currently, our SDK supports interactions with our application-specific rollup ba
 
 ## Documentation
 
-See our [developer documentation](https://docs.x.immutable.com) for information on building on Immutable X.
+See our [developer documentation](https://docs.x.immutable.com) for information on building on ImmutableX.
 
 See our [API reference](https://docs.x.immutable.com/reference) for more information on our APIs.
 
@@ -47,7 +47,7 @@ const client = new ImmutableX(config);
 
 ## Get data (on assets, orders, past transactions, etc.)
 
-These methods allow you to read data about events, transactions or current state on Immutable X (layer 2). They do not require any user authentication because no state is being changed.
+These methods allow you to read data about events, transactions or current state on ImmutableX (layer 2). They do not require any user authentication because no state is being changed.
 
 Examples of the types of data that are typically retrieved include:
 
@@ -73,42 +73,27 @@ const collectionAssetsResponse = await client.listAssets({
 });
 ```
 
-## Operations requiring user signatures
+### Generating Stark (Layer 2) keys
 
-There are two types of operations requiring user signatures:
+Stark keys are required by users in order to transact on ImmutableX's StarkEx Layer 2. They are the equivalent of Ethereum keys on L1, and allows users to sign transactions, and receive and store tokens.
 
-1. Transactions that update blockchain state
-2. Operations that Immutable X require authorization for
+#### Key registration
 
-In order to get user signatures, applications need to [generate "signers"](#how-do-applications-generate-and-use-signers).
+On ImmutableX, the goal of generating a Stark key is to [register](https://docs.x.immutable.com/docs/how-to-register-users/) a mapping between this key and the user's Ethereum key so that transactions requiring both L1 and L2 signers can be executed by users.
 
-#### What are transactions that update blockchain state?
+#### How to generate Stark keys on ImmutableX
 
-A common transaction type is the transfer of asset ownership from one user to another (ie. asset sale). These operations require users to sign (approve) them to prove that they are valid.
+ImmutableX provides two Stark key generation methods:
+| Type of Stark key generated | How do applications connect to these Stark accounts? | Factors determining when this method should be used: | ImmutableX tools: |
+| --- | --- | --- | --- |
+| [Deterministic](#generating-or-retrieving-a-deterministic-key) - generated using the user's Ethereum key as a seed (which means that the same Ethereum key will always generate the same Stark key) | Users connect with their L1 wallet (ie. Metamask), as the L2 key can simply be obtained from the L1 key. | ***User experience*** - do you want the user to have full responsibility for storing their L2 key?<br/><br/> ***Interoperability*** - how do most applications connect to user's Stark wallets? If a user's key is randomly generated, then they will not be able to connect to an application that requires them to sign in with their L1 key to generate their L2 key.  | [Link SDK](https://docs.x.immutable.com/docs/link-setup)<br/><br/>Core SDK's [`generateLegacyStarkPrivateKey()`](https://github.com/immutable/imx-core-sdk/blob/main/src/utils/stark/starkCurve.ts#L152) method |
+| [Random and non-reproducible](#generating-a-random-non-deterministic-key) - not generated from a user's Ethereum key | Once this Stark key is [registered](#) on ImmutableX (mapped to an Ethereum key), the Stark key owner needs to know and input this. | ***Security*** - because the Stark key generated using this method is completely independent of their Ethereum key, then the compromise of an Ethereum key does not compromise a user's corresponding Stark key.<br/><br/>***Isolated use-case*** - this method is ideal for keys that are only used for one particular functionality, ie. in the backend of an application that allows tokens to be minted from a collection registered with this key. | <br/><br/>Core SDK's [`generateStarkPrivateKey()`](https://github.com/immutable/imx-core-sdk/blob/main/src/utils/stark/starkCurve.ts#L108) method |
 
-#### What are operations that require authorization?
+The ability to generate a random, non-reproducible Stark key was [implemented in v1.0.0-beta3](https://docs.x.immutable.com/sdk-docs/core-sdk-ts/core-sdk-migration-guide/#what-has-changed-in-core-sdk-v100-beta3) of the Core SDK.
 
-These operations add to or update data in Immutable's databases and typically require the authorization of an object's owner (ie. a user creating a project on Immutable X).
+#### Generating or retrieving a deterministic key
 
-### How do applications generate and use signers?
-
-Signers are abstractions of user accounts that can be used to sign transactions. A user's private key is required to generate them.
-
-There are two ways to get signers in your application:
-1. [Generate your own by obtaining and using the user's private keys](#1-generate-your-own-signers)
-2. [Use our Wallet SDK to connect to a user's wallet application](#2-generate-signers-using-the-wallet-sdk)
-
-The first option, where an application obtains a user's private key directly, is risky because these keys allow anyone in possession of them full control of an account.
-
-The second option provides an application with an interface to the user's account by prompting the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages without having to reveal their private key.
-
-### Pre-requisite: User must have Ethereum (L1) and Stark (L2) keys
-
-As Immutable X enables applications to execute signed transactions on both Ethereum (layer 1) and StarkEx (layer 2), signers are required for both these layers. In order to generate an Ethereum or Stark signer, a user's Ethereum or Stark private key is required.
-
-The Core SDK can be used to generate a Stark key for a user. Previously, this key was deterministically generated so that the same key could always be obtained using the user's Ethereum key. This meant that if someone had access to a user's L1 (Ethereum) private keys, they could also obtain the user's L2 (Stark) private keys. This was [changed in v1.0.0-beta3](https://docs.x.immutable.com/sdk-docs/core-sdk-ts/core-sdk-migration-guide/#what-has-changed-in-core-sdk-v100-beta3) of the Core SDK, so that Stark keys are now randomly generated and non-reproducible.
-
-If your user has a Stark key that was generated using the previous, deterministic method, you can still retrieve their Stark private key by using the [generateLegacyStarkPrivateKey()](https://github.com/immutable/imx-core-sdk/blob/83f800956f541f338b3267ec7cb16e039182dfa6/src/utils/stark/starkCurve.ts#L152) method:
+If your user has a Stark key that was generated using the deterministic method, the Core SDK provides a method for you to retrieve this key using the [generateLegacyStarkPrivateKey()](https://github.com/immutable/imx-core-sdk/blob/83f800956f541f338b3267ec7cb16e039182dfa6/src/utils/stark/starkCurve.ts#L152) method:
 ```ts
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
@@ -123,7 +108,9 @@ const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 const starkPrivateKey = generateLegacyStarkPrivateKey(ethSigner);
 ```
 
-If they do not yet have a Stark key, you can use the Core SDK to generate one for them using [generateStarkPrivateKey()](/src/utils/stark/starkCurve.ts#L108):
+#### Generating a random, non-deterministic key
+
+It also provides a method to generate a random, non-reproducible key using [generateStarkPrivateKey()](/src/utils/stark/starkCurve.ts#L108):
 
 #### 🚨🚨🚨 Warning 🚨🚨🚨
 > If you generate your own Stark private key, you will have to persist it. The key is [randomly generated](/src/utils/stark/starkCurve.ts#L108) so **_cannot_** be deterministically re-generated.
@@ -133,6 +120,39 @@ import { generateStarkPrivateKey } from '@imtbl/core-sdk';
 
 const starkPrivateKey = generateStarkPrivateKey();
 ```
+
+## Operations requiring user signatures
+
+As ImmutableX enables applications to execute signed transactions on both Ethereum (Layer 1) and StarkEx (Layer 2), signers are required for both these layers. In order to generate an Ethereum or Stark signer, a user's Ethereum or Stark private key is required.
+
+There are two types of operations requiring user signatures:
+
+1. Transactions that update blockchain state
+2. Operations that ImmutableX require authorization for
+
+In order to get user signatures, applications need to [generate "signers"](#how-do-applications-generate-and-use-signers).
+
+#### What are transactions that update blockchain state?
+
+A common transaction type is the transfer of asset ownership from one user to another (ie. asset sale). These operations require users to sign (approve) them to prove that they are valid.
+
+#### What are operations that require authorization?
+
+These operations add to or update data in Immutable's databases and typically require the authorization of an object's owner (ie. a user creating a project on ImmutableX).
+
+### How do applications generate and use signers?
+
+Signers are abstractions of user accounts that can be used to sign transactions. A user's private key is required to generate them.
+
+There are two ways to get signers in your application:
+1. [Generate your own by obtaining and using the user's private keys](#1-generate-your-own-signers)
+2. [Use our Wallet SDK to connect to a user's wallet application](#2-generate-signers-using-the-wallet-sdk)
+
+The first option, where an application obtains a user's private key directly, is risky because these keys allow anyone in possession of them full control of an account.
+
+The second option provides an application with an interface to the user's account by prompting the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages without having to reveal their private key.
+
+
 
 ### 1. Generate your own signers
 
@@ -208,9 +228,9 @@ const orderResponse = await client.createOrder(signers, {
 
 ## Contract requests
 
-Immutable X is built as a ZK-rollup in partnership with StarkWare. We chose the ZK-rollups because it is the only solution capable of scale without compromise. This means whenever you mint or trade an NFT on Immutable X, you pay zero gas, and the validity of all transactions are directly enforced by Ethereum’s security using zero-knowledge proofs -- the first “layer 2” for NFTs on Ethereum.
+ImmutableX is built as a ZK-rollup in partnership with StarkWare. We chose the ZK-rollups because it is the only solution capable of scale without compromise. This means whenever you mint or trade an NFT on ImmutableX, you pay zero gas, and the validity of all transactions are directly enforced by Ethereum’s security using zero-knowledge proofs -- the first “layer 2” for NFTs on Ethereum.
 
-The Core SDK provides interfaces for all smart contracts required to interact with the Immutable X platform.
+The Core SDK provides interfaces for all smart contracts required to interact with the ImmutableX platform.
 
 [See all smart contracts available in the Core SDK](#smart-contract-autogeneration).
 
@@ -361,7 +381,7 @@ The `package.json` will contain the value of the previous release:
 
 ## Getting help
 
-Immutable X is open to all to build on, with no approvals required. If you want to talk to us to learn more, or apply for developer grants, click below:
+ImmutableX is open to all to build on, with no approvals required. If you want to talk to us to learn more, or apply for developer grants, click below:
 
 [Contact us](https://www.immutable.com/contact)
 
@@ -371,13 +391,13 @@ To get help from other developers, discuss ideas, and stay up-to-date on what's 
 
 [Join us on Discord](https://discord.gg/TkVumkJ9D6)
 
-You can also join the conversation, connect with other projects, and ask questions in our Immutable X Discourse forum.
+You can also join the conversation, connect with other projects, and ask questions in our ImmutableX Discourse forum.
 
 [Visit the forum](https://forum.immutable.com/)
 
 #### Still need help?
 
-You can also apply for marketing support for your project. Or, if you need help with an issue related to what you're building with Immutable X, click below to submit an issue. Select _I have a question_ or _issue related to building on Immutable X_ as your issue type.
+You can also apply for marketing support for your project. Or, if you need help with an issue related to what you're building with ImmutableX, click below to submit an issue. Select _I have a question_ or _issue related to building on ImmutableX_ as your issue type.
 
 [Contact support](https://support.immutable.com/hc/en-us/requests/new)
 
