@@ -27,7 +27,7 @@ export interface NftprimarytransactionGetResponse {
      */
     'contract_address'?: string;
     /**
-     * Temporary asset id
+     * Temporary asset id. Might be a token id if the token id is known or a generic description if it\'s not
      * @type {string}
      * @memberof NftprimarytransactionGetResponse
      */
@@ -45,13 +45,13 @@ export interface NftprimarytransactionGetResponse {
      */
     'seller_wallet_address'?: string;
     /**
-     * Transaction status
+     * Transaction status enums(created, waitingPayment, pending, completed, failed)
      * @type {string}
      * @memberof NftprimarytransactionGetResponse
      */
     'status'?: string;
     /**
-     * Asset id
+     * ID of the token that has been successfully minted - might or not be the same as `offer_id`
      * @type {string}
      * @memberof NftprimarytransactionGetResponse
      */
@@ -63,7 +63,7 @@ export interface NftprimarytransactionGetResponse {
      */
     'transaction_id'?: string;
     /**
-     * Ethereum address of the user who wants to create transaction
+     * Wallet address that receives the minted NFT
      * @type {string}
      * @memberof NftprimarytransactionGetResponse
      */
