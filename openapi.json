@@ -3822,15 +3822,15 @@
     },
     "/v2/nft/secondary": {
       "get": {
-        "description": "Returns a list of NFT secondary transactions",
+        "description": "Returns a list of successful non-crypto checkout transactions",
         "produces": [
           "application/json"
         ],
         "tags": [
-          "nft-checkout-secondary"
+          "non-crypto-checkout"
         ],
-        "summary": "Get a list of NFT secondary transactions",
-        "operationId": "getNftSecondaryTransactions",
+        "summary": "Get a list of non-crypto checkout transactions",
+        "operationId": "getNonCryptoCheckoutTransactions",
         "parameters": [
           {
             "type": "integer",
@@ -3864,13 +3864,13 @@
           },
           {
             "type": "string",
-            "description": "Transaction id",
+            "description": "Transaction ID",
             "name": "transaction_id",
             "in": "query"
           },
           {
             "type": "integer",
-            "description": "Order id",
+            "description": "Order ID",
             "name": "order_id",
             "in": "query"
           },
@@ -3891,7 +3891,7 @@
               "moonpay"
             ],
             "type": "string",
-            "description": "Provider name",
+            "description": "Name of provider of non-crypto checkout integration",
             "name": "provider",
             "in": "query"
           }
@@ -3912,7 +3912,7 @@
         }
       },
       "post": {
-        "description": "creates nft secondary transaction",
+        "description": "Creates a transaction to purchase an asset via a non-crypto checkout method",
         "consumes": [
           "application/json"
         ],
@@ -3920,10 +3920,10 @@
           "application/json"
         ],
         "tags": [
-          "nft-checkout-secondary"
+          "non-crypto-checkout"
         ],
-        "summary": "Create nft secondary transaction",
-        "operationId": "createNftSecondary",
+        "summary": "Create a non-crypto checkout transaction",
+        "operationId": "createNonCryptoCheckoutTransaction",
         "parameters": [
           {
             "description": "req",
@@ -3951,9 +3951,9 @@
         }
       }
     },
-    "/v2/nft/secondary/{transaction_id}": {
+    "/v2/nft/secondary/verify/{provider}/order/{order_id}": {
       "get": {
-        "description": "gets nft secondary transaction by transaction id",
+        "description": "Checks if an order can be purchased via a non-crypto checkout method",
         "consumes": [
           "application/json"
         ],
@@ -3961,14 +3961,112 @@
           "application/json"
         ],
         "tags": [
-          "nft-checkout-secondary"
+          "non-crypto-checkout"
         ],
-        "summary": "Get nft secondary transaction by id",
-        "operationId": "getNftSecondaryTransaction",
+        "summary": "Get orders eligible for non-crypto checkout",
+        "operationId": "getNonCryptoCheckoutOrderAvailability",
+        "parameters": [
+          {
+            "enum": [
+              "moonpay"
+            ],
+            "type": "string",
+            "description": "Name of provider of non-crypto checkout integration",
+            "name": "provider",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "Order ID",
+            "name": "order_id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftsecondarytransaction.CheckOrderResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/nft/secondary/verify/{provider}/user/{wallet_address}": {
+      "get": {
+        "description": "Gets the KYC status (`{ verified: true | false }`) of a user for selling NFTs via non-crypto checkout",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "non-crypto-checkout"
+        ],
+        "summary": "Get KYC status of a seller of a non-crypto checkout order",
+        "operationId": "getNonCryptoCheckoutSellerKycStatus",
+        "parameters": [
+          {
+            "enum": [
+              "moonpay"
+            ],
+            "type": "string",
+            "description": "Name of provider of non-crypto checkout integration",
+            "name": "provider",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "Seller's ImmutableX (L2) wallet address",
+            "name": "wallet_address",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/nftsecondarytransaction.CheckUserResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/nft/secondary/{transaction_id}": {
+      "get": {
+        "description": "Gets non-crypto checkout transaction by its ID",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "non-crypto-checkout"
+        ],
+        "summary": "Get non-crypto checkout transaction by ID",
+        "operationId": "getNonCryptoCheckoutTransaction",
         "parameters": [
           {
             "type": "string",
-            "description": "Transaction id",
+            "description": "Transaction ID",
             "name": "transaction_id",
             "in": "path",
             "required": true
@@ -7805,6 +7903,25 @@
           "description": "enums(light, dark)",
           "type": "string",
           "example": "light"
+        }
+      }
+    },
+    "nftsecondarytransaction.CheckOrderResponse": {
+      "type": "object",
+      "properties": {
+        "available": {
+          "type": "boolean"
+        }
+      }
+    },
+    "nftsecondarytransaction.CheckUserResponse": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "verified": {
+          "type": "boolean"
         }
       }
     },
