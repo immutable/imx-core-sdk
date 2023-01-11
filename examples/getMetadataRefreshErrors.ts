@@ -6,19 +6,19 @@ import { generateWalletConnection } from './libs/walletConnection';
 
   const imxClient = new ImmutableX(Config.SANDBOX);
 
-  const collectionAddress: string = '';
+  const refreshId: string = '';
   const pageSize: number = 200;
   const cursor: string = '';
 
   try {
-    const listMetadataRefreshResponse = await imxClient.listMetadataRefreshes(
+    const getMetadataRefreshErrorsResponse = await imxClient.getMetadataRefreshErrors(
       walletConnection.ethSigner,
-      collectionAddress,
+      refreshId,
       pageSize,
       cursor
     );
 
-    console.log('listMetadataRefreshResponse', listMetadataRefreshResponse);
+    console.log('getMetadataRefreshErrorsResponse', getMetadataRefreshErrorsResponse);
   } catch (error) {
     console.error(error);
     process.exit(1);

@@ -148,8 +148,18 @@ Update [getMetadataRefreshResults.ts](./getMetadataRefreshResults.ts#L10) with y
 yarn get-metadata-refresh-results
 ```
 ## List Metadata Refreshes
+
 Update [listMetadataRefreshes.ts](./listMetadataRefreshes.ts#L10) with your refresh details then run
 
 ```sh
 yarn list-metadata-refreshes
+```
+
+
+## Get Metadata Refreshe Errors
+
+Update [getMetadataRefreshErrors.ts](./getMetadataRefreshErrors.ts#L10) with your refresh details then run
+
+```sh
+yarn get-metadata-refresh-errors
 ```
