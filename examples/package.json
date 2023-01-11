@@ -18,7 +18,8 @@
     "transfer-eth": "ts-node -r dotenv/config transferEth.ts",
     "transfer-erc20": "ts-node -r dotenv/config transferErc20.ts",
     "create-metadata-refresh": "ts-node -r dotenv/config createMetadataRefresh.ts",
-    "get-metadata-refresh-results": "ts-node -r dotenv/config getMetadataRefreshResults.ts"
+    "get-metadata-refresh-results": "ts-node -r dotenv/config getMetadataRefreshResults.ts",
+    "list-metadata-refreshes": "ts-node -r dotenv/config listMetadataRefreshes.ts"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
