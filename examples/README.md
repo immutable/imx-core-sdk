@@ -37,6 +37,14 @@ Update [depositEth.ts](./depositEth.ts#L14) with your deposit amount then run
 yarn deposit-eth
 ```
 
+## Deposit NFT
+
+Update [depositNft.ts](./depositNft.ts#L14) with your token address and id then run
+
+```sh
+yarn deposit-nft
+```
+
 ## Prepare Eth Withdrawal
 
 Update [createEthWithdrawal.ts](./createEthWithdrawal.ts#L12) with your withdrawal amount then run

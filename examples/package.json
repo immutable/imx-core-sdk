@@ -10,6 +10,7 @@
     "create-exchange-transfer": "ts-node -r dotenv/config createExchangeTransfer.ts",
     "create-nft-primary-txn": "ts-node -r dotenv/config createNftPrimaryTransaction.ts",
     "deposit-eth": "ts-node -r dotenv/config depositEth.ts",
+    "deposit-nft": "ts-node -r dotenv/config depositNft.ts",
     "create-eth-withdrawal": "ts-node -r dotenv/config createEthWithdrawal.ts",
     "complete-eth-withdrawal": "ts-node -r dotenv/config completeEthWithdrawal.ts",
     "create-project": "ts-node -r dotenv/config createProject.ts",
