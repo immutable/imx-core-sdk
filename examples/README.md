@@ -86,6 +86,22 @@ Update [mint.ts](./mint.ts#L9) with your minting details then run
 yarn mint
 ```
 
+## List mints
+
+Update [listMints.ts](./listMints.ts#L13) with your mint query details then run
+
+```sh
+yarn list-mints
+```
+
+## Get mint
+
+Update [getMint.ts](./getMint.ts#L13) with your mint id then run
+
+```sh
+yarn get-mint
+```
+
 ## Create order
 
 Update [createOrder.ts](./createOrder.ts#L9) with your order details then run
