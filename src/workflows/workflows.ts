@@ -1,4 +1,3 @@
-import { Signer } from '@ethersproject/abstract-signer';
 import {
   DepositsApi,
   EncodingApi,
@@ -26,7 +25,6 @@ import {
 import {
   UnsignedMintRequest,
   UnsignedTransferRequest,
-  WalletConnection,
   ERC721Token,
   UnsignedOrderRequest,
   NftTransferDetails,
@@ -35,9 +33,9 @@ import {
   ERC20Amount,
   AnyToken,
   ERC20Token,
-  EthSigner,
   UnsignedExchangeTransferRequest,
 } from '../types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { Registration__factory } from '../contracts';
 import {
   isRegisteredOnChainWorkflow,
@@ -102,8 +100,16 @@ export class Workflows {
     this.exchangesApi = new ExchangesApi(apiConfiguration);
   }
 
-  private async validateChain(signer: Signer) {
-    const chainID = await signer.getChainId();
+  private async validateChain(walletConnection: WalletConnection) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
+    const chainID = await ethSigner.getChainId();
 
     if (!this.isChainValid(chainID))
       throw new Error(
@@ -112,41 +118,45 @@ export class Workflows {
   }
 
   public async registerOffchain(walletConnection: WalletConnection) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return registerOffchainWorkflow({
-      ...walletConnection,
+      walletConnection,
       usersApi: this.usersApi,
     });
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
+    const { ethSigner, starkExSigner } = walletConnection.signers;
     const registrationContract = Registration__factory.connect(
       this.config.ethConfiguration.registrationContractAddress,
-      walletConnection.ethSigner,
+      ethSigner,
     );
 
-    const l2Address = await walletConnection.starkSigner.getAddress();
+    const l2Address = await starkExSigner.getAddress();
 
     return isRegisteredOnChainWorkflow(l2Address, registrationContract);
   }
 
-  public async mint(signer: Signer, request: UnsignedMintRequest) {
-    await this.validateChain(signer);
+  public async mint(
+    walletConnection: WalletConnection,
+    request: UnsignedMintRequest,
+  ) {
+    await this.validateChain(walletConnection);
 
-    return mintingWorkflow(signer, request, this.mintsApi);
+    return mintingWorkflow(walletConnection, request, this.mintsApi);
   }
 
   public async transfer(
     walletConnection: WalletConnection,
     request: UnsignedTransferRequest,
   ) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return transfersWorkflow({
-      ...walletConnection,
+      walletConnection,
       request,
       transfersApi: this.transfersApi,
     });
@@ -156,10 +166,10 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedExchangeTransferRequest,
   ) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return exchangeTransfersWorkflow({
-      ...walletConnection,
+      walletConnection,
       request,
       exchangesApi: this.exchangesApi,
     });
@@ -169,31 +179,37 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: Array<NftTransferDetails>,
   ) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return batchTransfersWorkflow({
-      ...walletConnection,
+      walletConnection,
       request,
       transfersApi: this.transfersApi,
     });
   }
 
-  public async deposit(signer: Signer, deposit: TokenAmount) {
+  public async deposit(
+    walletConnection: WalletConnection,
+    deposit: TokenAmount,
+  ) {
     switch (deposit.type) {
       case 'ETH':
-        return this.depositEth(signer, deposit);
+        return this.depositEth(walletConnection, deposit);
       case 'ERC20':
-        return this.depositERC20(signer, deposit);
+        return this.depositERC20(walletConnection, deposit);
       case 'ERC721':
-        return this.depositERC721(signer, deposit);
+        return this.depositERC721(walletConnection, deposit);
     }
   }
 
-  private async depositEth(signer: Signer, deposit: ETHAmount) {
-    await this.validateChain(signer);
+  private async depositEth(
+    walletConnection: WalletConnection,
+    deposit: ETHAmount,
+  ) {
+    await this.validateChain(walletConnection);
 
     return depositEthWorkflow(
-      signer,
+      walletConnection.signers.ethSigner,
       deposit,
       this.depositsApi,
       this.usersApi,
@@ -202,11 +218,14 @@ export class Workflows {
     );
   }
 
-  private async depositERC20(signer: Signer, deposit: ERC20Amount) {
-    await this.validateChain(signer);
+  private async depositERC20(
+    walletConnection: WalletConnection,
+    deposit: ERC20Amount,
+  ) {
+    await this.validateChain(walletConnection);
 
     return depositERC20Workflow(
-      signer,
+      walletConnection.signers.ethSigner,
       deposit,
       this.depositsApi,
       this.usersApi,
@@ -216,11 +235,14 @@ export class Workflows {
     );
   }
 
-  private async depositERC721(signer: Signer, deposit: ERC721Token) {
-    await this.validateChain(signer);
+  private async depositERC721(
+    walletConnection: WalletConnection,
+    deposit: ERC721Token,
+  ) {
+    await this.validateChain(walletConnection);
 
     return depositERC721Workflow(
-      signer,
+      walletConnection.signers.ethSigner,
       deposit,
       this.depositsApi,
       this.usersApi,
@@ -233,35 +255,48 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: TokenAmount,
   ) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return prepareWithdrawalWorkflow({
-      ...walletConnection,
-      ...request,
+      walletConnection,
+      request,
       withdrawalsApi: this.withdrawalsApi,
     });
   }
 
   public completeWithdrawal(
-    signer: Signer,
+    walletConnection: WalletConnection,
     starkPublicKey: string,
     token: AnyToken,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     switch (token.type) {
       case 'ETH':
-        return this.completeEthWithdrawal(signer, starkPublicKey);
+        return this.completeEthWithdrawal(ethSigner, starkPublicKey);
       case 'ERC20':
-        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
+        return this.completeERC20Withdrawal(ethSigner, starkPublicKey, token);
       case 'ERC721':
-        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
+        return this.completeERC721Withdrawal(ethSigner, starkPublicKey, token);
     }
   }
 
-  private async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
-    await this.validateChain(signer);
+  private async completeEthWithdrawal(
+    walletConnection: WalletConnection,
+    starkPublicKey: string,
+  ) {
+    await this.validateChain(walletConnection);
+
+    const ethSigner = walletConnection.signers.ethSigner;
 
     return completeEthWithdrawalWorkflow(
-      signer,
+      ethSigner,
       starkPublicKey,
       this.encodingApi,
       this.usersApi,
@@ -270,14 +305,16 @@ export class Workflows {
   }
 
   private async completeERC20Withdrawal(
-    signer: Signer,
+    walletConnection: WalletConnection,
     starkPublicKey: string,
     token: ERC20Token,
   ) {
-    await this.validateChain(signer);
+    await this.validateChain(walletConnection);
+
+    const ethSigner = walletConnection.signers.ethSigner;
 
     return completeERC20WithdrawalWorkflow(
-      signer,
+      ethSigner,
       starkPublicKey,
       token,
       this.encodingApi,
@@ -287,14 +324,16 @@ export class Workflows {
   }
 
   private async completeERC721Withdrawal(
-    signer: Signer,
+    walletConnection: WalletConnection,
     starkPublicKey: string,
     token: ERC721Token,
   ) {
-    await this.validateChain(signer);
+    await this.validateChain(walletConnection);
+
+    const ethSigner = walletConnection.signers.ethSigner;
 
     return completeERC721WithdrawalWorkflow(
-      signer,
+      ethSigner,
       starkPublicKey,
       token,
       this.encodingApi,
@@ -308,10 +347,10 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: UnsignedOrderRequest,
   ) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return createOrderWorkflow({
-      ...walletConnection,
+      walletConnection,
       request,
       ordersApi: this.ordersApi,
     });
@@ -321,10 +360,10 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableCancelOrderRequest,
   ) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return cancelOrderWorkflow({
-      ...walletConnection,
+      walletConnection,
       request,
       ordersApi: this.ordersApi,
     });
@@ -334,10 +373,10 @@ export class Workflows {
     walletConnection: WalletConnection,
     request: GetSignableTradeRequest,
   ) {
-    await this.validateChain(walletConnection.ethSigner);
+    await this.validateChain(walletConnection);
 
     return createTradeWorkflow({
-      ...walletConnection,
+      walletConnection,
       request,
       tradesApi: this.tradesApi,
     });
@@ -347,9 +386,17 @@ export class Workflows {
    * IMX authorisation header functions
    */
   public async createProject(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     createProjectRequest: CreateProjectRequest,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
     return this.projectsApi.createProject({
@@ -359,7 +406,15 @@ export class Workflows {
     });
   }
 
-  public async getProject(ethSigner: EthSigner, id: string) {
+  public async getProject(walletConnection: WalletConnection, id: string) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
     return this.projectsApi.getProject({
@@ -370,12 +425,20 @@ export class Workflows {
   }
 
   public async getProjects(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     pageSize?: number,
     cursor?: string,
     orderBy?: string,
     direction?: string,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
     return this.projectsApi.getProjects({
@@ -389,9 +452,17 @@ export class Workflows {
   }
 
   public async createCollection(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     createCollectionRequest: CreateCollectionRequest,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
     return this.collectionsApi.createCollection({
@@ -402,10 +473,18 @@ export class Workflows {
   }
 
   public async updateCollection(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     address: string,
     updateCollectionRequest: UpdateCollectionRequest,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
     return this.collectionsApi.updateCollection({
@@ -417,10 +496,18 @@ export class Workflows {
   }
 
   public async addMetadataSchemaToCollection(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     address: string,
     addMetadataSchemaToCollectionRequest: AddMetadataSchemaToCollectionRequest,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
     return this.metadataApi.addMetadataSchemaToCollection({
@@ -432,11 +519,19 @@ export class Workflows {
   }
 
   public async updateMetadataSchemaByName(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     address: string,
     name: string,
     metadataSchemaRequest: MetadataSchemaRequest,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
     return this.metadataApi.updateMetadataSchemaByName({
@@ -449,11 +544,19 @@ export class Workflows {
   }
 
   public async listMetadataRefreshes(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     collectionAddress?: string,
     pageSize?: number,
     cursor?: string,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
     const ethAddress = await ethSigner.getAddress();
 
@@ -468,11 +571,19 @@ export class Workflows {
   }
 
   public async getMetadataRefreshErrors(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     refreshId: string,
     pageSize?: number,
     cursor?: string,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
     const ethAddress = await ethSigner.getAddress();
 
@@ -487,9 +598,17 @@ export class Workflows {
   }
 
   public async getMetadataRefreshResults(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     refreshId: string,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
     const ethAddress = await ethSigner.getAddress();
 
@@ -502,9 +621,17 @@ export class Workflows {
   }
 
   public async createMetadataRefresh(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     request: CreateMetadataRefreshRequest,
   ) {
+    const ethSigner = walletConnection.signers.ethSigner;
+
+    if (!ethSigner) {
+      throw new Error(
+        'Wallet does not support signing transactions on Ethereum',
+      );
+    }
+
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
     const ethAddress = await ethSigner.getAddress();
 

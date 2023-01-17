@@ -19,17 +19,3 @@ export interface StarkSigner {
    */
   getAddress(): string | Promise<string>;
 }
-
-/**
- * A pair of Signers
- */
-export interface WalletConnection {
-  /**
-   * The L1 signer
-   */
-  ethSigner: EthSigner;
-  /**
-   * The L2 signer
-   */
-  starkSigner: StarkSigner;
-}

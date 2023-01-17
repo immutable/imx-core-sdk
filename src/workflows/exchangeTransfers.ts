@@ -1,19 +1,26 @@
 import { CreateTransferResponseV1, ExchangesApi } from '../api';
-import { UnsignedExchangeTransferRequest, WalletConnection } from '../types';
+import { UnsignedExchangeTransferRequest } from '../types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { signRaw } from '../utils';
 import { convertToSignableToken } from '../utils/convertToSignableToken';
 
-type TransfersWorkflowParams = WalletConnection & {
+type TransfersWorkflowParams = {
+  walletConnection: WalletConnection;
   request: UnsignedExchangeTransferRequest;
   exchangesApi: ExchangesApi;
 };
 
 export async function exchangeTransfersWorkflow({
-  ethSigner,
-  starkSigner,
+  walletConnection,
   request,
   exchangesApi,
 }: TransfersWorkflowParams): Promise<CreateTransferResponseV1> {
+  const { ethSigner, starkExSigner } = walletConnection.signers;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const ethAddress = await ethSigner.getAddress();
 
   const transferAmount = request.amount;
@@ -32,7 +39,11 @@ export async function exchangeTransfersWorkflow({
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await starkSigner.signMessage(payloadHash);
+  const starkSignature = await starkExSigner.signMessage({
+    payload: '',
+    message: payloadHash,
+    signature: '',
+  });
 
   const transferSigningParams = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

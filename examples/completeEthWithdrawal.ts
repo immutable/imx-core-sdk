@@ -7,10 +7,10 @@ import { generateWalletConnection } from './libs/walletConnection';
 
     const client = new ImmutableX(Config.SANDBOX);
 
-    const starkPublicKey = await walletConnection.starkSigner.getAddress();
+    const starkPublicKey = await walletConnection.signers.starkExSigner.getAddress();
 
     const completeWithdrawalResponse = await client.completeWithdrawal(
-      walletConnection.ethSigner,
+      walletConnection.signers.ethSigner,
       starkPublicKey,
       {
         type: 'ETH',

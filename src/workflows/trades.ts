@@ -3,20 +3,26 @@ import {
   GetSignableTradeRequest,
   CreateTradeResponse,
 } from '../api';
-import { WalletConnection } from '../types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { signRaw } from '../utils';
 
-type createTradeWorkflowParams = WalletConnection & {
+type createTradeWorkflowParams = {
+  walletConnection: WalletConnection;
   request: GetSignableTradeRequest;
   tradesApi: TradesApi;
 };
 
 export async function createTradeWorkflow({
-  ethSigner,
-  starkSigner,
+  walletConnection,
   request,
   tradesApi,
 }: createTradeWorkflowParams): Promise<CreateTradeResponse> {
+  const { ethSigner, starkExSigner } = walletConnection.signers;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const ethAddress = await ethSigner.getAddress();
 
   const signableResult = await tradesApi.getSignableTrade({
@@ -32,7 +38,11 @@ export async function createTradeWorkflow({
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await starkSigner.signMessage(payloadHash);
+  const starkSignature = await starkExSigner.signMessage({
+    payload: '',
+    message: payloadHash,
+    signature: '',
+  });
 
   const createTradeResponse = await tradesApi.createTrade({
     createTradeRequest: {

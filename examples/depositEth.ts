@@ -9,7 +9,7 @@ import { generateWalletConnection } from './libs/walletConnection';
     const client = new ImmutableX(Config.SANDBOX);
 
     // Deposit ETH
-    const depositResponse = await client.deposit(walletConnection.ethSigner, {
+    const depositResponse = await client.deposit(walletConnection, {
       type: 'ETH',
       amount: '1000000000000000000', //amount is in units of Wei i.e. 1 ETH = 1000000000000000000 Wei
     });

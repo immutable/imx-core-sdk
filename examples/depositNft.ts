@@ -9,7 +9,7 @@ import { generateWalletConnection } from './libs/walletConnection';
     const client = new ImmutableX(Config.SANDBOX);
 
     // Deposit ERC721
-    const depositResponse = await client.deposit(walletConnection.ethSigner, {
+    const depositResponse = await client.deposit(walletConnection, {
       type: 'ERC721',
       tokenId: '', // TOKEN_ID
       tokenAddress: '' // COLLECTION_CONTRACT_ADDRESS

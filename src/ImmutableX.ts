@@ -7,8 +7,8 @@ import {
   UnsignedMintRequest,
   UnsignedOrderRequest,
   UnsignedTransferRequest,
-  WalletConnection,
 } from './types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { Workflows } from './workflows';
 import {
   DepositsApi,
@@ -122,8 +122,8 @@ export class ImmutableX {
    * @returns a promise that resolves with the resulting transaction
    * @throws {@link index.IMXError}
    */
-  public deposit(ethSigner: EthSigner, deposit: TokenAmount) {
-    return this.workflows.deposit(ethSigner, deposit).catch(err => {
+  public deposit(walletConnection: WalletConnection, deposit: TokenAmount) {
+    return this.workflows.deposit(walletConnection, deposit).catch(err => {
       throw formatError(err);
     });
   }
@@ -235,11 +235,11 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public createCollection(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     request: CreateCollectionRequest,
   ) {
     return this.workflows
-      .createCollection(ethSigner, request)
+      .createCollection(walletConnection, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -302,12 +302,12 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public updateCollection(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     collectionAddress: string,
     request: UpdateCollectionRequest,
   ) {
     return this.workflows
-      .updateCollection(ethSigner, collectionAddress, request)
+      .updateCollection(walletConnection, collectionAddress, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -323,12 +323,12 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public addMetadataSchemaToCollection(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     collectionAddress: string,
     request: AddMetadataSchemaToCollectionRequest,
   ) {
     return this.workflows
-      .addMetadataSchemaToCollection(ethSigner, collectionAddress, request)
+      .addMetadataSchemaToCollection(walletConnection, collectionAddress, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -360,13 +360,13 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public updateMetadataSchemaByName(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     collectionAddress: string,
     name: string,
     request: MetadataSchemaRequest,
   ) {
     return this.workflows
-      .updateMetadataSchemaByName(ethSigner, collectionAddress, name, request)
+      .updateMetadataSchemaByName(walletConnection, collectionAddress, name, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -383,13 +383,13 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public listMetadataRefreshes(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     collectionAddress?: string,
     pageSize?: number,
     cursor?: string,
   ) {
     return this.workflows
-      .listMetadataRefreshes(ethSigner, collectionAddress, pageSize, cursor)
+      .listMetadataRefreshes(walletConnection, collectionAddress, pageSize, cursor)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -406,13 +406,13 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public getMetadataRefreshErrors(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     refreshId: string,
     pageSize?: number,
     cursor?: string,
   ) {
     return this.workflows
-      .getMetadataRefreshErrors(ethSigner, refreshId, pageSize, cursor)
+      .getMetadataRefreshErrors(walletConnection, refreshId, pageSize, cursor)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -426,9 +426,9 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested metadata refresh results
    * @throws {@link index.IMXError}
    */
-  public getMetadataRefreshResults(ethSigner: EthSigner, refreshId: string) {
+  public getMetadataRefreshResults(walletConnection: WalletConnection, refreshId: string) {
     return this.workflows
-      .getMetadataRefreshResults(ethSigner, refreshId)
+      .getMetadataRefreshResults(walletConnection, refreshId)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -443,11 +443,11 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public createMetadataRefresh(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     request: CreateMetadataRefreshRequest,
   ) {
     return this.workflows
-      .createMetadataRefresh(ethSigner, request)
+      .createMetadataRefresh(walletConnection, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -462,11 +462,11 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public async createProject(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     request: CreateProjectRequest,
   ) {
     return this.workflows
-      .createProject(ethSigner, request)
+      .createProject(walletConnection, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -480,9 +480,9 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested Project
    * @throws {@link index.IMXError}
    */
-  public async getProject(ethSigner: EthSigner, id: string) {
+  public async getProject(walletConnection: WalletConnection, id: string) {
     return this.workflows
-      .getProject(ethSigner, id)
+      .getProject(walletConnection, id)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -500,14 +500,14 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public async getProjects(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     pageSize?: number,
     cursor?: string,
     orderBy?: string,
     direction?: string,
   ) {
     return this.workflows
-      .getProjects(ethSigner, pageSize, cursor, orderBy, direction)
+      .getProjects(walletConnection, pageSize, cursor, orderBy, direction)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -581,8 +581,8 @@ export class ImmutableX {
    * @returns a promise that resolves with the minted tokens
    * @throws {@link index.IMXError}
    */
-  public mint(ethSigner: EthSigner, request: UnsignedMintRequest) {
-    return this.workflows.mint(ethSigner, request).catch(err => {
+  public mint(walletConnection: WalletConnection, request: UnsignedMintRequest) {
+    return this.workflows.mint(walletConnection, request).catch(err => {
       throw formatError(err);
     });
   }
@@ -644,12 +644,12 @@ export class ImmutableX {
    * @throws {@link index.IMXError}
    */
   public completeWithdrawal(
-    ethSigner: EthSigner,
+    walletConnection: WalletConnection,
     starkPublicKey: string,
     token: AnyToken,
   ) {
     return this.workflows
-      .completeWithdrawal(ethSigner, starkPublicKey, token)
+      .completeWithdrawal(walletConnection, starkPublicKey, token)
       .catch(err => {
         throw formatError(err);
       });

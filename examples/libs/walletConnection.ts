@@ -1,7 +1,8 @@
 import { AlchemyProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
-import { createStarkSigner, WalletConnection } from '@imtbl/core-sdk';
+import { createStarkSigner } from '@imtbl/core-sdk';
 import { requireEnvironmentVariable } from './utils';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 
 /**
  * Generate a ethSigner/starkSigner object from a private key.
@@ -20,10 +21,14 @@ export const generateWalletConnection = async (
   const ethSigner = new Wallet(userPrivateKey).connect(provider);
 
   // L2 credentials
-  const starkSigner = createStarkSigner(userStarkKey);
+  const starkExSigner = createStarkSigner(userStarkKey);
 
   return {
-    ethSigner,
-    starkSigner,
+    providerName: "",
+    providerIcon: "",
+    signers: {
+      ethSigner,
+      starkExSigner,
+    }
   };
 };

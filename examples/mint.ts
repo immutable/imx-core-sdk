@@ -18,7 +18,7 @@ import { generateWalletConnection } from './libs/walletConnection';
 
   try {
     const mintResponse = await imxClient.mint(
-      walletConnection.ethSigner,
+      walletConnection,
       mintParams,
     );
 

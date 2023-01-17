@@ -1,6 +1,7 @@
 import BN from 'bn.js';
 import * as encUtils from 'enc-utils';
-import { Signer } from '@ethersproject/abstract-signer';
+// import { Signer } from '@ethersproject/abstract-signer';
+import { Signer } from '@imtbl/provider-sdk-web';
 
 type SignatureOptions = {
   r: BN;
@@ -41,7 +42,9 @@ export async function signRaw(
   payload: string,
   signer: Signer,
 ): Promise<string> {
-  const signature = deserializeSignature(await signer.signMessage(payload));
+  const signature = deserializeSignature(
+    await signer.signMessage({ payload: '', message: payload, signature: '' }),
+  );
   return serializeEthSignature(signature);
 }
 

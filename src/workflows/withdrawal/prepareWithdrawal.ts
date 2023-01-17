@@ -1,5 +1,6 @@
 import { WithdrawalsApi, CreateWithdrawalResponse } from '../../api';
-import { TokenAmount, WalletConnection } from '../../types';
+import { TokenAmount } from '../../types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { signMessage } from '../../utils';
 import { convertToSignableToken } from '../../utils/convertToSignableToken';
 
@@ -8,15 +9,25 @@ const assertIsDefined = <T>(value?: T): T => {
   throw new Error('undefined field exception');
 };
 
-type PrepareWithdrawalWorkflowParams = TokenAmount &
-  WalletConnection & {
-    withdrawalsApi: WithdrawalsApi;
-  };
+type PrepareWithdrawalWorkflowParams = TokenAmount & {
+  walletConnection: WalletConnection;
+  withdrawalsApi: WithdrawalsApi;
+};
 
 export async function prepareWithdrawalWorkflow(
   params: PrepareWithdrawalWorkflowParams,
 ): Promise<CreateWithdrawalResponse> {
-  const { ethSigner, starkSigner, withdrawalsApi } = params;
+  const {
+    walletConnection: {
+      signers: { ethSigner, starkExSigner },
+    },
+    withdrawalsApi,
+  } = params;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const withdrawalAmount = params.type === 'ERC721' ? '1' : params.amount;
   const signableWithdrawalResult = await withdrawalsApi.getSignableWithdrawal({
     getSignableWithdrawalRequest: {
@@ -29,7 +40,11 @@ export async function prepareWithdrawalWorkflow(
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     signableWithdrawalResult.data;
 
-  const starkSignature = await starkSigner.signMessage(payloadHash);
+  const starkSignature = await starkExSigner.signMessage({
+    payload: '',
+    message: payloadHash,
+    signature: '',
+  });
 
   const { ethAddress, ethSignature } = await signMessage(
     signableMessage,

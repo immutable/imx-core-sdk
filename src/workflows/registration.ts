@@ -3,21 +3,27 @@ import {
   GetSignableRegistrationResponse,
   RegisterUserResponse,
 } from '../api';
-import { WalletConnection } from '../types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { signRaw } from '../utils';
 import { Registration } from '../contracts';
 
-type registerOffchainWorkflowParams = WalletConnection & {
+type registerOffchainWorkflowParams = {
+  walletConnection: WalletConnection;
   usersApi: UsersApi;
 };
 
 export async function registerOffchainWorkflow({
-  ethSigner,
-  starkSigner,
+  walletConnection,
   usersApi,
 }: registerOffchainWorkflowParams): Promise<RegisterUserResponse> {
+  const { ethSigner, starkExSigner } = walletConnection.signers;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const userAddress = await ethSigner.getAddress();
-  const starkPublicKey = await starkSigner.getAddress();
+  const starkPublicKey = await starkExSigner.getAddress();
 
   const signableResult = await usersApi.getSignableRegistrationOffchain({
     getSignableRegistrationRequest: {
@@ -31,7 +37,11 @@ export async function registerOffchainWorkflow({
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await starkSigner.signMessage(payloadHash);
+  const starkSignature = await starkExSigner.signMessage({
+    payload: '',
+    message: payloadHash,
+    signature: '',
+  });
 
   const registeredUser = await usersApi.registerUser({
     registerUserRequest: {

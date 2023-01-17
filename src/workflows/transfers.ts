@@ -3,30 +3,34 @@ import {
   CreateTransferResponseV1,
   CreateTransferResponse,
 } from '../api';
-import {
-  NftTransferDetails,
-  UnsignedTransferRequest,
-  WalletConnection,
-} from '../types';
+import { NftTransferDetails, UnsignedTransferRequest } from '../types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { signRaw } from '../utils';
 import { convertToSignableToken } from '../utils/convertToSignableToken';
 
-type TransfersWorkflowParams = WalletConnection & {
+type TransfersWorkflowParams = {
+  walletConnection: WalletConnection;
   request: UnsignedTransferRequest;
   transfersApi: TransfersApi;
 };
 
-type BatchTransfersWorkflowParams = WalletConnection & {
+type BatchTransfersWorkflowParams = {
+  walletConnection: WalletConnection;
   request: Array<NftTransferDetails>;
   transfersApi: TransfersApi;
 };
 
 export async function transfersWorkflow({
-  ethSigner,
-  starkSigner,
+  walletConnection,
   request,
   transfersApi,
 }: TransfersWorkflowParams): Promise<CreateTransferResponseV1> {
+  const { ethSigner, starkExSigner } = walletConnection.signers;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const ethAddress = await ethSigner.getAddress();
 
   const transferAmount = request.type === 'ERC721' ? '1' : request.amount;
@@ -44,7 +48,11 @@ export async function transfersWorkflow({
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await starkSigner.signMessage(payloadHash);
+  const starkSignature = await starkExSigner.signMessage({
+    payload: '',
+    message: payloadHash,
+    signature: '',
+  });
 
   const transferSigningParams = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -74,11 +82,16 @@ export async function transfersWorkflow({
 }
 
 export async function batchTransfersWorkflow({
-  ethSigner,
-  starkSigner,
+  walletConnection,
   request,
   transfersApi,
 }: BatchTransfersWorkflowParams): Promise<CreateTransferResponse> {
+  const { ethSigner, starkExSigner } = walletConnection.signers;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const ethAddress = await ethSigner.getAddress();
 
   const signableRequests = request.map(nftTransfer => {
@@ -110,7 +123,7 @@ export async function batchTransfersWorkflow({
 
   const requests = [];
   for (const resp of signableResult.data.signable_responses) {
-    const starkSignature = await starkSigner.signMessage(resp.payload_hash);
+    const starkSignature = await starkExSigner.signMessage(resp.payload_hash);
     const req = {
       sender_vault_id: resp.sender_vault_id,
       receiver_stark_key: resp.receiver_stark_key,

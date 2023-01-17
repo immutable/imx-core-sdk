@@ -5,13 +5,14 @@ import {
   MintsApiMintTokensRequest,
   MintTokensResponse,
 } from '../api';
-import { UnsignedMintRequest } from '../types';
+import { EthSigner, UnsignedMintRequest } from '../types';
 import { signRaw } from '../utils';
 import { keccak256 } from '@ethersproject/keccak256';
 import { toUtf8Bytes } from '@ethersproject/strings';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 
 export async function mintingWorkflow(
-  signer: Signer,
+  walletConnection: WalletConnection,
   request: UnsignedMintRequest,
   mintsApi: MintsApi,
 ): Promise<MintTokensResponse> {
@@ -46,8 +47,10 @@ export async function mintingWorkflow(
     auth_signature: '',
   };
 
+  const ethSigner = walletConnection.signers.ethSigner;
   const hash = keccak256(toUtf8Bytes(JSON.stringify(signablePayload)));
-  const authSignature = await signRaw(hash, signer);
+
+  const authSignature = ethSigner && (await signRaw(hash, ethSigner));
 
   const apiPayload: MintRequest = {
     users: signablePayload.users.map(user => ({

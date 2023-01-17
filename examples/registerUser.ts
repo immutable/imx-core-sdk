@@ -10,7 +10,7 @@ import { generateWalletConnection } from './libs/walletConnection';
     await imxClient.registerOffchain(walletConnection);
     console.log('Successfully registered user.');
 
-    const ethAddress = await walletConnection.ethSigner.getAddress();
+    const ethAddress = await walletConnection.signers.ethSigner.getAddress();
     const response = await imxClient.getUser(ethAddress);
 
     console.log('User account:', response);

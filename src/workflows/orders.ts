@@ -6,26 +6,34 @@ import {
   CancelOrderResponse,
   CreateOrderResponse,
 } from '../api';
-import { UnsignedOrderRequest, WalletConnection } from '../types';
+import { UnsignedOrderRequest } from '../types';
+import { WalletConnection } from '@imtbl/provider-sdk-web';
 import { signRaw } from '../utils';
 import { convertToSignableToken } from '../utils/convertToSignableToken';
 
-type CreateOrderWorkflowParams = WalletConnection & {
+type CreateOrderWorkflowParams = {
+  walletConnection: WalletConnection;
   request: UnsignedOrderRequest;
   ordersApi: OrdersApi;
 };
 
-type CancelOrderWorkflowParams = WalletConnection & {
+type CancelOrderWorkflowParams = {
+  walletConnection: WalletConnection;
   request: GetSignableCancelOrderRequest;
   ordersApi: OrdersApi;
 };
 
 export async function createOrderWorkflow({
-  ethSigner,
-  starkSigner,
+  walletConnection,
   request,
   ordersApi,
 }: CreateOrderWorkflowParams): Promise<CreateOrderResponse> {
+  const { ethSigner, starkExSigner } = walletConnection.signers;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const ethAddress = await ethSigner.getAddress();
 
   const amountSell = request.sell.type === 'ERC721' ? '1' : request.sell.amount;
@@ -49,7 +57,11 @@ export async function createOrderWorkflow({
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await starkSigner.signMessage(payloadHash);
+  const starkSignature = await starkExSigner.signMessage({
+    payload: '',
+    message: payloadHash,
+    signature: '',
+  });
 
   const resp = getSignableOrderResponse.data;
 
@@ -80,8 +92,7 @@ export async function createOrderWorkflow({
 }
 
 export async function cancelOrderWorkflow({
-  ethSigner,
-  starkSigner,
+  walletConnection,
   request,
   ordersApi,
 }: CancelOrderWorkflowParams): Promise<CancelOrderResponse> {
@@ -93,12 +104,22 @@ export async function cancelOrderWorkflow({
     },
   );
 
+  const { ethSigner, starkExSigner } = walletConnection.signers;
+
+  if (!ethSigner) {
+    throw new Error('Wallet does not support signing transactions on Ethereum');
+  }
+
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableCancelOrderResponse.data;
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  const starkSignature = await starkSigner.signMessage(payloadHash);
+  const starkSignature = await starkExSigner.signMessage({
+    payload: '',
+    message: payloadHash,
+    signature: '',
+  });
 
   const ethAddress = await ethSigner.getAddress();
 
