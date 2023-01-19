@@ -120,7 +120,7 @@ yarn list-orders
 
 ## Get order
 
-Update [getOrder.ts](./getOrder.ts#L12) with your order id then run
+Update [getOrder.ts](./getOrder.ts#L11) with your order id then run
 
 ```sh
 yarn get-order
@@ -131,7 +131,7 @@ yarn get-order
 Update [cancelOrder.ts](./cancelOrder.ts#L10) with your order id then run
 
 ```sh
-yarn get-order
+yarn cancel-order
 ```
 
 ## Create trade
