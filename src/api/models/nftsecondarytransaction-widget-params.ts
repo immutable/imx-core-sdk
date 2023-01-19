@@ -17,13 +17,13 @@
 /**
  * 
  * @export
- * @interface NftprimarytransactionWidgetParams
+ * @interface NftsecondarytransactionWidgetParams
  */
-export interface NftprimarytransactionWidgetParams {
+export interface NftsecondarytransactionWidgetParams {
     /**
-     * enums(light, dark)
+     * 
      * @type {string}
-     * @memberof NftprimarytransactionWidgetParams
+     * @memberof NftsecondarytransactionWidgetParams
      */
     'theme'?: string;
 }

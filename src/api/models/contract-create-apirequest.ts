@@ -17,14 +17,26 @@
 /**
  * 
  * @export
- * @interface NftprimarytransactionWidgetParams
+ * @interface ContractCreateAPIRequest
  */
-export interface NftprimarytransactionWidgetParams {
+export interface ContractCreateAPIRequest {
     /**
-     * enums(light, dark)
+     * 
      * @type {string}
-     * @memberof NftprimarytransactionWidgetParams
+     * @memberof ContractCreateAPIRequest
      */
-    'theme'?: string;
+    'contract_address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractCreateAPIRequest
+     */
+    'data_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractCreateAPIRequest
+     */
+    'mint_url'?: string;
 }
 

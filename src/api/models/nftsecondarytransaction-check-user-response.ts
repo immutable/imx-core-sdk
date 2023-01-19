@@ -13,21 +13,24 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { ProviderMintStatus } from './provider-mint-status';
 
 /**
  * 
  * @export
- * @interface ProviderGetMintStatusResponse
+ * @interface NftsecondarytransactionCheckUserResponse
  */
-export interface ProviderGetMintStatusResponse {
+export interface NftsecondarytransactionCheckUserResponse {
     /**
-     * Mint status for requested transactions
-     * @type {Array<ProviderMintStatus>}
-     * @memberof ProviderGetMintStatusResponse
+     * 
+     * @type {string}
+     * @memberof NftsecondarytransactionCheckUserResponse
      */
-    'data'?: Array<ProviderMintStatus>;
+    'url'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof NftsecondarytransactionCheckUserResponse
+     */
+    'verified'?: boolean;
 }
 

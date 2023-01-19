@@ -17,14 +17,14 @@
 /**
  * 
  * @export
- * @interface NftprimarytransactionWidgetParams
+ * @interface NftsecondarytransactionCheckOrderResponse
  */
-export interface NftprimarytransactionWidgetParams {
+export interface NftsecondarytransactionCheckOrderResponse {
     /**
-     * enums(light, dark)
-     * @type {string}
-     * @memberof NftprimarytransactionWidgetParams
+     * 
+     * @type {boolean}
+     * @memberof NftsecondarytransactionCheckOrderResponse
      */
-    'theme'?: string;
+    'available'?: boolean;
 }
 

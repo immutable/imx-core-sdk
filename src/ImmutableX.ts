@@ -62,9 +62,14 @@ import {
   NftCheckoutPrimaryApi,
   NftCheckoutPrimaryApiCreateNftPrimaryRequest,
   NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest,
-  NftCheckoutPrimaryApiGetMintStatusByIdRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest,
+  NonCryptoCheckoutApi,
+  NonCryptoCheckoutApiCreateNonCryptoCheckoutTransactionRequest,
+  NonCryptoCheckoutApiGetNonCryptoCheckoutOrderAvailabilityRequest,
+  NonCryptoCheckoutApiGetNonCryptoCheckoutSellerKycStatusRequest,
+  NonCryptoCheckoutApiGetNonCryptoCheckoutTransactionRequest,
+  NonCryptoCheckoutApiGetNonCryptoCheckoutTransactionsRequest,
 } from './api';
 import { formatError } from './utils/formatError';
 import { ImmutableXConfiguration } from './config';
@@ -81,6 +86,7 @@ export class ImmutableX {
   public transfersApi: TransfersApi;
   public exchangeApi: ExchangesApi;
   public nftCheckoutPrimaryApi: NftCheckoutPrimaryApi;
+  public nonCryptoCheckoutApi: NonCryptoCheckoutApi;
   public usersApi: UsersApi;
   public withdrawalsApi: WithdrawalsApi;
   public balanceApi: BalancesApi;
@@ -109,6 +115,9 @@ export class ImmutableX {
       config.apiConfiguration,
     );
     this.nftCheckoutPrimaryApi = new NftCheckoutPrimaryApi(
+      config.apiConfiguration,
+    );
+    this.nonCryptoCheckoutApi = new NonCryptoCheckoutApi(
       config.apiConfiguration,
     );
     this.projectsApi = new ProjectsApi(config.apiConfiguration);
@@ -942,20 +951,6 @@ export class ImmutableX {
   }
 
   /**
-   * Get mint status by nft primary transaction id
-   * @param request - the request object to be provided in the API request
-   * @returns a promise that resolves with nft primary mint status
-   * @throws {@link index.IMXError}
-   */
-  public getMintStatusById(
-    request: NftCheckoutPrimaryApiGetMintStatusByIdRequest,
-  ) {
-    return this.nftCheckoutPrimaryApi.getMintStatusById(request).catch(err => {
-      throw formatError(err);
-    });
-  }
-
-  /**
    * Get nft primary transaction by transaction id
    * @param request - the request object to be provided in the API request
    * @returns a promise that resolves with nft primary transaction
@@ -982,6 +977,86 @@ export class ImmutableX {
   ) {
     return this.nftCheckoutPrimaryApi
       .getNftPrimaryTransactions(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Check order availability for non-crypto checkout
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the available status of the order
+   * @throws {@link index.IMXError}
+   */
+  public getNonCryptoCheckoutOrderAvailability(
+    request: NonCryptoCheckoutApiGetNonCryptoCheckoutOrderAvailabilityRequest,
+  ) {
+    return this.nonCryptoCheckoutApi
+      .getNonCryptoCheckoutOrderAvailability(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get KYC status of a seller of a non-crypto checkout order
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the KYC status of the user and URL to perform KYC
+   * @throws {@link index.IMXError}
+   */
+  public getNonCryptoCheckoutSellerKycStatus(
+    request: NonCryptoCheckoutApiGetNonCryptoCheckoutSellerKycStatusRequest,
+  ) {
+    return this.nonCryptoCheckoutApi
+      .getNonCryptoCheckoutSellerKycStatus(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a non-crypto checkout transaction
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created non-crypto checkout transaction
+   * @throws {@link index.IMXError}
+   */
+  public createNonCryptoCheckoutTransaction(
+    request: NonCryptoCheckoutApiCreateNonCryptoCheckoutTransactionRequest,
+  ) {
+    return this.nonCryptoCheckoutApi
+      .createNonCryptoCheckoutTransaction(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get non-crypto checkout transaction by ID
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the non-crypto checkout transaction
+   * @throws {@link index.IMXError}
+   */
+  public getNonCryptoCheckoutTransaction(
+    request: NonCryptoCheckoutApiGetNonCryptoCheckoutTransactionRequest,
+  ) {
+    return this.nonCryptoCheckoutApi
+      .getNonCryptoCheckoutTransaction(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Get a list of non-crypto checkout transactions
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the list of matching non-crypto checkout transactions
+   * @throws {@link index.IMXError}
+   */
+  public getNonCryptoCheckoutTransactions(
+    request: NonCryptoCheckoutApiGetNonCryptoCheckoutTransactionsRequest,
+  ) {
+    return this.nonCryptoCheckoutApi
+      .getNonCryptoCheckoutTransactions(request)
       .catch(err => {
         throw formatError(err);
       });
