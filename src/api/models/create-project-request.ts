@@ -27,7 +27,7 @@ export interface CreateProjectRequest {
      */
     'company_name': string;
     /**
-     * The project contact email
+     * The project contact email (must be registered as a developer account with Immutable at https://hub.immutable.com)
      * @type {string}
      * @memberof CreateProjectRequest
      */

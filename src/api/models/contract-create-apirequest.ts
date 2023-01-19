@@ -13,21 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { ProviderMintStatus } from './provider-mint-status';
 
 /**
  * 
  * @export
- * @interface ProviderGetMintStatusResponse
+ * @interface ContractCreateAPIRequest
  */
-export interface ProviderGetMintStatusResponse {
+export interface ContractCreateAPIRequest {
     /**
-     * Mint status for requested transactions
-     * @type {Array<ProviderMintStatus>}
-     * @memberof ProviderGetMintStatusResponse
+     * 
+     * @type {string}
+     * @memberof ContractCreateAPIRequest
      */
-    'data'?: Array<ProviderMintStatus>;
+    'contract_address'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractCreateAPIRequest
+     */
+    'data_url'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ContractCreateAPIRequest
+     */
+    'mint_url'?: string;
 }
 
