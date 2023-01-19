@@ -7,7 +7,7 @@ import { generateWalletConnection } from './libs/walletConnection';
   const imxClient = new ImmutableX(Config.SANDBOX);
 
   const orderParams: GetSignableCancelOrderRequest = {
-    order_id: 12425, // fill in order id
+    order_id: 12345, // fill in order id
   };
 
   try {
