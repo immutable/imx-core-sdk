@@ -6,11 +6,11 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
     const client = new ImmutableX(Config.SANDBOX);
 
     // Get details of a mint with the mint ID (transaction_id returned from listMints)
-    const getMintResponse = await client.getMint({
+    const getOrderResponse = await client.getOrder({
       id: ''
     });
 
-    console.log('getMintResponse', JSON.stringify(getMintResponse));
+    console.log('getOrderResponse', JSON.stringify(getOrderResponse));
   } catch (err) {
     console.error(err);
     process.exit(1);
