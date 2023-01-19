@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -174,27 +175,22 @@ export const BalancesApiFactory = function (configuration?: Configuration, baseP
         /**
          * Fetches the token balances of the user
          * @summary Fetches the token balances of the user
-         * @param {string} owner Address of the owner/user
-         * @param {string} address Token address
+         * @param {BalancesApiGetBalanceRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getBalance(owner: string, address: string, options?: any): AxiosPromise<Balance> {
-            return localVarFp.getBalance(owner, address, options).then((request) => request(axios, basePath));
+        getBalance(requestParameters: BalancesApiGetBalanceRequest, options?: AxiosRequestConfig): AxiosPromise<Balance> {
+            return localVarFp.getBalance(requestParameters.owner, requestParameters.address, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of balances for given user
          * @summary Get a list of balances for given user
-         * @param {string} owner Ethereum wallet address for user
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {string} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
+         * @param {BalancesApiListBalancesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listBalances(owner: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, options?: any): AxiosPromise<ListBalancesResponse> {
-            return localVarFp.listBalances(owner, pageSize, cursor, orderBy, direction, options).then((request) => request(axios, basePath));
+        listBalances(requestParameters: BalancesApiListBalancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListBalancesResponse> {
+            return localVarFp.listBalances(requestParameters.owner, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, options).then((request) => request(axios, basePath));
         },
     };
 };

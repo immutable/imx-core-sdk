@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -263,41 +264,32 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
         /**
          * Create a project
          * @summary Create a project
-         * @param {string} iMXSignature String created by signing wallet address and timestamp
-         * @param {string} iMXTimestamp Unix Epoc timestamp
-         * @param {CreateProjectRequest} createProjectRequest create a project
+         * @param {ProjectsApiCreateProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProject(iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options?: any): AxiosPromise<CreateProjectResponse> {
-            return localVarFp.createProject(iMXSignature, iMXTimestamp, createProjectRequest, options).then((request) => request(axios, basePath));
+        createProject(requestParameters: ProjectsApiCreateProjectRequest, options?: AxiosRequestConfig): AxiosPromise<CreateProjectResponse> {
+            return localVarFp.createProject(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.createProjectRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a project
          * @summary Get a project
-         * @param {string} id Project ID
-         * @param {string} iMXSignature String created by signing wallet address and timestamp
-         * @param {string} iMXTimestamp Unix Epoc timestamp
+         * @param {ProjectsApiGetProjectRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProject(id: string, iMXSignature: string, iMXTimestamp: string, options?: any): AxiosPromise<Project> {
-            return localVarFp.getProject(id, iMXSignature, iMXTimestamp, options).then((request) => request(axios, basePath));
+        getProject(requestParameters: ProjectsApiGetProjectRequest, options?: AxiosRequestConfig): AxiosPromise<Project> {
+            return localVarFp.getProject(requestParameters.id, requestParameters.iMXSignature, requestParameters.iMXTimestamp, options).then((request) => request(axios, basePath));
         },
         /**
          * Get projects
          * @summary Get projects
-         * @param {string} iMXSignature String created by signing wallet address and timestamp
-         * @param {string} iMXTimestamp Unix Epoc timestamp
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {string} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
+         * @param {ProjectsApiGetProjectsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProjects(iMXSignature: string, iMXTimestamp: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, options?: any): AxiosPromise<GetProjectsResponse> {
-            return localVarFp.getProjects(iMXSignature, iMXTimestamp, pageSize, cursor, orderBy, direction, options).then((request) => request(axios, basePath));
+        getProjects(requestParameters: ProjectsApiGetProjectsRequest, options?: AxiosRequestConfig): AxiosPromise<GetProjectsResponse> {
+            return localVarFp.getProjects(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, options).then((request) => request(axios, basePath));
         },
     };
 };

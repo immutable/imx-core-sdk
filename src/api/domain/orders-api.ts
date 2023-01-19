@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -573,98 +574,62 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
         /**
          * Cancel an order
          * @summary Cancel an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
-         * @param {string} id Order ID to cancel
-         * @param {CancelOrderRequest} cancelOrderRequest cancel an order
+         * @param {OrdersApiCancelOrderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelOrder(xImxEthAddress: string, xImxEthSignature: string, id: string, cancelOrderRequest: CancelOrderRequest, options?: any): AxiosPromise<CancelOrderResponse> {
-            return localVarFp.cancelOrder(xImxEthAddress, xImxEthSignature, id, cancelOrderRequest, options).then((request) => request(axios, basePath));
+        cancelOrder(requestParameters: OrdersApiCancelOrderRequest, options?: AxiosRequestConfig): AxiosPromise<CancelOrderResponse> {
+            return localVarFp.cancelOrder(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.id, requestParameters.cancelOrderRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Create an order
          * @summary Create an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
-         * @param {CreateOrderRequest} createOrderRequest create an order
+         * @param {OrdersApiCreateOrderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrder(xImxEthAddress: string, xImxEthSignature: string, createOrderRequest: CreateOrderRequest, options?: any): AxiosPromise<CreateOrderResponse> {
-            return localVarFp.createOrder(xImxEthAddress, xImxEthSignature, createOrderRequest, options).then((request) => request(axios, basePath));
+        createOrder(requestParameters: OrdersApiCreateOrderRequest, options?: AxiosRequestConfig): AxiosPromise<CreateOrderResponse> {
+            return localVarFp.createOrder(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createOrderRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get details of an order with the given ID
          * @summary Get details of an order with the given ID
-         * @param {string} id Order ID
-         * @param {boolean} [includeFees] Set flag to true to include fee body for the order
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+         * @param {OrdersApiGetOrderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrder(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<Order> {
-            return localVarFp.getOrder(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
+        getOrder(requestParameters: OrdersApiGetOrderRequest, options?: AxiosRequestConfig): AxiosPromise<Order> {
+            return localVarFp.getOrder(requestParameters.id, requestParameters.includeFees, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
         },
         /**
          * Get details a signable cancel order
          * @summary Get details a signable cancel order
-         * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
+         * @param {OrdersApiGetSignableCancelOrderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableCancelOrder(getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options?: any): AxiosPromise<GetSignableCancelOrderResponse> {
-            return localVarFp.getSignableCancelOrder(getSignableCancelOrderRequest, options).then((request) => request(axios, basePath));
+        getSignableCancelOrder(requestParameters: OrdersApiGetSignableCancelOrderRequest, options?: AxiosRequestConfig): AxiosPromise<GetSignableCancelOrderResponse> {
+            return localVarFp.getSignableCancelOrder(requestParameters.getSignableCancelOrderRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a signable order request (V3)
          * @summary Get a signable order request (V3)
-         * @param {GetSignableOrderRequest} getSignableOrderRequestV3 get a signable order
+         * @param {OrdersApiGetSignableOrderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableOrder(getSignableOrderRequestV3: GetSignableOrderRequest, options?: any): AxiosPromise<GetSignableOrderResponse> {
-            return localVarFp.getSignableOrder(getSignableOrderRequestV3, options).then((request) => request(axios, basePath));
+        getSignableOrder(requestParameters: OrdersApiGetSignableOrderRequest, options?: AxiosRequestConfig): AxiosPromise<GetSignableOrderResponse> {
+            return localVarFp.getSignableOrder(requestParameters.getSignableOrderRequestV3, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of orders
          * @summary Get a list of orders
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [user] Ethereum address of the user who submitted this order
-         * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-         * @param {string} [minTimestamp] Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [maxTimestamp] Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMinTimestamp] Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [buyTokenType] Token type of the asset this order buys
-         * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
-         * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
-         * @param {string} [buyTokenAddress] Token address of the asset this order buys
-         * @param {string} [buyTokenName] Token name of the asset this order buys
-         * @param {string} [buyMinQuantity] Min quantity for the asset this order buys
-         * @param {string} [buyMaxQuantity] Max quantity for the asset this order buys
-         * @param {string} [buyMetadata] JSON-encoded metadata filters for the asset this order buys
-         * @param {string} [sellTokenType] Token type of the asset this order sells
-         * @param {string} [sellTokenId] ERC721 Token ID of the asset this order sells
-         * @param {string} [sellAssetId] Internal IMX ID of the asset this order sells
-         * @param {string} [sellTokenAddress] Token address of the asset this order sells
-         * @param {string} [sellTokenName] Token name of the asset this order sells
-         * @param {string} [sellMinQuantity] Min quantity for the asset this order sells
-         * @param {string} [sellMaxQuantity] Max quantity for the asset this order sells
-         * @param {string} [sellMetadata] JSON-encoded metadata filters for the asset this order sells
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-         * @param {boolean} [includeFees] Set flag to true to include fee object for orders
+         * @param {OrdersApiListOrdersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options?: any): AxiosPromise<ListOrdersResponse> {
-            return localVarFp.listOrders(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, updatedMinTimestamp, updatedMaxTimestamp, buyTokenType, buyTokenId, buyAssetId, buyTokenAddress, buyTokenName, buyMinQuantity, buyMaxQuantity, buyMetadata, sellTokenType, sellTokenId, sellAssetId, sellTokenAddress, sellTokenName, sellMinQuantity, sellMaxQuantity, sellMetadata, auxiliaryFeePercentages, auxiliaryFeeRecipients, includeFees, options).then((request) => request(axios, basePath));
+        listOrders(requestParameters: OrdersApiListOrdersRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ListOrdersResponse> {
+            return localVarFp.listOrders(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.buyTokenType, requestParameters.buyTokenId, requestParameters.buyAssetId, requestParameters.buyTokenAddress, requestParameters.buyTokenName, requestParameters.buyMinQuantity, requestParameters.buyMaxQuantity, requestParameters.buyMetadata, requestParameters.sellTokenType, requestParameters.sellTokenId, requestParameters.sellAssetId, requestParameters.sellTokenAddress, requestParameters.sellTokenName, requestParameters.sellMinQuantity, requestParameters.sellMaxQuantity, requestParameters.sellMetadata, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, requestParameters.includeFees, options).then((request) => request(axios, basePath));
         },
     };
 };

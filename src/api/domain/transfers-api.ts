@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -478,82 +479,62 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
         /**
          * Create a new transfer request
          * @summary Creates a transfer of multiple tokens between two parties
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
-         * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
+         * @param {TransfersApiCreateTransferRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTransfer(xImxEthAddress: string, xImxEthSignature: string, createTransferRequestV2: CreateTransferRequest, options?: any): AxiosPromise<CreateTransferResponse> {
-            return localVarFp.createTransfer(xImxEthAddress, xImxEthSignature, createTransferRequestV2, options).then((request) => request(axios, basePath));
+        createTransfer(requestParameters: TransfersApiCreateTransferRequest, options?: AxiosRequestConfig): AxiosPromise<CreateTransferResponse> {
+            return localVarFp.createTransfer(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createTransferRequestV2, options).then((request) => request(axios, basePath));
         },
         /**
          * Create a new transfer request
          * @summary Creates a transfer of tokens between two parties
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
-         * @param {CreateTransferRequestV1} createTransferRequest Create transfer
+         * @param {TransfersApiCreateTransferV1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTransferV1(xImxEthAddress: string, xImxEthSignature: string, createTransferRequest: CreateTransferRequestV1, options?: any): AxiosPromise<CreateTransferResponseV1> {
-            return localVarFp.createTransferV1(xImxEthAddress, xImxEthSignature, createTransferRequest, options).then((request) => request(axios, basePath));
+        createTransferV1(requestParameters: TransfersApiCreateTransferV1Request, options?: AxiosRequestConfig): AxiosPromise<CreateTransferResponseV1> {
+            return localVarFp.createTransferV1(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createTransferRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets bulk details of a signable transfer
          * @summary Gets bulk details of a signable transfer
-         * @param {GetSignableTransferRequest} getSignableTransferRequestV2 get details of signable transfer
+         * @param {TransfersApiGetSignableTransferRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransfer(getSignableTransferRequestV2: GetSignableTransferRequest, options?: any): AxiosPromise<GetSignableTransferResponse> {
-            return localVarFp.getSignableTransfer(getSignableTransferRequestV2, options).then((request) => request(axios, basePath));
+        getSignableTransfer(requestParameters: TransfersApiGetSignableTransferRequest, options?: AxiosRequestConfig): AxiosPromise<GetSignableTransferResponse> {
+            return localVarFp.getSignableTransfer(requestParameters.getSignableTransferRequestV2, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
-         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
+         * @param {TransfersApiGetSignableTransferV1Request} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequestV1, options?: any): AxiosPromise<GetSignableTransferResponseV1> {
-            return localVarFp.getSignableTransferV1(getSignableTransferRequest, options).then((request) => request(axios, basePath));
+        getSignableTransferV1(requestParameters: TransfersApiGetSignableTransferV1Request, options?: AxiosRequestConfig): AxiosPromise<GetSignableTransferResponseV1> {
+            return localVarFp.getSignableTransferV1(requestParameters.getSignableTransferRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get details of a transfer with the given ID
          * @summary Get details of a transfer with the given ID
-         * @param {string} id Transfer ID
+         * @param {TransfersApiGetTransferRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTransfer(id: string, options?: any): AxiosPromise<Transfer> {
-            return localVarFp.getTransfer(id, options).then((request) => request(axios, basePath));
+        getTransfer(requestParameters: TransfersApiGetTransferRequest, options?: AxiosRequestConfig): AxiosPromise<Transfer> {
+            return localVarFp.getTransfer(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of transfers
          * @summary Get a list of transfers
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [user] Ethereum address of the user who submitted this transfer
-         * @param {string} [receiver] Ethereum address of the user who received this transfer
-         * @param {'success' | 'failure'} [status] Status of this transfer
-         * @param {string} [minTimestamp] Minimum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [maxTimestamp] Maximum timestamp for this transfer, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [tokenType] Token type of the transferred asset
-         * @param {string} [tokenId] ERC721 Token ID of the minted asset
-         * @param {string} [assetId] Internal IMX ID of the minted asset
-         * @param {string} [tokenAddress] Token address of the transferred asset
-         * @param {string} [tokenName] Token name of the transferred asset
-         * @param {string} [minQuantity] Max quantity for the transferred asset
-         * @param {string} [maxQuantity] Max quantity for the transferred asset
-         * @param {string} [metadata] JSON-encoded metadata filters for the transferred asset
+         * @param {TransfersApiListTransfersRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTransfers(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key', direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: any): AxiosPromise<ListTransfersResponse> {
-            return localVarFp.listTransfers(pageSize, cursor, orderBy, direction, user, receiver, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(axios, basePath));
+        listTransfers(requestParameters: TransfersApiListTransfersRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ListTransfersResponse> {
+            return localVarFp.listTransfers(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.receiver, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(axios, basePath));
         },
     };
 };

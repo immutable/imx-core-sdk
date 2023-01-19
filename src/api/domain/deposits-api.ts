@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -113,8 +114,8 @@ export const DepositsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this deposit
          * @param {string} [status] Status of this deposit
-         * @param {string} [updatedMinTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [minTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the deposited asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -126,7 +127,7 @@ export const DepositsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDeposits: async (pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listDeposits: async (pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/deposits`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -163,12 +164,12 @@ export const DepositsApiAxiosParamCreator = function (configuration?: Configurat
                 localVarQueryParameter['status'] = status;
             }
 
-            if (updatedMinTimestamp !== undefined) {
-                localVarQueryParameter['updated_min_timestamp'] = updatedMinTimestamp;
+            if (minTimestamp !== undefined) {
+                localVarQueryParameter['min_timestamp'] = minTimestamp;
             }
 
-            if (updatedMaxTimestamp !== undefined) {
-                localVarQueryParameter['updated_max_timestamp'] = updatedMaxTimestamp;
+            if (maxTimestamp !== undefined) {
+                localVarQueryParameter['max_timestamp'] = maxTimestamp;
             }
 
             if (tokenType !== undefined) {
@@ -255,8 +256,8 @@ export const DepositsApiFp = function(configuration?: Configuration) {
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this deposit
          * @param {string} [status] Status of this deposit
-         * @param {string} [updatedMinTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [minTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {string} [maxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [tokenType] Token type of the deposited asset
          * @param {string} [tokenId] ERC721 Token ID of the minted asset
          * @param {string} [assetId] Internal IMX ID of the minted asset
@@ -268,8 +269,8 @@ export const DepositsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listDeposits(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListDepositsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listDeposits(pageSize, cursor, orderBy, direction, user, status, updatedMinTimestamp, updatedMaxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options);
+        async listDeposits(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListDepositsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listDeposits(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -285,47 +286,32 @@ export const DepositsApiFactory = function (configuration?: Configuration, baseP
         /**
          * Get details of a deposit with the given ID
          * @summary Get details of a deposit with the given ID
-         * @param {string} id Deposit ID
+         * @param {DepositsApiGetDepositRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDeposit(id: string, options?: any): AxiosPromise<Deposit> {
-            return localVarFp.getDeposit(id, options).then((request) => request(axios, basePath));
+        getDeposit(requestParameters: DepositsApiGetDepositRequest, options?: AxiosRequestConfig): AxiosPromise<Deposit> {
+            return localVarFp.getDeposit(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets details of a signable deposit
          * @summary Gets details of a signable deposit
-         * @param {GetSignableDepositRequest} getSignableDepositRequest Get details of signable deposit
+         * @param {DepositsApiGetSignableDepositRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableDeposit(getSignableDepositRequest: GetSignableDepositRequest, options?: any): AxiosPromise<GetSignableDepositResponse> {
-            return localVarFp.getSignableDeposit(getSignableDepositRequest, options).then((request) => request(axios, basePath));
+        getSignableDeposit(requestParameters: DepositsApiGetSignableDepositRequest, options?: AxiosRequestConfig): AxiosPromise<GetSignableDepositResponse> {
+            return localVarFp.getSignableDeposit(requestParameters.getSignableDepositRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of deposits
          * @summary Get a list of deposits
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {string} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [user] Ethereum address of the user who submitted this deposit
-         * @param {string} [status] Status of this deposit
-         * @param {string} [updatedMinTimestamp] Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [tokenType] Token type of the deposited asset
-         * @param {string} [tokenId] ERC721 Token ID of the minted asset
-         * @param {string} [assetId] Internal IMX ID of the minted asset
-         * @param {string} [tokenAddress] Token address of the deposited asset
-         * @param {string} [tokenName] Token name of the deposited asset
-         * @param {string} [minQuantity] Min quantity for the deposited asset
-         * @param {string} [maxQuantity] Max quantity for the deposited asset
-         * @param {string} [metadata] JSON-encoded metadata filters for the deposited asset
+         * @param {DepositsApiListDepositsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listDeposits(pageSize?: number, cursor?: string, orderBy?: string, direction?: string, user?: string, status?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: any): AxiosPromise<ListDepositsResponse> {
-            return localVarFp.listDeposits(pageSize, cursor, orderBy, direction, user, status, updatedMinTimestamp, updatedMaxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(axios, basePath));
+        listDeposits(requestParameters: DepositsApiListDepositsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ListDepositsResponse> {
+            return localVarFp.listDeposits(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -411,14 +397,14 @@ export interface DepositsApiListDepositsRequest {
      * @type {string}
      * @memberof DepositsApiListDeposits
      */
-    readonly updatedMinTimestamp?: string
+    readonly minTimestamp?: string
 
     /**
      * Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
      * @type {string}
      * @memberof DepositsApiListDeposits
      */
-    readonly updatedMaxTimestamp?: string
+    readonly maxTimestamp?: string
 
     /**
      * Token type of the deposited asset
@@ -517,6 +503,6 @@ export class DepositsApi extends BaseAPI {
      * @memberof DepositsApi
      */
     public listDeposits(requestParameters: DepositsApiListDepositsRequest = {}, options?: AxiosRequestConfig) {
-        return DepositsApiFp(this.configuration).listDeposits(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
+        return DepositsApiFp(this.configuration).listDeposits(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.tokenType, requestParameters.tokenId, requestParameters.assetId, requestParameters.tokenAddress, requestParameters.tokenName, requestParameters.minQuantity, requestParameters.maxQuantity, requestParameters.metadata, options).then((request) => request(this.axios, this.basePath));
     }
 }

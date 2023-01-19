@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -322,54 +323,42 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
         /**
          * Create a Trade
          * @summary Create a Trade between two parties
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
-         * @param {CreateTradeRequestV1} createTradeRequest create a trade
+         * @param {TradesApiCreateTradeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTrade(xImxEthAddress: string, xImxEthSignature: string, createTradeRequest: CreateTradeRequestV1, options?: any): AxiosPromise<CreateTradeResponse> {
-            return localVarFp.createTrade(xImxEthAddress, xImxEthSignature, createTradeRequest, options).then((request) => request(axios, basePath));
+        createTrade(requestParameters: TradesApiCreateTradeRequest, options?: AxiosRequestConfig): AxiosPromise<CreateTradeResponse> {
+            return localVarFp.createTrade(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createTradeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get details a signable trade V3
          * @summary Get details a signable trade V3
-         * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
+         * @param {TradesApiGetSignableTradeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTrade(getSignableTradeRequest: GetSignableTradeRequest, options?: any): AxiosPromise<GetSignableTradeResponse> {
-            return localVarFp.getSignableTrade(getSignableTradeRequest, options).then((request) => request(axios, basePath));
+        getSignableTrade(requestParameters: TradesApiGetSignableTradeRequest, options?: AxiosRequestConfig): AxiosPromise<GetSignableTradeResponse> {
+            return localVarFp.getSignableTrade(requestParameters.getSignableTradeRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get details of a trade with the given ID
          * @summary Get details of a trade with the given ID
-         * @param {string} id Trade ID
+         * @param {TradesApiGetTradeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getTrade(id: string, options?: any): AxiosPromise<Trade> {
-            return localVarFp.getTrade(id, options).then((request) => request(axios, basePath));
+        getTrade(requestParameters: TradesApiGetTradeRequest, options?: AxiosRequestConfig): AxiosPromise<Trade> {
+            return localVarFp.getTrade(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of trades
          * @summary Get a list of trades
-         * @param {string} [partyATokenType] Party A\&#39;s (buy order) token type of currency used to buy
-         * @param {string} [partyATokenAddress] Party A\&#39;s (buy order) token address of currency used to buy
-         * @param {string} [partyBTokenType] Party B\&#39;s (sell order) token type of NFT sold - always ERC721
-         * @param {string} [partyBTokenAddress] Party B\&#39;s (sell order) collection address of NFT sold
-         * @param {string} [partyBTokenId] Party B\&#39;s (sell order) token id of NFT sold
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {string} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
+         * @param {TradesApiListTradesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTrades(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: any): AxiosPromise<ListTradesResponse> {
-            return localVarFp.listTrades(partyATokenType, partyATokenAddress, partyBTokenType, partyBTokenAddress, partyBTokenId, pageSize, cursor, orderBy, direction, minTimestamp, maxTimestamp, options).then((request) => request(axios, basePath));
+        listTrades(requestParameters: TradesApiListTradesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ListTradesResponse> {
+            return localVarFp.listTrades(requestParameters.partyATokenType, requestParameters.partyATokenAddress, requestParameters.partyBTokenType, requestParameters.partyBTokenAddress, requestParameters.partyBTokenId, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.minTimestamp, requestParameters.maxTimestamp, options).then((request) => request(axios, basePath));
         },
     };
 };

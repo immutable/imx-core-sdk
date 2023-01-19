@@ -13,13 +13,18 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from '../base';
+// @ts-ignore
+import { ContractCreateAPIRequest } from '../models';
+// @ts-ignore
+import { ContractCreateResponse } from '../models';
 // @ts-ignore
 import { CurrencyWithLimits } from '../models';
 // @ts-ignore
@@ -32,8 +37,6 @@ import { NftprimarytransactionCreateResponse } from '../models';
 import { NftprimarytransactionGetResponse } from '../models';
 // @ts-ignore
 import { NftprimarytransactionListTransactionsResponse } from '../models';
-// @ts-ignore
-import { ProviderGetMintStatusResponse } from '../models';
 /**
  * NftCheckoutPrimaryApi - axios parameter creator
  * @export
@@ -41,8 +44,8 @@ import { ProviderGetMintStatusResponse } from '../models';
 export const NftCheckoutPrimaryApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * creates nft primary transaction
-         * @summary Create nft primary transaction
+         * Creates a transaction representing minting an NFT with a card payment.
+         * @summary Create NFT primary sale transaction
          * @param {NftprimarytransactionCreateAPIRequest} createAPIRequest req
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -117,49 +120,8 @@ export const NftCheckoutPrimaryApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * gets mint status by transaction ids
-         * @summary Get mint status by transaction id
-         * @param {'moonpay'} provider Provider name
-         * @param {string} id transaction id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getMintStatusById: async (provider: 'moonpay', id: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'provider' is not null or undefined
-            assertParamExists('getMintStatusById', 'provider', provider)
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getMintStatusById', 'id', id)
-            const localVarPath = `/v2/{provider}/transaction_status`
-                .replace(`{${"provider"}}`, encodeURIComponent(String(provider)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (id !== undefined) {
-                localVarQueryParameter['id'] = id;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * gets nft primary transaction by transaction id
-         * @summary Get nft primary transaction by id
+         * given a transaction id, returns the corresponding transaction representing a mint executed from a card payment
+         * @summary Get NFT primary sale transaction by id
          * @param {string} transactionId Transaction id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -192,8 +154,8 @@ export const NftCheckoutPrimaryApiAxiosParamCreator = function (configuration?: 
             };
         },
         /**
-         * Returns a list of NFT primary transactions
-         * @summary Get a list of NFT primary transactions
+         * Returns a list of NFT primary sales transactions
+         * @summary Get a list of NFT primary sales transactions
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
          * @param {'transaction_id' | 'status' | 'amount' | 'mint_id'} [orderBy] Property to sort by
@@ -201,14 +163,14 @@ export const NftCheckoutPrimaryApiAxiosParamCreator = function (configuration?: 
          * @param {string} [transactionId] Transaction id
          * @param {string} [contractAddress] Contract address of the asset
          * @param {string} [sellerWalletAddress] Ethereum address of the seller
-         * @param {string} [walletAddress] Ethereum address of the user who wants to create transaction
-         * @param {string} [status] Transaction status
-         * @param {'moonpay'} [provider] Provider name
-         * @param {string} [mintId] Mint id
+         * @param {string} [userWalletAddress] Ethereum address of the user who wants to create transaction
+         * @param {'created' | 'waitingPayment' | 'pending' | 'completed' | 'failed'} [status] Transaction status
+         * @param {'moonpay'} [provider] Checkout provider name
+         * @param {string} [mintId] Minting transaction ID - see mintTokens response
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNftPrimaryTransactions: async (pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'status' | 'amount' | 'mint_id', direction?: string, transactionId?: string, contractAddress?: string, sellerWalletAddress?: string, walletAddress?: string, status?: string, provider?: 'moonpay', mintId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getNftPrimaryTransactions: async (pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'status' | 'amount' | 'mint_id', direction?: string, transactionId?: string, contractAddress?: string, sellerWalletAddress?: string, userWalletAddress?: string, status?: 'created' | 'waitingPayment' | 'pending' | 'completed' | 'failed', provider?: 'moonpay', mintId?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v2/nft/primary`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -249,8 +211,8 @@ export const NftCheckoutPrimaryApiAxiosParamCreator = function (configuration?: 
                 localVarQueryParameter['seller_wallet_address'] = sellerWalletAddress;
             }
 
-            if (walletAddress !== undefined) {
-                localVarQueryParameter['wallet_address'] = walletAddress;
+            if (userWalletAddress !== undefined) {
+                localVarQueryParameter['user_wallet_address'] = userWalletAddress;
             }
 
             if (status !== undefined) {
@@ -276,6 +238,42 @@ export const NftCheckoutPrimaryApiAxiosParamCreator = function (configuration?: 
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Registers a new contract for use in the minting with fiat card flow
+         * @summary Executes NFT primary sales contract registration
+         * @param {ContractCreateAPIRequest} createAPIRequest req
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        registerNftPrimarySalesContract: async (createAPIRequest: ContractCreateAPIRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createAPIRequest' is not null or undefined
+            assertParamExists('registerNftPrimarySalesContract', 'createAPIRequest', createAPIRequest)
+            const localVarPath = `/v2/nft/primary/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createAPIRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -287,8 +285,8 @@ export const NftCheckoutPrimaryApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = NftCheckoutPrimaryApiAxiosParamCreator(configuration)
     return {
         /**
-         * creates nft primary transaction
-         * @summary Create nft primary transaction
+         * Creates a transaction representing minting an NFT with a card payment.
+         * @summary Create NFT primary sale transaction
          * @param {NftprimarytransactionCreateAPIRequest} createAPIRequest req
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -310,20 +308,8 @@ export const NftCheckoutPrimaryApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * gets mint status by transaction ids
-         * @summary Get mint status by transaction id
-         * @param {'moonpay'} provider Provider name
-         * @param {string} id transaction id
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getMintStatusById(provider: 'moonpay', id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProviderGetMintStatusResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getMintStatusById(provider, id, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * gets nft primary transaction by transaction id
-         * @summary Get nft primary transaction by id
+         * given a transaction id, returns the corresponding transaction representing a mint executed from a card payment
+         * @summary Get NFT primary sale transaction by id
          * @param {string} transactionId Transaction id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -333,8 +319,8 @@ export const NftCheckoutPrimaryApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Returns a list of NFT primary transactions
-         * @summary Get a list of NFT primary transactions
+         * Returns a list of NFT primary sales transactions
+         * @summary Get a list of NFT primary sales transactions
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
          * @param {'transaction_id' | 'status' | 'amount' | 'mint_id'} [orderBy] Property to sort by
@@ -342,15 +328,26 @@ export const NftCheckoutPrimaryApiFp = function(configuration?: Configuration) {
          * @param {string} [transactionId] Transaction id
          * @param {string} [contractAddress] Contract address of the asset
          * @param {string} [sellerWalletAddress] Ethereum address of the seller
-         * @param {string} [walletAddress] Ethereum address of the user who wants to create transaction
-         * @param {string} [status] Transaction status
-         * @param {'moonpay'} [provider] Provider name
-         * @param {string} [mintId] Mint id
+         * @param {string} [userWalletAddress] Ethereum address of the user who wants to create transaction
+         * @param {'created' | 'waitingPayment' | 'pending' | 'completed' | 'failed'} [status] Transaction status
+         * @param {'moonpay'} [provider] Checkout provider name
+         * @param {string} [mintId] Minting transaction ID - see mintTokens response
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getNftPrimaryTransactions(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'status' | 'amount' | 'mint_id', direction?: string, transactionId?: string, contractAddress?: string, sellerWalletAddress?: string, walletAddress?: string, status?: string, provider?: 'moonpay', mintId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftprimarytransactionListTransactionsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getNftPrimaryTransactions(pageSize, cursor, orderBy, direction, transactionId, contractAddress, sellerWalletAddress, walletAddress, status, provider, mintId, options);
+        async getNftPrimaryTransactions(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'status' | 'amount' | 'mint_id', direction?: string, transactionId?: string, contractAddress?: string, sellerWalletAddress?: string, userWalletAddress?: string, status?: 'created' | 'waitingPayment' | 'pending' | 'completed' | 'failed', provider?: 'moonpay', mintId?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<NftprimarytransactionListTransactionsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getNftPrimaryTransactions(pageSize, cursor, orderBy, direction, transactionId, contractAddress, sellerWalletAddress, userWalletAddress, status, provider, mintId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Registers a new contract for use in the minting with fiat card flow
+         * @summary Executes NFT primary sales contract registration
+         * @param {ContractCreateAPIRequest} createAPIRequest req
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async registerNftPrimarySalesContract(createAPIRequest: ContractCreateAPIRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ContractCreateResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.registerNftPrimarySalesContract(createAPIRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -364,66 +361,54 @@ export const NftCheckoutPrimaryApiFactory = function (configuration?: Configurat
     const localVarFp = NftCheckoutPrimaryApiFp(configuration)
     return {
         /**
-         * creates nft primary transaction
-         * @summary Create nft primary transaction
-         * @param {NftprimarytransactionCreateAPIRequest} createAPIRequest req
+         * Creates a transaction representing minting an NFT with a card payment.
+         * @summary Create NFT primary sale transaction
+         * @param {NftCheckoutPrimaryApiCreateNftPrimaryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createNftPrimary(createAPIRequest: NftprimarytransactionCreateAPIRequest, options?: any): AxiosPromise<NftprimarytransactionCreateResponse> {
-            return localVarFp.createNftPrimary(createAPIRequest, options).then((request) => request(axios, basePath));
+        createNftPrimary(requestParameters: NftCheckoutPrimaryApiCreateNftPrimaryRequest, options?: AxiosRequestConfig): AxiosPromise<NftprimarytransactionCreateResponse> {
+            return localVarFp.createNftPrimary(requestParameters.createAPIRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of supported currencies and their limits
          * @summary Get currencies with limits
-         * @param {'moonpay'} [provider] Provider name
-         * @param {boolean} [includeLimits] Flag if limits should be included in the response or not
+         * @param {NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCurrenciesNFTCheckoutPrimary(provider?: 'moonpay', includeLimits?: boolean, options?: any): AxiosPromise<CurrencyWithLimits> {
-            return localVarFp.getCurrenciesNFTCheckoutPrimary(provider, includeLimits, options).then((request) => request(axios, basePath));
+        getCurrenciesNFTCheckoutPrimary(requestParameters: NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest = {}, options?: AxiosRequestConfig): AxiosPromise<CurrencyWithLimits> {
+            return localVarFp.getCurrenciesNFTCheckoutPrimary(requestParameters.provider, requestParameters.includeLimits, options).then((request) => request(axios, basePath));
         },
         /**
-         * gets mint status by transaction ids
-         * @summary Get mint status by transaction id
-         * @param {'moonpay'} provider Provider name
-         * @param {string} id transaction id
+         * given a transaction id, returns the corresponding transaction representing a mint executed from a card payment
+         * @summary Get NFT primary sale transaction by id
+         * @param {NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMintStatusById(provider: 'moonpay', id: string, options?: any): AxiosPromise<ProviderGetMintStatusResponse> {
-            return localVarFp.getMintStatusById(provider, id, options).then((request) => request(axios, basePath));
+        getNftPrimaryTransaction(requestParameters: NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest, options?: AxiosRequestConfig): AxiosPromise<NftprimarytransactionGetResponse> {
+            return localVarFp.getNftPrimaryTransaction(requestParameters.transactionId, options).then((request) => request(axios, basePath));
         },
         /**
-         * gets nft primary transaction by transaction id
-         * @summary Get nft primary transaction by id
-         * @param {string} transactionId Transaction id
+         * Returns a list of NFT primary sales transactions
+         * @summary Get a list of NFT primary sales transactions
+         * @param {NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNftPrimaryTransaction(transactionId: string, options?: any): AxiosPromise<NftprimarytransactionGetResponse> {
-            return localVarFp.getNftPrimaryTransaction(transactionId, options).then((request) => request(axios, basePath));
+        getNftPrimaryTransactions(requestParameters: NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<NftprimarytransactionListTransactionsResponse> {
+            return localVarFp.getNftPrimaryTransactions(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.transactionId, requestParameters.contractAddress, requestParameters.sellerWalletAddress, requestParameters.userWalletAddress, requestParameters.status, requestParameters.provider, requestParameters.mintId, options).then((request) => request(axios, basePath));
         },
         /**
-         * Returns a list of NFT primary transactions
-         * @summary Get a list of NFT primary transactions
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'transaction_id' | 'status' | 'amount' | 'mint_id'} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [transactionId] Transaction id
-         * @param {string} [contractAddress] Contract address of the asset
-         * @param {string} [sellerWalletAddress] Ethereum address of the seller
-         * @param {string} [walletAddress] Ethereum address of the user who wants to create transaction
-         * @param {string} [status] Transaction status
-         * @param {'moonpay'} [provider] Provider name
-         * @param {string} [mintId] Mint id
+         * Registers a new contract for use in the minting with fiat card flow
+         * @summary Executes NFT primary sales contract registration
+         * @param {NftCheckoutPrimaryApiRegisterNftPrimarySalesContractRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getNftPrimaryTransactions(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'status' | 'amount' | 'mint_id', direction?: string, transactionId?: string, contractAddress?: string, sellerWalletAddress?: string, walletAddress?: string, status?: string, provider?: 'moonpay', mintId?: string, options?: any): AxiosPromise<NftprimarytransactionListTransactionsResponse> {
-            return localVarFp.getNftPrimaryTransactions(pageSize, cursor, orderBy, direction, transactionId, contractAddress, sellerWalletAddress, walletAddress, status, provider, mintId, options).then((request) => request(axios, basePath));
+        registerNftPrimarySalesContract(requestParameters: NftCheckoutPrimaryApiRegisterNftPrimarySalesContractRequest, options?: AxiosRequestConfig): AxiosPromise<ContractCreateResponse> {
+            return localVarFp.registerNftPrimarySalesContract(requestParameters.createAPIRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -461,27 +446,6 @@ export interface NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest {
      * @memberof NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimary
      */
     readonly includeLimits?: boolean
-}
-
-/**
- * Request parameters for getMintStatusById operation in NftCheckoutPrimaryApi.
- * @export
- * @interface NftCheckoutPrimaryApiGetMintStatusByIdRequest
- */
-export interface NftCheckoutPrimaryApiGetMintStatusByIdRequest {
-    /**
-     * Provider name
-     * @type {'moonpay'}
-     * @memberof NftCheckoutPrimaryApiGetMintStatusById
-     */
-    readonly provider: 'moonpay'
-
-    /**
-     * transaction id
-     * @type {string}
-     * @memberof NftCheckoutPrimaryApiGetMintStatusById
-     */
-    readonly id: string
 }
 
 /**
@@ -558,28 +522,42 @@ export interface NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest {
      * @type {string}
      * @memberof NftCheckoutPrimaryApiGetNftPrimaryTransactions
      */
-    readonly walletAddress?: string
+    readonly userWalletAddress?: string
 
     /**
      * Transaction status
-     * @type {string}
+     * @type {'created' | 'waitingPayment' | 'pending' | 'completed' | 'failed'}
      * @memberof NftCheckoutPrimaryApiGetNftPrimaryTransactions
      */
-    readonly status?: string
+    readonly status?: 'created' | 'waitingPayment' | 'pending' | 'completed' | 'failed'
 
     /**
-     * Provider name
+     * Checkout provider name
      * @type {'moonpay'}
      * @memberof NftCheckoutPrimaryApiGetNftPrimaryTransactions
      */
     readonly provider?: 'moonpay'
 
     /**
-     * Mint id
+     * Minting transaction ID - see mintTokens response
      * @type {string}
      * @memberof NftCheckoutPrimaryApiGetNftPrimaryTransactions
      */
     readonly mintId?: string
+}
+
+/**
+ * Request parameters for registerNftPrimarySalesContract operation in NftCheckoutPrimaryApi.
+ * @export
+ * @interface NftCheckoutPrimaryApiRegisterNftPrimarySalesContractRequest
+ */
+export interface NftCheckoutPrimaryApiRegisterNftPrimarySalesContractRequest {
+    /**
+     * req
+     * @type {ContractCreateAPIRequest}
+     * @memberof NftCheckoutPrimaryApiRegisterNftPrimarySalesContract
+     */
+    readonly createAPIRequest: ContractCreateAPIRequest
 }
 
 /**
@@ -590,8 +568,8 @@ export interface NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest {
  */
 export class NftCheckoutPrimaryApi extends BaseAPI {
     /**
-     * creates nft primary transaction
-     * @summary Create nft primary transaction
+     * Creates a transaction representing minting an NFT with a card payment.
+     * @summary Create NFT primary sale transaction
      * @param {NftCheckoutPrimaryApiCreateNftPrimaryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -614,20 +592,8 @@ export class NftCheckoutPrimaryApi extends BaseAPI {
     }
 
     /**
-     * gets mint status by transaction ids
-     * @summary Get mint status by transaction id
-     * @param {NftCheckoutPrimaryApiGetMintStatusByIdRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof NftCheckoutPrimaryApi
-     */
-    public getMintStatusById(requestParameters: NftCheckoutPrimaryApiGetMintStatusByIdRequest, options?: AxiosRequestConfig) {
-        return NftCheckoutPrimaryApiFp(this.configuration).getMintStatusById(requestParameters.provider, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * gets nft primary transaction by transaction id
-     * @summary Get nft primary transaction by id
+     * given a transaction id, returns the corresponding transaction representing a mint executed from a card payment
+     * @summary Get NFT primary sale transaction by id
      * @param {NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -638,14 +604,26 @@ export class NftCheckoutPrimaryApi extends BaseAPI {
     }
 
     /**
-     * Returns a list of NFT primary transactions
-     * @summary Get a list of NFT primary transactions
+     * Returns a list of NFT primary sales transactions
+     * @summary Get a list of NFT primary sales transactions
      * @param {NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof NftCheckoutPrimaryApi
      */
     public getNftPrimaryTransactions(requestParameters: NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest = {}, options?: AxiosRequestConfig) {
-        return NftCheckoutPrimaryApiFp(this.configuration).getNftPrimaryTransactions(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.transactionId, requestParameters.contractAddress, requestParameters.sellerWalletAddress, requestParameters.walletAddress, requestParameters.status, requestParameters.provider, requestParameters.mintId, options).then((request) => request(this.axios, this.basePath));
+        return NftCheckoutPrimaryApiFp(this.configuration).getNftPrimaryTransactions(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.transactionId, requestParameters.contractAddress, requestParameters.sellerWalletAddress, requestParameters.userWalletAddress, requestParameters.status, requestParameters.provider, requestParameters.mintId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Registers a new contract for use in the minting with fiat card flow
+     * @summary Executes NFT primary sales contract registration
+     * @param {NftCheckoutPrimaryApiRegisterNftPrimarySalesContractRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof NftCheckoutPrimaryApi
+     */
+    public registerNftPrimarySalesContract(requestParameters: NftCheckoutPrimaryApiRegisterNftPrimarySalesContractRequest, options?: AxiosRequestConfig) {
+        return NftCheckoutPrimaryApiFp(this.configuration).registerNftPrimarySalesContract(requestParameters.createAPIRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }

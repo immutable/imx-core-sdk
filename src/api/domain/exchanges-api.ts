@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -373,64 +374,52 @@ export const ExchangesApiFactory = function (configuration?: Configuration, base
         /**
          * Receive wallet_address, provider, type and widget information to create a base exchange transaction and return widget URL
          * @summary Create an exchange with URL
-         * @param {CreateExchangeAndURLAPIRequest} createExchangeAPIRequest req
+         * @param {ExchangesApiCreateExchangeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExchange(createExchangeAPIRequest: CreateExchangeAndURLAPIRequest, options?: any): AxiosPromise<ExchangeCreateExchangeAndURLResponse> {
-            return localVarFp.createExchange(createExchangeAPIRequest, options).then((request) => request(axios, basePath));
+        createExchange(requestParameters: ExchangesApiCreateExchangeRequest, options?: AxiosRequestConfig): AxiosPromise<ExchangeCreateExchangeAndURLResponse> {
+            return localVarFp.createExchange(requestParameters.createExchangeAPIRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
          * @summary Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
-         * @param {string} id Transaction ID
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
-         * @param {CreateTransferRequestV1} createTransferRequest Create a transfer
+         * @param {ExchangesApiCreateExchangeTransferRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExchangeTransfer(id: string, xImxEthAddress: string, xImxEthSignature: string, createTransferRequest: CreateTransferRequestV1, options?: any): AxiosPromise<CreateTransferResponseV1> {
-            return localVarFp.createExchangeTransfer(id, xImxEthAddress, xImxEthSignature, createTransferRequest, options).then((request) => request(axios, basePath));
+        createExchangeTransfer(requestParameters: ExchangesApiCreateExchangeTransferRequest, options?: AxiosRequestConfig): AxiosPromise<CreateTransferResponseV1> {
+            return localVarFp.createExchangeTransfer(requestParameters.id, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createTransferRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an exchange by ID
          * @summary Get an exchange by ID
-         * @param {string} id Exchange ID
+         * @param {ExchangesApiGetExchangeRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExchange(id: string, options?: any): AxiosPromise<Exchange> {
-            return localVarFp.getExchange(id, options).then((request) => request(axios, basePath));
+        getExchange(requestParameters: ExchangesApiGetExchangeRequest, options?: AxiosRequestConfig): AxiosPromise<Exchange> {
+            return localVarFp.getExchange(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * Send a request for signable-transfer-details (offramp)
          * @summary Send a request for signable-transfer-details (offramp)
-         * @param {string} id Transaction ID
-         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
+         * @param {ExchangesApiGetExchangeSignableTransferRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExchangeSignableTransfer(id: string, getSignableTransferRequest: GetSignableTransferRequestV1, options?: any): AxiosPromise<GetSignableTransferResponseV1> {
-            return localVarFp.getExchangeSignableTransfer(id, getSignableTransferRequest, options).then((request) => request(axios, basePath));
+        getExchangeSignableTransfer(requestParameters: ExchangesApiGetExchangeSignableTransferRequest, options?: AxiosRequestConfig): AxiosPromise<GetSignableTransferResponseV1> {
+            return localVarFp.getExchangeSignableTransfer(requestParameters.id, requestParameters.getSignableTransferRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Returns a list of exchanges based on the request
          * @summary Returns a list of exchanges based on the request
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'id' | 'status' | 'exchange' | 'amount' | 'transfer_id'} [orderBy] Property to sort by
-         * @param {'asc' | 'desc'} [direction] Direction to sort
-         * @param {number} [id] Transaction ID
-         * @param {string} [walletAddress] Ethereum address of the user who created transaction
-         * @param {'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut'} [status] Transaction status
-         * @param {'moonpay' | 'layerswap'} [provider] Provider name
-         * @param {string} [transferId] Transfer ID
+         * @param {ExchangesApiGetExchangesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExchanges(pageSize?: number, cursor?: string, orderBy?: 'id' | 'status' | 'exchange' | 'amount' | 'transfer_id', direction?: 'asc' | 'desc', id?: number, walletAddress?: string, status?: 'created' | 'pending' | 'completed' | 'failed' | 'waitingPayment' | 'timedOut', provider?: 'moonpay' | 'layerswap', transferId?: string, options?: any): AxiosPromise<GetTransactionsResponse> {
-            return localVarFp.getExchanges(pageSize, cursor, orderBy, direction, id, walletAddress, status, provider, transferId, options).then((request) => request(axios, basePath));
+        getExchanges(requestParameters: ExchangesApiGetExchangesRequest = {}, options?: AxiosRequestConfig): AxiosPromise<GetTransactionsResponse> {
+            return localVarFp.getExchanges(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.id, requestParameters.walletAddress, requestParameters.status, requestParameters.provider, requestParameters.transferId, options).then((request) => request(axios, basePath));
         },
     };
 };

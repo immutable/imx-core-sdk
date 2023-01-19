@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -247,39 +248,22 @@ export const AssetsApiFactory = function (configuration?: Configuration, basePat
         /**
          * Get details of an asset
          * @summary Get details of an asset
-         * @param {string} tokenAddress Address of the ERC721 contract
-         * @param {string} tokenId Either ERC721 token ID or internal IMX ID
-         * @param {boolean} [includeFees] Set flag to include fees associated with the asset
+         * @param {AssetsApiGetAssetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAsset(tokenAddress: string, tokenId: string, includeFees?: boolean, options?: any): AxiosPromise<Asset> {
-            return localVarFp.getAsset(tokenAddress, tokenId, includeFees, options).then((request) => request(axios, basePath));
+        getAsset(requestParameters: AssetsApiGetAssetRequest, options?: AxiosRequestConfig): AxiosPromise<Asset> {
+            return localVarFp.getAsset(requestParameters.tokenAddress, requestParameters.tokenId, requestParameters.includeFees, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of assets
          * @summary Get a list of assets
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'updated_at' | 'name'} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [user] Ethereum address of the user who owns these assets
-         * @param {'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned'} [status] Status of these assets
-         * @param {string} [name] Name of the asset to search
-         * @param {string} [metadata] URL JSON-encoded metadata filters for these assets. Javascript example: encodeURI(JSON.stringify({\&#39;proto\&#39;:[\&#39;1147\&#39;],\&#39;quality\&#39;:[\&#39;Meteorite\&#39;]}))
-         * @param {boolean} [sellOrders] Set flag to true to fetch an array of sell order details with accepted status associated with the asset
-         * @param {boolean} [buyOrders] Set flag to true to fetch an array of buy order details  with accepted status associated with the asset
-         * @param {boolean} [includeFees] Set flag to include fees associated with the asset
-         * @param {string} [collection] Collection contract address
-         * @param {string} [updatedMinTimestamp] Minimum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Maximum timestamp for when these assets were last updated, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
+         * @param {AssetsApiListAssetsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: 'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned', name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<ListAssetsResponse> {
-            return localVarFp.listAssets(pageSize, cursor, orderBy, direction, user, status, name, metadata, sellOrders, buyOrders, includeFees, collection, updatedMinTimestamp, updatedMaxTimestamp, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
+        listAssets(requestParameters: AssetsApiListAssetsRequest = {}, options?: AxiosRequestConfig): AxiosPromise<ListAssetsResponse> {
+            return localVarFp.listAssets(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.name, requestParameters.metadata, requestParameters.sellOrders, requestParameters.buyOrders, requestParameters.includeFees, requestParameters.collection, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
         },
     };
 };

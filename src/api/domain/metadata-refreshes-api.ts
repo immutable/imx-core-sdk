@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -355,55 +356,39 @@ export const MetadataRefreshesApiFactory = function (configuration?: Configurati
     return {
         /**
          * Get a list of metadata refreshes
-         * @param {string} xImxEthSignature String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
-         * @param {string} xImxEthTimestamp Unix Epoc timestamp
-         * @param {string} xImxEthAddress Wallet Address that signed the signature
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {string} [collectionAddress] Collection address
+         * @param {MetadataRefreshesApiGetAListOfMetadataRefreshesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAListOfMetadataRefreshes(xImxEthSignature: string, xImxEthTimestamp: string, xImxEthAddress: string, pageSize?: number, cursor?: string, collectionAddress?: string, options?: any): AxiosPromise<GetMetadataRefreshes> {
-            return localVarFp.getAListOfMetadataRefreshes(xImxEthSignature, xImxEthTimestamp, xImxEthAddress, pageSize, cursor, collectionAddress, options).then((request) => request(axios, basePath));
+        getAListOfMetadataRefreshes(requestParameters: MetadataRefreshesApiGetAListOfMetadataRefreshesRequest, options?: AxiosRequestConfig): AxiosPromise<GetMetadataRefreshes> {
+            return localVarFp.getAListOfMetadataRefreshes(requestParameters.xImxEthSignature, requestParameters.xImxEthTimestamp, requestParameters.xImxEthAddress, requestParameters.pageSize, requestParameters.cursor, requestParameters.collectionAddress, options).then((request) => request(axios, basePath));
         },
         /**
          * Get metadata refresh errors
-         * @param {string} refreshId The metadata refresh ID
-         * @param {string} xImxEthSignature String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
-         * @param {string} xImxEthTimestamp Unix Epoc timestamp
-         * @param {string} xImxEthAddress Wallet Address that signed the signature
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
+         * @param {MetadataRefreshesApiGetMetadataRefreshErrorsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMetadataRefreshErrors(refreshId: string, xImxEthSignature: string, xImxEthTimestamp: string, xImxEthAddress: string, pageSize?: number, cursor?: string, options?: any): AxiosPromise<GetMetadataRefreshErrorsResponse> {
-            return localVarFp.getMetadataRefreshErrors(refreshId, xImxEthSignature, xImxEthTimestamp, xImxEthAddress, pageSize, cursor, options).then((request) => request(axios, basePath));
+        getMetadataRefreshErrors(requestParameters: MetadataRefreshesApiGetMetadataRefreshErrorsRequest, options?: AxiosRequestConfig): AxiosPromise<GetMetadataRefreshErrorsResponse> {
+            return localVarFp.getMetadataRefreshErrors(requestParameters.refreshId, requestParameters.xImxEthSignature, requestParameters.xImxEthTimestamp, requestParameters.xImxEthAddress, requestParameters.pageSize, requestParameters.cursor, options).then((request) => request(axios, basePath));
         },
         /**
          * Get metadata refresh results
-         * @param {string} refreshId The metadata refresh ID
-         * @param {string} xImxEthSignature String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
-         * @param {string} xImxEthTimestamp Unix Epoc timestamp
-         * @param {string} xImxEthAddress Wallet Address that signed the signature
+         * @param {MetadataRefreshesApiGetMetadataRefreshResultsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMetadataRefreshResults(refreshId: string, xImxEthSignature: string, xImxEthTimestamp: string, xImxEthAddress: string, options?: any): AxiosPromise<GetMetadataRefreshResponse> {
-            return localVarFp.getMetadataRefreshResults(refreshId, xImxEthSignature, xImxEthTimestamp, xImxEthAddress, options).then((request) => request(axios, basePath));
+        getMetadataRefreshResults(requestParameters: MetadataRefreshesApiGetMetadataRefreshResultsRequest, options?: AxiosRequestConfig): AxiosPromise<GetMetadataRefreshResponse> {
+            return localVarFp.getMetadataRefreshResults(requestParameters.refreshId, requestParameters.xImxEthSignature, requestParameters.xImxEthTimestamp, requestParameters.xImxEthAddress, options).then((request) => request(axios, basePath));
         },
         /**
          * Request metadata refresh for provided tokens
-         * @param {string} xImxEthSignature String created by signing wallet address and timestamp. See https://docs.x.immutable.com/docs/generate-imx-signature
-         * @param {string} xImxEthTimestamp Unix Epoc timestamp
-         * @param {string} xImxEthAddress Wallet Address that signed the signature
-         * @param {CreateMetadataRefreshRequest} createMetadataRefreshRequest Create metadata refresh request
+         * @param {MetadataRefreshesApiRequestAMetadataRefreshRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        requestAMetadataRefresh(xImxEthSignature: string, xImxEthTimestamp: string, xImxEthAddress: string, createMetadataRefreshRequest: CreateMetadataRefreshRequest, options?: any): AxiosPromise<CreateMetadataRefreshResponse> {
-            return localVarFp.requestAMetadataRefresh(xImxEthSignature, xImxEthTimestamp, xImxEthAddress, createMetadataRefreshRequest, options).then((request) => request(axios, basePath));
+        requestAMetadataRefresh(requestParameters: MetadataRefreshesApiRequestAMetadataRefreshRequest, options?: AxiosRequestConfig): AxiosPromise<CreateMetadataRefreshResponse> {
+            return localVarFp.requestAMetadataRefresh(requestParameters.xImxEthSignature, requestParameters.xImxEthTimestamp, requestParameters.xImxEthAddress, requestParameters.createMetadataRefreshRequest, options).then((request) => request(axios, basePath));
         },
     };
 };

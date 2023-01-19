@@ -13,8 +13,9 @@
  */
 
 
-import globalAxios, { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
-import { Configuration } from '../configuration';
+import type { Configuration } from '../configuration';
+import type { AxiosPromise, AxiosInstance, AxiosRequestConfig } from 'axios';
+import globalAxios from 'axios';
 // Some imports not used depending on template conditions
 // @ts-ignore
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
@@ -105,13 +106,12 @@ export const EncodingApiFactory = function (configuration?: Configuration, baseP
         /**
          * Retrieves the Starkex Encoded format for a given asset so that it can be used as parameter for Starkex smart contracts
          * @summary Retrieves the Starkex Encoded format for a given asset
-         * @param {string} assetType Asset type to be encoded. (asset/mintable-asset)
-         * @param {EncodeAssetRequest} encodeAssetRequest Encode Asset
+         * @param {EncodingApiEncodeAssetRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        encodeAsset(assetType: string, encodeAssetRequest: EncodeAssetRequest, options?: any): AxiosPromise<EncodeAssetResponse> {
-            return localVarFp.encodeAsset(assetType, encodeAssetRequest, options).then((request) => request(axios, basePath));
+        encodeAsset(requestParameters: EncodingApiEncodeAssetRequest, options?: AxiosRequestConfig): AxiosPromise<EncodeAssetResponse> {
+            return localVarFp.encodeAsset(requestParameters.assetType, requestParameters.encodeAssetRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
