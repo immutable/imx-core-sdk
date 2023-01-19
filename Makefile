@@ -22,7 +22,7 @@ get-openapi-sandbox:
 generate-api:
 	rm -rf src/api && \
     mkdir src/api && \
-	docker run --rm -v $(shell pwd):/app openapitools/openapi-generator-cli generate \
+	docker run --rm -v $(shell pwd):/app openapitools/openapi-generator-cli:v6.2.1 generate \
     -i ./app/openapi.json \
     -g typescript-axios \
     --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true,withSeparateModelsAndApi=true,modelPackage=models,apiPackage=domain,useSingleRequestParameter=true \

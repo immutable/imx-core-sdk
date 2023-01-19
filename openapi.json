@@ -812,13 +812,13 @@
           {
             "type": "string",
             "description": "Minimum timestamp for this deposit, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "updated_min_timestamp",
+            "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
             "description": "Maximum timestamp for this deposit, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "updated_max_timestamp",
+            "name": "max_timestamp",
             "in": "query"
           },
           {
@@ -1445,12 +1445,6 @@
             "type": "string",
             "description": "ERC721 Token ID of the minted asset",
             "name": "token_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "[DEPRECATED] Internal IMX ID of the minted asset",
-            "name": "asset_id",
             "in": "query"
           },
           {
@@ -3545,14 +3539,14 @@
     },
     "/v2/nft/primary": {
       "get": {
-        "description": "Returns a list of NFT primary transactions",
+        "description": "Returns a list of NFT primary sales transactions",
         "produces": [
           "application/json"
         ],
         "tags": [
           "nft-checkout-primary"
         ],
-        "summary": "Get a list of NFT primary transactions",
+        "summary": "Get a list of NFT primary sales transactions",
         "operationId": "getNftPrimaryTransactions",
         "parameters": [
           {
@@ -3606,10 +3600,17 @@
           {
             "type": "string",
             "description": "Ethereum address of the user who wants to create transaction",
-            "name": "wallet_address",
+            "name": "user_wallet_address",
             "in": "query"
           },
           {
+            "enum": [
+              "created",
+              "waitingPayment",
+              "pending",
+              "completed",
+              "failed"
+            ],
             "type": "string",
             "description": "Transaction status",
             "name": "status",
@@ -3617,17 +3618,16 @@
           },
           {
             "enum": [
-              "moonpay",
-              "layerswap"
+              "moonpay"
             ],
             "type": "string",
-            "description": "Provider name",
+            "description": "Checkout provider name",
             "name": "provider",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Mint id",
+            "description": "Minting transaction ID - see mintTokens response",
             "name": "mint_id",
             "in": "query"
           }
@@ -3648,7 +3648,7 @@
         }
       },
       "post": {
-        "description": "creates nft primary transaction",
+        "description": "Creates a transaction representing minting an NFT with a card payment.",
         "consumes": [
           "application/json"
         ],
@@ -3658,7 +3658,7 @@
         "tags": [
           "nft-checkout-primary"
         ],
-        "summary": "Create nft primary transaction",
+        "summary": "Create NFT primary sale transaction",
         "operationId": "createNftPrimary",
         "parameters": [
           {
@@ -3734,9 +3734,9 @@
         }
       }
     },
-    "/v2/nft/primary/{transaction_id}": {
-      "get": {
-        "description": "gets nft primary transaction by transaction id",
+    "/v2/nft/primary/register": {
+      "post": {
+        "description": "Registers a new contract for use in the minting with fiat card flow",
         "consumes": [
           "application/json"
         ],
@@ -3746,7 +3746,48 @@
         "tags": [
           "nft-checkout-primary"
         ],
-        "summary": "Get nft primary transaction by id",
+        "summary": "Executes NFT primary sales contract registration",
+        "operationId": "registerNftPrimarySalesContract",
+        "parameters": [
+          {
+            "description": "req",
+            "name": "CreateAPIRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/contract.CreateAPIRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/contract.CreateResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/lambdas.APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/nft/primary/{transaction_id}": {
+      "get": {
+        "description": "given a transaction id, returns the corresponding transaction representing a mint executed from a card payment",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "nft-checkout-primary"
+        ],
+        "summary": "Get NFT primary sale transaction by id",
         "operationId": "getNftPrimaryTransaction",
         "parameters": [
           {
@@ -3900,56 +3941,6 @@
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      }
-    },
-    "/v2/{provider}/transaction_status": {
-      "get": {
-        "description": "gets mint status by transaction ids",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "nft-checkout-primary"
-        ],
-        "summary": "Get mint status by transaction id",
-        "operationId": "getMintStatusById",
-        "parameters": [
-          {
-            "enum": [
-              "moonpay",
-              "layerswap"
-            ],
-            "type": "string",
-            "description": "Provider name",
-            "name": "provider",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "transaction id",
-            "name": "id",
-            "in": "query",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/provider.GetMintStatusResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/lambdas.APIError"
             }
           }
         }
@@ -4850,7 +4841,7 @@
           "type": "string"
         },
         "contact_email": {
-          "description": "The project contact email",
+          "description": "The project contact email (must be registered as a developer account with Immutable at https://hub.immutable.com)",
           "type": "string"
         },
         "name": {
@@ -6535,6 +6526,7 @@
         "users": {
           "description": "Users to mint to",
           "type": "array",
+          "minItems": 1,
           "items": {
             "$ref": "#/definitions/MintUser"
           }
@@ -6816,7 +6808,7 @@
           "type": "string"
         },
         "contact_email": {
-          "description": "The project contact email",
+          "description": "The project contact email (must be registered as a developer account with Immutable at https://hub.immutable.com)",
           "type": "string"
         },
         "id": {
@@ -7343,6 +7335,28 @@
         }
       }
     },
+    "contract.CreateAPIRequest": {
+      "type": "object",
+      "properties": {
+        "contract_address": {
+          "type": "string"
+        },
+        "data_url": {
+          "type": "string"
+        },
+        "mint_url": {
+          "type": "string"
+        }
+      }
+    },
+    "contract.CreateResponse": {
+      "type": "object",
+      "properties": {
+        "webhook_hash": {
+          "type": "string"
+        }
+      }
+    },
     "encodeAssetRequestToken": {
       "type": "object",
       "properties": {
@@ -7444,7 +7458,7 @@
           "type": "string"
         },
         "offer_id": {
-          "description": "Temporary asset id",
+          "description": "Temporary asset id. Might be a token id if the token id is known or a generic description if it's not",
           "type": "string"
         },
         "provider": {
@@ -7452,11 +7466,11 @@
           "type": "string"
         },
         "seller_wallet_address": {
-          "description": "Ethereum address of the seller",
+          "description": "Wallet address that will receive the payment (in crypto) from the checkout provider for the minted NFT",
           "type": "string"
         },
         "token_id": {
-          "description": "Asset id",
+          "description": "ID of the token that has been successfully minted - should be the same as `offer_id`",
           "type": "string"
         },
         "transaction_id": {
@@ -7464,7 +7478,7 @@
           "type": "string"
         },
         "url": {
-          "description": "Widget Url signed by provider",
+          "description": "NFT purchase URL given by the checkout provider that the user can use to complete payment",
           "type": "string"
         },
         "user_wallet_address": {
@@ -7481,7 +7495,7 @@
           "type": "string"
         },
         "offer_id": {
-          "description": "Temporary asset id",
+          "description": "Temporary asset id. Might be a token id if the token id is known or a generic description if it's not",
           "type": "string"
         },
         "provider": {
@@ -7493,11 +7507,11 @@
           "type": "string"
         },
         "status": {
-          "description": "Transaction status",
+          "description": "Transaction status enums(created, waitingPayment, pending, completed, failed)",
           "type": "string"
         },
         "token_id": {
-          "description": "Asset id",
+          "description": "ID of the token that has been successfully minted - might or not be the same as `offer_id`",
           "type": "string"
         },
         "transaction_id": {
@@ -7505,7 +7519,7 @@
           "type": "string"
         },
         "user_wallet_address": {
-          "description": "Ethereum address of the user who wants to create transaction",
+          "description": "Wallet address that receives the minted NFT",
           "type": "string"
         }
       }
@@ -7550,15 +7564,15 @@
           "type": "number"
         },
         "from_amount": {
-          "description": "Amount of currency (from_currency) used for transaction",
+          "description": "Amount of the currency specified in `from_currency` that the buyer paid for the transaction",
           "type": "number"
         },
         "from_currency": {
-          "description": "Currency used for transaction",
+          "description": "Currency that the buyer used for the transaction",
           "type": "string"
         },
         "mint_id": {
-          "description": "Mint id",
+          "description": "Minting transaction ID - see mintTokens response",
           "type": "string"
         },
         "mint_status": {
@@ -7566,7 +7580,7 @@
           "type": "string"
         },
         "offer_id": {
-          "description": "Temporary asset id",
+          "description": "Temporary asset id. Might be a token id if the token id is known or a generic description if it's not",
           "type": "string"
         },
         "provider": {
@@ -7578,19 +7592,19 @@
           "type": "string"
         },
         "status": {
-          "description": "Transaction status",
+          "description": "Transaction status enums(created, waitingPayment, pending, completed, failed)",
           "type": "string"
         },
         "to_amount": {
-          "description": "Amount of target currency (to_currency) bought",
+          "description": "Amount of the currency specified in `to_currency` that the seller received from the checkout provider for the transaction",
           "type": "number"
         },
         "to_currency": {
-          "description": "Target currency",
+          "description": "Currency (crypto) that the checkout provider sent to the seller for the transaction",
           "type": "string"
         },
         "token_id": {
-          "description": "Asset id",
+          "description": "ID of the token that has been successfully minted - should be the same as `offer_id`",
           "type": "string"
         },
         "transaction_id": {
@@ -7602,7 +7616,7 @@
           "type": "string"
         },
         "user_wallet_address": {
-          "description": "Ethereum address of the user who wants to create transaction",
+          "description": "Wallet address that receives the minted NFT",
           "type": "string"
         }
       }
@@ -7611,52 +7625,9 @@
       "type": "object",
       "properties": {
         "theme": {
+          "description": "enums(light, dark)",
           "type": "string",
           "example": "light"
-        }
-      }
-    },
-    "provider.GetMintStatusResponse": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "description": "Mint status for requested transactions",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/provider.MintStatus"
-          }
-        }
-      }
-    },
-    "provider.MintStatus": {
-      "type": "object",
-      "properties": {
-        "failureReason": {
-          "description": "reason for mint failure",
-          "type": "string"
-        },
-        "id": {
-          "description": "External transaction id",
-          "type": "string"
-        },
-        "status": {
-          "description": "Mint status",
-          "type": "string"
-        },
-        "statusChangedAt": {
-          "description": "status updated-at timestamp",
-          "type": "string"
-        },
-        "tokenId": {
-          "description": "Asset id",
-          "type": "string"
-        },
-        "transactionHash": {
-          "description": "Transaction hash",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     }

@@ -27,7 +27,7 @@ export interface NftprimarytransactionCreateResponse {
      */
     'contract_address'?: string;
     /**
-     * Temporary asset id
+     * Temporary asset id. Might be a token id if the token id is known or a generic description if it\'s not
      * @type {string}
      * @memberof NftprimarytransactionCreateResponse
      */
@@ -39,13 +39,13 @@ export interface NftprimarytransactionCreateResponse {
      */
     'provider'?: string;
     /**
-     * Ethereum address of the seller
+     * Wallet address that will receive the payment (in crypto) from the checkout provider for the minted NFT
      * @type {string}
      * @memberof NftprimarytransactionCreateResponse
      */
     'seller_wallet_address'?: string;
     /**
-     * Asset id
+     * ID of the token that has been successfully minted - should be the same as `offer_id`
      * @type {string}
      * @memberof NftprimarytransactionCreateResponse
      */
@@ -57,7 +57,7 @@ export interface NftprimarytransactionCreateResponse {
      */
     'transaction_id'?: string;
     /**
-     * Widget Url signed by provider
+     * NFT purchase URL given by the checkout provider that the user can use to complete payment
      * @type {string}
      * @memberof NftprimarytransactionCreateResponse
      */

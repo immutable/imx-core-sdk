@@ -45,19 +45,19 @@ export interface NftprimarytransactionTransactionData {
      */
     'fees_amount'?: number;
     /**
-     * Amount of currency (from_currency) used for transaction
+     * Amount of the currency specified in `from_currency` that the buyer paid for the transaction
      * @type {number}
      * @memberof NftprimarytransactionTransactionData
      */
     'from_amount'?: number;
     /**
-     * Currency used for transaction
+     * Currency that the buyer used for the transaction
      * @type {string}
      * @memberof NftprimarytransactionTransactionData
      */
     'from_currency'?: string;
     /**
-     * Mint id
+     * Minting transaction ID - see mintTokens response
      * @type {string}
      * @memberof NftprimarytransactionTransactionData
      */
@@ -69,7 +69,7 @@ export interface NftprimarytransactionTransactionData {
      */
     'mint_status'?: string;
     /**
-     * Temporary asset id
+     * Temporary asset id. Might be a token id if the token id is known or a generic description if it\'s not
      * @type {string}
      * @memberof NftprimarytransactionTransactionData
      */
@@ -87,25 +87,25 @@ export interface NftprimarytransactionTransactionData {
      */
     'seller_wallet_address'?: string;
     /**
-     * Transaction status
+     * Transaction status enums(created, waitingPayment, pending, completed, failed)
      * @type {string}
      * @memberof NftprimarytransactionTransactionData
      */
     'status'?: string;
     /**
-     * Amount of target currency (to_currency) bought
+     * Amount of the currency specified in `to_currency` that the seller received from the checkout provider for the transaction
      * @type {number}
      * @memberof NftprimarytransactionTransactionData
      */
     'to_amount'?: number;
     /**
-     * Target currency
+     * Currency (crypto) that the checkout provider sent to the seller for the transaction
      * @type {string}
      * @memberof NftprimarytransactionTransactionData
      */
     'to_currency'?: string;
     /**
-     * Asset id
+     * ID of the token that has been successfully minted - should be the same as `offer_id`
      * @type {string}
      * @memberof NftprimarytransactionTransactionData
      */
@@ -123,7 +123,7 @@ export interface NftprimarytransactionTransactionData {
      */
     'updated_at'?: string;
     /**
-     * Ethereum address of the user who wants to create transaction
+     * Wallet address that receives the minted NFT
      * @type {string}
      * @memberof NftprimarytransactionTransactionData
      */
