@@ -6,6 +6,9 @@
   "scripts": {
     "register-user": "ts-node -r dotenv/config registerUser.ts",
     "create-order": "ts-node -r dotenv/config createOrder.ts",
+    "list-orders": "ts-node -r dotenv/config listOrders.ts",
+    "get-order": "ts-node -r dotenv/config getOrder.ts",
+    "cancel-order": "ts-node -r dotenv/config cancelOrder.ts",
     "create-trade": "ts-node -r dotenv/config createTrade.ts",
     "create-exchange-transfer": "ts-node -r dotenv/config createExchangeTransfer.ts",
     "create-nft-primary-txn": "ts-node -r dotenv/config createNftPrimaryTransaction.ts",

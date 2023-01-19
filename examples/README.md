@@ -110,6 +110,30 @@ Update [createOrder.ts](./createOrder.ts#L9) with your order details then run
 yarn create-order
 ```
 
+## List orders
+
+Update [listOrders.ts](./listOrders.ts#L11) with your order query details then run
+
+```sh
+yarn list-orders
+```
+
+## Get order
+
+Update [getOrder.ts](./getOrder.ts#L11) with your order id then run
+
+```sh
+yarn get-order
+```
+
+## Cancel order
+
+Update [cancelOrder.ts](./cancelOrder.ts#L10) with your order id then run
+
+```sh
+yarn cancel-order
+```
+
 ## Create trade
 
 Update [createTrade.ts](./createTrade.ts#L9) with your trade details then run
