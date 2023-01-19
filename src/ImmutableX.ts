@@ -62,7 +62,6 @@ import {
   NftCheckoutPrimaryApi,
   NftCheckoutPrimaryApiCreateNftPrimaryRequest,
   NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest,
-  NftCheckoutPrimaryApiGetMintStatusByIdRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest,
 } from './api';
@@ -939,20 +938,6 @@ export class ImmutableX {
       .catch(err => {
         throw formatError(err);
       });
-  }
-
-  /**
-   * Get mint status by nft primary transaction id
-   * @param request - the request object to be provided in the API request
-   * @returns a promise that resolves with nft primary mint status
-   * @throws {@link index.IMXError}
-   */
-  public getMintStatusById(
-    request: NftCheckoutPrimaryApiGetMintStatusByIdRequest,
-  ) {
-    return this.nftCheckoutPrimaryApi.getMintStatusById(request).catch(err => {
-      throw formatError(err);
-    });
   }
 
   /**
