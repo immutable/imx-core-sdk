@@ -156,10 +156,34 @@ yarn list-metadata-refreshes
 ```
 
 
-## Get Metadata Refreshe Errors
+## Get Metadata Refresh Errors
 
 Update [getMetadataRefreshErrors.ts](./getMetadataRefreshErrors.ts#L10) with your refresh details then run
 
 ```sh
 yarn get-metadata-refresh-errors
+```
+
+## Add Metadata Schema To Collection
+
+Update [addMetadataSchemaToCollection.ts](./addMetadataSchemaToCollection.ts#L10) with your metadata schema details then run
+
+```sh
+yarn add-metadata-schema-to-collection
+```
+
+## Get Metadata Schema
+
+Update [getMetadataSchema.ts](./getMetadataSchema.ts#L10) with your collection details then run
+
+```sh
+yarn get-metadata-schema
+```
+
+## Update Metadata Schema By Name
+
+Update [updateMetadataSchemaByName.ts](./updateMetadataSchemaByName.ts#L10) with your metadata schema details then run
+
+```sh
+yarn update-metadata-schema-by-name
 ```

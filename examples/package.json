@@ -20,7 +20,10 @@
     "create-metadata-refresh": "ts-node -r dotenv/config createMetadataRefresh.ts",
     "get-metadata-refresh-results": "ts-node -r dotenv/config getMetadataRefreshResults.ts",
     "list-metadata-refreshes": "ts-node -r dotenv/config listMetadataRefreshes.ts",
-    "get-metadata-refresh-errors": "ts-node -r dotenv/config getMetadataRefreshErrors.ts"
+    "get-metadata-refresh-errors": "ts-node -r dotenv/config getMetadataRefreshErrors.ts",
+    "add-metadata-schema-to-collection": "ts-node -r dotenv/config addMetadataSchemaToCollection.ts",
+    "get-metadata-schema": "ts-node -r dotenv/config getMetadataSchema.ts",
+    "update-metadata-schema-by-name": "ts-node -r dotenv/config updateMetadataSchemaByName.ts"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
