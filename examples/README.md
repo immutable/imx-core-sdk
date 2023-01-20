@@ -37,6 +37,14 @@ Update [depositEth.ts](./depositEth.ts#L14) with your deposit amount then run
 yarn deposit-eth
 ```
 
+## Deposit NFT
+
+Update [depositNft.ts](./depositNft.ts#L14) with your token address and id then run
+
+```sh
+yarn deposit-nft
+```
+
 ## Prepare Eth Withdrawal
 
 Update [createEthWithdrawal.ts](./createEthWithdrawal.ts#L12) with your withdrawal amount then run
@@ -78,12 +86,52 @@ Update [mint.ts](./mint.ts#L9) with your minting details then run
 yarn mint
 ```
 
+## List mints
+
+Update [listMints.ts](./listMints.ts#L13) with your mint query details then run
+
+```sh
+yarn list-mints
+```
+
+## Get mint
+
+Update [getMint.ts](./getMint.ts#L13) with your mint id then run
+
+```sh
+yarn get-mint
+```
+
 ## Create order
 
 Update [createOrder.ts](./createOrder.ts#L9) with your order details then run
 
 ```sh
 yarn create-order
+```
+
+## List orders
+
+Update [listOrders.ts](./listOrders.ts#L11) with your order query details then run
+
+```sh
+yarn list-orders
+```
+
+## Get order
+
+Update [getOrder.ts](./getOrder.ts#L11) with your order id then run
+
+```sh
+yarn get-order
+```
+
+## Cancel order
+
+Update [cancelOrder.ts](./cancelOrder.ts#L10) with your order id then run
+
+```sh
+yarn cancel-order
 ```
 
 ## Create trade
