@@ -7,8 +7,8 @@ import { generateWalletConnection } from './libs/walletConnection';
   const imxClient = new ImmutableX(Config.SANDBOX);
 
   const metadataRefreshParams: CreateMetadataRefreshRequest = {
-    collection_address: "0x07f68c5cda94347bf1c34ce398330aa42c0842b7",
-    token_ids:["1","2","3","4","5","6"] 
+    collection_address: '', // The collection contract address
+    token_ids:[] // The tokens to refresh
   };
 
   try {

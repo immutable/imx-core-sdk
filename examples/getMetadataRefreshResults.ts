@@ -6,7 +6,7 @@ import { generateWalletConnection } from './libs/walletConnection';
 
   const imxClient = new ImmutableX(Config.SANDBOX);
 
-  const refreshId: string = '7b6855ac-2431-4040-aff1-931d03d53643';
+  const refreshId: string = ''; // The metadata refresh ID returned from creating a metadata refresh request
 
   try {
     const metadataRefreshResultResponse = await imxClient.getMetadataRefreshResults(

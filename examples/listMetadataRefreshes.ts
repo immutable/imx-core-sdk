@@ -6,9 +6,9 @@ import { generateWalletConnection } from './libs/walletConnection';
 
   const imxClient = new ImmutableX(Config.SANDBOX);
 
-  const collectionAddress: string = '';
-  const pageSize: number = 200;
-  const cursor: string = '';
+  const collectionAddress: string = ''; // Collection address
+  const pageSize: number = 200; // Page size of the result
+  const cursor: string = ''; // Cursor used for pagination of results
 
   try {
     const listMetadataRefreshResponse = await imxClient.listMetadataRefreshes(
