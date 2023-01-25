@@ -23,7 +23,19 @@
     "get-mint": "ts-node -r dotenv/config getMint.ts",
     "transfer-nfts": "ts-node -r dotenv/config transferNfts.ts",
     "transfer-eth": "ts-node -r dotenv/config transferEth.ts",
-    "transfer-erc20": "ts-node -r dotenv/config transferErc20.ts"
+    "transfer-erc20": "ts-node -r dotenv/config transferErc20.ts",
+    "get-balance": "ts-node -r dotenv/config getBalance.ts",
+    "list-balances": "ts-node -r dotenv/config listBalances.ts",
+    "get-projects": "ts-node -r dotenv/config getProjects.ts",
+    "get-transfer": "ts-node -r dotenv/config getTransfer.ts",
+    "list-transfers": "ts-node -r dotenv/config listTransfers.ts",
+    "get-user": "ts-node -r dotenv/config getUser.ts",
+    "get-withdrawal": "ts-node -r dotenv/config getWithdrawal.ts",
+    "list-withdrawals": "ts-node -r dotenv/config listWithdrawals.ts",
+    "create-nft-withdrawal": "ts-node -r dotenv/config createNftWithdrawal.ts",
+    "complete-nft-withdrawal": "ts-node -r dotenv/config completeNftWithdrawal.ts",
+    "complete-erc20-withdrawal": "ts-node -r dotenv/config completeErc20Withdrawal.ts",
+    "create-erc20-withdrawal": "ts-node -r dotenv/config completeErc20Withdrawal.ts"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",
