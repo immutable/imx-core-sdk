@@ -5,13 +5,12 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
     // IMX class client
     const client = new ImmutableX(Config.SANDBOX);
 
-    // Get a list of orders
-    const listOrdersResponse = await client.listOrders({
-      buyTokenId: '',
-      buyTokenAddress: ''
+    // Get details of a trade with the trade ID
+    const getTradeResponse = await client.getTrade({
+      id: ''
     });
 
-    console.log('listOrdersResponse', JSON.stringify(listOrdersResponse));
+    console.log('getTradeResponse', JSON.stringify(getTradeResponse));
   } catch (err) {
     console.error(err);
     process.exit(1);
