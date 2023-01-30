@@ -10,6 +10,8 @@
     "get-order": "ts-node -r dotenv/config getOrder.ts",
     "cancel-order": "ts-node -r dotenv/config cancelOrder.ts",
     "create-trade": "ts-node -r dotenv/config createTrade.ts",
+    "list-trades": "ts-node -r dotenv/config listTrades.ts",
+    "get-trade": "ts-node -r dotenv/config getTrade.ts",
     "create-exchange-transfer": "ts-node -r dotenv/config createExchangeTransfer.ts",
     "create-nft-primary-txn": "ts-node -r dotenv/config createNftPrimaryTransaction.ts",
     "deposit-eth": "ts-node -r dotenv/config depositEth.ts",
@@ -30,7 +32,9 @@
     "get-metadata-refresh-errors": "ts-node -r dotenv/config getMetadataRefreshErrors.ts",
     "add-metadata-schema-to-collection": "ts-node -r dotenv/config addMetadataSchemaToCollection.ts",
     "get-metadata-schema": "ts-node -r dotenv/config getMetadataSchema.ts",
-    "update-metadata-schema-by-name": "ts-node -r dotenv/config updateMetadataSchemaByName.ts"
+    "update-metadata-schema-by-name": "ts-node -r dotenv/config updateMetadataSchemaByName.ts",
+    "list-tokens": "ts-node -r dotenv/config listTokens.ts",
+    "get-token": "ts-node -r dotenv/config getToken.ts"
   },
   "dependencies": {
     "@ethersproject/providers": "^5.7.2",

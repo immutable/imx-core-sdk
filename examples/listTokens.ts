@@ -5,13 +5,13 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
     // IMX class client
     const client = new ImmutableX(Config.SANDBOX);
 
-    // Get a list of orders
-    const listOrdersResponse = await client.listOrders({
-      buyTokenId: '',
-      buyTokenAddress: ''
+    // Get a list of tokens
+    const listTokensResponse = await client.listTokens({
+      orderBy: 'symbol',
+      symbols: "IMX,ETH"
     });
 
-    console.log('listOrdersResponse', JSON.stringify(listOrdersResponse));
+    console.log('listTokensResponse', JSON.stringify(listTokensResponse));
   } catch (err) {
     console.error(err);
     process.exit(1);

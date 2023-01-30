@@ -142,6 +142,22 @@ Update [createTrade.ts](./createTrade.ts#L9) with your trade details then run
 yarn create-trade
 ```
 
+## List trades
+
+Update [listTrades.ts](./listTrades.ts#L10) with your trade query details then run
+
+```sh
+yarn list-trades
+```
+
+## Get trade
+
+Update [getTrade.ts](./getTrade.ts#L10) with your trade id then run
+
+```sh
+yarn get-trade
+```
+
 ## Transfer Nfts
 
 Update [transferNfts.ts](./transferNfts.ts#L13) with your transfer details then run
@@ -181,6 +197,7 @@ Update [create-nft-primary-txn.ts](./create-nft-primary-txn.ts#L10) with your ex
 ```sh
 yarn create-nft-primary-txn
 ```
+
 ## Create Metadata Refresh
 
 Update [createMetadataRefresh.ts](./createMetadataRefresh.ts#L10) with your refresh details then run
@@ -234,4 +251,20 @@ Update [updateMetadataSchemaByName.ts](./updateMetadataSchemaByName.ts#L10) with
 
 ```sh
 yarn update-metadata-schema-by-name
+```
+
+## List tokens
+
+Update [listTokens.ts](./listTokens.ts#L10) with your token query details then run
+
+```sh
+yarn list-tokens
+```
+
+## Get token
+
+Update [getToken.ts](./getToken.ts#L10) with the token contract address then run
+
+```sh
+yarn get-token
 ```
