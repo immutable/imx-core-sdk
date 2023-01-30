@@ -198,21 +198,21 @@ Update [create-nft-primary-txn.ts](./create-nft-primary-txn.ts#L10) with your ex
 yarn create-nft-primary-txn
 ```
 
-## Create Metadata Refresh
+## Create metadata refresh
 
 Update [createMetadataRefresh.ts](./createMetadataRefresh.ts#L10) with your refresh details then run
 
 ```sh
 yarn create-metadata-refresh
 ```
-## Get Metadata Refresh Results
+## Get metadata refresh results
 
 Update [getMetadataRefreshResults.ts](./getMetadataRefreshResults.ts#L10) with your refresh details then run
 
 ```sh
 yarn get-metadata-refresh-results
 ```
-## List Metadata Refreshes
+## List metadata refreshes
 
 Update [listMetadataRefreshes.ts](./listMetadataRefreshes.ts#L10) with your refresh details then run
 
@@ -221,7 +221,7 @@ yarn list-metadata-refreshes
 ```
 
 
-## Get Metadata Refresh Errors
+## Get metadata refresh errors
 
 Update [getMetadataRefreshErrors.ts](./getMetadataRefreshErrors.ts#L10) with your refresh details then run
 
@@ -229,7 +229,7 @@ Update [getMetadataRefreshErrors.ts](./getMetadataRefreshErrors.ts#L10) with you
 yarn get-metadata-refresh-errors
 ```
 
-## Add Metadata Schema To Collection
+## Add metadata schema to collection
 
 Update [addMetadataSchemaToCollection.ts](./addMetadataSchemaToCollection.ts#L10) with your metadata schema details then run
 
@@ -237,7 +237,7 @@ Update [addMetadataSchemaToCollection.ts](./addMetadataSchemaToCollection.ts#L10
 yarn add-metadata-schema-to-collection
 ```
 
-## Get Metadata Schema
+## Get metadata schema
 
 Update [getMetadataSchema.ts](./getMetadataSchema.ts#L10) with your collection details then run
 
@@ -245,7 +245,7 @@ Update [getMetadataSchema.ts](./getMetadataSchema.ts#L10) with your collection d
 yarn get-metadata-schema
 ```
 
-## Update Metadata Schema By Name
+## Update metadata schema by name
 
 Update [updateMetadataSchemaByName.ts](./updateMetadataSchemaByName.ts#L10) with your metadata schema details then run
 
