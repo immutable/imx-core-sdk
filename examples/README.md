@@ -198,6 +198,61 @@ Update [create-nft-primary-txn.ts](./create-nft-primary-txn.ts#L10) with your ex
 yarn create-nft-primary-txn
 ```
 
+## Create metadata refresh
+
+Update [createMetadataRefresh.ts](./createMetadataRefresh.ts#L10) with your refresh details then run
+
+```sh
+yarn create-metadata-refresh
+```
+## Get metadata refresh results
+
+Update [getMetadataRefreshResults.ts](./getMetadataRefreshResults.ts#L10) with your refresh details then run
+
+```sh
+yarn get-metadata-refresh-results
+```
+## List metadata refreshes
+
+Update [listMetadataRefreshes.ts](./listMetadataRefreshes.ts#L10) with your refresh details then run
+
+```sh
+yarn list-metadata-refreshes
+```
+
+
+## Get metadata refresh errors
+
+Update [getMetadataRefreshErrors.ts](./getMetadataRefreshErrors.ts#L10) with your refresh details then run
+
+```sh
+yarn get-metadata-refresh-errors
+```
+
+## Add metadata schema to collection
+
+Update [addMetadataSchemaToCollection.ts](./addMetadataSchemaToCollection.ts#L10) with your metadata schema details then run
+
+```sh
+yarn add-metadata-schema-to-collection
+```
+
+## Get metadata schema
+
+Update [getMetadataSchema.ts](./getMetadataSchema.ts#L10) with your collection details then run
+
+```sh
+yarn get-metadata-schema
+```
+
+## Update metadata schema by name
+
+Update [updateMetadataSchemaByName.ts](./updateMetadataSchemaByName.ts#L10) with your metadata schema details then run
+
+```sh
+yarn update-metadata-schema-by-name
+```
+
 ## List tokens
 
 Update [listTokens.ts](./listTokens.ts#L10) with your token query details then run
