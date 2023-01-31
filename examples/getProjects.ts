@@ -17,7 +17,3 @@ import { generateWalletConnection } from './libs/walletConnection';
       process.exit(1);
     }
   })();
-
-
-
-

@@ -9,8 +9,6 @@ import { generateWalletConnection } from './libs/walletConnection';
 
     const starkPublicKey = await walletConnection.starkSigner.getAddress();
 
-
-
     const completeWithdrawalResponse = await client.completeWithdrawal(
       walletConnection.ethSigner,
       starkPublicKey,
