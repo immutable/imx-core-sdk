@@ -4,7 +4,7 @@ import { Config, ImmutableX, TransfersApiGetTransferRequest } from '@imtbl/core-
     try {
       const client = new ImmutableX(Config.SANDBOX);
   
-      const transferRequest : TransfersApiGetTransferRequest = {
+      const transferRequest: TransfersApiGetTransferRequest = {
         id: "" // transaction ID 
       };
       const transferResponse = await client.getTransfer(transferRequest);
