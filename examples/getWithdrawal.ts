@@ -4,7 +4,7 @@ import { Config, ImmutableX, WithdrawalsApiGetWithdrawalRequest} from '@imtbl/co
     try {
       const client = new ImmutableX(Config.SANDBOX);
   
-      const withdrawal : WithdrawalsApiGetWithdrawalRequest = {
+      const withdrawal: WithdrawalsApiGetWithdrawalRequest = {
         id: "" //  transaction id of withdrawal
       };
       const withdrawalResponse = await client.getWithdrawal(withdrawal);
