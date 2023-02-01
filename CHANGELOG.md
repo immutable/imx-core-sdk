@@ -7,9 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added examples for following endpoints
+  - Get token
+  - List tokens
+  - Get balance
+  - List balances
+  - List orders
+  - Get projects
+  - Get transfer
+  - List transfers
+  - Get trade
+  - List trades
+  - Get user
+  - Deposit nft
+  - Add metadata schema to collection
+  - Create metadata refresh
+  - Get metadata refresh errors
+  - Get metadata refresh results
+  - List metadata refreshes
+  - Get metadata schema
+  - Get withdrawal
+  - List withdrawals
+  - Create nft withdrawal
+  - Complete nft withdrawal
+  - Complete erc20 withdrawal
+  - Create erc20 withdrawal
+
+### Fixed
+
+- Fixed bug in stark grindkey logic to work when there is a leading zero in ethereum wallet private key.
+- Readme bug fixes
+
 ### Removed
 
 - Removed unused parameter from `listMints` interface
+- Removed `getMintStatus`
 
 ## [1.0.0] - 2022-11-29
 
