@@ -1,4 +1,5 @@
 import { Signer as EthSigner } from '@ethersproject/abstract-signer';
+import { StarkExSigner } from '@imtbl/provider-sdk-web';
 
 export { EthSigner };
 
@@ -32,4 +33,15 @@ export interface WalletConnection {
    * The L2 signer
    */
   starkSigner: StarkSigner;
+}
+
+export interface ResolvedSigners {
+  /**
+   * The L1 signer
+   */
+  ethSigner: EthSigner;
+  /**
+   * The L2 signer
+   */
+  starkExSigner: StarkExSigner;
 }
