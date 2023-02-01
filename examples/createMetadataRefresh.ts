@@ -1,4 +1,8 @@
-import { ImmutableX, Config,CreateMetadataRefreshRequest } from '@imtbl/core-sdk';
+import {
+  ImmutableX,
+  Config,
+  CreateMetadataRefreshRequest,
+} from '@imtbl/core-sdk';
 import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
@@ -8,7 +12,7 @@ import { generateWalletConnection } from './libs/walletConnection';
 
   const metadataRefreshParams: CreateMetadataRefreshRequest = {
     collection_address: '', // The collection contract address
-    token_ids:[] // The tokens to refresh
+    token_ids: [], // The tokens to refresh
   };
 
   try {

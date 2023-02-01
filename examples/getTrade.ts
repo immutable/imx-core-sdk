@@ -7,7 +7,7 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
 
     // Get details of a trade with the trade ID
     const getTradeResponse = await client.getTrade({
-      id: ''
+      id: '',
     });
 
     console.log('getTradeResponse', JSON.stringify(getTradeResponse));

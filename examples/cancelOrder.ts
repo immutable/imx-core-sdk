@@ -1,4 +1,8 @@
-import { ImmutableX, Config, GetSignableCancelOrderRequest } from '@imtbl/core-sdk';
+import {
+  ImmutableX,
+  Config,
+  GetSignableCancelOrderRequest,
+} from '@imtbl/core-sdk';
 import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {

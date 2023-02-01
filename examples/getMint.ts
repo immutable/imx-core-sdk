@@ -7,7 +7,7 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
 
     // Get details of a mint with the mint ID (transaction_id returned from listMints)
     const getMintResponse = await client.getMint({
-      id: ''
+      id: '',
     });
 
     console.log('getMintResponse', JSON.stringify(getMintResponse));

@@ -33,8 +33,8 @@
     "release": "release-it",
     "typecheck": "tsc --noEmit",
     "typecheck-staged": "tsc-files --noEmit",
-    "lint": "eslint ./src/utils/** ./src/workflows/** --max-warnings=0",
-    "lint-fix": "eslint ./src/utils/** ./src/workflows/** --fix --max-warnings=0",
+    "lint": "eslint ./src/utils/*.ts ./src/workflows/*.ts ./src/types/*.ts ./src/config/*.ts ./examples/*.ts --max-warnings=0",
+    "lint-fix": "eslint ./src/utils/*.ts ./src/workflows/*.ts ./src/types/*.ts ./src/config/*.ts ./examples/*.ts --fix --max-warnings=0",
     "prepare": "husky install",
     "docs:build": "yarn typedoc --cleanOutputDir ./src/ImmutableX.ts ./src/index.ts --excludePrivate --excludeProtected",
     "docs:serve": "http-server -c-1 ./docs"
@@ -89,6 +89,7 @@
     "@ethersproject/abi": "^5.0.0",
     "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/providers": "^5.0.0",
+    "@imtbl/core-sdk": "^1.0.0",
     "axios": "^0.26.1",
     "bn.js": "^5.2.0",
     "elliptic": "^6.5.4",

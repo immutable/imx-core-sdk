@@ -1,4 +1,8 @@
-import { ImmutableX, Config, UnsignedExchangeTransferRequest } from '@imtbl/core-sdk';
+import {
+  ImmutableX,
+  Config,
+  UnsignedExchangeTransferRequest,
+} from '@imtbl/core-sdk';
 import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
@@ -7,14 +11,17 @@ import { generateWalletConnection } from './libs/walletConnection';
   const imxClient = new ImmutableX(Config.SANDBOX);
 
   const exchangeTransferParams: UnsignedExchangeTransferRequest = {
-    type: "ETH",
-    amount:'0.001',
+    type: 'ETH',
+    amount: '0.001',
     transactionID: '0',
-    receiver: ''
+    receiver: '',
   };
 
   try {
-    const exchangeTransferResponse = await imxClient.exchangeTransfer(walletConnection, exchangeTransferParams)
+    const exchangeTransferResponse = await imxClient.exchangeTransfer(
+      walletConnection,
+      exchangeTransferParams,
+    );
 
     console.log('exchangeTransferResponse', exchangeTransferResponse);
   } catch (error) {

@@ -12,7 +12,7 @@ import { generateWalletConnection } from './libs/walletConnection';
     const depositResponse = await client.deposit(walletConnection.ethSigner, {
       type: 'ERC721',
       tokenId: '', // TOKEN_ID
-      tokenAddress: '' // COLLECTION_CONTRACT_ADDRESS
+      tokenAddress: '', // COLLECTION_CONTRACT_ADDRESS
     });
 
     console.log('depositResponse', depositResponse);

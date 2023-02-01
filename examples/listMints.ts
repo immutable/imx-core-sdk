@@ -10,7 +10,7 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
       //pageSize: 100,
       //cursor: '',
       //orderBy: '',
-      //direction: '', 
+      //direction: '',
       //user: '',
       //status: '',
       //minTimestamp: '',

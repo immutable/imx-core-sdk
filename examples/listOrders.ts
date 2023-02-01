@@ -8,7 +8,7 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
     // Get a list of orders
     const listOrdersResponse = await client.listOrders({
       buyTokenId: '',
-      buyTokenAddress: ''
+      buyTokenAddress: '',
     });
 
     console.log('listOrdersResponse', JSON.stringify(listOrdersResponse));

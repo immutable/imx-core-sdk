@@ -6,13 +6,14 @@ import { generateWalletConnection } from './libs/walletConnection';
 
   const imxClient = new ImmutableX(Config.SANDBOX);
 
-  const refreshId: string = ''; // The metadata refresh ID returned from creating a metadata refresh request
+  const refreshId = ''; // The metadata refresh ID returned from creating a metadata refresh request
 
   try {
-    const metadataRefreshResultResponse = await imxClient.getMetadataRefreshResults(
-      walletConnection.ethSigner,
-      refreshId,
-    );
+    const metadataRefreshResultResponse =
+      await imxClient.getMetadataRefreshResults(
+        walletConnection.ethSigner,
+        refreshId,
+      );
 
     console.log('metadataRefreshResultResponse', metadataRefreshResultResponse);
   } catch (error) {
