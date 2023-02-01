@@ -17,14 +17,14 @@
 /**
  * 
  * @export
- * @interface NftprimarytransactionWidgetParams
+ * @interface ContractCreateResponse
  */
-export interface NftprimarytransactionWidgetParams {
+export interface ContractCreateResponse {
     /**
-     * enums(light, dark)
+     * 
      * @type {string}
-     * @memberof NftprimarytransactionWidgetParams
+     * @memberof ContractCreateResponse
      */
-    'theme'?: string;
+    'webhook_hash'?: string;
 }
 

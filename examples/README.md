@@ -37,6 +37,14 @@ Update [depositEth.ts](./depositEth.ts#L14) with your deposit amount then run
 yarn deposit-eth
 ```
 
+## Deposit NFT
+
+Update [depositNft.ts](./depositNft.ts#L14) with your token address and id then run
+
+```sh
+yarn deposit-nft
+```
+
 ## Prepare Eth Withdrawal
 
 Update [createEthWithdrawal.ts](./createEthWithdrawal.ts#L12) with your withdrawal amount then run
@@ -78,6 +86,22 @@ Update [mint.ts](./mint.ts#L9) with your minting details then run
 yarn mint
 ```
 
+## List mints
+
+Update [listMints.ts](./listMints.ts#L13) with your mint query details then run
+
+```sh
+yarn list-mints
+```
+
+## Get mint
+
+Update [getMint.ts](./getMint.ts#L13) with your mint id then run
+
+```sh
+yarn get-mint
+```
+
 ## Create order
 
 Update [createOrder.ts](./createOrder.ts#L9) with your order details then run
@@ -86,12 +110,52 @@ Update [createOrder.ts](./createOrder.ts#L9) with your order details then run
 yarn create-order
 ```
 
+## List orders
+
+Update [listOrders.ts](./listOrders.ts#L11) with your order query details then run
+
+```sh
+yarn list-orders
+```
+
+## Get order
+
+Update [getOrder.ts](./getOrder.ts#L11) with your order id then run
+
+```sh
+yarn get-order
+```
+
+## Cancel order
+
+Update [cancelOrder.ts](./cancelOrder.ts#L10) with your order id then run
+
+```sh
+yarn cancel-order
+```
+
 ## Create trade
 
 Update [createTrade.ts](./createTrade.ts#L9) with your trade details then run
 
 ```sh
 yarn create-trade
+```
+
+## List trades
+
+Update [listTrades.ts](./listTrades.ts#L10) with your trade query details then run
+
+```sh
+yarn list-trades
+```
+
+## Get trade
+
+Update [getTrade.ts](./getTrade.ts#L10) with your trade id then run
+
+```sh
+yarn get-trade
 ```
 
 ## Transfer Nfts
@@ -132,4 +196,75 @@ Update [create-nft-primary-txn.ts](./create-nft-primary-txn.ts#L10) with your ex
 
 ```sh
 yarn create-nft-primary-txn
+```
+
+## Create metadata refresh
+
+Update [createMetadataRefresh.ts](./createMetadataRefresh.ts#L10) with your refresh details then run
+
+```sh
+yarn create-metadata-refresh
+```
+## Get metadata refresh results
+
+Update [getMetadataRefreshResults.ts](./getMetadataRefreshResults.ts#L10) with your refresh details then run
+
+```sh
+yarn get-metadata-refresh-results
+```
+## List metadata refreshes
+
+Update [listMetadataRefreshes.ts](./listMetadataRefreshes.ts#L10) with your refresh details then run
+
+```sh
+yarn list-metadata-refreshes
+```
+
+
+## Get metadata refresh errors
+
+Update [getMetadataRefreshErrors.ts](./getMetadataRefreshErrors.ts#L10) with your refresh details then run
+
+```sh
+yarn get-metadata-refresh-errors
+```
+
+## Add metadata schema to collection
+
+Update [addMetadataSchemaToCollection.ts](./addMetadataSchemaToCollection.ts#L10) with your metadata schema details then run
+
+```sh
+yarn add-metadata-schema-to-collection
+```
+
+## Get metadata schema
+
+Update [getMetadataSchema.ts](./getMetadataSchema.ts#L10) with your collection details then run
+
+```sh
+yarn get-metadata-schema
+```
+
+## Update metadata schema by name
+
+Update [updateMetadataSchemaByName.ts](./updateMetadataSchemaByName.ts#L10) with your metadata schema details then run
+
+```sh
+yarn update-metadata-schema-by-name
+```
+
+## List tokens
+
+Update [listTokens.ts](./listTokens.ts#L10) with your token query details then run
+
+```sh
+yarn list-tokens
+```
+
+## Get token
+
+Update [getToken.ts](./getToken.ts#L10) with the token contract address then run
+
+```sh
+yarn get-token
 ```

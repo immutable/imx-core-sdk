@@ -92,7 +92,10 @@ export function grindKey(keySeed: BN, keyValLimit: BN) {
   const maxAllowedVal = sha256EcMaxDigest.sub(
     sha256EcMaxDigest.mod(keyValLimit),
   );
-  let key = hashKeyWithIndex(keySeed.toString('hex'), 0);
+  // The key passed to hashKeyWithIndex must have a length of 64 characters
+  // to ensure that the correct number of leading zeroes are used as input
+  // to the hashing loop
+  let key = hashKeyWithIndex(keySeed.toString('hex', 64), 0);
   // Make sure the produced key is devided by the Stark EC order, and falls within the range
   // [0, maxAllowedVal).
   for (let i = 1; key.gte(maxAllowedVal); i++) {

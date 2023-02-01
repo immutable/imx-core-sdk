@@ -36,6 +36,8 @@ models/cancel-order-response.ts
 models/collection-details.ts
 models/collection-filter.ts
 models/collection.ts
+models/contract-create-apirequest.ts
+models/contract-create-response.ts
 models/create-collection-request.ts
 models/create-exchange-and-urlapirequest.ts
 models/create-metadata-refresh-request.ts
@@ -124,8 +126,6 @@ models/order-details.ts
 models/order-fee-info.ts
 models/order.ts
 models/project.ts
-models/provider-get-mint-status-response.ts
-models/provider-mint-status.ts
 models/range.ts
 models/register-user-request.ts
 models/register-user-response.ts

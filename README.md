@@ -22,6 +22,9 @@ See our [developer documentation](https://docs.x.immutable.com) for information 
 
 See our [API reference](https://docs.x.immutable.com/reference) for more information on our APIs.
 
+### Examples
+* **Sample code** - see the [examples](./examples/) folder for sample code for key SDK functionality.
+
 ## Installation
 
 ```sh
