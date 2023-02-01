@@ -16,8 +16,6 @@ import { Config, ImmutableX, WithdrawalsApiListWithdrawalsRequest} from '@imtbl/
         tokenAddress: "", // contract address of token
         tokenId: "", // token ID of NFT if applicable 
         orderBy: "" // transaction_id, updated_at, created_at
-
-    
     };
   
       const withdrawalResponse = await client.listWithdrawals(withdrawalRequest);
