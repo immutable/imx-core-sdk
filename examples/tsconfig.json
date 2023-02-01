@@ -1,1 +1,8 @@
-{}
+{
+    "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+        "@imtbl/core-sdk": ["./../src"]
+        }
+    },
+}

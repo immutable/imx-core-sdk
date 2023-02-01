@@ -1361,6 +1361,22 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
+"@imtbl/core-sdk@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@imtbl/core-sdk/-/core-sdk-1.0.0.tgz#c3bf5d8375bca09f4053ddf8c02e6de1c01b1dfc"
+  integrity sha512-4EFpF+iGIu0tN/H7bKVsxMbReMllplymZcqbqnub9wbYSs2Ow3NCPLgKaVirgEP+fyZuGw7Il2fJm78bUYHzkw==
+  dependencies:
+    "@ethersproject/abi" "^5.0.0"
+    "@ethersproject/bytes" "^5.0.0"
+    "@ethersproject/providers" "^5.0.0"
+    axios "^0.26.1"
+    bn.js "^5.2.0"
+    elliptic "^6.5.4"
+    enc-utils "^3.0.0"
+    ethereumjs-wallet "^1.0.2"
+    ethers "^5.6.9"
+    hash.js "^1.1.7"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
