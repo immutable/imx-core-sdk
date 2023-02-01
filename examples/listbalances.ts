@@ -1,12 +1,16 @@
-import { Config, ImmutableX, BalancesApiListBalancesRequest} from '@imtbl/core-sdk';
+import {
+  Config,
+  ImmutableX,
+  BalancesApiListBalancesRequest,
+} from '@imtbl/core-sdk';
 
 (async () => {
   try {
     const client = new ImmutableX(Config.SANDBOX);
 
-    const balanceRequest : BalancesApiListBalancesRequest = {
-    owner: "", //  wallet address of user
-    }; 
+    const balanceRequest: BalancesApiListBalancesRequest = {
+      owner: '', //  wallet address of user
+    };
 
     const balances = await client.listBalances(balanceRequest);
 

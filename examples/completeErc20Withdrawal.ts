@@ -14,7 +14,7 @@ import { generateWalletConnection } from './libs/walletConnection';
       starkPublicKey,
       {
         type: 'ERC20',
-        tokenAddress: ''    
+        tokenAddress: '',
       },
     );
 

@@ -9,8 +9,8 @@ import { generateWalletConnection } from './libs/walletConnection';
 
     const tokenAmount: TokenAmount = {
       type: 'ERC721',
-      tokenAddress: "" , // contract address of token
-      tokenId: "" // token ID
+      tokenAddress: '', // contract address of token
+      tokenId: '', // token ID
     };
 
     const createWithdrawalResponse = await client.prepareWithdrawal(
