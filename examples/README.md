@@ -268,3 +268,89 @@ Update [getToken.ts](./getToken.ts#L10) with the token contract address then run
 ```sh
 yarn get-token
 ```
+
+## Get balance
+
+Update [getBalance.ts](./getBalance.ts#L10) with the user address and token address then run
+
+```sh
+yarn get-balance
+```
+## List balance
+
+Update [listBalance.ts](./listBalances.ts#L10) with the user address and then run
+
+```sh
+yarn list-balances
+```
+## Get projects
+
+Update [getProjects.ts](./getProjects.ts#L10) with the desired fields and then run
+
+```sh
+yarn get-projects
+```
+
+## Get transfer
+
+Update [getTransfer.ts](./getTransfer.ts#L10) with the transaction id and then run
+
+```sh
+yarn get-transfer
+```
+## List transfer
+
+Update [listTransfers.ts](./listTransfers.ts#L10) the desired fields and then run
+
+```sh
+yarn list-transfers
+```
+## Get user
+
+Update [getUser.ts](./getUser.ts#L10) with the wallet address and then run
+
+```sh
+yarn get-user
+```
+## Get withdrawal
+
+Update [getWithdrawal.ts](./getWithdrawal.ts#L10) with the transaction id and then run
+
+```sh
+yarn get-withdrawal
+```
+## List withdrawal
+
+Update [lisWithdrawals.ts](./listWithdrawals.ts#L10) the desired field and then run
+
+```sh
+yarn list-withdrawals
+```
+## Create nft withdrawal
+
+Update [createNftWithdrawal.ts](./createNftWithdrawal.ts#L10) with the token id and token address then run
+
+```sh
+yarn create-nft-withdrawal
+```
+## Complete nft withdrawal
+
+Update [completeNftWithdrawal.ts](./completeNftWithdrawal.ts#L10) with the token id and token address then run
+
+```sh
+yarn complete-nft-withdrawal
+```
+## Create erc20 withdrawal
+
+Update [createErc20Withdrawal.ts](./createErc20Withdrawal.ts#L10) with the token address then run
+
+```sh
+yarn create-erc20-withdrawal
+```
+## Complete nft withdrawal
+
+Update [completeErc20Withdrawal.ts](./completeErc20Withdrawal.ts#L10) with the token id and token address then run
+
+```sh
+yarn complete-erc20-withdrawal
+```
