@@ -7,7 +7,7 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
 
     // Get details of a token with the token contract address
     const getTokenResponse = await client.getToken({
-      address: '0x1facdd0165489f373255a90304650e15481b2c85'
+      address: '0x1facdd0165489f373255a90304650e15481b2c85',
     });
 
     console.log('getTokenResponse', JSON.stringify(getTokenResponse));

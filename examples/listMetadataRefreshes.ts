@@ -6,16 +6,16 @@ import { generateWalletConnection } from './libs/walletConnection';
 
   const imxClient = new ImmutableX(Config.SANDBOX);
 
-  const collectionAddress: string = ''; // Collection address
-  const pageSize: number = 200; // Page size of the result
-  const cursor: string = ''; // Cursor used for pagination of results
+  const collectionAddress = ''; // Collection address
+  const pageSize = 200; // Page size of the result
+  const cursor = ''; // Cursor used for pagination of results
 
   try {
     const listMetadataRefreshResponse = await imxClient.listMetadataRefreshes(
       walletConnection.ethSigner,
       collectionAddress,
       pageSize,
-      cursor
+      cursor,
     );
 
     console.log('listMetadataRefreshResponse', listMetadataRefreshResponse);

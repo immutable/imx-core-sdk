@@ -8,7 +8,7 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
     // Get a list of trades
     const listTradesResponse = await client.listTrades({
       partyBTokenAddress: '',
-      partyBTokenId: ''
+      partyBTokenId: '',
     });
 
     console.log('listTradesResponse', JSON.stringify(listTradesResponse));

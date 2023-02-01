@@ -8,7 +8,7 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
     // Get a list of tokens
     const listTokensResponse = await client.listTokens({
       orderBy: 'symbol',
-      symbols: "IMX,ETH"
+      symbols: 'IMX,ETH',
     });
 
     console.log('listTokensResponse', JSON.stringify(listTokensResponse));

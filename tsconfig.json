@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
+  "include": ["src", "examples"],
   "exclude": ["node_modules", "dist"],
   "files": ["hardhat.config.ts"]
 }
