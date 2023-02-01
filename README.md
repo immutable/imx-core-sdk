@@ -106,7 +106,7 @@ const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
 const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 
 // Get the legacy Stark private key
-const starkPrivateKey = generateLegacyStarkPrivateKey(ethSigner);
+const starkPrivateKey = await generateLegacyStarkPrivateKey(ethSigner);
 ```
 
 #### Generating a random, non-deterministic key
