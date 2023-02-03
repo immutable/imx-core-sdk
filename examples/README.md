@@ -305,6 +305,20 @@ Update [listTransfers.ts](./listTransfers.ts#L10) the desired fields and then ru
 ```sh
 yarn list-transfers
 ```
+## Get asset
+Update [getAsset.ts](./getAsset.ts#L10) the token address and token id and then run
+
+```sh
+yarn get-asset
+```
+
+## List assets
+Update [listAssets.ts](./listAssets.ts#L10) the desired fields and then run
+
+```sh
+yarn list-assets
+```
+
 ## Get user
 
 Update [getUser.ts](./getUser.ts#L10) with the wallet address and then run
