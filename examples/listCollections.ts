@@ -13,9 +13,9 @@ import { Config, ImmutableX, CollectionsApiListCollectionsRequest } from '@imtbl
         whitelist: '', // list of collections to be included seperated by comma
         keyword: '', // word to search for in description and collection name
         cursor: '' // cursor
-    } 
+    };
     
-    const collectionListResponse = await client.listCollections(collectionListRequest)
+    const collectionListResponse = await client.listCollections(collectionListRequest);
 
     console.log('collectionListResponse', JSON.stringify(collectionListResponse, null, 4));
   } catch (err) {

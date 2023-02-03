@@ -9,9 +9,9 @@ import { Config, ImmutableX, CollectionsApiListCollectionFiltersRequest } from '
         pageSize: 200, // max size 200
         address:'', // collection address
         nextPageToken: ''// cursor
-    } 
+    }; 
     
-    const collectionListFiltersResponse = await client.listCollectionFilters(collectionListFiltersRequest)
+    const collectionListFiltersResponse = await client.listCollectionFilters(collectionListFiltersRequest);
 
     console.log('collectionListFiltersResponse', JSON.stringify(collectionListFiltersResponse, null, 4));
   } catch (err) {
