@@ -1,4 +1,8 @@
-import { ImmutableX, Config, AssetsApiListAssetsRequest } from '@imtbl/core-sdk';
+import { 
+  ImmutableX, 
+  Config, 
+  AssetsApiListAssetsRequest,
+} from '@imtbl/core-sdk';
 
 (async () => {
   const imxClient = new ImmutableX(Config.SANDBOX);
@@ -23,9 +27,7 @@ import { ImmutableX, Config, AssetsApiListAssetsRequest } from '@imtbl/core-sdk'
   };
 
   try {
-    const assetResponse = await imxClient.listAssets(
-      assetParams
-    );
+    const assetResponse = await imxClient.listAssets(assetParams);
 
     console.log('assetResponse', assetResponse);
   } catch (error) {
