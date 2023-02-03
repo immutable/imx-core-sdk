@@ -12,7 +12,7 @@
 
 [![npm version](https://badge.fury.io/js/@imtbl%2Fcore-sdk.svg)](https://www.npmjs.com/package/@imtbl/core-sdk) [![Maintainability](https://api.codeclimate.com/v1/badges/219466ee5269620167e5/maintainability)](https://codeclimate.com/repos/62848fd8d4420d01b6002210/maintainability)
 
-> **⚠ DANGER: We recommend you upgrade to Core SDK v1.0.1 as soon as you can.**  
+> **⚠ We recommend you upgrade to Core SDK v1.0.1 as soon as you can.**  
 > We've released a critical bug fix in the stark `grindkey` method logic to work when there is a leading zero in the Ethereum wallet private key.
 
 The Immutable Core SDK provides convenient access to Immutable's APIs and smart contracts to help projects build better web3 games and marketplaces.
