@@ -1,6 +1,6 @@
-import { 
-  ImmutableX, 
-  Config, 
+import {
+  ImmutableX,
+  Config,
   AssetsApiListAssetsRequest,
 } from '@imtbl/core-sdk';
 
