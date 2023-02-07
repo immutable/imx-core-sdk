@@ -23,6 +23,8 @@
     "mint": "ts-node -r dotenv/config mint.ts",
     "list-mints": "ts-node -r dotenv/config listMints.ts",
     "get-mint": "ts-node -r dotenv/config getMint.ts",
+    "get-asset": "ts-node -r dotenv/config getAsset.ts",
+    "list-assets": "ts-node -r dotenv/config listAssets.ts",
     "transfer-nfts": "ts-node -r dotenv/config transferNfts.ts",
     "transfer-eth": "ts-node -r dotenv/config transferEth.ts",
     "transfer-erc20": "ts-node -r dotenv/config transferErc20.ts",
