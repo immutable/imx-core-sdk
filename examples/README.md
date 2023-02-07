@@ -368,3 +368,25 @@ Update [completeErc20Withdrawal.ts](./completeErc20Withdrawal.ts#L10) with the t
 ```sh
 yarn complete-erc20-withdrawal
 ```
+## List collections
+
+Update [listCollections.ts](./listCollections.ts#L10) with the wanted filters and run 
+
+```sh
+yarn list-collections
+```
+## List collection filters
+
+Update [listCollectionFilters.ts](./listCollectionFilters.ts#L10) with the wanted filters and run 
+
+```sh
+yarn list-collection-filters
+```
+## Update collection
+
+Update [updateCollection.ts](./updateCollection.ts#L10) with the all values filled in and run 
+
+```sh
+yarn update-collection
+```
+
