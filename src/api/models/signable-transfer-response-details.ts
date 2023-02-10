@@ -77,5 +77,17 @@ export interface SignableTransferResponseDetails {
      * @memberof SignableTransferResponseDetails
      */
     'token': SignableToken;
+    /**
+     * An EIP-712 encoded JSON payload that represents the transaction
+     * @type {string}
+     * @memberof GetSignableCancelOrderResponse
+     */
+     'readable_transaction': string;
+     /**
+     * A signature that can be used to verify that the readable_transaction and payload_hash match
+     * @type {string}
+     * @memberof GetSignableCancelOrderResponse
+     */
+      'verification_signature': string;
 }
 
