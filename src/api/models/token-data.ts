@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AssetProperties } from './asset-properties';
+import { TokenDataProperties } from './token-data-properties';
 
 /**
  * 
@@ -37,10 +37,10 @@ export interface TokenData {
     'id'?: string;
     /**
      * 
-     * @type {AssetProperties}
+     * @type {TokenDataProperties}
      * @memberof TokenData
      */
-    'properties'?: AssetProperties;
+    'properties'?: TokenDataProperties;
     /**
      * Quantity of this asset - inclusive of fees for buy order in v1 API and exclusive of fees in v3 API
      * @type {string}

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { TokenData } from './token-data';
+import { TokenDataOAIGen } from './token-data-oaigen';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { TokenData } from './token-data';
 export interface Token {
     /**
      * 
-     * @type {TokenData}
+     * @type {TokenDataOAIGen}
      * @memberof Token
      */
-    'data': TokenData;
+    'data': TokenDataOAIGen;
     /**
      * Type of this asset (ETH/ERC20/ERC721)
      * @type {string}

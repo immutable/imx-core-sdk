@@ -33,10 +33,22 @@ export interface GetSignableCancelOrderResponse {
      */
     'payload_hash': string;
     /**
+     * EIP-712 encoding of the StarkEx cancel order request to be displayed to the user
+     * @type {string}
+     * @memberof GetSignableCancelOrderResponse
+     */
+    'readable_transaction': string;
+    /**
      * Message to sign from wallet to confirm cancel order
      * @type {string}
      * @memberof GetSignableCancelOrderResponse
      */
     'signable_message': string;
+    /**
+     * IMX signed readable_transaction and payload_hash
+     * @type {string}
+     * @memberof GetSignableCancelOrderResponse
+     */
+    'verification_signature': string;
 }
 
