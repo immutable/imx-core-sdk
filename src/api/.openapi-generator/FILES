@@ -127,6 +127,7 @@ models/order-fee-info.ts
 models/order.ts
 models/project.ts
 models/range.ts
+models/register-passport-user-request.ts
 models/register-user-request.ts
 models/register-user-response.ts
 models/signable-token.ts

@@ -6941,6 +6941,33 @@
         }
       }
     },
+    "RegisterPassportUserRequest": {
+      "type": "object",
+      "required": [
+        "eth_signature",
+        "ether_key",
+        "stark_key",
+        "stark_signature"
+      ],
+      "properties": {
+        "eth_signature": {
+          "description": "Eth signature",
+          "type": "string"
+        },
+        "ether_key": {
+          "description": "The ether key of the user",
+          "type": "string"
+        },
+        "stark_key": {
+          "description": "Public stark key of the user",
+          "type": "string"
+        },
+        "stark_signature": {
+          "description": "Payload signature",
+          "type": "string"
+        }
+      }
+    },
     "RegisterUserResponse": {
       "type": "object",
       "required": [

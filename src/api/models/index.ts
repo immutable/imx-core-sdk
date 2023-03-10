@@ -100,6 +100,7 @@ export * from './order-details';
 export * from './order-fee-info';
 export * from './project';
 export * from './range';
+export * from './register-passport-user-request';
 export * from './register-user-request';
 export * from './register-user-response';
 export * from './signable-token';
