@@ -79,39 +79,3 @@ export async function getSignableRegistrationOnchain(
     payload_hash: response.data.payload_hash,
   };
 }
-
-export async function registerPassportWorkflow({
- ethSigner,
- starkSigner,
- usersApi,
-  }: registerOffchainWorkflowParams, jwt: string): Promise<string> {
-  const userAddress = await ethSigner.getAddress();
-  const starkPublicKey = await starkSigner.getAddress();
-
-  const signableResult = await usersApi.getSignableRegistrationOffchain({
-    getSignableRegistrationRequest: {
-      ether_key: userAddress,
-      stark_key: starkPublicKey,
-    },
-  });
-
-  const { signable_message: signableMessage, payload_hash: payloadHash } =
-    signableResult.data;
-
-  const ethSignature = await signRaw(signableMessage, ethSigner);
-
-  const starkSignature = await starkSigner.signMessage(payloadHash);
-
-  const registeredUser = await usersApi.registerPassportUser({
-    authorization: jwt,
-    registerPassportUserRequest: {
-      eth_signature: ethSignature,
-      ether_key: userAddress,
-      stark_signature: starkSignature,
-      stark_key: starkPublicKey,
-    },
-  });
-
-  return registeredUser.statusText;
-}
-
