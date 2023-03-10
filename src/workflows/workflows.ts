@@ -42,7 +42,6 @@ import { Registration__factory } from '../contracts';
 import {
   isRegisteredOnChainWorkflow,
   registerOffchainWorkflow,
-  registerPassportWorkflow,
 } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
@@ -119,15 +118,6 @@ export class Workflows {
       ...walletConnection,
       usersApi: this.usersApi,
     });
-  }
-
-  public async registerPassport(walletConnection: WalletConnection, jwt: string) {
-    await this.validateChain(walletConnection.ethSigner);
-
-    return registerPassportWorkflow({
-      ...walletConnection,
-      usersApi: this.usersApi,
-    }, jwt);
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
