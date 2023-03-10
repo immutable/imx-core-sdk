@@ -31,6 +31,8 @@ import { GetSignableRegistrationResponse } from '../models';
 // @ts-ignore
 import { GetUsersApiResponse } from '../models';
 // @ts-ignore
+import { RegisterPassportUserRequest } from '../models';
+// @ts-ignore
 import { RegisterUserRequest } from '../models';
 // @ts-ignore
 import { RegisterUserResponse } from '../models';
@@ -147,6 +149,49 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
+         * Registers a passport user
+         * @summary Registers a passport user
+         * @param {string} authorization Authorization header
+         * @param {RegisterPassportUserRequest} registerPassportUserRequest Register Passport User
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        registerPassportUser: async (authorization: string, registerPassportUserRequest: RegisterPassportUserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'authorization' is not null or undefined
+            assertParamExists('registerPassportUser', 'authorization', authorization)
+            // verify required parameter 'registerPassportUserRequest' is not null or undefined
+            assertParamExists('registerPassportUser', 'registerPassportUserRequest', registerPassportUserRequest)
+            const localVarPath = `/v1/passport/users`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(registerPassportUserRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Registers a user
          * @summary Registers a user
          * @param {RegisterUserRequest} registerUserRequest Register User
@@ -226,6 +271,18 @@ export const UsersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Registers a passport user
+         * @summary Registers a passport user
+         * @param {string} authorization Authorization header
+         * @param {RegisterPassportUserRequest} registerPassportUserRequest Register Passport User
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async registerPassportUser(authorization: string, registerPassportUserRequest: RegisterPassportUserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.registerPassportUser(authorization, registerPassportUserRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Registers a user
          * @summary Registers a user
          * @param {RegisterUserRequest} registerUserRequest Register User
@@ -275,6 +332,17 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          */
         getUsers(user: string, options?: any): AxiosPromise<GetUsersApiResponse> {
             return localVarFp.getUsers(user, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Registers a passport user
+         * @summary Registers a passport user
+         * @param {string} authorization Authorization header
+         * @param {RegisterPassportUserRequest} registerPassportUserRequest Register Passport User
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        registerPassportUser(authorization: string, registerPassportUserRequest: RegisterPassportUserRequest, options?: any): AxiosPromise<object> {
+            return localVarFp.registerPassportUser(authorization, registerPassportUserRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Registers a user
@@ -332,6 +400,27 @@ export interface UsersApiGetUsersRequest {
 }
 
 /**
+ * Request parameters for registerPassportUser operation in UsersApi.
+ * @export
+ * @interface UsersApiRegisterPassportUserRequest
+ */
+export interface UsersApiRegisterPassportUserRequest {
+    /**
+     * Authorization header
+     * @type {string}
+     * @memberof UsersApiRegisterPassportUser
+     */
+    readonly authorization: string
+
+    /**
+     * Register Passport User
+     * @type {RegisterPassportUserRequest}
+     * @memberof UsersApiRegisterPassportUser
+     */
+    readonly registerPassportUserRequest: RegisterPassportUserRequest
+}
+
+/**
  * Request parameters for registerUser operation in UsersApi.
  * @export
  * @interface UsersApiRegisterUserRequest
@@ -386,6 +475,18 @@ export class UsersApi extends BaseAPI {
      */
     public getUsers(requestParameters: UsersApiGetUsersRequest, options?: AxiosRequestConfig) {
         return UsersApiFp(this.configuration).getUsers(requestParameters.user, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Registers a passport user
+     * @summary Registers a passport user
+     * @param {UsersApiRegisterPassportUserRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UsersApi
+     */
+    public registerPassportUser(requestParameters: UsersApiRegisterPassportUserRequest, options?: AxiosRequestConfig) {
+        return UsersApiFp(this.configuration).registerPassportUser(requestParameters.authorization, requestParameters.registerPassportUserRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
