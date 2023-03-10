@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Token } from './token';
+import { TransferToken } from './transfer-token';
 
 /**
  * 
@@ -43,10 +43,10 @@ export interface Transfer {
     'timestamp': string | null;
     /**
      * 
-     * @type {Token}
+     * @type {TransferToken}
      * @memberof Transfer
      */
-    'token': Token;
+    'token': TransferToken;
     /**
      * Sequential transaction ID
      * @type {number}

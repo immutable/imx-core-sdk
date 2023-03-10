@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { SignableToken } from './signable-token';
+import { GetSignableWithdrawalRequestToken } from './get-signable-withdrawal-request-token';
 
 /**
  * 
@@ -31,10 +31,10 @@ export interface GetSignableWithdrawalRequest {
     'amount': string;
     /**
      * 
-     * @type {SignableToken}
+     * @type {GetSignableWithdrawalRequestToken}
      * @memberof GetSignableWithdrawalRequest
      */
-    'token': SignableToken;
+    'token': GetSignableWithdrawalRequestToken;
     /**
      * Ethereum address of the user who is making this withdrawal
      * @type {string}

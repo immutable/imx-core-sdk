@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Range } from './range';
+import { CollectionFilterRange } from './collection-filter-range';
 
 /**
  * 
@@ -31,10 +31,10 @@ export interface CollectionFilter {
     'key'?: string;
     /**
      * 
-     * @type {Range}
+     * @type {CollectionFilterRange}
      * @memberof CollectionFilter
      */
-    'range'?: Range;
+    'range'?: CollectionFilterRange;
     /**
      * Type of this filter
      * @type {string}

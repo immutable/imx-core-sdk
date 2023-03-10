@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeEntry } from './fee-entry';
+import { CreateTradeRequestV1FeeInfo } from './create-trade-request-v1-fee-info';
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeInfo } from './fee-info';
+import { FeeEntry } from './fee-entry';
 
 /**
  * 
@@ -58,10 +58,10 @@ export interface CreateTradeRequestV1 {
     'expiration_timestamp': number;
     /**
      * 
-     * @type {FeeInfo}
+     * @type {CreateTradeRequestV1FeeInfo}
      * @memberof CreateTradeRequestV1
      */
-    'fee_info'?: FeeInfo;
+    'fee_info'?: CreateTradeRequestV1FeeInfo;
     /**
      * Fee information
      * @type {Array<FeeEntry>}

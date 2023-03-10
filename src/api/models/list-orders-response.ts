@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Order } from './order';
+import { ApiOrderV3 } from './api-order-v3';
 
 /**
  * 
@@ -37,9 +37,9 @@ export interface ListOrdersResponse {
     'remaining': number;
     /**
      * Orders matching query parameters
-     * @type {Array<Order>}
+     * @type {Array<ApiOrderV3>}
      * @memberof ListOrdersResponse
      */
-    'result': Array<Order>;
+    'result': Array<ApiOrderV3>;
 }
 

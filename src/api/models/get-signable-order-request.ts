@@ -18,7 +18,10 @@
 import { FeeEntry } from './fee-entry';
 // May contain unused imports in some cases
 // @ts-ignore
-import { SignableToken } from './signable-token';
+import { GetSignableOrderRequestTokenBuy } from './get-signable-order-request-token-buy';
+// May contain unused imports in some cases
+// @ts-ignore
+import { GetSignableOrderRequestTokenSell } from './get-signable-order-request-token-sell';
 
 /**
  * 
@@ -51,17 +54,23 @@ export interface GetSignableOrderRequest {
      */
     'fees'?: Array<FeeEntry>;
     /**
-     * 
-     * @type {SignableToken}
+     * SplitFees controls whether fees will be split between maker & taker
+     * @type {boolean}
      * @memberof GetSignableOrderRequest
      */
-    'token_buy': SignableToken;
+    'split_fees'?: boolean;
     /**
      * 
-     * @type {SignableToken}
+     * @type {GetSignableOrderRequestTokenBuy}
      * @memberof GetSignableOrderRequest
      */
-    'token_sell': SignableToken;
+    'token_buy': GetSignableOrderRequestTokenBuy;
+    /**
+     * 
+     * @type {GetSignableOrderRequestTokenSell}
+     * @memberof GetSignableOrderRequest
+     */
+    'token_sell': GetSignableOrderRequestTokenSell;
     /**
      * Ethereum address of the submitting user
      * @type {string}

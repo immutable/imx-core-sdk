@@ -15,10 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import { OrderBuy } from './order-buy';
+// May contain unused imports in some cases
+// @ts-ignore
 import { OrderFeeInfo } from './order-fee-info';
 // May contain unused imports in some cases
 // @ts-ignore
-import { Token } from './token';
+import { OrderSell } from './order-sell';
 
 /**
  * 
@@ -34,10 +37,10 @@ export interface Order {
     'amount_sold': string | null;
     /**
      * 
-     * @type {Token}
+     * @type {OrderBuy}
      * @memberof Order
      */
-    'buy': Token;
+    'buy': OrderBuy;
     /**
      * Expiration timestamp of this order
      * @type {string}
@@ -58,10 +61,10 @@ export interface Order {
     'order_id': number;
     /**
      * 
-     * @type {Token}
+     * @type {OrderSell}
      * @memberof Order
      */
-    'sell': Token;
+    'sell': OrderSell;
     /**
      * Status of the order
      * @type {string}

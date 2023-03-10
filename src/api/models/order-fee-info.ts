@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeToken } from './fee-token';
+import { OrderFeeInfoToken } from './order-fee-info-token';
 
 /**
  * 
@@ -37,10 +37,10 @@ export interface OrderFeeInfo {
     'amount'?: string;
     /**
      * 
-     * @type {FeeToken}
+     * @type {OrderFeeInfoToken}
      * @memberof OrderFeeInfo
      */
-    'token'?: FeeToken;
+    'token'?: OrderFeeInfoToken;
     /**
      * Fee type
      * @type {string}
