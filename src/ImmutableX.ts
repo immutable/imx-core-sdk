@@ -170,6 +170,19 @@ export class ImmutableX {
   }
 
   /**
+   * Register a Passport User to Immutable X if they are not already
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param Authorization string - valid bearer token
+   * @returns a promise that resolves with void if successful
+   * @throws {@link index.IMXError}
+   */
+  public registerPassport(walletConnection: WalletConnection, jwt: string) {
+    return this.workflows.registerPassport(walletConnection, jwt).catch(err => {
+      throw formatError(err);
+    });
+  }
+
+  /**
    * Checks if a User is registered on on-chain
    * @param walletConnection - the pair of L1/L2 signers
    * @returns a promise that resolves with true if the User is registered, false otherwise
