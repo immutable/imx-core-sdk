@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { EncodeAssetTokenData } from './encode-asset-token-data';
+import { EncodeAssetRequestTokenData } from './encode-asset-request-token-data';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { EncodeAssetTokenData } from './encode-asset-token-data';
 export interface EncodeAssetRequestToken {
     /**
      * 
-     * @type {EncodeAssetTokenData}
+     * @type {EncodeAssetRequestTokenData}
      * @memberof EncodeAssetRequestToken
      */
-    'data'?: EncodeAssetTokenData;
+    'data'?: EncodeAssetRequestTokenData;
     /**
      * The type of the token to be encoded
      * @type {string}
