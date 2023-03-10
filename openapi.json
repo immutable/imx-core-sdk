@@ -2843,15 +2843,19 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header",
-            "required": true
+            "in": "header"
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header",
-            "required": true
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
           },
           {
             "description": "Create transfer",
@@ -2972,6 +2976,66 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/RegisterUserResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v1/passport/users": {
+      "post": {
+        "description": "Registers a passport user",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "users"
+        ],
+        "summary": "Registers a passport user",
+        "operationId": "RegisterPassportUser",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Register Passport User",
+            "name": "RegisterPassportUserRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterPassportUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "schema": {
+              "type": "object"
             }
           },
           "400": {
