@@ -1,6 +1,7 @@
 export * from './apierror';
 export * from './add-metadata-schema-to-collection-request';
 export * from './aggregate-limit';
+export * from './api-register-passport-user-request';
 export * from './asset';
 export * from './asset-properties';
 export * from './asset-with-orders';
@@ -100,7 +101,6 @@ export * from './order-details';
 export * from './order-fee-info';
 export * from './project';
 export * from './range';
-export * from './register-passport-user-request';
 export * from './register-user-request';
 export * from './register-user-response';
 export * from './signable-token';

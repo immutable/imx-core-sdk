@@ -3027,7 +3027,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/RegisterPassportUserRequest"
+              "$ref": "#/definitions/api.RegisterPassportUserRequest"
             }
           }
         ],
@@ -6941,7 +6941,7 @@
         }
       }
     },
-    "RegisterPassportUserRequest": {
+    "api.RegisterPassportUserRequest": {
       "type": "object",
       "required": [
         "eth_signature",

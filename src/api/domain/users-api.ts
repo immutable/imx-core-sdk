@@ -23,6 +23,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { APIError } from '../models';
 // @ts-ignore
+import { ApiRegisterPassportUserRequest } from '../models';
+// @ts-ignore
 import { GetSignableRegistrationOffchainResponse } from '../models';
 // @ts-ignore
 import { GetSignableRegistrationRequest } from '../models';
@@ -30,8 +32,6 @@ import { GetSignableRegistrationRequest } from '../models';
 import { GetSignableRegistrationResponse } from '../models';
 // @ts-ignore
 import { GetUsersApiResponse } from '../models';
-// @ts-ignore
-import { RegisterPassportUserRequest } from '../models';
 // @ts-ignore
 import { RegisterUserRequest } from '../models';
 // @ts-ignore
@@ -152,11 +152,11 @@ export const UsersApiAxiosParamCreator = function (configuration?: Configuration
          * Registers a passport user
          * @summary Registers a passport user
          * @param {string} authorization Authorization header
-         * @param {RegisterPassportUserRequest} registerPassportUserRequest Register Passport User
+         * @param {ApiRegisterPassportUserRequest} registerPassportUserRequest Register Passport User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerPassportUser: async (authorization: string, registerPassportUserRequest: RegisterPassportUserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        registerPassportUser: async (authorization: string, registerPassportUserRequest: ApiRegisterPassportUserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'authorization' is not null or undefined
             assertParamExists('registerPassportUser', 'authorization', authorization)
             // verify required parameter 'registerPassportUserRequest' is not null or undefined
@@ -274,11 +274,11 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * Registers a passport user
          * @summary Registers a passport user
          * @param {string} authorization Authorization header
-         * @param {RegisterPassportUserRequest} registerPassportUserRequest Register Passport User
+         * @param {ApiRegisterPassportUserRequest} registerPassportUserRequest Register Passport User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerPassportUser(authorization: string, registerPassportUserRequest: RegisterPassportUserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async registerPassportUser(authorization: string, registerPassportUserRequest: ApiRegisterPassportUserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registerPassportUser(authorization, registerPassportUserRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -337,11 +337,11 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * Registers a passport user
          * @summary Registers a passport user
          * @param {string} authorization Authorization header
-         * @param {RegisterPassportUserRequest} registerPassportUserRequest Register Passport User
+         * @param {ApiRegisterPassportUserRequest} registerPassportUserRequest Register Passport User
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerPassportUser(authorization: string, registerPassportUserRequest: RegisterPassportUserRequest, options?: any): AxiosPromise<object> {
+        registerPassportUser(authorization: string, registerPassportUserRequest: ApiRegisterPassportUserRequest, options?: any): AxiosPromise<object> {
             return localVarFp.registerPassportUser(authorization, registerPassportUserRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -414,10 +414,10 @@ export interface UsersApiRegisterPassportUserRequest {
 
     /**
      * Register Passport User
-     * @type {RegisterPassportUserRequest}
+     * @type {ApiRegisterPassportUserRequest}
      * @memberof UsersApiRegisterPassportUser
      */
-    readonly registerPassportUserRequest: RegisterPassportUserRequest
+    readonly registerPassportUserRequest: ApiRegisterPassportUserRequest
 }
 
 /**
