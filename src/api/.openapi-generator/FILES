@@ -26,6 +26,7 @@ git_push.sh
 index.ts
 models/add-metadata-schema-to-collection-request.ts
 models/aggregate-limit.ts
+models/api-register-passport-user-request.ts
 models/apierror.ts
 models/asset-properties.ts
 models/asset-with-orders.ts

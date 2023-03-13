@@ -1,6 +1,7 @@
 export * from './apierror';
 export * from './add-metadata-schema-to-collection-request';
 export * from './aggregate-limit';
+export * from './api-register-passport-user-request';
 export * from './asset';
 export * from './asset-properties';
 export * from './asset-with-orders';
