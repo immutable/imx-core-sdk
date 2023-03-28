@@ -268,7 +268,7 @@ export const MintsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getMint(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Mint>> {
+        async getMint(id: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Mint>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getMint(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -337,7 +337,7 @@ export const MintsApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getMint(id: string, options?: any): AxiosPromise<Mint> {
+        getMint(id: string, options?: any): AxiosPromise<Array<Mint>> {
             return localVarFp.getMint(id, options).then((request) => request(axios, basePath));
         },
         /**
