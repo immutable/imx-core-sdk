@@ -1522,9 +1522,12 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Result array will contain only one item",
             "schema": {
-              "$ref": "#/definitions/Mint"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Mint"
+              }
             }
           },
           "400": {
