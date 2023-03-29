@@ -41,17 +41,14 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Create a Trade
          * @summary Create a Trade between two parties
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateTradeRequestV1} createTradeRequest create a trade
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTrade: async (xImxEthAddress: string, xImxEthSignature: string, createTradeRequest: CreateTradeRequestV1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'xImxEthAddress' is not null or undefined
-            assertParamExists('createTrade', 'xImxEthAddress', xImxEthAddress)
-            // verify required parameter 'xImxEthSignature' is not null or undefined
-            assertParamExists('createTrade', 'xImxEthSignature', xImxEthSignature)
+        createTrade: async (createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createTradeRequest' is not null or undefined
             assertParamExists('createTrade', 'createTradeRequest', createTradeRequest)
             const localVarPath = `/v1/trades`;
@@ -74,6 +71,10 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
             }
 
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -89,8 +90,8 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get details a signable trade V3
-         * @summary Get details a signable trade V3
+         * Get a signable trade V3 message
+         * @summary Get a signable trade V3 message
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -256,19 +257,20 @@ export const TradesApiFp = function(configuration?: Configuration) {
         /**
          * Create a Trade
          * @summary Create a Trade between two parties
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateTradeRequestV1} createTradeRequest create a trade
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createTrade(xImxEthAddress: string, xImxEthSignature: string, createTradeRequest: CreateTradeRequestV1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTradeResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createTrade(xImxEthAddress, xImxEthSignature, createTradeRequest, options);
+        async createTrade(createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTradeResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createTrade(createTradeRequest, xImxEthAddress, xImxEthSignature, authorization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get details a signable trade V3
-         * @summary Get details a signable trade V3
+         * Get a signable trade V3 message
+         * @summary Get a signable trade V3 message
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -322,18 +324,19 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
         /**
          * Create a Trade
          * @summary Create a Trade between two parties
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateTradeRequestV1} createTradeRequest create a trade
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTrade(xImxEthAddress: string, xImxEthSignature: string, createTradeRequest: CreateTradeRequestV1, options?: any): AxiosPromise<CreateTradeResponse> {
-            return localVarFp.createTrade(xImxEthAddress, xImxEthSignature, createTradeRequest, options).then((request) => request(axios, basePath));
+        createTrade(createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateTradeResponse> {
+            return localVarFp.createTrade(createTradeRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get details a signable trade V3
-         * @summary Get details a signable trade V3
+         * Get a signable trade V3 message
+         * @summary Get a signable trade V3 message
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -381,25 +384,32 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
  */
 export interface TradesApiCreateTradeRequest {
     /**
+     * create a trade
+     * @type {CreateTradeRequestV1}
+     * @memberof TradesApiCreateTrade
+     */
+    readonly createTradeRequest: CreateTradeRequestV1
+
+    /**
      * eth address
      * @type {string}
      * @memberof TradesApiCreateTrade
      */
-    readonly xImxEthAddress: string
+    readonly xImxEthAddress?: string
 
     /**
      * eth signature
      * @type {string}
      * @memberof TradesApiCreateTrade
      */
-    readonly xImxEthSignature: string
+    readonly xImxEthSignature?: string
 
     /**
-     * create a trade
-     * @type {CreateTradeRequestV1}
+     * Authorization header
+     * @type {string}
      * @memberof TradesApiCreateTrade
      */
-    readonly createTradeRequest: CreateTradeRequestV1
+    readonly authorization?: string
 }
 
 /**
@@ -530,12 +540,12 @@ export class TradesApi extends BaseAPI {
      * @memberof TradesApi
      */
     public createTrade(requestParameters: TradesApiCreateTradeRequest, options?: AxiosRequestConfig) {
-        return TradesApiFp(this.configuration).createTrade(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createTradeRequest, options).then((request) => request(this.axios, this.basePath));
+        return TradesApiFp(this.configuration).createTrade(requestParameters.createTradeRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
-     * Get details a signable trade V3
-     * @summary Get details a signable trade V3
+     * Get a signable trade V3 message
+     * @summary Get a signable trade V3 message
      * @param {TradesApiGetSignableTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}

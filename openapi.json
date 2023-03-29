@@ -1522,9 +1522,12 @@
         ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Result array will contain only one item",
             "schema": {
-              "$ref": "#/definitions/Mint"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Mint"
+              }
             }
           },
           "400": {
@@ -1789,15 +1792,19 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header",
-            "required": true
+            "in": "header"
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header",
-            "required": true
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
           },
           {
             "description": "create an order",
@@ -1917,15 +1924,19 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header",
-            "required": true
+            "in": "header"
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header",
-            "required": true
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
           },
           {
             "description": "cancel an order",
@@ -2186,7 +2197,7 @@
     },
     "/v1/signable-cancel-order-details": {
       "post": {
-        "description": "Get details a signable cancel order",
+        "description": "Get a signable cancel order message",
         "consumes": [
           "application/json"
         ],
@@ -2196,7 +2207,7 @@
         "tags": [
           "orders"
         ],
-        "summary": "Get details a signable cancel order",
+        "summary": "Get a signable cancel order message",
         "operationId": "getSignableCancelOrder",
         "parameters": [
           {
@@ -2618,15 +2629,19 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header",
-            "required": true
+            "in": "header"
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header",
-            "required": true
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
           },
           {
             "description": "create a trade",
@@ -3956,15 +3971,19 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header",
-            "required": true
+            "in": "header"
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header",
-            "required": true
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
           },
           {
             "description": "Create transfer",
@@ -4252,7 +4271,7 @@
     },
     "/v3/signable-trade-details": {
       "post": {
-        "description": "Get details a signable trade V3",
+        "description": "Get a signable trade V3 message",
         "consumes": [
           "application/json"
         ],
@@ -4262,7 +4281,7 @@
         "tags": [
           "trades"
         ],
-        "summary": "Get details a signable trade V3",
+        "summary": "Get a signable trade V3 message",
         "operationId": "getSignableTrade",
         "parameters": [
           {

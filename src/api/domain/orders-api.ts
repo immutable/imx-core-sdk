@@ -51,18 +51,15 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Cancel an order
          * @summary Cancel an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {string} id Order ID to cancel
          * @param {CancelOrderRequest} cancelOrderRequest cancel an order
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelOrder: async (xImxEthAddress: string, xImxEthSignature: string, id: string, cancelOrderRequest: CancelOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'xImxEthAddress' is not null or undefined
-            assertParamExists('cancelOrder', 'xImxEthAddress', xImxEthAddress)
-            // verify required parameter 'xImxEthSignature' is not null or undefined
-            assertParamExists('cancelOrder', 'xImxEthSignature', xImxEthSignature)
+        cancelOrder: async (id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('cancelOrder', 'id', id)
             // verify required parameter 'cancelOrderRequest' is not null or undefined
@@ -88,6 +85,10 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
             }
 
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
+            }
+
 
     
             localVarHeaderParameter['Content-Type'] = 'application/json';
@@ -105,17 +106,14 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * Create an order
          * @summary Create an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateOrderRequest} createOrderRequest create an order
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrder: async (xImxEthAddress: string, xImxEthSignature: string, createOrderRequest: CreateOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'xImxEthAddress' is not null or undefined
-            assertParamExists('createOrder', 'xImxEthAddress', xImxEthAddress)
-            // verify required parameter 'xImxEthSignature' is not null or undefined
-            assertParamExists('createOrder', 'xImxEthSignature', xImxEthSignature)
+        createOrder: async (createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'createOrderRequest' is not null or undefined
             assertParamExists('createOrder', 'createOrderRequest', createOrderRequest)
             const localVarPath = `/v1/orders`;
@@ -136,6 +134,10 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (xImxEthSignature != null) {
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
+            }
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
             }
 
 
@@ -202,8 +204,8 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get details a signable cancel order
-         * @summary Get details a signable cancel order
+         * Get a signable cancel order message
+         * @summary Get a signable cancel order message
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -461,28 +463,30 @@ export const OrdersApiFp = function(configuration?: Configuration) {
         /**
          * Cancel an order
          * @summary Cancel an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {string} id Order ID to cancel
          * @param {CancelOrderRequest} cancelOrderRequest cancel an order
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async cancelOrder(xImxEthAddress: string, xImxEthSignature: string, id: string, cancelOrderRequest: CancelOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CancelOrderResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelOrder(xImxEthAddress, xImxEthSignature, id, cancelOrderRequest, options);
+        async cancelOrder(id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CancelOrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelOrder(id, cancelOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Create an order
          * @summary Create an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateOrderRequest} createOrderRequest create an order
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createOrder(xImxEthAddress: string, xImxEthSignature: string, createOrderRequest: CreateOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateOrderResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrder(xImxEthAddress, xImxEthSignature, createOrderRequest, options);
+        async createOrder(createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateOrderResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrder(createOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -500,8 +504,8 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get details a signable cancel order
-         * @summary Get details a signable cancel order
+         * Get a signable cancel order message
+         * @summary Get a signable cancel order message
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -573,27 +577,29 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
         /**
          * Cancel an order
          * @summary Cancel an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {string} id Order ID to cancel
          * @param {CancelOrderRequest} cancelOrderRequest cancel an order
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        cancelOrder(xImxEthAddress: string, xImxEthSignature: string, id: string, cancelOrderRequest: CancelOrderRequest, options?: any): AxiosPromise<CancelOrderResponse> {
-            return localVarFp.cancelOrder(xImxEthAddress, xImxEthSignature, id, cancelOrderRequest, options).then((request) => request(axios, basePath));
+        cancelOrder(id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CancelOrderResponse> {
+            return localVarFp.cancelOrder(id, cancelOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
          * Create an order
          * @summary Create an order
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateOrderRequest} createOrderRequest create an order
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createOrder(xImxEthAddress: string, xImxEthSignature: string, createOrderRequest: CreateOrderRequest, options?: any): AxiosPromise<CreateOrderResponse> {
-            return localVarFp.createOrder(xImxEthAddress, xImxEthSignature, createOrderRequest, options).then((request) => request(axios, basePath));
+        createOrder(createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateOrderResponse> {
+            return localVarFp.createOrder(createOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
          * Get details of an order with the given ID
@@ -609,8 +615,8 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getOrder(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get details a signable cancel order
-         * @summary Get details a signable cancel order
+         * Get a signable cancel order message
+         * @summary Get a signable cancel order message
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -676,20 +682,6 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
  */
 export interface OrdersApiCancelOrderRequest {
     /**
-     * eth address
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly xImxEthAddress: string
-
-    /**
-     * eth signature
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly xImxEthSignature: string
-
-    /**
      * Order ID to cancel
      * @type {string}
      * @memberof OrdersApiCancelOrder
@@ -702,6 +694,27 @@ export interface OrdersApiCancelOrderRequest {
      * @memberof OrdersApiCancelOrder
      */
     readonly cancelOrderRequest: CancelOrderRequest
+
+    /**
+     * eth address
+     * @type {string}
+     * @memberof OrdersApiCancelOrder
+     */
+    readonly xImxEthAddress?: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof OrdersApiCancelOrder
+     */
+    readonly xImxEthSignature?: string
+
+    /**
+     * Authorization header
+     * @type {string}
+     * @memberof OrdersApiCancelOrder
+     */
+    readonly authorization?: string
 }
 
 /**
@@ -711,25 +724,32 @@ export interface OrdersApiCancelOrderRequest {
  */
 export interface OrdersApiCreateOrderRequest {
     /**
+     * create an order
+     * @type {CreateOrderRequest}
+     * @memberof OrdersApiCreateOrder
+     */
+    readonly createOrderRequest: CreateOrderRequest
+
+    /**
      * eth address
      * @type {string}
      * @memberof OrdersApiCreateOrder
      */
-    readonly xImxEthAddress: string
+    readonly xImxEthAddress?: string
 
     /**
      * eth signature
      * @type {string}
      * @memberof OrdersApiCreateOrder
      */
-    readonly xImxEthSignature: string
+    readonly xImxEthSignature?: string
 
     /**
-     * create an order
-     * @type {CreateOrderRequest}
+     * Authorization header
+     * @type {string}
      * @memberof OrdersApiCreateOrder
      */
-    readonly createOrderRequest: CreateOrderRequest
+    readonly authorization?: string
 }
 
 /**
@@ -1021,7 +1041,7 @@ export class OrdersApi extends BaseAPI {
      * @memberof OrdersApi
      */
     public cancelOrder(requestParameters: OrdersApiCancelOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).cancelOrder(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.id, requestParameters.cancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
+        return OrdersApiFp(this.configuration).cancelOrder(requestParameters.id, requestParameters.cancelOrderRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1033,7 +1053,7 @@ export class OrdersApi extends BaseAPI {
      * @memberof OrdersApi
      */
     public createOrder(requestParameters: OrdersApiCreateOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).createOrder(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createOrderRequest, options).then((request) => request(this.axios, this.basePath));
+        return OrdersApiFp(this.configuration).createOrder(requestParameters.createOrderRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1049,8 +1069,8 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Get details a signable cancel order
-     * @summary Get details a signable cancel order
+     * Get a signable cancel order message
+     * @summary Get a signable cancel order message
      * @param {OrdersApiGetSignableCancelOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
