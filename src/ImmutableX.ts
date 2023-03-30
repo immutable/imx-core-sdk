@@ -513,7 +513,7 @@ export class ImmutableX {
       });
   }
 
-  /***
+  /**
    * Get the token Balances of the User
    * @param request - the request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested Balance
