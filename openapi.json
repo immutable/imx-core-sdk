@@ -3513,15 +3513,19 @@
             "type": "string",
             "description": "eth address",
             "name": "x-imx-eth-address",
-            "in": "header",
-            "required": true
+            "in": "header"
           },
           {
             "type": "string",
             "description": "eth signature",
             "name": "x-imx-eth-signature",
-            "in": "header",
-            "required": true
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
           }
         ],
         "responses": {
