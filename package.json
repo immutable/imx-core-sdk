@@ -89,7 +89,6 @@
     "@ethersproject/abi": "^5.0.0",
     "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/providers": "^5.0.0",
-    "@imtbl/core-sdk": "^1.0.0",
     "axios": "^0.26.1",
     "bn.js": "^5.2.0",
     "elliptic": "^6.5.4",
