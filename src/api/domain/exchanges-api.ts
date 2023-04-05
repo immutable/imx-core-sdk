@@ -84,19 +84,16 @@ export const ExchangesApiAxiosParamCreator = function (configuration?: Configura
          * Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
          * @summary Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
          * @param {string} id Transaction ID
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateTransferRequestV1} createTransferRequest Create a transfer
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExchangeTransfer: async (id: string, xImxEthAddress: string, xImxEthSignature: string, createTransferRequest: CreateTransferRequestV1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createExchangeTransfer: async (id: string, createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('createExchangeTransfer', 'id', id)
-            // verify required parameter 'xImxEthAddress' is not null or undefined
-            assertParamExists('createExchangeTransfer', 'xImxEthAddress', xImxEthAddress)
-            // verify required parameter 'xImxEthSignature' is not null or undefined
-            assertParamExists('createExchangeTransfer', 'xImxEthSignature', xImxEthSignature)
             // verify required parameter 'createTransferRequest' is not null or undefined
             assertParamExists('createExchangeTransfer', 'createTransferRequest', createTransferRequest)
             const localVarPath = `/v2/exchanges/{id}/transfers`
@@ -118,6 +115,10 @@ export const ExchangesApiAxiosParamCreator = function (configuration?: Configura
 
             if (xImxEthSignature != null) {
                 localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
+            }
+
+            if (authorization != null) {
+                localVarHeaderParameter['Authorization'] = String(authorization);
             }
 
 
@@ -308,14 +309,15 @@ export const ExchangesApiFp = function(configuration?: Configuration) {
          * Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
          * @summary Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
          * @param {string} id Transaction ID
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateTransferRequestV1} createTransferRequest Create a transfer
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createExchangeTransfer(id: string, xImxEthAddress: string, xImxEthSignature: string, createTransferRequest: CreateTransferRequestV1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTransferResponseV1>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createExchangeTransfer(id, xImxEthAddress, xImxEthSignature, createTransferRequest, options);
+        async createExchangeTransfer(id: string, createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTransferResponseV1>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createExchangeTransfer(id, createTransferRequest, xImxEthAddress, xImxEthSignature, authorization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -384,14 +386,15 @@ export const ExchangesApiFactory = function (configuration?: Configuration, base
          * Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
          * @summary Accepts a transfer request and updates the transfer_status after processing transfer (offramp)
          * @param {string} id Transaction ID
-         * @param {string} xImxEthAddress eth address
-         * @param {string} xImxEthSignature eth signature
          * @param {CreateTransferRequestV1} createTransferRequest Create a transfer
+         * @param {string} [xImxEthAddress] eth address
+         * @param {string} [xImxEthSignature] eth signature
+         * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createExchangeTransfer(id: string, xImxEthAddress: string, xImxEthSignature: string, createTransferRequest: CreateTransferRequestV1, options?: any): AxiosPromise<CreateTransferResponseV1> {
-            return localVarFp.createExchangeTransfer(id, xImxEthAddress, xImxEthSignature, createTransferRequest, options).then((request) => request(axios, basePath));
+        createExchangeTransfer(id: string, createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateTransferResponseV1> {
+            return localVarFp.createExchangeTransfer(id, createTransferRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an exchange by ID
@@ -463,25 +466,32 @@ export interface ExchangesApiCreateExchangeTransferRequest {
     readonly id: string
 
     /**
+     * Create a transfer
+     * @type {CreateTransferRequestV1}
+     * @memberof ExchangesApiCreateExchangeTransfer
+     */
+    readonly createTransferRequest: CreateTransferRequestV1
+
+    /**
      * eth address
      * @type {string}
      * @memberof ExchangesApiCreateExchangeTransfer
      */
-    readonly xImxEthAddress: string
+    readonly xImxEthAddress?: string
 
     /**
      * eth signature
      * @type {string}
      * @memberof ExchangesApiCreateExchangeTransfer
      */
-    readonly xImxEthSignature: string
+    readonly xImxEthSignature?: string
 
     /**
-     * Create a transfer
-     * @type {CreateTransferRequestV1}
+     * Authorization header
+     * @type {string}
      * @memberof ExchangesApiCreateExchangeTransfer
      */
-    readonly createTransferRequest: CreateTransferRequestV1
+    readonly authorization?: string
 }
 
 /**
@@ -617,7 +627,7 @@ export class ExchangesApi extends BaseAPI {
      * @memberof ExchangesApi
      */
     public createExchangeTransfer(requestParameters: ExchangesApiCreateExchangeTransferRequest, options?: AxiosRequestConfig) {
-        return ExchangesApiFp(this.configuration).createExchangeTransfer(requestParameters.id, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createTransferRequest, options).then((request) => request(this.axios, this.basePath));
+        return ExchangesApiFp(this.configuration).createExchangeTransfer(requestParameters.id, requestParameters.createTransferRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
