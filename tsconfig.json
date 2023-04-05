@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@imtbl/core-sdk": ["src"]
+    },
     "rootDirs": ["src"],
     "target": "esnext",
     "module": "esnext",
@@ -15,7 +19,7 @@
     "declarationDir": ".",
     "declaration": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
   "include": ["src", "examples"],
   "exclude": ["node_modules", "dist"],
