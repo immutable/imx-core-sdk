@@ -38,7 +38,6 @@ models/asset.ts
 models/balance.ts
 models/cancel-order-request.ts
 models/cancel-order-response.ts
-models/collection-collection.ts
 models/collection-details.ts
 models/collection-filter.ts
 models/collection.ts
@@ -69,7 +68,6 @@ models/encode-asset-request-token.ts
 models/encode-asset-request.ts
 models/encode-asset-response.ts
 models/encode-asset-token-data.ts
-models/engine-register-user-result.ts
 models/exchange-create-exchange-and-urlresponse.ts
 models/exchange.ts
 models/fee-data.ts
@@ -182,9 +180,7 @@ models/trade.ts
 models/trades-create-trade-request-fee-info.ts
 models/trades-create-trade-request.ts
 models/transfer-request.ts
-models/transfer-token.ts
 models/transfer.ts
 models/update-collection-request.ts
 models/widget-params.ts
-models/withdrawal-token.ts
 models/withdrawal.ts

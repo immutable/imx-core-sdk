@@ -45,12 +45,6 @@ export interface GetSignableWithdrawalResponse {
      */
     'payload_hash': string;
     /**
-     * EIP-712 encoding of the StarkEx withdrawal request to be displayed to the user
-     * @type {string}
-     * @memberof GetSignableWithdrawalResponse
-     */
-    'readable_transaction': string;
-    /**
      * Message to sign with L1 wallet to verity withdrawal request
      * @type {string}
      * @memberof GetSignableWithdrawalResponse
@@ -68,11 +62,5 @@ export interface GetSignableWithdrawalResponse {
      * @memberof GetSignableWithdrawalResponse
      */
     'vault_id': number;
-    /**
-     * IMX signed readable_transaction and payload_hash
-     * @type {string}
-     * @memberof GetSignableWithdrawalResponse
-     */
-    'verification_signature': string;
 }
 

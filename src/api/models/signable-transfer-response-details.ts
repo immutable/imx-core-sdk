@@ -54,12 +54,6 @@ export interface SignableTransferResponseDetails {
      */
     'payload_hash': string;
     /**
-     * EIP-712 encoding of the StarkEx transfer request to be displayed to the user
-     * @type {string}
-     * @memberof SignableTransferResponseDetails
-     */
-    'readable_transaction': string;
-    /**
      * Receiver of the transfer
      * @type {string}
      * @memberof SignableTransferResponseDetails
@@ -83,11 +77,5 @@ export interface SignableTransferResponseDetails {
      * @memberof SignableTransferResponseDetails
      */
     'token': SignableTransferResponseDetailsToken;
-    /**
-     * IMX signed readable_transaction and payload_hash
-     * @type {string}
-     * @memberof SignableTransferResponseDetails
-     */
-    'verification_signature': string;
 }
 
