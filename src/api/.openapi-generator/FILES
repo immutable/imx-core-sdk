@@ -105,7 +105,6 @@ models/get-signable-transfer-request-v1.ts
 models/get-signable-transfer-request.ts
 models/get-signable-transfer-response-v1.ts
 models/get-signable-transfer-response.ts
-models/get-signable-withdrawal-request-token.ts
 models/get-signable-withdrawal-request.ts
 models/get-signable-withdrawal-response.ts
 models/get-transactions-response.ts

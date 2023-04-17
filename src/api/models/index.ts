@@ -80,7 +80,6 @@ export * from './get-signable-transfer-request-v1';
 export * from './get-signable-transfer-response';
 export * from './get-signable-transfer-response-v1';
 export * from './get-signable-withdrawal-request';
-export * from './get-signable-withdrawal-request-token';
 export * from './get-signable-withdrawal-response';
 export * from './get-transactions-response';
 export * from './get-users-api-response';

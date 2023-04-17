@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { SignableTransferResponseDetailsToken } from './signable-transfer-response-details-token';
+import { SignableToken } from './signable-token';
 
 /**
  * 
@@ -73,9 +73,9 @@ export interface SignableTransferResponseDetails {
     'sender_vault_id': number;
     /**
      * 
-     * @type {SignableTransferResponseDetailsToken}
+     * @type {SignableToken}
      * @memberof SignableTransferResponseDetails
      */
-    'token': SignableTransferResponseDetailsToken;
+    'token': SignableToken;
 }
 

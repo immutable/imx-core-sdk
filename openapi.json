@@ -7154,10 +7154,6 @@
         "name": {
           "description": "The project name",
           "type": "string"
-        },
-        "org_id": {
-          "description": "The organisation ID that the project belongs to",
-          "type": "string"
         }
       }
     },
@@ -7320,7 +7316,8 @@
           "type": "integer"
         },
         "token": {
-          "$ref": "#/definitions/signableTransferResponseDetailsToken"
+          "description": "Token in request to match in SDK implementation",
+          "$ref": "#/definitions/SignableToken"
         }
       }
     },
