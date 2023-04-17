@@ -1,10 +1,10 @@
 import {
-  OrdersApi,
-  OrdersApiCreateOrderRequest,
-  GetSignableCancelOrderRequest,
-  GetSignableOrderRequest,
   CancelOrderResponse,
   CreateOrderResponse,
+  GetSignableCancelOrderRequest,
+  GetSignableOrderRequest,
+  OrdersApi,
+  OrdersApiCreateOrderRequest,
 } from '../api';
 import { UnsignedOrderRequest, WalletConnection } from '../types';
 import { signRaw } from '../utils';
@@ -38,6 +38,7 @@ export async function createOrderWorkflow({
     token_sell: convertToSignableToken(request.sell),
     fees: request.fees,
     expiration_timestamp: request.expiration_timestamp,
+    split_fees: true,
   };
 
   const getSignableOrderResponse = await ordersApi.getSignableOrder({
@@ -72,7 +73,7 @@ export async function createOrderWorkflow({
     xImxEthSignature: ethSignature,
   };
 
-  const createOrderResponse = await ordersApi.createOrder(orderParams);
+  const createOrderResponse = await ordersApi.createOrderV3(orderParams);
 
   return {
     ...createOrderResponse.data,
@@ -85,13 +86,12 @@ export async function cancelOrderWorkflow({
   request,
   ordersApi,
 }: CancelOrderWorkflowParams): Promise<CancelOrderResponse> {
-  const getSignableCancelOrderResponse = await ordersApi.getSignableCancelOrder(
-    {
+  const getSignableCancelOrderResponse =
+    await ordersApi.getSignableCancelOrderV3({
       getSignableCancelOrderRequest: {
         order_id: request.order_id,
       },
-    },
-  );
+    });
 
   const { signable_message: signableMessage, payload_hash: payloadHash } =
     getSignableCancelOrderResponse.data;
