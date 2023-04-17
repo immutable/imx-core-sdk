@@ -29,6 +29,8 @@ import { CreateTransferRequestV1 } from '../models';
 // @ts-ignore
 import { CreateTransferResponse } from '../models';
 // @ts-ignore
+import { CreateTransferResponseV1 } from '../models';
+// @ts-ignore
 import { GetSignableTransferRequest } from '../models';
 // @ts-ignore
 import { GetSignableTransferResponse } from '../models';
@@ -43,7 +45,7 @@ import { Transfer } from '../models';
 export const TransfersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransfer to get request body params.
+         * Create a new transfer request.
          * @summary Creates a transfer of multiple tokens between two parties
          * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -94,7 +96,7 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransferV1 to get request body params.
+         * Create a new transfer request.
          * @summary Creates a transfer of tokens between two parties
          * @param {CreateTransferRequestV1} createTransferRequest Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -376,7 +378,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TransfersApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransfer to get request body params.
+         * Create a new transfer request.
          * @summary Creates a transfer of multiple tokens between two parties
          * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -390,7 +392,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransferV1 to get request body params.
+         * Create a new transfer request.
          * @summary Creates a transfer of tokens between two parties
          * @param {CreateTransferRequestV1} createTransferRequest Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -399,7 +401,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createTransferV1(createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTransferResponse>> {
+        async createTransferV1(createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTransferResponseV1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createTransferV1(createTransferRequest, xImxEthAddress, xImxEthSignature, authorization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -474,7 +476,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
     const localVarFp = TransfersApiFp(configuration)
     return {
         /**
-         * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransfer to get request body params.
+         * Create a new transfer request.
          * @summary Creates a transfer of multiple tokens between two parties
          * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -487,7 +489,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
             return localVarFp.createTransfer(createTransferRequestV2, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransferV1 to get request body params.
+         * Create a new transfer request.
          * @summary Creates a transfer of tokens between two parties
          * @param {CreateTransferRequestV1} createTransferRequest Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -496,7 +498,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTransferV1(createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateTransferResponse> {
+        createTransferV1(createTransferRequest: CreateTransferRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateTransferResponseV1> {
             return localVarFp.createTransferV1(createTransferRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
@@ -804,7 +806,7 @@ export interface TransfersApiListTransfersRequest {
  */
 export class TransfersApi extends BaseAPI {
     /**
-     * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransfer to get request body params.
+     * Create a new transfer request.
      * @summary Creates a transfer of multiple tokens between two parties
      * @param {TransfersApiCreateTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -816,7 +818,7 @@ export class TransfersApi extends BaseAPI {
     }
 
     /**
-     * Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransferV1 to get request body params.
+     * Create a new transfer request.
      * @summary Creates a transfer of tokens between two parties
      * @param {TransfersApiCreateTransferV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

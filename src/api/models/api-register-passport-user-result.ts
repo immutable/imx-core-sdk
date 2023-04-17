@@ -17,26 +17,32 @@
 /**
  * 
  * @export
- * @interface RegisterPassportUserResult
+ * @interface ApiRegisterPassportUserResult
  */
-export interface RegisterPassportUserResult {
+export interface ApiRegisterPassportUserResult {
+    /**
+     * Eth signature
+     * @type {string}
+     * @memberof ApiRegisterPassportUserResult
+     */
+    'eth_signature': string;
     /**
      * The ether key of the user
      * @type {string}
-     * @memberof RegisterPassportUserResult
+     * @memberof ApiRegisterPassportUserResult
      */
-    'ether_key'?: string;
+    'ether_key': string;
     /**
-     * The stark key of the user
+     * Public stark key of the user
      * @type {string}
-     * @memberof RegisterPassportUserResult
+     * @memberof ApiRegisterPassportUserResult
      */
-    'stark_key'?: string;
+    'stark_key': string;
     /**
-     * The admin key of the user
+     * Payload signature
      * @type {string}
-     * @memberof RegisterPassportUserResult
+     * @memberof ApiRegisterPassportUserResult
      */
-    'user_admin_key'?: string;
+    'stark_signature': string;
 }
 

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { SignableTransferDetailsToken } from './signable-transfer-details-token';
+import { SignableToken } from './signable-token';
 
 /**
  * 
@@ -37,9 +37,9 @@ export interface SignableTransferDetails {
     'receiver': string;
     /**
      * 
-     * @type {SignableTransferDetailsToken}
+     * @type {SignableToken}
      * @memberof SignableTransferDetails
      */
-    'token': SignableTransferDetailsToken;
+    'token': SignableToken;
 }
 
