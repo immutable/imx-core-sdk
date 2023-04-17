@@ -1,7 +1,7 @@
 import {
-  CreateTransferResponse,
-  CreateTransferResponseV1,
   TransfersApi,
+  CreateTransferResponseV1,
+  CreateTransferResponse,
 } from '../api';
 import {
   NftTransferDetails,
@@ -32,39 +32,30 @@ export async function transfersWorkflow({
   const transferAmount = request.type === 'ERC721' ? '1' : request.amount;
   const signableResult = await transfersApi.getSignableTransferV1({
     getSignableTransferRequest: {
-      sender_ether_key: ethAddress,
-      signable_requests: [
-        {
-          token: convertToSignableToken(request),
-          amount: transferAmount,
-          receiver: request.receiver,
-        },
-      ],
+      sender: ethAddress,
+      token: convertToSignableToken(request),
+      amount: transferAmount,
+      receiver: request.receiver,
     },
   });
 
-  const {
-    signable_message: signableMessage,
-    signable_responses: signableResponses,
-  } = signableResult.data;
+  const { signable_message: signableMessage, payload_hash: payloadHash } =
+    signableResult.data;
 
   const ethSignature = await signRaw(signableMessage, ethSigner);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const res = signableResponses.find(x => x)!;
-
-  const starkSignature = await starkSigner.signMessage(res.payload_hash);
+  const starkSignature = await starkSigner.signMessage(payloadHash);
 
   const transferSigningParams = {
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     sender_stark_key: signableResult.data.sender_stark_key!,
-    sender_vault_id: res.sender_vault_id,
-    receiver_stark_key: res.receiver_stark_key,
-    receiver_vault_id: res.receiver_vault_id,
-    asset_id: res.asset_id,
-    amount: res.amount,
-    nonce: res.nonce,
-    expiration_timestamp: res.expiration_timestamp,
+    sender_vault_id: signableResult.data.sender_vault_id,
+    receiver_stark_key: signableResult.data.receiver_stark_key,
+    receiver_vault_id: signableResult.data.receiver_vault_id,
+    asset_id: signableResult.data.asset_id,
+    amount: signableResult.data.amount,
+    nonce: signableResult.data.nonce,
+    expiration_timestamp: signableResult.data.expiration_timestamp,
     stark_signature: starkSignature,
   };
 
@@ -74,16 +65,11 @@ export async function transfersWorkflow({
     xImxEthSignature: ethSignature,
   });
 
-  // TODO: Ask passport team?
   return {
-    sent_signature: ethSignature,
-    transfer_id: response.data.transfer_ids[0],
-    status: '',
-    time: 0,
-    // sent_signature: response?.data.sent_signature,
-    // status: response?.data.status?.toString(),
-    // time: response?.data.time,
-    // transfer_id: response?.data.transfer_id,
+    sent_signature: response?.data.sent_signature,
+    status: response?.data.status?.toString(),
+    time: response?.data.time,
+    transfer_id: response?.data.transfer_id,
   };
 }
 
