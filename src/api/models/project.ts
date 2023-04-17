@@ -80,5 +80,11 @@ export interface Project {
      * @memberof Project
      */
     'name': string;
+    /**
+     * The organisation ID that the project belongs to
+     * @type {string}
+     * @memberof Project
+     */
+    'org_id'?: string;
 }
 

@@ -15,7 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { TradeSide } from './trade-side';
+import { TradeA } from './trade-a';
+// May contain unused imports in some cases
+// @ts-ignore
+import { TradeB } from './trade-b';
 
 /**
  * 
@@ -25,16 +28,16 @@ import { TradeSide } from './trade-side';
 export interface Trade {
     /**
      * 
-     * @type {TradeSide}
+     * @type {TradeA}
      * @memberof Trade
      */
-    'a': TradeSide;
+    'a': TradeA;
     /**
      * 
-     * @type {TradeSide}
+     * @type {TradeB}
      * @memberof Trade
      */
-    'b': TradeSide;
+    'b': TradeB;
     /**
      * Status of this trade
      * @type {string}

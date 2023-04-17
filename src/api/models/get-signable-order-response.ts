@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeInfo } from './fee-info';
+import { GetSignableOrderResponseFeeInfo } from './get-signable-order-response-fee-info';
 
 /**
  * 
@@ -55,10 +55,10 @@ export interface GetSignableOrderResponse {
     'expiration_timestamp': number;
     /**
      * 
-     * @type {FeeInfo}
+     * @type {GetSignableOrderResponseFeeInfo}
      * @memberof GetSignableOrderResponse
      */
-    'fee_info'?: FeeInfo;
+    'fee_info'?: GetSignableOrderResponseFeeInfo;
     /**
      * Nonce of the order
      * @type {number}
@@ -71,6 +71,12 @@ export interface GetSignableOrderResponse {
      * @memberof GetSignableOrderResponse
      */
     'payload_hash': string;
+    /**
+     * EIP-712 encoding of the StarkEx order transaction to be displayed to the user
+     * @type {string}
+     * @memberof GetSignableOrderResponse
+     */
+    'readable_transaction': string;
     /**
      * Message to sign with L1 wallet to confirm order request
      * @type {string}
@@ -95,5 +101,11 @@ export interface GetSignableOrderResponse {
      * @memberof GetSignableOrderResponse
      */
     'vault_id_sell': number;
+    /**
+     * IMX signed readable_transaction and payload_hash
+     * @type {string}
+     * @memberof GetSignableOrderResponse
+     */
+    'verification_signature': string;
 }
 

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Token } from './token';
+import { DepositToken } from './deposit-token';
 
 /**
  * 
@@ -37,10 +37,10 @@ export interface Deposit {
     'timestamp': string;
     /**
      * 
-     * @type {Token}
+     * @type {DepositToken}
      * @memberof Deposit
      */
-    'token': Token;
+    'token': DepositToken;
     /**
      * Sequential ID of this transaction within Immutable X
      * @type {number}
