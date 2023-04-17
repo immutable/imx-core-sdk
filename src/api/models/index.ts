@@ -104,7 +104,6 @@ export * from './mint';
 export * from './mint-fee';
 export * from './mint-request';
 export * from './mint-result-details';
-export * from './mint-token';
 export * from './mint-token-data-v2';
 export * from './mint-tokens-response';
 export * from './mint-user';

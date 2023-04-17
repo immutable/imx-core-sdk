@@ -7937,15 +7937,6 @@
         }
       }
     },
-    "mintToken": {
-      "description": "Details of the asset which has been minted",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Token"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
     "nftprimarytransaction.CreateAPIRequest": {
       "type": "object",
       "properties": {
