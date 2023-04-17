@@ -31,6 +31,7 @@ models/api-order-v3-maker-fees.ts
 models/api-order-v3-sell.ts
 models/api-order-v3-taker-fees.ts
 models/api-order-v3.ts
+models/api-register-passport-user-request.ts
 models/apierror.ts
 models/asset-properties.ts
 models/asset-with-orders.ts
@@ -63,7 +64,6 @@ models/create-withdrawal-request.ts
 models/create-withdrawal-response.ts
 models/currency-with-limits.ts
 models/deposit.ts
-models/encode-asset-request-token-data.ts
 models/encode-asset-request-token.ts
 models/encode-asset-request.ts
 models/encode-asset-response.ts
@@ -82,7 +82,6 @@ models/get-metadata-refreshes.ts
 models/get-projects-response.ts
 models/get-signable-cancel-order-request.ts
 models/get-signable-cancel-order-response.ts
-models/get-signable-deposit-request-token.ts
 models/get-signable-deposit-request.ts
 models/get-signable-deposit-response.ts
 models/get-signable-order-request-token-buy.ts
@@ -162,9 +161,7 @@ models/range.ts
 models/register-user-request.ts
 models/register-user-response.ts
 models/signable-token.ts
-models/signable-transfer-details-token.ts
 models/signable-transfer-details.ts
-models/signable-transfer-response-details-token.ts
 models/signable-transfer-response-details.ts
 models/store-maker-taker-fee.ts
 models/success-response.ts

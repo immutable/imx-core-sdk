@@ -1833,60 +1833,6 @@
         }
       }
     },
-    "/v1/passport/users": {
-      "post": {
-        "description": "Registers a passport user",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["users"],
-        "summary": "Registers a passport user",
-        "operationId": "RegisterPassportUser",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Authorization header",
-            "name": "Authorization",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "Register Passport User",
-            "name": "RegisterPassportUserRequest",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/api.RegisterPassportUserRequest"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content",
-            "schema": {
-              "type": "object"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      }
-    },
     "/v1/projects": {
       "get": {
         "description": "Get projects",
@@ -2838,6 +2784,61 @@
         }
       }
     },
+    "/v1/passport/users": {
+      "post": {
+        "description": "Registers a passport user",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["users"],
+        "summary": "Registers a passport user",
+        "operationId": "RegisterPassportUser",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "Register Passport User",
+            "name": "RegisterPassportUserRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/api.RegisterPassportUserRequest"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "schema": {
+              "type": "object"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+
     "/v1/users/{user}": {
       "get": {
         "description": "Get stark keys for a registered user",
@@ -6292,7 +6293,8 @@
           "type": "string"
         },
         "token": {
-          "$ref": "#/definitions/getSignableWithdrawalRequestToken"
+          "description": "Token to withdraw",
+          "$ref": "#/definitions/SignableToken"
         },
         "user": {
           "description": "Ethereum address of the user who is making this withdrawal",
@@ -7203,6 +7205,33 @@
         }
       }
     },
+    "api.RegisterPassportUserRequest": {
+      "type": "object",
+      "required": [
+        "eth_signature",
+        "ether_key",
+        "stark_key",
+        "stark_signature"
+      ],
+      "properties": {
+        "eth_signature": {
+          "description": "Eth signature",
+          "type": "string"
+        },
+        "ether_key": {
+          "description": "The ether key of the user",
+          "type": "string"
+        },
+        "stark_key": {
+          "description": "Public stark key of the user",
+          "type": "string"
+        },
+        "stark_signature": {
+          "description": "Payload signature",
+          "type": "string"
+        }
+      }
+    },
     "RegisterUserResponse": {
       "type": "object",
       "required": ["tx_hash"],
@@ -7771,7 +7800,8 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/encodeAssetRequestTokenData"
+          "description": "Extra token information to be encoded",
+          "$ref": "#/definitions/EncodeAssetTokenData"
         },
         "type": {
           "description": "The type of the token to be encoded",
@@ -7779,15 +7809,6 @@
           "enum": ["ETH", "ERC20", "ERC721"]
         }
       },
-      "x-go-gen-location": "models"
-    },
-    "encodeAssetRequestTokenData": {
-      "description": "Extra token information to be encoded",
-      "allOf": [
-        {
-          "$ref": "#/definitions/EncodeAssetTokenData"
-        }
-      ],
       "x-go-gen-location": "models"
     },
     "exchange.CreateExchangeAndURLResponse": {
@@ -7822,15 +7843,6 @@
       "allOf": [
         {
           "$ref": "#/definitions/FeeData"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "getSignableDepositRequestToken": {
-      "description": "Details of the token the user is depositing",
-      "allOf": [
-        {
-          "$ref": "#/definitions/SignableToken"
         }
       ],
       "x-go-gen-location": "models"
@@ -7903,15 +7915,6 @@
       "allOf": [
         {
           "$ref": "#/definitions/FeeInfo"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "getSignableWithdrawalRequestToken": {
-      "description": "Token to withdraw",
-      "allOf": [
-        {
-          "$ref": "#/definitions/SignableToken"
         }
       ],
       "x-go-gen-location": "models"
@@ -8248,24 +8251,6 @@
           "type": "string"
         }
       }
-    },
-    "signableTransferDetailsToken": {
-      "description": "Token to transfer",
-      "allOf": [
-        {
-          "$ref": "#/definitions/SignableToken"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "signableTransferResponseDetailsToken": {
-      "description": "Token in request to match in SDK implementation",
-      "allOf": [
-        {
-          "$ref": "#/definitions/SignableToken"
-        }
-      ],
-      "x-go-gen-location": "models"
     },
     "store.MakerTakerFee": {
       "type": "object",
