@@ -31,15 +31,8 @@ models/api-order-v3-maker-fees.ts
 models/api-order-v3-sell.ts
 models/api-order-v3-taker-fees.ts
 models/api-order-v3.ts
-models/api-register-passport-user-request.ts
-models/api-register-passport-user-result.ts
 models/apierror.ts
-models/asset-collection.ts
-models/asset-orders.ts
-models/asset-properties-collection.ts
 models/asset-properties.ts
-models/asset-with-orders-collection.ts
-models/asset-with-orders-orders.ts
 models/asset-with-orders.ts
 models/asset.ts
 models/balance.ts
@@ -47,7 +40,6 @@ models/cancel-order-request.ts
 models/cancel-order-response.ts
 models/collection-collection.ts
 models/collection-details.ts
-models/collection-filter-range.ts
 models/collection-filter.ts
 models/collection.ts
 models/contract-create-apirequest.ts
@@ -71,7 +63,6 @@ models/create-transfer-response.ts
 models/create-withdrawal-request.ts
 models/create-withdrawal-response.ts
 models/currency-with-limits.ts
-models/deposit-token.ts
 models/deposit.ts
 models/encode-asset-request-token-data.ts
 models/encode-asset-request-token.ts

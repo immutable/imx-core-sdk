@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AssetPropertiesCollection } from './asset-properties-collection';
+import { CollectionDetails } from './collection-details';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { AssetPropertiesCollection } from './asset-properties-collection';
 export interface AssetProperties {
     /**
      * 
-     * @type {AssetPropertiesCollection}
+     * @type {CollectionDetails}
      * @memberof AssetProperties
      */
-    'collection'?: AssetPropertiesCollection;
+    'collection'?: CollectionDetails;
     /**
      * Image URL of this asset
      * @type {string}

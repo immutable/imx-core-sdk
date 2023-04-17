@@ -2254,7 +2254,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GetSignableTransferRequest"
+              "$ref": "#/definitions/GetSignableTransferRequestV1"
             }
           }
         ],
@@ -2262,7 +2262,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/GetSignableTransferResponse"
+              "$ref": "#/definitions/GetSignableTransferResponseV1"
             }
           }
         }
@@ -4569,7 +4569,8 @@
       ],
       "properties": {
         "collection": {
-          "$ref": "#/definitions/assetCollection"
+          "description": "Information about the collection to which this asset belongs",
+          "$ref": "#/definitions/CollectionDetails"
         },
         "created_at": {
           "description": "Timestamp of when the asset was created",
@@ -4608,7 +4609,8 @@
           "x-nullable": true
         },
         "orders": {
-          "$ref": "#/definitions/assetOrders"
+          "description": "[DEPRECATED] Open orders for this asset will always return empty. Use GET /orders",
+          "$ref": "#/definitions/OrderDetails"
         },
         "status": {
           "description": "Status of this asset (where it is in the system)",
@@ -4642,7 +4644,8 @@
       "type": "object",
       "properties": {
         "collection": {
-          "$ref": "#/definitions/assetPropertiesCollection"
+          "description": "Details of this asset's collection",
+          "$ref": "#/definitions/CollectionDetails"
         },
         "image_url": {
           "description": "Image URL of this asset",
@@ -4672,7 +4675,8 @@
       ],
       "properties": {
         "collection": {
-          "$ref": "#/definitions/assetWithOrdersCollection"
+          "description": "Information about the collection to which this asset belongs",
+          "$ref": "#/definitions/CollectionDetails"
         },
         "created_at": {
           "description": "Timestamp of when the asset was created",
@@ -4711,7 +4715,8 @@
           "x-nullable": true
         },
         "orders": {
-          "$ref": "#/definitions/assetWithOrdersOrders"
+          "description": "Open orders for this asset",
+          "$ref": "#/definitions/OrderDetails"
         },
         "status": {
           "description": "Status of this asset (where it is in the system)",
@@ -4887,7 +4892,8 @@
           "type": "string"
         },
         "range": {
-          "$ref": "#/definitions/collectionFilterRange"
+          "description": "Range of values for this property",
+          "$ref": "#/definitions/Range"
         },
         "type": {
           "description": "Type of this filter",
@@ -5471,7 +5477,8 @@
           "type": "string"
         },
         "token": {
-          "$ref": "#/definitions/depositToken"
+          "description": "Details of the asset being deposited",
+          "$ref": "#/definitions/Token"
         },
         "transaction_id": {
           "description": "Sequential ID of this transaction within Immutable X",
@@ -6816,7 +6823,8 @@
           "type": "string"
         },
         "token": {
-          "$ref": "#/definitions/mintToken"
+          "description": "Details of the asset which has been minted",
+          "$ref": "#/definitions/Token"
         },
         "transaction_id": {
           "description": "Sequential ID of transaction in Immutable X",
@@ -7254,33 +7262,6 @@
           "description": "User email",
           "type": "string"
         },
-        "eth_signature": {
-          "description": "Eth signature",
-          "type": "string"
-        },
-        "ether_key": {
-          "description": "The ether key of the user",
-          "type": "string"
-        },
-        "stark_key": {
-          "description": "Public stark key of the user",
-          "type": "string"
-        },
-        "stark_signature": {
-          "description": "Payload signature",
-          "type": "string"
-        }
-      }
-    },
-    "api.RegisterPassportUserResult": {
-      "type": "object",
-      "required": [
-        "eth_signature",
-        "ether_key",
-        "stark_key",
-        "stark_signature"
-      ],
-      "properties": {
         "eth_signature": {
           "description": "Eth signature",
           "type": "string"
@@ -7806,33 +7787,6 @@
         }
       }
     },
-    "api.RegisterPassportUserRequest": {
-      "type": "object",
-      "required": [
-        "eth_signature",
-        "ether_key",
-        "stark_key",
-        "stark_signature"
-      ],
-      "properties": {
-        "eth_signature": {
-          "description": "Eth signature",
-          "type": "string"
-        },
-        "ether_key": {
-          "description": "The ether key of the user",
-          "type": "string"
-        },
-        "stark_key": {
-          "description": "Public stark key of the user",
-          "type": "string"
-        },
-        "stark_signature": {
-          "description": "Payload signature",
-          "type": "string"
-        }
-      }
-    },
     "apiOrderV3Buy": {
       "description": "Details of the asset being bought",
       "allOf": [
@@ -7865,51 +7819,6 @@
       "allOf": [
         {
           "$ref": "#/definitions/store.MakerTakerFee"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "assetCollection": {
-      "description": "Information about the collection to which this asset belongs",
-      "allOf": [
-        {
-          "$ref": "#/definitions/CollectionDetails"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "assetOrders": {
-      "description": "[DEPRECATED] Open orders for this asset will always return empty. Use GET /orders",
-      "allOf": [
-        {
-          "$ref": "#/definitions/OrderDetails"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "assetPropertiesCollection": {
-      "description": "Details of this asset's collection",
-      "allOf": [
-        {
-          "$ref": "#/definitions/CollectionDetails"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "assetWithOrdersCollection": {
-      "description": "Information about the collection to which this asset belongs",
-      "allOf": [
-        {
-          "$ref": "#/definitions/CollectionDetails"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "assetWithOrdersOrders": {
-      "description": "Open orders for this asset",
-      "allOf": [
-        {
-          "$ref": "#/definitions/OrderDetails"
         }
       ],
       "x-go-gen-location": "models"
@@ -7952,15 +7861,6 @@
         }
       }
     },
-    "collectionFilterRange": {
-      "description": "Range of values for this property",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Range"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
     "contract.CreateAPIRequest": {
       "type": "object",
       "properties": {
@@ -7988,15 +7888,6 @@
       "allOf": [
         {
           "$ref": "#/definitions/FeeInfo"
-        }
-      ],
-      "x-go-gen-location": "models"
-    },
-    "depositToken": {
-      "description": "Details of the asset being deposited",
-      "allOf": [
-        {
-          "$ref": "#/definitions/Token"
         }
       ],
       "x-go-gen-location": "models"

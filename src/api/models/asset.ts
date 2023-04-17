@@ -15,13 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { AssetCollection } from './asset-collection';
-// May contain unused imports in some cases
-// @ts-ignore
-import { AssetOrders } from './asset-orders';
+import { CollectionDetails } from './collection-details';
 // May contain unused imports in some cases
 // @ts-ignore
 import { Fee } from './fee';
+// May contain unused imports in some cases
+// @ts-ignore
+import { OrderDetails } from './order-details';
 
 /**
  * 
@@ -31,10 +31,10 @@ import { Fee } from './fee';
 export interface Asset {
     /**
      * 
-     * @type {AssetCollection}
+     * @type {CollectionDetails}
      * @memberof Asset
      */
-    'collection': AssetCollection;
+    'collection': CollectionDetails;
     /**
      * Timestamp of when the asset was created
      * @type {string}
@@ -79,10 +79,10 @@ export interface Asset {
     'name': string | null;
     /**
      * 
-     * @type {AssetOrders}
+     * @type {OrderDetails}
      * @memberof Asset
      */
-    'orders'?: AssetOrders;
+    'orders'?: OrderDetails;
     /**
      * Status of this asset (where it is in the system)
      * @type {string}

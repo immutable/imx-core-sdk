@@ -33,7 +33,11 @@ import { CreateTransferResponseV1 } from '../models';
 // @ts-ignore
 import { GetSignableTransferRequest } from '../models';
 // @ts-ignore
+import { GetSignableTransferRequestV1 } from '../models';
+// @ts-ignore
 import { GetSignableTransferResponse } from '../models';
+// @ts-ignore
+import { GetSignableTransferResponseV1 } from '../models';
 // @ts-ignore
 import { ListTransfersResponse } from '../models';
 // @ts-ignore
@@ -185,11 +189,11 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
-         * @param {GetSignableTransferRequest} getSignableTransferRequest get details of signable transfer
+         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransferV1: async (getSignableTransferRequest: GetSignableTransferRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSignableTransferV1: async (getSignableTransferRequest: GetSignableTransferRequestV1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'getSignableTransferRequest' is not null or undefined
             assertParamExists('getSignableTransferV1', 'getSignableTransferRequest', getSignableTransferRequest)
             const localVarPath = `/v1/signable-transfer-details`;
@@ -419,11 +423,11 @@ export const TransfersApiFp = function(configuration?: Configuration) {
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
-         * @param {GetSignableTransferRequest} getSignableTransferRequest get details of signable transfer
+         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableTransferResponse>> {
+        async getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequestV1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableTransferResponseV1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableTransferV1(getSignableTransferRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -514,11 +518,11 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
-         * @param {GetSignableTransferRequest} getSignableTransferRequest get details of signable transfer
+         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequest, options?: any): AxiosPromise<GetSignableTransferResponse> {
+        getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequestV1, options?: any): AxiosPromise<GetSignableTransferResponseV1> {
             return localVarFp.getSignableTransferV1(getSignableTransferRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -652,10 +656,10 @@ export interface TransfersApiGetSignableTransferRequest {
 export interface TransfersApiGetSignableTransferV1Request {
     /**
      * get details of signable transfer
-     * @type {GetSignableTransferRequest}
+     * @type {GetSignableTransferRequestV1}
      * @memberof TransfersApiGetSignableTransferV1
      */
-    readonly getSignableTransferRequest: GetSignableTransferRequest
+    readonly getSignableTransferRequest: GetSignableTransferRequestV1
 }
 
 /**
