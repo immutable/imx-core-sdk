@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1] - 2023-02-01
 
+## [Unreleased]
+- Added support for listings & bids for the upgraded v3 endpoints of orders and trades
+
 ### Added
 
 - Added examples for following endpoints
