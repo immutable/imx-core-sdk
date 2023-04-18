@@ -49,7 +49,7 @@ import { Transfer } from '../models';
 export const TransfersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a new transfer request
+         * Create a new transfer request.
          * @summary Creates a transfer of multiple tokens between two parties
          * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -100,7 +100,7 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Create a new transfer request
+         * Create a new transfer request.
          * @summary Creates a transfer of tokens between two parties
          * @param {CreateTransferRequestV1} createTransferRequest Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -382,7 +382,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TransfersApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a new transfer request
+         * Create a new transfer request.
          * @summary Creates a transfer of multiple tokens between two parties
          * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -396,7 +396,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Create a new transfer request
+         * Create a new transfer request.
          * @summary Creates a transfer of tokens between two parties
          * @param {CreateTransferRequestV1} createTransferRequest Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -480,7 +480,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
     const localVarFp = TransfersApiFp(configuration)
     return {
         /**
-         * Create a new transfer request
+         * Create a new transfer request.
          * @summary Creates a transfer of multiple tokens between two parties
          * @param {CreateTransferRequest} createTransferRequestV2 Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -493,7 +493,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
             return localVarFp.createTransfer(createTransferRequestV2, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create a new transfer request
+         * Create a new transfer request.
          * @summary Creates a transfer of tokens between two parties
          * @param {CreateTransferRequestV1} createTransferRequest Create transfer
          * @param {string} [xImxEthAddress] eth address
@@ -810,7 +810,7 @@ export interface TransfersApiListTransfersRequest {
  */
 export class TransfersApi extends BaseAPI {
     /**
-     * Create a new transfer request
+     * Create a new transfer request.
      * @summary Creates a transfer of multiple tokens between two parties
      * @param {TransfersApiCreateTransferRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -822,7 +822,7 @@ export class TransfersApi extends BaseAPI {
     }
 
     /**
-     * Create a new transfer request
+     * Create a new transfer request.
      * @summary Creates a transfer of tokens between two parties
      * @param {TransfersApiCreateTransferV1Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

@@ -15,99 +15,99 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { CreateTradeRequestV1FeeInfo } from './create-trade-request-v1-fee-info';
+import { FeeEntry } from './fee-entry';
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeEntry } from './fee-entry';
+import { TradesCreateTradeRequestFeeInfo } from './trades-create-trade-request-fee-info';
 
 /**
  * 
  * @export
- * @interface CreateTradeRequestV1
+ * @interface TradesCreateTradeRequest
  */
-export interface CreateTradeRequestV1 {
+export interface TradesCreateTradeRequest {
     /**
      * Amount to buy
      * @type {string}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'amount_buy': string;
     /**
      * Amount to sell
      * @type {string}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'amount_sell': string;
     /**
      * ID of the asset to buy
      * @type {string}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'asset_id_buy': string;
     /**
      * ID of the asset to sell
      * @type {string}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'asset_id_sell': string;
     /**
      * Expiration timestamp for this trade
      * @type {number}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'expiration_timestamp': number;
     /**
      * 
-     * @type {CreateTradeRequestV1FeeInfo}
-     * @memberof CreateTradeRequestV1
+     * @type {TradesCreateTradeRequestFeeInfo}
+     * @memberof TradesCreateTradeRequest
      */
-    'fee_info'?: CreateTradeRequestV1FeeInfo;
+    'fee_info'?: TradesCreateTradeRequestFeeInfo;
     /**
      * Fee information
      * @type {Array<FeeEntry>}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'fees'?: Array<FeeEntry>;
     /**
      * [deprecated] All orders include fees since the introduction of protocol fees
      * @type {boolean}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'include_fees'?: boolean;
     /**
      * Nonce of the trade
      * @type {number}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'nonce': number;
     /**
      * ID of the order
      * @type {number}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'order_id': number;
     /**
      * Public stark key of the user creating trade
      * @type {string}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'stark_key': string;
     /**
      * Payload signature
      * @type {string}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'stark_signature': string;
     /**
      * ID of the vault into which the traded asset will be placed
      * @type {number}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'vault_id_buy': number;
     /**
      * ID of the vault to sell from
      * @type {number}
-     * @memberof CreateTradeRequestV1
+     * @memberof TradesCreateTradeRequest
      */
     'vault_id_sell': number;
 }

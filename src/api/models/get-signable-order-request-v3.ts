@@ -18,63 +18,63 @@
 import { FeeEntry } from './fee-entry';
 // May contain unused imports in some cases
 // @ts-ignore
-import { GetSignableOrderRequestTokenBuy } from './get-signable-order-request-token-buy';
+import { GetSignableOrderRequestV3TokenBuy } from './get-signable-order-request-v3-token-buy';
 // May contain unused imports in some cases
 // @ts-ignore
-import { GetSignableOrderRequestTokenSell } from './get-signable-order-request-token-sell';
+import { GetSignableOrderRequestV3TokenSell } from './get-signable-order-request-v3-token-sell';
 
 /**
  * 
  * @export
- * @interface GetSignableOrderRequest
+ * @interface GetSignableOrderRequestV3
  */
-export interface GetSignableOrderRequest {
+export interface GetSignableOrderRequestV3 {
     /**
      * Fee-exclusive amount to buy the asset
      * @type {string}
-     * @memberof GetSignableOrderRequest
+     * @memberof GetSignableOrderRequestV3
      */
     'amount_buy': string;
     /**
      * Amount to sell (quantity)
      * @type {string}
-     * @memberof GetSignableOrderRequest
+     * @memberof GetSignableOrderRequestV3
      */
     'amount_sell': string;
     /**
      * ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour
      * @type {number}
-     * @memberof GetSignableOrderRequest
+     * @memberof GetSignableOrderRequestV3
      */
     'expiration_timestamp'?: number;
     /**
      * Inclusion of either maker or taker fees
      * @type {Array<FeeEntry>}
-     * @memberof GetSignableOrderRequest
+     * @memberof GetSignableOrderRequestV3
      */
     'fees'?: Array<FeeEntry>;
     /**
      * SplitFees dictates whether fees will be split between maker & taker, set split_fees to true when submitting signing to v3 endpoints and vice versa for v1
      * @type {boolean}
-     * @memberof GetSignableOrderRequest
+     * @memberof GetSignableOrderRequestV3
      */
     'split_fees'?: boolean;
     /**
      * 
-     * @type {GetSignableOrderRequestTokenBuy}
-     * @memberof GetSignableOrderRequest
+     * @type {GetSignableOrderRequestV3TokenBuy}
+     * @memberof GetSignableOrderRequestV3
      */
-    'token_buy': GetSignableOrderRequestTokenBuy;
+    'token_buy': GetSignableOrderRequestV3TokenBuy;
     /**
      * 
-     * @type {GetSignableOrderRequestTokenSell}
-     * @memberof GetSignableOrderRequest
+     * @type {GetSignableOrderRequestV3TokenSell}
+     * @memberof GetSignableOrderRequestV3
      */
-    'token_sell': GetSignableOrderRequestTokenSell;
+    'token_sell': GetSignableOrderRequestV3TokenSell;
     /**
      * Ethereum address of the submitting user
      * @type {string}
-     * @memberof GetSignableOrderRequest
+     * @memberof GetSignableOrderRequestV3
      */
     'user': string;
 }

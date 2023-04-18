@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeInfo } from './fee-info';
+import { GetSignableOrderResponseFeeInfo } from './get-signable-order-response-fee-info';
 
 /**
  * 
@@ -55,10 +55,10 @@ export interface GetSignableOrderResponse {
     'expiration_timestamp': number;
     /**
      * 
-     * @type {FeeInfo}
+     * @type {GetSignableOrderResponseFeeInfo}
      * @memberof GetSignableOrderResponse
      */
-    'fee_info'?: FeeInfo;
+    'fee_info'?: GetSignableOrderResponseFeeInfo;
     /**
      * Nonce of the order
      * @type {number}

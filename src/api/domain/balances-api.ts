@@ -36,7 +36,7 @@ export const BalancesApiAxiosParamCreator = function (configuration?: Configurat
          * Fetches the token balances of the user
          * @summary Fetches the token balances of the user
          * @param {string} owner Address of the owner/user
-         * @param {string} address Token address
+         * @param {string} address Token address or \&#39;eth\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -138,7 +138,7 @@ export const BalancesApiFp = function(configuration?: Configuration) {
          * Fetches the token balances of the user
          * @summary Fetches the token balances of the user
          * @param {string} owner Address of the owner/user
-         * @param {string} address Token address
+         * @param {string} address Token address or \&#39;eth\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -175,7 +175,7 @@ export const BalancesApiFactory = function (configuration?: Configuration, baseP
          * Fetches the token balances of the user
          * @summary Fetches the token balances of the user
          * @param {string} owner Address of the owner/user
-         * @param {string} address Token address
+         * @param {string} address Token address or \&#39;eth\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -213,7 +213,7 @@ export interface BalancesApiGetBalanceRequest {
     readonly owner: string
 
     /**
-     * Token address
+     * Token address or \&#39;eth\&#39;
      * @type {string}
      * @memberof BalancesApiGetBalance
      */

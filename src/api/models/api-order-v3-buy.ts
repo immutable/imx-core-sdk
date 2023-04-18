@@ -15,25 +15,16 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
+import { Token } from './token';
+// May contain unused imports in some cases
+// @ts-ignore
 import { TokenDataOAIGen } from './token-data-oaigen';
 
 /**
- * 
+ * @type ApiOrderV3Buy
+ * Details of the asset being bought
  * @export
- * @interface Token
  */
-export interface Token {
-    /**
-     * 
-     * @type {TokenDataOAIGen}
-     * @memberof Token
-     */
-    'data': TokenDataOAIGen;
-    /**
-     * Type of this asset (ETH/ERC20/ERC721)
-     * @type {string}
-     * @memberof Token
-     */
-    'type': string;
-}
+export type ApiOrderV3Buy = Token;
+
 

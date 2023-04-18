@@ -15,78 +15,102 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { OrderBuy } from './order-buy';
+import { ApiOrderV3Buy } from './api-order-v3-buy';
+// May contain unused imports in some cases
+// @ts-ignore
+import { ApiOrderV3MakerFees } from './api-order-v3-maker-fees';
+// May contain unused imports in some cases
+// @ts-ignore
+import { ApiOrderV3Sell } from './api-order-v3-sell';
+// May contain unused imports in some cases
+// @ts-ignore
+import { ApiOrderV3TakerFees } from './api-order-v3-taker-fees';
 // May contain unused imports in some cases
 // @ts-ignore
 import { OrderFeeInfo } from './order-fee-info';
-// May contain unused imports in some cases
-// @ts-ignore
-import { OrderSell } from './order-sell';
 
 /**
  * 
  * @export
- * @interface Order
+ * @interface ApiOrderV3
  */
-export interface Order {
+export interface ApiOrderV3 {
     /**
      * Amount of the asset already sold by this order
      * @type {string}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'amount_sold': string | null;
     /**
      * 
-     * @type {OrderBuy}
-     * @memberof Order
+     * @type {ApiOrderV3Buy}
+     * @memberof ApiOrderV3
      */
-    'buy': OrderBuy;
+    'buy': ApiOrderV3Buy;
     /**
      * Expiration timestamp of this order
      * @type {string}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'expiration_timestamp': string | null;
     /**
      * Fee information for the order
      * @type {Array<OrderFeeInfo>}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'fees'?: Array<OrderFeeInfo>;
     /**
+     * 
+     * @type {ApiOrderV3MakerFees}
+     * @memberof ApiOrderV3
+     */
+    'maker_fees'?: ApiOrderV3MakerFees;
+    /**
+     * MakerTakerType
+     * @type {string}
+     * @memberof ApiOrderV3
+     */
+    'maker_taker_type'?: string;
+    /**
      * ID of the order
      * @type {number}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'order_id': number;
     /**
      * 
-     * @type {OrderSell}
-     * @memberof Order
+     * @type {ApiOrderV3Sell}
+     * @memberof ApiOrderV3
      */
-    'sell': OrderSell;
+    'sell': ApiOrderV3Sell;
     /**
      * Status of the order
      * @type {string}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'status': string;
     /**
+     * 
+     * @type {ApiOrderV3TakerFees}
+     * @memberof ApiOrderV3
+     */
+    'taker_fees'?: ApiOrderV3TakerFees;
+    /**
      * Timestamp this order was created
      * @type {string}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'timestamp': string | null;
     /**
      * Updated timestamp of this order
      * @type {string}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'updated_timestamp': string | null;
     /**
      * Ethereum address of the user who submitted the order
      * @type {string}
-     * @memberof Order
+     * @memberof ApiOrderV3
      */
     'user': string;
 }

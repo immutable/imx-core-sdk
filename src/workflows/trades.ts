@@ -1,7 +1,7 @@
 import {
-  TradesApi,
-  GetSignableTradeRequest,
   CreateTradeResponse,
+  GetSignableTradeRequest,
+  TradesApi,
 } from '../api';
 import { WalletConnection } from '../types';
 import { signRaw } from '../utils';
@@ -34,7 +34,7 @@ export async function createTradeWorkflow({
 
   const starkSignature = await starkSigner.signMessage(payloadHash);
 
-  const createTradeResponse = await tradesApi.createTrade({
+  const createTradeResponse = await tradesApi.createTradeV3({
     createTradeRequest: {
       amount_buy: signableResult.data.amount_buy,
       amount_sell: signableResult.data.amount_sell,

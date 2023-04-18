@@ -15,25 +15,16 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { TokenDataOAIGen } from './token-data-oaigen';
+import { AssetProperties } from './asset-properties';
+// May contain unused imports in some cases
+// @ts-ignore
+import { CollectionDetails } from './collection-details';
 
 /**
- * 
+ * @type TokenDataProperties
+ * Properties of this asset
  * @export
- * @interface Token
  */
-export interface Token {
-    /**
-     * 
-     * @type {TokenDataOAIGen}
-     * @memberof Token
-     */
-    'data': TokenDataOAIGen;
-    /**
-     * Type of this asset (ETH/ERC20/ERC721)
-     * @type {string}
-     * @memberof Token
-     */
-    'type': string;
-}
+export type TokenDataProperties = AssetProperties;
+
 

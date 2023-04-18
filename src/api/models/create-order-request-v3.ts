@@ -15,84 +15,84 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { GetSignableTradeResponseFeeInfo } from './get-signable-trade-response-fee-info';
+import { FeeEntry } from './fee-entry';
 
 /**
  * 
  * @export
- * @interface GetSignableTradeResponse
+ * @interface CreateOrderRequestV3
  */
-export interface GetSignableTradeResponse {
+export interface CreateOrderRequestV3 {
     /**
      * Amount to buy
      * @type {string}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'amount_buy': string;
     /**
      * Amount to sell
      * @type {string}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'amount_sell': string;
     /**
      * ID of the asset to buy
      * @type {string}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'asset_id_buy': string;
     /**
      * ID of the asset to sell
      * @type {string}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'asset_id_sell': string;
     /**
      * Expiration timestamp for this order
      * @type {number}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'expiration_timestamp': number;
     /**
-     * 
-     * @type {GetSignableTradeResponseFeeInfo}
-     * @memberof GetSignableTradeResponse
+     * Fee information
+     * @type {Array<FeeEntry>}
+     * @memberof CreateOrderRequestV3
      */
-    'fee_info'?: GetSignableTradeResponseFeeInfo;
+    'fees'?: Array<FeeEntry>;
+    /**
+     * [DEPRECATED] Whether to include fees in order
+     * @type {boolean}
+     * @memberof CreateOrderRequestV3
+     */
+    'include_fees'?: boolean;
     /**
      * Nonce of the order
      * @type {number}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'nonce': number;
     /**
-     * Payload Hash
+     * Public stark key of the user creating order
      * @type {string}
-     * @memberof GetSignableTradeResponse
-     */
-    'payload_hash': string;
-    /**
-     * Message to sign with L1 wallet to confirm trade request
-     * @type {string}
-     * @memberof GetSignableTradeResponse
-     */
-    'signable_message': string;
-    /**
-     * Public stark key of the created user
-     * @type {string}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'stark_key': string;
     /**
+     * Payload signature
+     * @type {string}
+     * @memberof CreateOrderRequestV3
+     */
+    'stark_signature': string;
+    /**
      * ID of the vault into which the bought asset will be placed
      * @type {number}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'vault_id_buy': number;
     /**
      * ID of the vault to sell from
      * @type {number}
-     * @memberof GetSignableTradeResponse
+     * @memberof CreateOrderRequestV3
      */
     'vault_id_sell': number;
 }

@@ -1616,25 +1616,25 @@
           },
           {
             "type": "string",
-            "description": "Minimum created at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "description": "Filter orders to include those with created_at timestamps after this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum created at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "description": "Filter orders to include those with created_at timestamps before this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "max_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Minimum updated at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "description": "Filter orders to include those with updated_at timestamps after this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "updated_min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum updated at timestamp for this order, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "description": "Filter orders to include those with updated_at timestamps before this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
             "name": "updated_max_timestamp",
             "in": "query"
           },
@@ -1775,7 +1775,7 @@
         }
       },
       "post": {
-        "description": "Create an order",
+        "description": "Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.",
         "consumes": [
           "application/json"
         ],
@@ -1840,7 +1840,7 @@
     },
     "/v1/orders/{id}": {
       "get": {
-        "description": "Get details of an order with the given ID",
+        "description": "Get an order",
         "consumes": [
           "application/json"
         ],
@@ -1850,7 +1850,7 @@
         "tags": [
           "orders"
         ],
-        "summary": "Get details of an order with the given ID",
+        "summary": "Get an order",
         "operationId": "getOrder",
         "parameters": [
           {
@@ -1907,7 +1907,7 @@
         }
       },
       "delete": {
-        "description": "Cancel an order",
+        "description": "Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.",
         "consumes": [
           "application/json"
         ],
@@ -2578,6 +2578,13 @@
             "in": "query"
           },
           {
+            "enum": [
+              "created_at",
+              "updated_at",
+              "transaction_id",
+              "party_a_sold_quantity",
+              "party_b_sold_quantity"
+            ],
             "type": "string",
             "description": "Property to sort by",
             "name": "order_by",
@@ -2612,7 +2619,7 @@
         }
       },
       "post": {
-        "description": "Create a Trade",
+        "description": "Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.",
         "consumes": [
           "application/json"
         ],
@@ -2841,7 +2848,7 @@
         }
       },
       "post": {
-        "description": "Create a new transfer request",
+        "description": "Create a new transfer request.",
         "consumes": [
           "application/json"
         ],
@@ -3414,7 +3421,7 @@
           },
           {
             "type": "string",
-            "description": "Token address",
+            "description": "Token address or 'eth'",
             "name": "address",
             "in": "path",
             "required": true
@@ -3958,7 +3965,7 @@
     },
     "/v2/transfers": {
       "post": {
-        "description": "Create a new transfer request",
+        "description": "Create a new transfer request.",
         "consumes": [
           "application/json"
         ],
@@ -4226,6 +4233,433 @@
         }
       }
     },
+    "/v3/orders": {
+      "get": {
+        "description": "Get a list of orders (V3)",
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "summary": "Get a list of orders (V3)",
+        "operationId": "listOrdersV3",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "created_at",
+              "expired_at",
+              "sell_quantity",
+              "buy_quantity",
+              "buy_quantity_with_fees",
+              "updated_at"
+            ],
+            "type": "string",
+            "description": "Property to sort by",
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Direction to sort (asc/desc)",
+            "name": "direction",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Ethereum address of the user who submitted this order",
+            "name": "user",
+            "in": "query"
+          },
+          {
+            "enum": ["active", "filled", "cancelled", "expired", "inactive"],
+            "type": "string",
+            "description": "Status of this order",
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Filter orders to include those with created_at timestamps after this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "min_timestamp",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Filter orders to include those with created_at timestamps before this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "max_timestamp",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Filter orders to include those with updated_at timestamps after this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "updated_min_timestamp",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Filter orders to include those with updated_at timestamps before this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "updated_max_timestamp",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Token type of the asset this order buys",
+            "name": "buy_token_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "ERC721 Token ID of the asset this order buys",
+            "name": "buy_token_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Internal IMX ID of the asset this order buys",
+            "name": "buy_asset_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Token address of the asset this order buys",
+            "name": "buy_token_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Token name of the asset this order buys",
+            "name": "buy_token_name",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Min quantity for the asset this order buys",
+            "name": "buy_min_quantity",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Max quantity for the asset this order buys",
+            "name": "buy_max_quantity",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "JSON-encoded metadata filters for the asset this order buys",
+            "name": "buy_metadata",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Token type of the asset this order sells",
+            "name": "sell_token_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "ERC721 Token ID of the asset this order sells",
+            "name": "sell_token_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Internal IMX ID of the asset this order sells",
+            "name": "sell_asset_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Token address of the asset this order sells",
+            "name": "sell_token_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Token name of the asset this order sells",
+            "name": "sell_token_name",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Min quantity for the asset this order sells",
+            "name": "sell_min_quantity",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Max quantity for the asset this order sells",
+            "name": "sell_max_quantity",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "JSON-encoded metadata filters for the asset this order sells",
+            "name": "sell_metadata",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients",
+            "name": "auxiliary_fee_percentages",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages",
+            "name": "auxiliary_fee_recipients",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "description": "Set flag to true to include fee object for orders",
+            "name": "include_fees",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListOrdersResponseV3"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create an order using the v3 orderbook. Currently only buy NFT orders are supported.",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "summary": "Create an order (V3)",
+        "operationId": "createOrderV3",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "eth address",
+            "name": "x-imx-eth-address",
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "eth signature",
+            "name": "x-imx-eth-signature",
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
+          },
+          {
+            "description": "create an order",
+            "name": "CreateOrderRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateOrderRequestV3"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateOrderResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v3/orders/{id}": {
+      "get": {
+        "description": "Get an order (V3)",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "summary": "Get an order (V3)",
+        "operationId": "getOrderV3",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Order ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "description": "Set flag to true to include fee body for the order",
+            "name": "include_fees",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients",
+            "name": "auxiliary_fee_percentages",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages",
+            "name": "auxiliary_fee_recipients",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/OrderV3"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Cancel an order (V3)",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "summary": "Cancel an order (V3)",
+        "operationId": "cancelOrderV3",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "eth address",
+            "name": "x-imx-eth-address",
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "eth signature",
+            "name": "x-imx-eth-signature",
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
+          },
+          {
+            "description": "cancel an order",
+            "name": "CancelOrderRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CancelOrderRequest"
+            }
+          },
+          {
+            "type": "string",
+            "description": "Order ID to cancel",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CancelOrderResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v3/signable-cancel-order-details": {
+      "post": {
+        "description": "Get a signable cancel order message (V3)",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["orders"],
+        "summary": "Get a signable cancel order message (V3)",
+        "operationId": "getSignableCancelOrderV3",
+        "parameters": [
+          {
+            "description": "get a signable cancel order",
+            "name": "GetSignableCancelOrderRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetSignableCancelOrderRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetSignableCancelOrderResponse"
+            }
+          }
+        }
+      }
+    },
     "/v3/signable-order-details": {
       "post": {
         "description": "Get a signable order request (V3)",
@@ -4242,12 +4676,12 @@
         "operationId": "getSignableOrder",
         "parameters": [
           {
-            "description": "get a signable order",
+            "description": "get a signable order v3",
             "name": "GetSignableOrderRequestV3",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GetSignableOrderRequest"
+              "$ref": "#/definitions/GetSignableOrderRequestV3"
             }
           }
         ],
@@ -4303,6 +4737,157 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetSignableTradeResponse"
+            }
+          }
+        }
+      }
+    },
+    "/v3/trades": {
+      "get": {
+        "description": "Get a list of trades (V3)",
+        "produces": ["application/json"],
+        "tags": ["trades"],
+        "summary": "Get a list of trades (V3)",
+        "operationId": "listTradesV3",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Party A's (buy order) token type of currency used to buy",
+            "name": "party_a_token_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Party A's (buy order) token address of currency used to buy",
+            "name": "party_a_token_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Party B's (sell order) token type of NFT sold - always ERC721",
+            "name": "party_b_token_type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Party B's (sell order) collection address of NFT sold",
+            "name": "party_b_token_address",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Party B's (sell order) token id of NFT sold",
+            "name": "party_b_token_id",
+            "in": "query"
+          },
+          {
+            "type": "integer",
+            "description": "Page size of the result",
+            "name": "page_size",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Cursor",
+            "name": "cursor",
+            "in": "query"
+          },
+          {
+            "enum": [
+              "created_at",
+              "updated_at",
+              "transaction_id",
+              "party_a_sold_quantity",
+              "party_b_sold_quantity",
+              "timestamp",
+              "updated_timestamp"
+            ],
+            "type": "string",
+            "description": "Property to sort by",
+            "name": "order_by",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Direction to sort (asc/desc)",
+            "name": "direction",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Minimum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "min_timestamp",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Maximum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "name": "max_timestamp",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ListTradesResponse"
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a Trade. Currently only buy order is supported.",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "tags": ["trades"],
+        "summary": "Create a Trade (V3)",
+        "operationId": "createTradeV3",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "eth address",
+            "name": "x-imx-eth-address",
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "eth signature",
+            "name": "x-imx-eth-signature",
+            "in": "header"
+          },
+          {
+            "type": "string",
+            "description": "Authorization header",
+            "name": "Authorization",
+            "in": "header"
+          },
+          {
+            "description": "create a trade",
+            "name": "CreateTradeRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/trades.CreateTradeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateTradeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -4791,10 +5376,7 @@
     },
     "CreateMetadataRefreshRequest": {
       "type": "object",
-      "required": [
-        "collection_address",
-        "token_ids"
-      ],
+      "required": ["collection_address", "token_ids"],
       "properties": {
         "collection_address": {
           "description": "The collection contract address",
@@ -4889,13 +5471,77 @@
         }
       }
     },
-    "CreateOrderResponse": {
+    "CreateOrderRequestV3": {
       "type": "object",
       "required": [
-        "order_id",
-        "status",
-        "time"
+        "amount_buy",
+        "amount_sell",
+        "asset_id_buy",
+        "asset_id_sell",
+        "expiration_timestamp",
+        "nonce",
+        "stark_key",
+        "stark_signature",
+        "vault_id_buy",
+        "vault_id_sell"
       ],
+      "properties": {
+        "amount_buy": {
+          "description": "Amount to buy",
+          "type": "string"
+        },
+        "amount_sell": {
+          "description": "Amount to sell",
+          "type": "string"
+        },
+        "asset_id_buy": {
+          "description": "ID of the asset to buy",
+          "type": "string"
+        },
+        "asset_id_sell": {
+          "description": "ID of the asset to sell",
+          "type": "string"
+        },
+        "expiration_timestamp": {
+          "description": "Expiration timestamp for this order",
+          "type": "integer"
+        },
+        "fees": {
+          "description": "Fee information",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FeeEntry"
+          }
+        },
+        "include_fees": {
+          "description": "[DEPRECATED] Whether to include fees in order",
+          "type": "boolean"
+        },
+        "nonce": {
+          "description": "Nonce of the order",
+          "type": "integer"
+        },
+        "stark_key": {
+          "description": "Public stark key of the user creating order",
+          "type": "string"
+        },
+        "stark_signature": {
+          "description": "Payload signature",
+          "type": "string"
+        },
+        "vault_id_buy": {
+          "description": "ID of the vault into which the bought asset will be placed",
+          "type": "integer"
+        },
+        "vault_id_sell": {
+          "description": "ID of the vault to sell from",
+          "type": "integer"
+        }
+      }
+    },
+    "CreateOrderResponse": {
+      "type": "object",
+      "required": ["order_id", "status", "time"],
       "properties": {
         "order_id": {
           "description": "ID of the created order",
@@ -4986,8 +5632,7 @@
           "type": "integer"
         },
         "fee_info": {
-          "description": "Fee details",
-          "$ref": "#/definitions/FeeInfo"
+          "$ref": "#/definitions/createTradeRequestV1FeeInfo"
         },
         "fees": {
           "description": "Fee information",
@@ -5414,11 +6059,7 @@
     },
     "FeeInfo": {
       "type": "object",
-      "required": [
-        "asset_id",
-        "fee_limit",
-        "source_vault_id"
-      ],
+      "required": ["asset_id", "fee_limit", "source_vault_id"],
       "properties": {
         "asset_id": {
           "description": "ID of the asset these fees relate to",
@@ -5438,7 +6079,6 @@
       "type": "object",
       "properties": {
         "data": {
-          "description": "Fee token data details",
           "$ref": "#/definitions/FeeData"
         },
         "type": {
@@ -5688,13 +6328,60 @@
             "$ref": "#/definitions/FeeEntry"
           }
         },
+        "split_fees": {
+          "description": "SplitFees dictates whether fees will be split between maker \u0026 taker, set split_fees to true when submitting signing to v3 endpoints and vice versa for v1",
+          "type": "boolean"
+        },
         "token_buy": {
-          "description": "Token to buy",
-          "$ref": "#/definitions/SignableToken"
+          "$ref": "#/definitions/getSignableOrderRequestTokenBuy"
         },
         "token_sell": {
-          "description": "Token to sell",
-          "$ref": "#/definitions/SignableToken"
+          "$ref": "#/definitions/getSignableOrderRequestTokenSell"
+        },
+        "user": {
+          "description": "Ethereum address of the submitting user",
+          "type": "string"
+        }
+      }
+    },
+    "GetSignableOrderRequestV3": {
+      "type": "object",
+      "required": [
+        "amount_buy",
+        "amount_sell",
+        "token_buy",
+        "token_sell",
+        "user"
+      ],
+      "properties": {
+        "amount_buy": {
+          "description": "Fee-exclusive amount to buy the asset",
+          "type": "string"
+        },
+        "amount_sell": {
+          "description": "Amount to sell (quantity)",
+          "type": "string"
+        },
+        "expiration_timestamp": {
+          "description": "ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour",
+          "type": "integer"
+        },
+        "fees": {
+          "description": "Inclusion of either maker or taker fees",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FeeEntry"
+          }
+        },
+        "split_fees": {
+          "description": "SplitFees dictates whether fees will be split between maker \u0026 taker, set split_fees to true when submitting signing to v3 endpoints and vice versa for v1",
+          "type": "boolean"
+        },
+        "token_buy": {
+          "$ref": "#/definitions/getSignableOrderRequestV3TokenBuy"
+        },
+        "token_sell": {
+          "$ref": "#/definitions/getSignableOrderRequestV3TokenSell"
         },
         "user": {
           "description": "Ethereum address of the submitting user",
@@ -5739,8 +6426,7 @@
           "type": "integer"
         },
         "fee_info": {
-          "description": "Fee information",
-          "$ref": "#/definitions/FeeInfo"
+          "$ref": "#/definitions/getSignableOrderResponseFeeInfo"
         },
         "nonce": {
           "description": "Nonce of the order",
@@ -5884,8 +6570,7 @@
           "type": "integer"
         },
         "fee_info": {
-          "description": "Fee information",
-          "$ref": "#/definitions/FeeInfo"
+          "$ref": "#/definitions/getSignableTradeResponseFeeInfo"
         },
         "nonce": {
           "description": "Nonce of the order",
@@ -5905,6 +6590,58 @@
         },
         "vault_id_buy": {
           "description": "ID of the vault into which the bought asset will be placed",
+          "type": "integer"
+        },
+        "vault_id_sell": {
+          "description": "ID of the vault to sell from",
+          "type": "integer"
+        }
+      }
+    },
+    "GetSignableTradeResult": {
+      "type": "object",
+      "properties": {
+        "amount_buy": {
+          "description": "Amount to buy",
+          "type": "string"
+        },
+        "amount_sell": {
+          "description": "Amount to sell",
+          "type": "string"
+        },
+        "asset_id_buy": {
+          "description": "ID of the asset to buy",
+          "type": "string"
+        },
+        "asset_id_sell": {
+          "description": "ID of the asset to sell",
+          "type": "string"
+        },
+        "expiration_timestamp": {
+          "description": "Expiration timestamp of this trade",
+          "type": "integer"
+        },
+        "fee_info": {
+          "$ref": "#/definitions/getSignableTradeResultFeeInfo"
+        },
+        "nonce": {
+          "description": "Nonce of the trade",
+          "type": "integer"
+        },
+        "payload_hash": {
+          "description": "Payload Hash",
+          "type": "string"
+        },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to confirm trade request",
+          "type": "string"
+        },
+        "stark_key": {
+          "description": "Public stark key of the trading user",
+          "type": "string"
+        },
+        "vault_id_buy": {
+          "description": "ID of the vault into which the traded asset will be placed",
           "type": "integer"
         },
         "vault_id_sell": {
@@ -6167,11 +6904,7 @@
     },
     "ListBalancesResponse": {
       "type": "object",
-      "required": [
-        "cursor",
-        "remaining",
-        "result"
-      ],
+      "required": ["cursor", "remaining", "result"],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -6286,6 +7019,27 @@
           "type": "array",
           "items": {
             "$ref": "#/definitions/Order"
+          }
+        }
+      }
+    },
+    "ListOrdersResponseV3": {
+      "type": "object",
+      "required": ["cursor", "remaining", "result"],
+      "properties": {
+        "cursor": {
+          "description": "Generated cursor returned by previous query",
+          "type": "string"
+        },
+        "remaining": {
+          "description": "Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results",
+          "type": "integer"
+        },
+        "result": {
+          "description": "Orders matching query parameters",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderV3"
           }
         }
       }
@@ -6505,9 +7259,7 @@
     },
     "MetadataSchemaRequest": {
       "type": "object",
-      "required": [
-        "name"
-      ],
+      "required": ["name"],
       "properties": {
         "filterable": {
           "description": "Sets the metadata as filterable",
@@ -6780,8 +7532,7 @@
           "x-nullable": true
         },
         "buy": {
-          "description": "Details of the asset being bought",
-          "$ref": "#/definitions/Token"
+          "$ref": "#/definitions/orderBuy"
         },
         "expiration_timestamp": {
           "description": "Expiration timestamp of this order",
@@ -6800,8 +7551,7 @@
           "type": "integer"
         },
         "sell": {
-          "description": "Details of the asset being sold",
-          "$ref": "#/definitions/Token"
+          "$ref": "#/definitions/orderSell"
         },
         "status": {
           "description": "Status of the order",
@@ -6854,11 +7604,81 @@
           "type": "string"
         },
         "token": {
-          "description": "Details of the fee currency",
-          "$ref": "#/definitions/FeeToken"
+          "$ref": "#/definitions/orderFeeInfoToken"
         },
         "type": {
           "description": "Fee type",
+          "type": "string"
+        }
+      }
+    },
+    "OrderV3": {
+      "type": "object",
+      "required": [
+        "amount_sold",
+        "buy",
+        "expiration_timestamp",
+        "order_id",
+        "sell",
+        "status",
+        "timestamp",
+        "updated_timestamp",
+        "user"
+      ],
+      "properties": {
+        "amount_sold": {
+          "description": "Amount of the asset already sold by this order",
+          "type": "string",
+          "x-nullable": true
+        },
+        "buy": {
+          "$ref": "#/definitions/orderV3Buy"
+        },
+        "expiration_timestamp": {
+          "description": "Expiration timestamp of this order",
+          "type": "string",
+          "x-nullable": true
+        },
+        "fees": {
+          "description": "Fee information for the order",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderFeeInfo"
+          }
+        },
+        "maker_fees": {
+          "$ref": "#/definitions/orderV3MakerFees"
+        },
+        "maker_taker_type": {
+          "description": "MakerTakerType",
+          "type": "string"
+        },
+        "order_id": {
+          "description": "ID of the order",
+          "type": "integer"
+        },
+        "sell": {
+          "$ref": "#/definitions/orderV3Sell"
+        },
+        "status": {
+          "description": "Status of the order",
+          "type": "string"
+        },
+        "taker_fees": {
+          "$ref": "#/definitions/orderV3TakerFees"
+        },
+        "timestamp": {
+          "description": "Timestamp this order was created",
+          "type": "string",
+          "x-nullable": true
+        },
+        "updated_timestamp": {
+          "description": "Updated timestamp of this order",
+          "type": "string",
+          "x-nullable": true
+        },
+        "user": {
+          "description": "Ethereum address of the user who submitted the order",
           "type": "string"
         }
       }
@@ -7109,8 +7929,7 @@
       ],
       "properties": {
         "data": {
-          "description": "Token details of this asset",
-          "$ref": "#/definitions/TokenData"
+          "$ref": "#/definitions/tokenDataOAIGen"
         },
         "type": {
           "description": "Type of this asset (ETH/ERC20/ERC721)",
@@ -7134,8 +7953,7 @@
           "type": "string"
         },
         "properties": {
-          "description": "Properties of this asset",
-          "$ref": "#/definitions/AssetProperties"
+          "$ref": "#/definitions/tokenDataProperties"
         },
         "quantity": {
           "description": "Quantity of this asset - inclusive of fees for buy order in v1 API and exclusive of fees in v3 API",
@@ -7207,12 +8025,10 @@
       ],
       "properties": {
         "a": {
-          "description": "Side A of this trade (the buy order)",
-          "$ref": "#/definitions/TradeSide"
+          "$ref": "#/definitions/tradeA"
         },
         "b": {
-          "description": "Side B of this trade (the sell order)",
-          "$ref": "#/definitions/TradeSide"
+          "$ref": "#/definitions/tradeB"
         },
         "status": {
           "description": "Status of this trade",
@@ -7449,6 +8265,113 @@
         }
       }
     },
+    "api.OrderV3": {
+      "type": "object",
+      "required": [
+        "amount_sold",
+        "buy",
+        "expiration_timestamp",
+        "order_id",
+        "sell",
+        "status",
+        "timestamp",
+        "updated_timestamp",
+        "user"
+      ],
+      "properties": {
+        "amount_sold": {
+          "description": "Amount of the asset already sold by this order",
+          "type": "string",
+          "x-nullable": true
+        },
+        "buy": {
+          "$ref": "#/definitions/apiOrderV3Buy"
+        },
+        "expiration_timestamp": {
+          "description": "Expiration timestamp of this order",
+          "type": "string",
+          "x-nullable": true
+        },
+        "fees": {
+          "description": "Fee information for the order",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderFeeInfo"
+          }
+        },
+        "maker_fees": {
+          "$ref": "#/definitions/apiOrderV3MakerFees"
+        },
+        "maker_taker_type": {
+          "description": "MakerTakerType",
+          "type": "string"
+        },
+        "order_id": {
+          "description": "ID of the order",
+          "type": "integer"
+        },
+        "sell": {
+          "$ref": "#/definitions/apiOrderV3Sell"
+        },
+        "status": {
+          "description": "Status of the order",
+          "type": "string"
+        },
+        "taker_fees": {
+          "$ref": "#/definitions/apiOrderV3TakerFees"
+        },
+        "timestamp": {
+          "description": "Timestamp this order was created",
+          "type": "string",
+          "x-nullable": true
+        },
+        "updated_timestamp": {
+          "description": "Updated timestamp of this order",
+          "type": "string",
+          "x-nullable": true
+        },
+        "user": {
+          "description": "Ethereum address of the user who submitted the order",
+          "type": "string"
+        }
+      }
+    },
+    "apiOrderV3Buy": {
+      "description": "Details of the asset being bought",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "apiOrderV3MakerFees": {
+      "description": "MakerFees is the information about the fees that needs to be paid by the maker (liquidity)",
+      "allOf": [
+        {
+          "$ref": "#/definitions/store.MakerTakerFee"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "apiOrderV3Sell": {
+      "description": "Details of the asset being sold",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "apiOrderV3TakerFees": {
+      "description": "TakerFees is the information about the fees that needs to be paid by the taker (liquidity)",
+      "allOf": [
+        {
+          "$ref": "#/definitions/store.MakerTakerFee"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
     "contract.CreateAPIRequest": {
       "type": "object",
       "properties": {
@@ -7470,6 +8393,15 @@
           "type": "string"
         }
       }
+    },
+    "createTradeRequestV1FeeInfo": {
+      "description": "Fee details",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FeeInfo"
+        }
+      ],
+      "x-go-gen-location": "models"
     },
     "encodeAssetRequestToken": {
       "type": "object",
@@ -7516,6 +8448,87 @@
           "type": "string"
         }
       }
+    },
+    "feeTokenData": {
+      "description": "Fee token data details",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FeeData"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableOrderRequestTokenBuy": {
+      "description": "Token to buy",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableOrderRequestTokenSell": {
+      "description": "Token to sell",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableOrderRequestV3TokenBuy": {
+      "description": "Token to buy",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableOrderRequestV3TokenSell": {
+      "description": "Token to sell",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableOrderResponseFeeInfo": {
+      "description": "Fee information",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FeeInfo"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableTradeResponseFeeInfo": {
+      "description": "Fee information",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FeeInfo"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableTradeResponseResult": {
+      "description": "Signable trade result",
+      "allOf": [
+        {
+          "$ref": "#/definitions/GetSignableTradeResult"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableTradeResultFeeInfo": {
+      "description": "Fee details",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FeeInfo"
+        }
+      ],
+      "x-go-gen-location": "models"
     },
     "lambdas.APIError": {
       "type": "object",
@@ -7744,6 +8757,240 @@
           "example": "light"
         }
       }
+    },
+    "orderBuy": {
+      "description": "Details of the asset being bought",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "orderFeeInfoToken": {
+      "description": "Details of the fee currency",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FeeToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "orderSell": {
+      "description": "Details of the asset being sold",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "orderV3Buy": {
+      "description": "Details of the asset being bought",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "orderV3MakerFees": {
+      "description": "MakerFees is the information about the fees that needs to be paid by the maker (liquidity)",
+      "allOf": [
+        {
+          "$ref": "#/definitions/orders.MakerTakerFee"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "orderV3Sell": {
+      "description": "Details of the asset being sold",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "orderV3TakerFees": {
+      "description": "TakerFees is the information about the fees that needs to be paid by the taker (liquidity)",
+      "allOf": [
+        {
+          "$ref": "#/definitions/orders.MakerTakerFee"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "orders.MakerTakerFee": {
+      "type": "object",
+      "required": ["quantity_with_fees"],
+      "properties": {
+        "decimals": {
+          "description": "Number of Decimals supported the fee token",
+          "type": "integer"
+        },
+        "fees": {
+          "description": "Fees",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderFeeInfo"
+          }
+        },
+        "quantity_with_fees": {
+          "description": "Quantity of this asset with the sum of all fees applied to the asset",
+          "type": "string"
+        },
+        "symbol": {
+          "description": "Symbol of the fee token",
+          "type": "string"
+        },
+        "token_address": {
+          "description": "Address of the ERC20 contract for the fee token",
+          "type": "string"
+        },
+        "token_type": {
+          "description": "Type of the fee token (ETH/ERC20)",
+          "type": "string"
+        }
+      }
+    },
+    "store.MakerTakerFee": {
+      "type": "object",
+      "required": ["quantity_with_fees"],
+      "properties": {
+        "fees": {
+          "description": "Fees",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderFeeInfo"
+          }
+        },
+        "quantity_with_fees": {
+          "description": "Quantity of this asset with the sum of all fees applied to the asset",
+          "type": "string"
+        }
+      }
+    },
+    "tokenDataOAIGen": {
+      "description": "Token details of this asset",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TokenData"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "tokenDataProperties": {
+      "description": "Properties of this asset",
+      "allOf": [
+        {
+          "$ref": "#/definitions/AssetProperties"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "tradeA": {
+      "description": "Side A of this trade (the buy order)",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TradeSide"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "tradeB": {
+      "description": "Side B of this trade (the sell order)",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TradeSide"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "trades.CreateTradeRequest": {
+      "type": "object",
+      "required": [
+        "amount_buy",
+        "amount_sell",
+        "asset_id_buy",
+        "asset_id_sell",
+        "expiration_timestamp",
+        "nonce",
+        "order_id",
+        "stark_key",
+        "stark_signature",
+        "vault_id_buy",
+        "vault_id_sell"
+      ],
+      "properties": {
+        "amount_buy": {
+          "description": "Amount to buy",
+          "type": "string"
+        },
+        "amount_sell": {
+          "description": "Amount to sell",
+          "type": "string"
+        },
+        "asset_id_buy": {
+          "description": "ID of the asset to buy",
+          "type": "string"
+        },
+        "asset_id_sell": {
+          "description": "ID of the asset to sell",
+          "type": "string"
+        },
+        "expiration_timestamp": {
+          "description": "Expiration timestamp for this trade",
+          "type": "integer"
+        },
+        "fee_info": {
+          "$ref": "#/definitions/tradesCreateTradeRequestFeeInfo"
+        },
+        "fees": {
+          "description": "Fee information",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FeeEntry"
+          }
+        },
+        "include_fees": {
+          "description": "[deprecated] All orders include fees since the introduction of protocol fees",
+          "type": "boolean"
+        },
+        "nonce": {
+          "description": "Nonce of the trade",
+          "type": "integer"
+        },
+        "order_id": {
+          "description": "ID of the order",
+          "type": "integer"
+        },
+        "stark_key": {
+          "description": "Public stark key of the user creating trade",
+          "type": "string"
+        },
+        "stark_signature": {
+          "description": "Payload signature",
+          "type": "string"
+        },
+        "vault_id_buy": {
+          "description": "ID of the vault into which the traded asset will be placed",
+          "type": "integer"
+        },
+        "vault_id_sell": {
+          "description": "ID of the vault to sell from",
+          "type": "integer"
+        }
+      }
+    },
+    "tradesCreateTradeRequestFeeInfo": {
+      "description": "Fee details",
+      "allOf": [
+        {
+          "$ref": "#/definitions/FeeInfo"
+        }
+      ],
+      "x-go-gen-location": "models"
     }
   }
 }

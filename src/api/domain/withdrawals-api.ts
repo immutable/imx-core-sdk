@@ -39,7 +39,7 @@ import { Withdrawal } from '../models';
 export const WithdrawalsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Creates a withdrawal
+         * Creates a withdrawal.
          * @summary Creates a withdrawal of a token
          * @param {string} xImxEthAddress eth address
          * @param {string} xImxEthSignature eth signature
@@ -289,7 +289,7 @@ export const WithdrawalsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WithdrawalsApiAxiosParamCreator(configuration)
     return {
         /**
-         * Creates a withdrawal
+         * Creates a withdrawal.
          * @summary Creates a withdrawal of a token
          * @param {string} xImxEthAddress eth address
          * @param {string} xImxEthSignature eth signature
@@ -362,7 +362,7 @@ export const WithdrawalsApiFactory = function (configuration?: Configuration, ba
     const localVarFp = WithdrawalsApiFp(configuration)
     return {
         /**
-         * Creates a withdrawal
+         * Creates a withdrawal.
          * @summary Creates a withdrawal of a token
          * @param {string} xImxEthAddress eth address
          * @param {string} xImxEthSignature eth signature
@@ -620,7 +620,7 @@ export interface WithdrawalsApiListWithdrawalsRequest {
  */
 export class WithdrawalsApi extends BaseAPI {
     /**
-     * Creates a withdrawal
+     * Creates a withdrawal.
      * @summary Creates a withdrawal of a token
      * @param {WithdrawalsApiCreateWithdrawalRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

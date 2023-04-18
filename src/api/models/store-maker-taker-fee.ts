@@ -15,25 +15,25 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { TokenDataOAIGen } from './token-data-oaigen';
+import { OrderFeeInfo } from './order-fee-info';
 
 /**
  * 
  * @export
- * @interface Token
+ * @interface StoreMakerTakerFee
  */
-export interface Token {
+export interface StoreMakerTakerFee {
     /**
-     * 
-     * @type {TokenDataOAIGen}
-     * @memberof Token
+     * Fees
+     * @type {Array<OrderFeeInfo>}
+     * @memberof StoreMakerTakerFee
      */
-    'data': TokenDataOAIGen;
+    'fees'?: Array<OrderFeeInfo>;
     /**
-     * Type of this asset (ETH/ERC20/ERC721)
+     * Quantity of this asset with the sum of all fees applied to the asset
      * @type {string}
-     * @memberof Token
+     * @memberof StoreMakerTakerFee
      */
-    'type': string;
+    'quantity_with_fees': string;
 }
 

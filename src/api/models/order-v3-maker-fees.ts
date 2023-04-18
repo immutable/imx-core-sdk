@@ -15,25 +15,16 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { TokenDataOAIGen } from './token-data-oaigen';
+import { OrderFeeInfo } from './order-fee-info';
+// May contain unused imports in some cases
+// @ts-ignore
+import { OrdersMakerTakerFee } from './orders-maker-taker-fee';
 
 /**
- * 
+ * @type OrderV3MakerFees
+ * MakerFees is the information about the fees that needs to be paid by the maker (liquidity)
  * @export
- * @interface Token
  */
-export interface Token {
-    /**
-     * 
-     * @type {TokenDataOAIGen}
-     * @memberof Token
-     */
-    'data': TokenDataOAIGen;
-    /**
-     * Type of this asset (ETH/ERC20/ERC721)
-     * @type {string}
-     * @memberof Token
-     */
-    'type': string;
-}
+export type OrderV3MakerFees = OrdersMakerTakerFee;
+
 

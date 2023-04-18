@@ -15,37 +15,31 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { OrderFeeInfoToken } from './order-fee-info-token';
+import { OrderV3 } from './order-v3';
 
 /**
  * 
  * @export
- * @interface OrderFeeInfo
+ * @interface ListOrdersResponseV3
  */
-export interface OrderFeeInfo {
+export interface ListOrdersResponseV3 {
     /**
-     * Address of the fee recipient
+     * Generated cursor returned by previous query
      * @type {string}
-     * @memberof OrderFeeInfo
+     * @memberof ListOrdersResponseV3
      */
-    'address'?: string;
+    'cursor': string;
     /**
-     * Fee amount
-     * @type {string}
-     * @memberof OrderFeeInfo
+     * Remaining results flag. 1: there are remaining results matching this query, 0: no remaining results
+     * @type {number}
+     * @memberof ListOrdersResponseV3
      */
-    'amount'?: string;
+    'remaining': number;
     /**
-     * 
-     * @type {OrderFeeInfoToken}
-     * @memberof OrderFeeInfo
+     * Orders matching query parameters
+     * @type {Array<OrderV3>}
+     * @memberof ListOrdersResponseV3
      */
-    'token'?: OrderFeeInfoToken;
-    /**
-     * Fee type
-     * @type {string}
-     * @memberof OrderFeeInfo
-     */
-    'type'?: string;
+    'result': Array<OrderV3>;
 }
 

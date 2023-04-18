@@ -15,78 +15,102 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { OrderBuy } from './order-buy';
-// May contain unused imports in some cases
-// @ts-ignore
 import { OrderFeeInfo } from './order-fee-info';
 // May contain unused imports in some cases
 // @ts-ignore
-import { OrderSell } from './order-sell';
+import { OrderV3Buy } from './order-v3-buy';
+// May contain unused imports in some cases
+// @ts-ignore
+import { OrderV3MakerFees } from './order-v3-maker-fees';
+// May contain unused imports in some cases
+// @ts-ignore
+import { OrderV3Sell } from './order-v3-sell';
+// May contain unused imports in some cases
+// @ts-ignore
+import { OrderV3TakerFees } from './order-v3-taker-fees';
 
 /**
  * 
  * @export
- * @interface Order
+ * @interface OrderV3
  */
-export interface Order {
+export interface OrderV3 {
     /**
      * Amount of the asset already sold by this order
      * @type {string}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'amount_sold': string | null;
     /**
      * 
-     * @type {OrderBuy}
-     * @memberof Order
+     * @type {OrderV3Buy}
+     * @memberof OrderV3
      */
-    'buy': OrderBuy;
+    'buy': OrderV3Buy;
     /**
      * Expiration timestamp of this order
      * @type {string}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'expiration_timestamp': string | null;
     /**
      * Fee information for the order
      * @type {Array<OrderFeeInfo>}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'fees'?: Array<OrderFeeInfo>;
     /**
+     * 
+     * @type {OrderV3MakerFees}
+     * @memberof OrderV3
+     */
+    'maker_fees'?: OrderV3MakerFees;
+    /**
+     * MakerTakerType
+     * @type {string}
+     * @memberof OrderV3
+     */
+    'maker_taker_type'?: string;
+    /**
      * ID of the order
      * @type {number}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'order_id': number;
     /**
      * 
-     * @type {OrderSell}
-     * @memberof Order
+     * @type {OrderV3Sell}
+     * @memberof OrderV3
      */
-    'sell': OrderSell;
+    'sell': OrderV3Sell;
     /**
      * Status of the order
      * @type {string}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'status': string;
     /**
+     * 
+     * @type {OrderV3TakerFees}
+     * @memberof OrderV3
+     */
+    'taker_fees'?: OrderV3TakerFees;
+    /**
      * Timestamp this order was created
      * @type {string}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'timestamp': string | null;
     /**
      * Updated timestamp of this order
      * @type {string}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'updated_timestamp': string | null;
     /**
      * Ethereum address of the user who submitted the order
      * @type {string}
-     * @memberof Order
+     * @memberof OrderV3
      */
     'user': string;
 }

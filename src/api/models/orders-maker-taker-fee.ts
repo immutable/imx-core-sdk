@@ -15,61 +15,49 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { TokenDataProperties } from './token-data-properties';
+import { OrderFeeInfo } from './order-fee-info';
 
 /**
  * 
  * @export
- * @interface TokenData
+ * @interface OrdersMakerTakerFee
  */
-export interface TokenData {
+export interface OrdersMakerTakerFee {
     /**
-     * Number of decimals supported by this asset
+     * Number of Decimals supported the fee token
      * @type {number}
-     * @memberof TokenData
+     * @memberof OrdersMakerTakerFee
      */
     'decimals'?: number;
     /**
-     * [DEPRECATED] Internal Immutable X Token ID
-     * @type {string}
-     * @memberof TokenData
+     * Fees
+     * @type {Array<OrderFeeInfo>}
+     * @memberof OrdersMakerTakerFee
      */
-    'id'?: string;
-    /**
-     * 
-     * @type {TokenDataProperties}
-     * @memberof TokenData
-     */
-    'properties'?: TokenDataProperties;
-    /**
-     * Quantity of this asset - inclusive of fees for buy order in v1 API and exclusive of fees in v3 API
-     * @type {string}
-     * @memberof TokenData
-     */
-    'quantity': string;
+    'fees'?: Array<OrderFeeInfo>;
     /**
      * Quantity of this asset with the sum of all fees applied to the asset
      * @type {string}
-     * @memberof TokenData
+     * @memberof OrdersMakerTakerFee
      */
     'quantity_with_fees': string;
     /**
-     * Symbol of a token
+     * Symbol of the fee token
      * @type {string}
-     * @memberof TokenData
+     * @memberof OrdersMakerTakerFee
      */
     'symbol'?: string;
     /**
-     * Address of ERC721/ERC20 contract
+     * Address of the ERC20 contract for the fee token
      * @type {string}
-     * @memberof TokenData
+     * @memberof OrdersMakerTakerFee
      */
     'token_address'?: string;
     /**
-     * ERC721 Token ID
+     * Type of the fee token (ETH/ERC20)
      * @type {string}
-     * @memberof TokenData
+     * @memberof OrdersMakerTakerFee
      */
-    'token_id'?: string;
+    'token_type'?: string;
 }
 
