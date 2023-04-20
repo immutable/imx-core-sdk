@@ -34,6 +34,7 @@ describe('createConfig', () => {
     const chainID = 3;
     const customHeaders = {
       'x-custom-headers': 'x values',
+      'x-sdk-version': 'this should get overwritten',
     };
     const expected: ImmutableXConfiguration = {
       apiConfiguration: new Configuration({
@@ -68,6 +69,7 @@ describe('createConfig', () => {
     const chainID = 3;
     const customHeaders = {
       'x-custom-headers': 'x values',
+      'x-sdk-version': 'this should get overwritten',
     };
     const expected: ImmutableXConfiguration = {
       apiConfiguration: new Configuration({
