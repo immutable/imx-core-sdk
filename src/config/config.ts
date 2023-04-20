@@ -32,6 +32,7 @@ export interface ImmutableXConfiguration {
 interface Environment extends EthConfiguration {
   basePath: string;
   headers?: Record<string, string>;
+  sdkVersion?: string;
 }
 
 const createConfig = ({
@@ -40,9 +41,14 @@ const createConfig = ({
   chainID,
   basePath,
   headers,
+  sdkVersion,
 }: Environment): ImmutableXConfiguration => {
   if (!basePath.trim()) {
     throw Error('basePath can not be empty');
+  }
+
+  if (sdkVersion) {
+    defaultHeaders['x-sdk-version'] = sdkVersion;
   }
 
   headers = { ...(headers || {}), ...defaultHeaders };
