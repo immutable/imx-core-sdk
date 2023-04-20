@@ -59,8 +59,8 @@ describe('createConfig', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('config should return optional sdkIdentifier thats provided', () => {
-    const sdkIdentifier = `imx-core-sdk-ts-test-1.0.0`;
+  it('config should return sdkVersion thats provided', () => {
+    const sdkVersion = `imx-core-sdk-ts-test-1.0.0`;
 
     const basePath = 'https://api.sandbox.x.immutable.com';
     const coreContractAddress = '0x1';
@@ -75,7 +75,7 @@ describe('createConfig', () => {
         baseOptions: {
           headers: {
             'x-custom-headers': 'x values',
-            'x-sdk-version': sdkIdentifier,
+            'x-sdk-version': sdkVersion,
           },
         },
       }),
@@ -92,7 +92,7 @@ describe('createConfig', () => {
       chainID,
       basePath,
       headers: customHeaders,
-      sdkVersion: sdkIdentifier,
+      sdkVersion: sdkVersion,
     });
     expect(actual).toEqual(expected);
   });
