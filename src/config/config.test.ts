@@ -92,7 +92,7 @@ describe('createConfig', () => {
       chainID,
       basePath,
       headers: customHeaders,
-      sdkIdentifier: sdkIdentifier,
+      sdkVersion: sdkIdentifier,
     });
     expect(actual).toEqual(expected);
   });

@@ -4,7 +4,7 @@ import {
 } from '../api';
 import { version } from '../../package.json';
 
-const coreSDKIdentifier = `imx-core-sdk-ts-${version}`;
+const defaultHeaders = { 'x-sdk-version': `imx-core-sdk-ts-${version}` };
 
 /**
  * The configuration for the Ethereum network
@@ -32,7 +32,7 @@ export interface ImmutableXConfiguration {
 interface Environment extends EthConfiguration {
   basePath: string;
   headers?: Record<string, string>;
-  sdkIdentifier?: string;
+  sdkVersion?: string;
 }
 
 const createConfig = ({
@@ -41,13 +41,17 @@ const createConfig = ({
   chainID,
   basePath,
   headers,
-  sdkIdentifier = coreSDKIdentifier,
+  sdkVersion,
 }: Environment): ImmutableXConfiguration => {
   if (!basePath.trim()) {
     throw Error('basePath can not be empty');
   }
 
-  headers = { ...(headers || {}), ...{ 'x-sdk-version': sdkIdentifier } };
+  if (sdkVersion) {
+    defaultHeaders['x-sdk-version'] = sdkVersion;
+  }
+
+  headers = { ...(headers || {}), ...defaultHeaders };
   const apiConfigOptions: ConfigurationParameters = {
     basePath,
     baseOptions: { headers },
