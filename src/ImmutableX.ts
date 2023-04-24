@@ -11,59 +11,59 @@ import {
 } from './types';
 import { Workflows } from './workflows';
 import {
-  DepositsApi,
-  MintsApi,
-  OrdersApi,
-  TokensApi,
-  TradesApi,
-  TransfersApi,
-  UsersApi,
-  WithdrawalsApi,
-  BalancesApi,
+  AddMetadataSchemaToCollectionRequest,
   AssetsApi,
-  CollectionsApi,
-  MetadataApi,
-  ProjectsApi,
-  DepositsApiGetDepositRequest,
-  DepositsApiListDepositsRequest,
   AssetsApiGetAssetRequest,
   AssetsApiListAssetsRequest,
-  CreateCollectionRequest,
+  BalancesApi,
+  BalancesApiGetBalanceRequest,
+  BalancesApiListBalancesRequest,
+  CollectionsApi,
   CollectionsApiGetCollectionRequest,
   CollectionsApiListCollectionFiltersRequest,
   CollectionsApiListCollectionsRequest,
-  UpdateCollectionRequest,
-  AddMetadataSchemaToCollectionRequest,
-  MetadataApiGetMetadataSchemaRequest,
-  MetadataSchemaRequest,
-  CreateProjectRequest,
-  BalancesApiGetBalanceRequest,
-  BalancesApiListBalancesRequest,
-  MintsApiGetMintRequest,
-  MintsApiListMintsRequest,
-  WithdrawalsApiListWithdrawalsRequest,
-  WithdrawalsApiGetWithdrawalRequest,
-  OrdersApiGetOrderRequest,
-  OrdersApiListOrdersRequest,
-  GetSignableCancelOrderRequest,
-  TradesApiGetTradeRequest,
-  TradesApiListTradesRequest,
-  GetSignableTradeRequest,
-  TokensApiGetTokenRequest,
-  TokensApiListTokensRequest,
-  TransfersApiGetTransferRequest,
-  TransfersApiListTransfersRequest,
-  MetadataRefreshesApi,
+  CreateCollectionRequest,
   CreateMetadataRefreshRequest,
+  CreateProjectRequest,
+  DepositsApi,
+  DepositsApiGetDepositRequest,
+  DepositsApiListDepositsRequest,
   ExchangesApi,
   ExchangesApiCreateExchangeRequest,
   ExchangesApiGetExchangeRequest,
   ExchangesApiGetExchangesRequest,
+  GetSignableCancelOrderRequest,
+  GetSignableTradeRequest,
+  MetadataApi,
+  MetadataApiGetMetadataSchemaRequest,
+  MetadataRefreshesApi,
+  MetadataSchemaRequest,
+  MintsApi,
+  MintsApiGetMintRequest,
+  MintsApiListMintsRequest,
   NftCheckoutPrimaryApi,
   NftCheckoutPrimaryApiCreateNftPrimaryRequest,
   NftCheckoutPrimaryApiGetCurrenciesNFTCheckoutPrimaryRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionRequest,
   NftCheckoutPrimaryApiGetNftPrimaryTransactionsRequest,
+  OrdersApi,
+  OrdersApiGetOrderV3Request,
+  OrdersApiListOrdersV3Request,
+  ProjectsApi,
+  TokensApi,
+  TokensApiGetTokenRequest,
+  TokensApiListTokensRequest,
+  TradesApi,
+  TradesApiGetTradeRequest,
+  TradesApiListTradesV3Request,
+  TransfersApi,
+  TransfersApiGetTransferRequest,
+  TransfersApiListTransfersRequest,
+  UpdateCollectionRequest,
+  UsersApi,
+  WithdrawalsApi,
+  WithdrawalsApiGetWithdrawalRequest,
+  WithdrawalsApiListWithdrawalsRequest,
 } from './api';
 import { formatError } from './utils/formatError';
 import { ImmutableXConfiguration } from './config';
@@ -660,9 +660,9 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested Order
    * @throws {@link index.IMXError}
    */
-  public getOrder(request: OrdersApiGetOrderRequest) {
+  public getOrder(request: OrdersApiGetOrderV3Request) {
     return this.ordersApi
-      .getOrder(request)
+      .getOrderV3(request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -675,9 +675,9 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested list of Orders
    * @throws {@link index.IMXError}
    */
-  public listOrders(request?: OrdersApiListOrdersRequest) {
+  public listOrders(request?: OrdersApiListOrdersV3Request) {
     return this.ordersApi
-      .listOrders(request)
+      .listOrdersV3(request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -737,9 +737,9 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested list of Trades
    * @throws {@link index.IMXError}
    */
-  public listTrades(request?: TradesApiListTradesRequest) {
+  public listTrades(request?: TradesApiListTradesV3Request) {
     return this.tradesApi
-      .listTrades(request)
+      .listTradesV3(request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
