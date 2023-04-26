@@ -19,17 +19,18 @@ import { generateWalletConnection } from './libs/walletConnection';
   };
 
   // When creating a bid, the buy and sell token and amount is reversed.
-  const bidParams: UnsignedOrderRequest = {
-    buy: {
-      type: 'ERC721',
-      tokenAddress: '',
-      tokenId: '',
-    },
-    sell: {
-      type: 'ETH',
-      amount: '',
-    },
-  };
+  // For example:
+  // const bidParams: UnsignedOrderRequest = {
+  //   buy: {
+  //     type: 'ERC721',
+  //     tokenAddress: '',
+  //     tokenId: '',
+  //   },
+  //   sell: {
+  //     type: 'ETH',
+  //     amount: '',
+  //   },
+  // };
 
   try {
     const orderResponse = await imxClient.createOrder(
