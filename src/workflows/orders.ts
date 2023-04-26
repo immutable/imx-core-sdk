@@ -102,7 +102,7 @@ export async function cancelOrderWorkflow({
 
   const ethAddress = await ethSigner.getAddress();
 
-  const cancelOrderResponse = await ordersApi.cancelOrder({
+  const cancelOrderResponse = await ordersApi.cancelOrderV3({
     id: request.order_id.toString(),
     cancelOrderRequest: {
       order_id: request.order_id,
