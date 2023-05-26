@@ -10,7 +10,10 @@ import { Config, ImmutableX } from '@imtbl/core-sdk';
       id: '',
     });
 
-    console.log('getMintResponse', JSON.stringify(getMintResponse));
+    // getMintResponse will be an array containing only one result
+    const mintResult = getMintResponse[0];
+
+    console.log('getMintResponse', JSON.stringify(mintResult));
   } catch (err) {
     console.error(err);
     process.exit(1);
