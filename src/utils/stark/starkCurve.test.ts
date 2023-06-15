@@ -33,6 +33,15 @@ describe('Key grinding', () => {
       '5c8c8683596c732541a59e03007b2d30dbbbb873556fe65b5fb63c16688f941',
     );
   });
+  it('should produce the correct ground key even if the given private key is above the key limit', () => {
+    const privateKey = new BN(
+      'a978531943ad2e2a8af34e0e2a7d306dc99516d489be16e4ea2ee74c90a9d88f',
+      16,
+    );
+    expect(grindKey(privateKey, starkEcOrder)).toEqual(
+      '1e8108d99e74b769d6b998a5a41ff2745f0607496f2eed39abfd161837408e7',
+    );
+  });
   it('should produce the correct ground key when the key starts with zero', () => {
     const privateKey = new BN(
       '086F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E051',
