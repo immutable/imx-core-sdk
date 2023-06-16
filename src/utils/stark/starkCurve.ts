@@ -98,7 +98,7 @@ export function grindKey(keySeed: BN, keyValLimit: BN) {
   let key = hashKeyWithIndex(keySeed.toString('hex', 64), 0);
   // Make sure the produced key is devided by the Stark EC order, and falls within the range
   // [0, maxAllowedVal).
-  for (let i = 1; key.gte(maxAllowedVal); i++) {
+  for (let i = 0; key.gte(maxAllowedVal); i++) {
     key = hashKeyWithIndex(key.toString('hex'), i);
   }
   return key.umod(keyValLimit).toString('hex');
