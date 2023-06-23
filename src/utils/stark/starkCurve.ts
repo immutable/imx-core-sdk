@@ -90,7 +90,7 @@ function hashKeyWithIndex(key: string, index: number): BN {
 
  https://github.com/starkware-libs/starkware-crypto-utils/blob/dev/src/js/key_derivation.js#L119
 */
-export function grindKeyDefault(
+export function grindKey(
   keySeed: BN,
   keyValLimit: BN,
 ): { starkPrivateKey: string; accountMatchCheckRequired: boolean } {
@@ -120,13 +120,13 @@ export function grindKeyDefault(
 // DANGER: DO NOT MODIFY GRIND KEY / KEY GENERATION LOGIC.
 //////////////////////////////////////////////////////////////////////////////////////////////////
 /*
-The grindKeyAlt function introduced an alternate logic to the one in imx-sdk-js as part of this commit.
+The grindKeyV1 function introduced an alternate logic to the one in imx-sdk-js as part of this commit.
 https://github.com/immutable/imx-core-sdk/commit/3d9e35b4598784589bd7f121f26e105493196716
 
 Some of the accounts that has been created since 1.0.0-beta.2 release may have an issue to regenerate their stark keys
 from the given l1signer. This function is retained to provide a way for those users to get their stark keys.
 
-For most users the above `grindKeyDefault` function should work correctly, only use `grindKeyAlt` if the other one fails.
+For most users the above `grindKey` function should work correctly, only use `grindKeyV1` if the other one fails.
 
 Note: The issue we are addressing here is that if the hashKeyWithIndex value is above the limit, then we perform 
       hash again with index until it comes below the limit. But for the first time the index is not incriminated in 
@@ -134,7 +134,7 @@ Note: The issue we are addressing here is that if the hashKeyWithIndex value is 
       where the hashed value was less than the limit and fails only when it is above the limit.
       Refer, https://immutable.atlassian.net/browse/DX-2167
 */
-export function grindKeyAlt(keySeed: BN, keyValLimit: BN) {
+export function grindKeyV1(keySeed: BN, keyValLimit: BN) {
   const sha256EcMaxDigest = new BN(
     '1 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000',
     16,
@@ -161,7 +161,7 @@ export function grindKeyAlt(keySeed: BN, keyValLimit: BN) {
 export function generateStarkPrivateKey(): string {
   const keyPair = starkEc.genKeyPair();
   // These are/will always be new accounts no need to check.
-  return grindKeyDefault(keyPair.getPrivate(), starkEcOrder).starkPrivateKey;
+  return grindKey(keyPair.getPrivate(), starkEcOrder).starkPrivateKey;
 }
 
 function getIntFromBits(
@@ -224,7 +224,7 @@ async function getKeyFromPath(
     .getWallet()
     .getPrivateKey();
 
-  const res = grindKeyDefault(new BN(privateKey), starkEcOrder);
+  const res = grindKey(new BN(privateKey), starkEcOrder);
   if (res.accountMatchCheckRequired) {
     // Check if the generated stark public key matches with the existing account value for that user.
     if (
@@ -234,7 +234,7 @@ async function getKeyFromPath(
         ethAddress,
       )) != true
     ) {
-      const starkPrivateKeyAlt = grindKeyAlt(new BN(privateKey), starkEcOrder);
+      const starkPrivateKeyAlt = grindKeyV1(new BN(privateKey), starkEcOrder);
       if (
         await checkStarkPublicKeyMatches(
           starkPrivateKeyAlt,
