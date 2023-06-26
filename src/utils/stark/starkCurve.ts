@@ -8,6 +8,7 @@ import { hdkey } from 'ethereumjs-wallet';
 import { ImmutableX } from '../../ImmutableX';
 import { createStarkSigner } from './starkSigner';
 import { IMXError } from '../../types/errors';
+import { Config } from '../../config/config';
 
 const DEFAULT_SIGNATURE_MESSAGE =
   'Only sign this request if you’ve initiated an action with Immutable X.';
@@ -61,6 +62,14 @@ export const starkEc = new ec(
   }),
 );
 
+const MAX_ALLOWED_VAL = () => {
+  const sha256EcMaxDigest = new BN(
+    '1 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000',
+    16,
+  );
+  return sha256EcMaxDigest.sub(sha256EcMaxDigest.mod(starkEcOrder));
+};
+
 // Create a hash from a key + an index
 function hashKeyWithIndex(key: string, index: number): BN {
   return new BN(
@@ -90,30 +99,33 @@ function hashKeyWithIndex(key: string, index: number): BN {
 
  https://github.com/starkware-libs/starkware-crypto-utils/blob/dev/src/js/key_derivation.js#L119
 */
-export function grindKey(
-  keySeed: BN,
-  keyValLimit: BN,
-): { starkPrivateKey: string; accountMatchCheckRequired: boolean } {
-  const sha256EcMaxDigest = new BN(
-    '1 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000',
-    16,
-  );
-  const maxAllowedVal = sha256EcMaxDigest.sub(
-    sha256EcMaxDigest.mod(keyValLimit),
-  );
+export function grindKey(keySeed: BN): string {
+  const maxAllowedVal = MAX_ALLOWED_VAL();
+
   // The key passed to hashKeyWithIndex must have a length of 64 characters
   // to ensure that the correct number of leading zeroes are used as input
   // to the hashing loop
   let key = hashKeyWithIndex(keySeed.toString('hex', 64), 0);
+
   // Make sure the produced key is devided by the Stark EC order, and falls within the range
   // [0, maxAllowedVal).
-  let accountMatchCheckRequired = false;
   for (let i = 0; key.gte(maxAllowedVal); i++) {
-    accountMatchCheckRequired = true;
     key = hashKeyWithIndex(key.toString('hex'), i);
   }
-  const starkPrivateKey = key.umod(keyValLimit).toString('hex');
-  return { starkPrivateKey, accountMatchCheckRequired };
+  return key.umod(starkEcOrder).toString('hex');
+}
+
+// Check if the hash value of the the given keySeed falls above the StarkEcOrder limit.
+// This function is only serving the context of DX-2184, used to determine if we need to validate the generated key
+// against the one recorded in IMX servers.
+function checkIfHashedKeyIsAboveLimit(keySeed: BN) {
+  const maxAllowedVal = MAX_ALLOWED_VAL();
+  // The key passed to hashKeyWithIndex must have a length of 64 characters
+  // to ensure that the correct number of leading zeroes are used as input
+  // to the hashing loop
+  const key = hashKeyWithIndex(keySeed.toString('hex', 64), 0);
+
+  return key.gte(maxAllowedVal);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -123,7 +135,7 @@ export function grindKey(
 The grindKeyV1 function introduced an alternate logic to the one in imx-sdk-js as part of this commit.
 https://github.com/immutable/imx-core-sdk/commit/3d9e35b4598784589bd7f121f26e105493196716
 
-Some of the accounts that has been created since 1.0.0-beta.2 release may have an issue to regenerate their stark keys
+Some of the accounts that has been created with versions released between 1.0.0-beta.3 and 2.0.0 may have an issue to regenerate their stark keys
 from the given l1signer. This function is retained to provide a way for those users to get their stark keys.
 
 For most users the above `grindKey` function should work correctly, only use `grindKeyV1` if the other one fails.
@@ -134,24 +146,19 @@ Note: The issue we are addressing here is that if the hashKeyWithIndex value is 
       where the hashed value was less than the limit and fails only when it is above the limit.
       Refer, https://immutable.atlassian.net/browse/DX-2167
 */
-export function grindKeyV1(keySeed: BN, keyValLimit: BN) {
-  const sha256EcMaxDigest = new BN(
-    '1 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000',
-    16,
-  );
-  const maxAllowedVal = sha256EcMaxDigest.sub(
-    sha256EcMaxDigest.mod(keyValLimit),
-  );
+export function grindKeyV1(keySeed: BN) {
+  const maxAllowedVal = MAX_ALLOWED_VAL();
   // The key passed to hashKeyWithIndex must have a length of 64 characters
   // to ensure that the correct number of leading zeroes are used as input
   // to the hashing loop
   let key = hashKeyWithIndex(keySeed.toString('hex', 64), 0);
+
   // Make sure the produced key is devided by the Stark EC order, and falls within the range
   // [0, maxAllowedVal).
   for (let i = 1; key.gte(maxAllowedVal); i++) {
     key = hashKeyWithIndex(key.toString('hex'), i);
   }
-  return key.umod(keyValLimit).toString('hex');
+  return key.umod(starkEcOrder).toString('hex');
 }
 
 /**
@@ -161,7 +168,7 @@ export function grindKeyV1(keySeed: BN, keyValLimit: BN) {
 export function generateStarkPrivateKey(): string {
   const keyPair = starkEc.genKeyPair();
   // These are/will always be new accounts no need to check.
-  return grindKey(keyPair.getPrivate(), starkEcOrder).starkPrivateKey;
+  return grindKey(keyPair.getPrivate());
 }
 
 function getIntFromBits(
@@ -190,32 +197,30 @@ function getAccountPath(
   return `m/2645'/${layerInt}'/${applicationInt}'/${ethAddressInt1}'/${ethAddressInt2}'/${index}`;
 }
 
-async function checkStarkPublicKeyMatches(
-  starkPrivateKey: string,
-  imxClient?: ImmutableX,
+// Gets the account (stark public key) value of the requested user (ethAddress) for Production environment only.
+async function getStarkPublicKeyFromImx(
   ethAddress?: string,
-): Promise<boolean> {
+): Promise<{ starkPublicKey: string; accountNotFound: boolean } | undefined> {
   try {
+    const imxClient = new ImmutableX(Config.PRODUCTION);
     // Check if the generated stark public key matches with the existing account value for that user.
-    if (imxClient && ethAddress) {
+    if (ethAddress) {
       const user = await imxClient.getUser(ethAddress);
       if (user.accounts.length > 0) {
-        const starkSigner = createStarkSigner(starkPrivateKey);
-        return user.accounts[0] == starkSigner.getAddress();
+        return { starkPublicKey: user.accounts[0], accountNotFound: false };
       }
     }
   } catch (err) {
     if (err instanceof IMXError && err.code == 'account_not_found') {
-      return true; // This means a new account. So lets use the default GrindKey logic.
+      return { starkPublicKey: '', accountNotFound: true }; // This means a new account. So lets use the value from default GrindKey function.
     }
+    throw err;
   }
-  return false;
 }
 
 async function getKeyFromPath(
   seed: string,
   path: string,
-  imxClient?: ImmutableX,
   ethAddress?: string,
 ): Promise<string> {
   const privateKey = hdkey
@@ -224,29 +229,33 @@ async function getKeyFromPath(
     .getWallet()
     .getPrivateKey();
 
-  const res = grindKey(new BN(privateKey), starkEcOrder);
-  if (res.accountMatchCheckRequired) {
+  const keySeed = new BN(privateKey);
+  const starkPrivateKey = grindKey(keySeed);
+
+  if (checkIfHashedKeyIsAboveLimit(keySeed)) {
     // Check if the generated stark public key matches with the existing account value for that user.
+    // We are only validating for Production environment.
+    // For Sandbox account/key mismatch, solution is to discard the old account and create a new one.
+    const imxResponse = await getStarkPublicKeyFromImx(ethAddress);
     if (
-      (await checkStarkPublicKeyMatches(
-        res.starkPrivateKey,
-        imxClient,
-        ethAddress,
-      )) != true
+      imxResponse?.accountNotFound ||
+      imxResponse?.starkPublicKey ==
+        createStarkSigner(starkPrivateKey).getAddress()
     ) {
-      const starkPrivateKeyAlt = grindKeyV1(new BN(privateKey), starkEcOrder);
-      if (
-        await checkStarkPublicKeyMatches(
-          starkPrivateKeyAlt,
-          imxClient,
-          ethAddress,
-        )
-      ) {
-        res.starkPrivateKey = starkPrivateKeyAlt;
-      }
+      return starkPrivateKey;
     }
+    const starkPrivateKeyAlt = grindKeyV1(keySeed);
+    if (
+      imxResponse?.starkPublicKey ==
+      createStarkSigner(starkPrivateKeyAlt).getAddress()
+    ) {
+      return starkPrivateKeyAlt;
+    }
+    throw new Error(
+      'Can not deterministically generate stark private key - please contact support',
+    );
   }
-  return res.starkPrivateKey;
+  return starkPrivateKey;
 }
 
 /**
@@ -255,7 +264,6 @@ async function getKeyFromPath(
  */
 export async function generateLegacyStarkPrivateKey(
   signer: Signer,
-  imxClient?: ImmutableX,
 ): Promise<string> {
   const address = (await signer.getAddress()).toLowerCase();
   const signature = await signer.signMessage(DEFAULT_SIGNATURE_MESSAGE);
@@ -266,6 +274,6 @@ export async function generateLegacyStarkPrivateKey(
     address,
     DEFAULT_ACCOUNT_INDEX,
   );
-  const key = await getKeyFromPath(seed, path, imxClient, address);
+  const key = await getKeyFromPath(seed, path, address);
   return key.padStart(64, '0');
 }

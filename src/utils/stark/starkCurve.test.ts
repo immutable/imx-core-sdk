@@ -4,11 +4,8 @@ import {
   generateLegacyStarkPrivateKey,
   generateStarkPrivateKey,
   grindKey,
-  starkEcOrder,
 } from './starkCurve';
-import { ImmutableX } from '../../ImmutableX';
 import { createStarkSigner } from './starkSigner';
-import { Config } from '../../config/config';
 
 describe('Key generation', () => {
   it('should generate random Stark key', async () => {
@@ -25,27 +22,15 @@ describe('Key generation', () => {
     );
   });
 
-  it('should generate Legacy Stark key compatible with link/js sdk', async () => {
-    const signer = new Wallet(
-      'ba3c969f4957e6bf24e5cf8a931bdba4f90d27c01bb7dff738e4593142826db7',
-    );
-    const starkKey = await generateLegacyStarkPrivateKey(signer);
-    const starkPublicKey = createStarkSigner(starkKey).getAddress();
-    expect(starkPublicKey).toEqual(
-      '0x015fb71e85d4839168bd95e85cc8a090a00b292883be933315838cd8b8c35f70',
-    );
-  });
-
   it('should generate Legacy Stark key backwards compatible with versions between 1.0.0-beta.3 to 2.0.0', async () => {
     const signer = new Wallet(
       'ba3c969f4957e6bf24e5cf8a931bdba4f90d27c01bb7dff738e4593142826db7',
     );
-    const imxClient = new ImmutableX(Config.SANDBOX);
 
-    const starkKey = await generateLegacyStarkPrivateKey(signer, imxClient);
+    const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x04eb684f7318d2b90ef8703e6cd77e362414f4997934ee3c99ee50db3411dfef',
+      '0x04eb684f7318d2b90ef8703e6cd77e362414f4997934ee3c99ee50db3411dfef', // Compatible with GringKeyV1
     );
   });
 
@@ -67,7 +52,7 @@ describe('Key grinding', () => {
       '86F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E0519',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder).starkPrivateKey).toEqual(
+    expect(grindKey(privateKey)).toEqual(
       '5c8c8683596c732541a59e03007b2d30dbbbb873556fe65b5fb63c16688f941',
     );
   });
@@ -76,7 +61,7 @@ describe('Key grinding', () => {
       'a978531943ad2e2a8af34e0e2a7d306dc99516d489be16e4ea2ee74c90a9d88f',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder).starkPrivateKey).toEqual(
+    expect(grindKey(privateKey)).toEqual(
       '1e8108d99e74b769d6b998a5a41ff2745f0607496f2eed39abfd161837408e7',
     );
   });
@@ -85,7 +70,7 @@ describe('Key grinding', () => {
       '086F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E051',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder).starkPrivateKey).toEqual(
+    expect(grindKey(privateKey)).toEqual(
       '2b2c6db790a95ce05426c3d67247547f1a72d104fd5af24553d42b7557ab082',
     );
   });
@@ -95,7 +80,7 @@ describe('Key grinding', () => {
       '86F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E051',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder).starkPrivateKey).toEqual(
+    expect(grindKey(privateKey)).toEqual(
       '2b2c6db790a95ce05426c3d67247547f1a72d104fd5af24553d42b7557ab082',
     );
   });
