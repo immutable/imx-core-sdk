@@ -237,23 +237,26 @@ async function getKeyFromPath(
     // We are only validating for Production environment.
     // For Sandbox account/key mismatch, solution is to discard the old account and create a new one.
     const imxResponse = await getStarkPublicKeyFromImx(ethAddress);
+    // If the account is not found or account matches we just return the key pair at the end of this method.
+    // Only need to so alternative method if the account is found but the stark public key does not match.
     if (
-      imxResponse?.accountNotFound ||
-      imxResponse?.starkPublicKey ==
-        createStarkSigner(starkPrivateKey).getAddress()
+      !(
+        imxResponse?.accountNotFound ||
+        imxResponse?.starkPublicKey ==
+          createStarkSigner(starkPrivateKey).getAddress()
+      )
     ) {
-      return starkPrivateKey;
+      const starkPrivateKeyAlt = grindKeyV1(keySeed);
+      if (
+        imxResponse?.starkPublicKey ==
+        createStarkSigner(starkPrivateKeyAlt).getAddress()
+      ) {
+        return starkPrivateKeyAlt;
+      }
+      throw new Error(
+        'Can not deterministically generate stark private key - please contact support',
+      );
     }
-    const starkPrivateKeyAlt = grindKeyV1(keySeed);
-    if (
-      imxResponse?.starkPublicKey ==
-      createStarkSigner(starkPrivateKeyAlt).getAddress()
-    ) {
-      return starkPrivateKeyAlt;
-    }
-    throw new Error(
-      'Can not deterministically generate stark private key - please contact support',
-    );
   }
   return starkPrivateKey;
 }

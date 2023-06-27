@@ -22,6 +22,17 @@ describe('Key generation', () => {
     );
   });
 
+  it('should generate Legacy Stark public key', async () => {
+    const signer = new Wallet(
+      '5c7b4b5cad9a3fc7b1ba235a49cd74e615488a18b0d6a531739fd1062935104d',
+    );
+    const starkKey = await generateLegacyStarkPrivateKey(signer);
+    const starkPublicKey = createStarkSigner(starkKey).getAddress();
+    expect(starkPublicKey).toEqual(
+      '0x0579f97e8084dfbbead9bffd750df780e06d8c09a3ba7f40ebe51d46b47df043',
+    );
+  });
+
   it('should generate Legacy Stark key backwards compatible with versions between 1.0.0-beta.3 to 2.0.0', async () => {
     const signer = new Wallet(
       'ba3c969f4957e6bf24e5cf8a931bdba4f90d27c01bb7dff738e4593142826db7',
