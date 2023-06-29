@@ -3,9 +3,8 @@ import { Wallet } from 'ethers';
 import {
   generateLegacyStarkPrivateKey,
   generateStarkPrivateKey,
-  grindKey,
-  starkEcOrder,
 } from './starkCurve';
+import { grindKey } from '../legacy/crypto';
 
 describe('Key generation', () => {
   it('should generate random Stark key', async () => {
@@ -29,7 +28,7 @@ describe('Key grinding', () => {
       '86F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E0519',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder)).toEqual(
+    expect(grindKey(privateKey.toString('hex'))).toEqual(
       '5c8c8683596c732541a59e03007b2d30dbbbb873556fe65b5fb63c16688f941',
     );
   });
@@ -38,7 +37,7 @@ describe('Key grinding', () => {
       'a978531943ad2e2a8af34e0e2a7d306dc99516d489be16e4ea2ee74c90a9d88f',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder)).toEqual(
+    expect(grindKey(privateKey.toString('hex'))).toEqual(
       '1e8108d99e74b769d6b998a5a41ff2745f0607496f2eed39abfd161837408e7',
     );
   });
@@ -47,7 +46,7 @@ describe('Key grinding', () => {
       '086F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E051',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder)).toEqual(
+    expect(grindKey(privateKey.toString('hex'))).toEqual(
       '2b2c6db790a95ce05426c3d67247547f1a72d104fd5af24553d42b7557ab082',
     );
   });
@@ -57,7 +56,7 @@ describe('Key grinding', () => {
       '86F3E7293141F20A8BAFF320E8EE4ACCB9D4A4BF2B4D295E8CEE784DB46E051',
       16,
     );
-    expect(grindKey(privateKey, starkEcOrder)).toEqual(
+    expect(grindKey(privateKey.toString('hex'))).toEqual(
       '2b2c6db790a95ce05426c3d67247547f1a72d104fd5af24553d42b7557ab082',
     );
   });
