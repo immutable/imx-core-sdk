@@ -9,7 +9,7 @@ import {
   DEFAULT_SIGNATURE_MESSAGE,
   getAccountPath,
   getKeyPairFromPath,
-} from '../legacy/crypto';
+} from './legacy/crypto';
 
 /**
  * Generates a new Stark private key

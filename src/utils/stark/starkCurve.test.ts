@@ -4,7 +4,7 @@ import {
   generateLegacyStarkPrivateKey,
   generateStarkPrivateKey,
 } from './starkCurve';
-import { grindKey } from '../legacy/crypto';
+import { grindKey } from './legacy/crypto';
 import { createStarkSigner } from './starkSigner';
 
 describe('Key generation', () => {
@@ -30,6 +30,18 @@ describe('Key generation', () => {
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
       '0x0579f97e8084dfbbead9bffd750df780e06d8c09a3ba7f40ebe51d46b47df043',
+    );
+  });
+
+  it('should generate Legacy Stark key backwards compatible with versions between 1.0.0-beta.3 to 2.0.0', async () => {
+    const signer = new Wallet(
+      'ba3c969f4957e6bf24e5cf8a931bdba4f90d27c01bb7dff738e4593142826db7',
+    );
+
+    const starkKey = await generateLegacyStarkPrivateKey(signer);
+    const starkPublicKey = createStarkSigner(starkKey).getAddress();
+    expect(starkPublicKey).toEqual(
+      '0x04eb684f7318d2b90ef8703e6cd77e362414f4997934ee3c99ee50db3411dfef', // Compatible with GringKeyV1
     );
   });
 
