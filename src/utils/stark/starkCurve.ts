@@ -106,5 +106,5 @@ export async function generateLegacyStarkPrivateKey(
     legacy.DEFAULT_ACCOUNT_INDEX,
   );
   const key = await getKeyFromPath(seed, path, address);
-  return key.padStart(64, '0'); // Todo: Check if we need to do this?
+  return key.padStart(64, '0');
 }
