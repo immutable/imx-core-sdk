@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import assert from 'assert';
 import BN from 'bn.js';
 import { ec } from 'elliptic';
@@ -68,6 +69,18 @@ export function hashKeyWithIndex(key: string, index: number): BN {
   );
 }
 
+// Check if the hash value of the the given PrivateKey falls above the SECP_ORDER limit.
+// This function is only serving the context of DX-2184, used to determine if we need to validate the generated key
+// against the one recorded in IMX servers.
+export function checkIfHashedKeyIsAboveLimit(privateKey: string) {
+  // The key passed to hashKeyWithIndex must have a length of 64 characters
+  // to ensure that the correct number of leading zeroes are used as input
+  // to the hashing loop
+  const key = hashKeyWithIndex(privateKey, 0);
+
+  return !key.lt(SECP_ORDER.sub(SECP_ORDER.mod(ORDER)));
+}
+
 export function grindKey(privateKey: string): string {
   let i = 0;
   let key: BN = hashKeyWithIndex(privateKey, i);
@@ -83,13 +96,17 @@ export function getKeyPair(privateKey: string): ec.KeyPair {
   return starkEc.keyFromPrivate(privateKey, 'hex');
 }
 
-export function getKeyPairFromPath(seed: string, path: string): ec.KeyPair {
-  assert(isHexPrefixed(seed), MISSING_HEX_PREFIX);
-  const privateKey = hdkey
+export function getPrivateKeyFromPath(seed: string, path: string): string {
+  return hdkey
     .fromMasterSeed(Buffer.from(seed.slice(2), 'hex')) // assuming seed is '0x...'
     .derivePath(path)
     .getWallet()
     .getPrivateKeyString();
+}
+
+export function getKeyPairFromPath(seed: string, path: string): ec.KeyPair {
+  assert(isHexPrefixed(seed), MISSING_HEX_PREFIX);
+  const privateKey = getPrivateKeyFromPath(seed, path);
   return getKeyPair(grindKey(privateKey));
 }
 
