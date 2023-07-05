@@ -151,16 +151,14 @@ export function generateStarkPrivateKey(): string {
 
 // Gets the account (stark public key) value of the requested user (ethAddress) for Production environment only.
 export async function getStarkPublicKeyFromImx(
-  ethAddress?: string,
+  ethAddress: string,
 ): Promise<{ starkPublicKey: string; accountNotFound: boolean } | undefined> {
   try {
     const imxClient = new ImmutableX(Config.PRODUCTION);
     // Check if the generated stark public key matches with the existing account value for that user.
-    if (ethAddress) {
-      const user = await imxClient.getUser(ethAddress);
-      if (user.accounts.length > 0) {
-        return { starkPublicKey: user.accounts[0], accountNotFound: false };
-      }
+    const user = await imxClient.getUser(ethAddress);
+    if (user.accounts.length > 0) {
+      return { starkPublicKey: user.accounts[0], accountNotFound: false };
     }
   } catch (err) {
     if (err instanceof IMXError && err.code == 'account_not_found') {

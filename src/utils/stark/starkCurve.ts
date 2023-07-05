@@ -16,7 +16,7 @@ export function generateStarkPrivateKey(): string {
 async function getKeyFromPath(
   seed: string,
   path: string,
-  ethAddress?: string,
+  ethAddress: string,
 ): Promise<string> {
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // This section is legacy crypto.
