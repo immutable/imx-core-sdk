@@ -226,7 +226,7 @@ async function getKeyFromPath(
   }
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  // This is backwards compatible crypto (core-sdk)
+  // This is backwards compatible crypto (core-sdk) version 2.0.1
 
   // If we are here, we found the account but did not match with the recorded user account.
   // Lets try to use grindKeyV201 method from backwards compatible logic to generate a key and see if that matches.
@@ -239,7 +239,7 @@ async function getKeyFromPath(
   }
 
   // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  // This section is legacy crypto.
+  // This section is legacy crypto, compatible with imx-sdk-js released before 1.43.5
 
   const privateKeyString = legacy.getPrivateKeyFromPath(seed, path);
   const starkPrivateKeyLegacy = legacy.grindKey(privateKeyString);
