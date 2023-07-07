@@ -69,18 +69,6 @@ export function hashKeyWithIndex(key: string, index: number): BN {
   );
 }
 
-// Check if the hash value of the the given PrivateKey falls above the SECP_ORDER limit.
-// This function is only serving the context of DX-2184, used to determine if we need to validate the generated key
-// against the one recorded in IMX servers.
-export function checkIfHashedKeyIsAboveLimit(privateKey: string) {
-  // The key passed to hashKeyWithIndex must have a length of 64 characters
-  // to ensure that the correct number of leading zeroes are used as input
-  // to the hashing loop
-  const key = hashKeyWithIndex(privateKey, 0);
-
-  return !key.lt(SECP_ORDER.sub(SECP_ORDER.mod(ORDER)));
-}
-
 export function grindKey(privateKey: string): string {
   let i = 0;
   let key: BN = hashKeyWithIndex(privateKey, i);
