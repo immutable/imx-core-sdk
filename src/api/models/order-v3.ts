@@ -54,7 +54,7 @@ export interface OrderV3 {
      */
     'expiration_timestamp': string | null;
     /**
-     * Fee information for the order
+     * [DEPRECATED] Fee information for the order. Replaced by maker_fees / taker_fees depending on the type of order. Refer https://docs.x.immutable.com/docs/maker-taker-fees/#new-maker-taker-fields-and-the-deprecation-of-quantity_with_fees-in-buy-and-sell.
      * @type {Array<OrderFeeInfo>}
      * @memberof OrderV3
      */
