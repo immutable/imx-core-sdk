@@ -1553,15 +1553,16 @@
     },
     "/v1/orders": {
       "get": {
-        "description": "Get a list of orders",
+        "description": "Get a list of orders\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
         "produces": [
           "application/json"
         ],
         "tags": [
           "orders"
         ],
-        "summary": "Get a list of orders",
+        "summary": "Get a list of orders.",
         "operationId": "listOrders",
+        "deprecated": true,
         "parameters": [
           {
             "type": "integer",
@@ -1775,7 +1776,7 @@
         }
       },
       "post": {
-        "description": "Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.",
+        "description": "Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
         "consumes": [
           "application/json"
         ],
@@ -1787,6 +1788,7 @@
         ],
         "summary": "Create an order",
         "operationId": "createOrder",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -1840,7 +1842,7 @@
     },
     "/v1/orders/{id}": {
       "get": {
-        "description": "Get an order",
+        "description": "Get an order.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
         "consumes": [
           "application/json"
         ],
@@ -1852,6 +1854,7 @@
         ],
         "summary": "Get an order",
         "operationId": "getOrder",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -1907,7 +1910,7 @@
         }
       },
       "delete": {
-        "description": "Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.",
+        "description": "Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
         "consumes": [
           "application/json"
         ],
@@ -1919,6 +1922,7 @@
         ],
         "summary": "Cancel an order",
         "operationId": "cancelOrder",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -2197,7 +2201,7 @@
     },
     "/v1/signable-cancel-order-details": {
       "post": {
-        "description": "Get a signable cancel order message",
+        "description": "Sign cancel order message.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
         "consumes": [
           "application/json"
         ],
@@ -2207,8 +2211,9 @@
         "tags": [
           "orders"
         ],
-        "summary": "Get a signable cancel order message",
+        "summary": "Sign cancel order message",
         "operationId": "getSignableCancelOrder",
+        "deprecated": true,
         "parameters": [
           {
             "description": "get a signable cancel order",
@@ -2525,7 +2530,7 @@
     },
     "/v1/trades": {
       "get": {
-        "description": "Get a list of trades",
+        "description": "Get a list of trades.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listTradesV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
         "produces": [
           "application/json"
         ],
@@ -2534,6 +2539,7 @@
         ],
         "summary": "Get a list of trades",
         "operationId": "listTrades",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -2580,7 +2586,6 @@
           {
             "enum": [
               "created_at",
-              "updated_at",
               "transaction_id",
               "party_a_sold_quantity",
               "party_b_sold_quantity"
@@ -2619,7 +2624,7 @@
         }
       },
       "post": {
-        "description": "Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.",
+        "description": "Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createTradeV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
         "consumes": [
           "application/json"
         ],
@@ -2631,6 +2636,7 @@
         ],
         "summary": "Create a Trade between two parties",
         "operationId": "createTrade",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -2848,7 +2854,7 @@
         }
       },
       "post": {
-        "description": "Create a new transfer request.",
+        "description": "Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransferV1 to get request body params.",
         "consumes": [
           "application/json"
         ],
@@ -3965,7 +3971,7 @@
     },
     "/v2/transfers": {
       "post": {
-        "description": "Create a new transfer request.",
+        "description": "Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransfer to get request body params.",
         "consumes": [
           "application/json"
         ],
@@ -4236,8 +4242,12 @@
     "/v3/orders": {
       "get": {
         "description": "Get a list of orders (V3)",
-        "produces": ["application/json"],
-        "tags": ["orders"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
         "summary": "Get a list of orders (V3)",
         "operationId": "listOrdersV3",
         "parameters": [
@@ -4280,7 +4290,13 @@
             "in": "query"
           },
           {
-            "enum": ["active", "filled", "cancelled", "expired", "inactive"],
+            "enum": [
+              "active",
+              "filled",
+              "cancelled",
+              "expired",
+              "inactive"
+            ],
             "type": "string",
             "description": "Status of this order",
             "name": "status",
@@ -4448,9 +4464,15 @@
       },
       "post": {
         "description": "Create an order using the v3 orderbook. Currently only buy NFT orders are supported.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
         "summary": "Create an order (V3)",
         "operationId": "createOrderV3",
         "parameters": [
@@ -4507,9 +4529,15 @@
     "/v3/orders/{id}": {
       "get": {
         "description": "Get an order (V3)",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
         "summary": "Get an order (V3)",
         "operationId": "getOrderV3",
         "parameters": [
@@ -4568,9 +4596,15 @@
       },
       "delete": {
         "description": "Cancel an order (V3)",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
         "summary": "Cancel an order (V3)",
         "operationId": "cancelOrderV3",
         "parameters": [
@@ -4633,11 +4667,17 @@
     },
     "/v3/signable-cancel-order-details": {
       "post": {
-        "description": "Get a signable cancel order message (V3)",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["orders"],
-        "summary": "Get a signable cancel order message (V3)",
+        "description": "Generate a signable cancel order message (V3)",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "orders"
+        ],
+        "summary": "Generate a signable cancel order message (V3)",
         "operationId": "getSignableCancelOrderV3",
         "parameters": [
           {
@@ -4662,7 +4702,7 @@
     },
     "/v3/signable-order-details": {
       "post": {
-        "description": "Get a signable order request (V3)",
+        "description": "Generate a signable order request (V3)",
         "consumes": [
           "application/json"
         ],
@@ -4672,7 +4712,7 @@
         "tags": [
           "orders"
         ],
-        "summary": "Get a signable order request (V3)",
+        "summary": "Generate a signable order request (V3)",
         "operationId": "getSignableOrder",
         "parameters": [
           {
@@ -4709,7 +4749,7 @@
     },
     "/v3/signable-trade-details": {
       "post": {
-        "description": "Get a signable trade V3 message",
+        "description": "Generate a signable trade message (V3)",
         "consumes": [
           "application/json"
         ],
@@ -4719,7 +4759,7 @@
         "tags": [
           "trades"
         ],
-        "summary": "Get a signable trade V3 message",
+        "summary": "Generate a signable trade message (V3)",
         "operationId": "getSignableTrade",
         "parameters": [
           {
@@ -4745,8 +4785,12 @@
     "/v3/trades": {
       "get": {
         "description": "Get a list of trades (V3)",
-        "produces": ["application/json"],
-        "tags": ["trades"],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "trades"
+        ],
         "summary": "Get a list of trades (V3)",
         "operationId": "listTradesV3",
         "parameters": [
@@ -4795,7 +4839,6 @@
           {
             "enum": [
               "created_at",
-              "updated_at",
               "transaction_id",
               "party_a_sold_quantity",
               "party_b_sold_quantity",
@@ -4832,14 +4875,32 @@
             "schema": {
               "$ref": "#/definitions/ListTradesResponse"
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
           }
         }
       },
       "post": {
         "description": "Create a Trade. Currently only buy order is supported.",
-        "consumes": ["application/json"],
-        "produces": ["application/json"],
-        "tags": ["trades"],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "trades"
+        ],
         "summary": "Create a Trade (V3)",
         "operationId": "createTradeV3",
         "parameters": [
@@ -5541,7 +5602,11 @@
     },
     "CreateOrderResponse": {
       "type": "object",
-      "required": ["order_id", "status", "time"],
+      "required": [
+        "order_id",
+        "status",
+        "time"
+      ],
       "properties": {
         "order_id": {
           "description": "ID of the created order",
@@ -6363,7 +6428,7 @@
           "type": "string"
         },
         "expiration_timestamp": {
-          "description": "ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour",
+          "description": "ExpirationTimestamp in Unix time in hours. Note: will be rounded down to the nearest hour",
           "type": "integer"
         },
         "fees": {
@@ -6422,7 +6487,7 @@
           "type": "string"
         },
         "expiration_timestamp": {
-          "description": "Expiration timestamp for this order",
+          "description": "ExpirationTimestamp in Unix time in hours. Note: will be rounded down to the nearest hour",
           "type": "integer"
         },
         "fee_info": {
@@ -6513,7 +6578,7 @@
       ],
       "properties": {
         "expiration_timestamp": {
-          "description": "ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour",
+          "description": "ExpirationTimestamp in Unix time in hours. Note: will be rounded down to the nearest hour",
           "type": "integer"
         },
         "fees": {
@@ -6566,7 +6631,7 @@
           "type": "string"
         },
         "expiration_timestamp": {
-          "description": "Expiration timestamp for this order",
+          "description": "ExpirationTimestamp in Unix time in hours. Note: will be rounded down to the nearest hour",
           "type": "integer"
         },
         "fee_info": {
@@ -7640,7 +7705,7 @@
           "x-nullable": true
         },
         "fees": {
-          "description": "Fee information for the order",
+          "description": "[DEPRECATED] Fee information for the order.\nReplaced by maker_fees / taker_fees depending on the type of order.\nRefer https://docs.x.immutable.com/docs/maker-taker-fees/#new-maker-taker-fields-and-the-deprecation-of-quantity_with_fees-in-buy-and-sell.",
           "type": "array",
           "items": {
             "$ref": "#/definitions/OrderFeeInfo"
@@ -7960,7 +8025,7 @@
           "type": "string"
         },
         "quantity_with_fees": {
-          "description": "Quantity of this asset with the sum of all fees applied to the asset",
+          "description": "[DEPRECATED for v3 endpoints] Quantity of this asset with the sum of all fees applied to the asset.\nReplaced by quantity_with_fees in maker_fees / taker_fees depending on the type of order.\nRefer https://docs.x.immutable.com/docs/maker-taker-fees/#new-maker-taker-fields-and-the-deprecation-of-quantity_with_fees-in-buy-and-sell.",
           "type": "string"
         },
         "symbol": {
@@ -8823,7 +8888,9 @@
     },
     "orders.MakerTakerFee": {
       "type": "object",
-      "required": ["quantity_with_fees"],
+      "required": [
+        "quantity_with_fees"
+      ],
       "properties": {
         "decimals": {
           "description": "Number of Decimals supported the fee token",
@@ -8856,7 +8923,9 @@
     },
     "store.MakerTakerFee": {
       "type": "object",
-      "required": ["quantity_with_fees"],
+      "required": [
+        "quantity_with_fees"
+      ],
       "properties": {
         "fees": {
           "description": "Fees",
