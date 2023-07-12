@@ -55,7 +55,7 @@ import { OrderV3 } from '../models';
 export const OrdersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.
+         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Cancel an order
          * @param {string} id Order ID to cancel
          * @param {CancelOrderRequest} cancelOrderRequest cancel an order
@@ -63,6 +63,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         cancelOrder: async (id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -165,13 +166,14 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.
+         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Create an order
          * @param {CreateOrderRequest} createOrderRequest create an order
          * @param {string} [xImxEthAddress] eth address
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createOrder: async (createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -267,13 +269,14 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get an order
+         * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Get an order
          * @param {string} id Order ID
          * @param {boolean} [includeFees] Set flag to true to include fee body for the order
          * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getOrder: async (id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -365,10 +368,11 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get a signable cancel order message
-         * @summary Get a signable cancel order message
+         * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+         * @summary Sign cancel order message
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getSignableCancelOrder: async (getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -401,8 +405,8 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get a signable cancel order message (V3)
-         * @summary Get a signable cancel order message (V3)
+         * Generate a signable cancel order message (V3)
+         * @summary Generate a signable cancel order message (V3)
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -437,8 +441,8 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get a signable order request (V3)
-         * @summary Get a signable order request (V3)
+         * Generate a signable order request (V3)
+         * @summary Generate a signable order request (V3)
          * @param {GetSignableOrderRequestV3} getSignableOrderRequestV3 get a signable order v3
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -473,8 +477,8 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get a list of orders
-         * @summary Get a list of orders
+         * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+         * @summary Get a list of orders.
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
          * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
@@ -505,6 +509,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {boolean} [includeFees] Set flag to true to include fee object for orders
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         listOrders: async (pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -833,7 +838,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OrdersApiAxiosParamCreator(configuration)
     return {
         /**
-         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.
+         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Cancel an order
          * @param {string} id Order ID to cancel
          * @param {CancelOrderRequest} cancelOrderRequest cancel an order
@@ -841,6 +846,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async cancelOrder(id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CancelOrderResponse>> {
@@ -863,13 +869,14 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.
+         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Create an order
          * @param {CreateOrderRequest} createOrderRequest create an order
          * @param {string} [xImxEthAddress] eth address
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createOrder(createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateOrderResponse>> {
@@ -891,13 +898,14 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get an order
+         * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Get an order
          * @param {string} id Order ID
          * @param {boolean} [includeFees] Set flag to true to include fee body for the order
          * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getOrder(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Order>> {
@@ -919,10 +927,11 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a signable cancel order message
-         * @summary Get a signable cancel order message
+         * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+         * @summary Sign cancel order message
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async getSignableCancelOrder(getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableCancelOrderResponse>> {
@@ -930,8 +939,8 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a signable cancel order message (V3)
-         * @summary Get a signable cancel order message (V3)
+         * Generate a signable cancel order message (V3)
+         * @summary Generate a signable cancel order message (V3)
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -941,8 +950,8 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a signable order request (V3)
-         * @summary Get a signable order request (V3)
+         * Generate a signable order request (V3)
+         * @summary Generate a signable order request (V3)
          * @param {GetSignableOrderRequestV3} getSignableOrderRequestV3 get a signable order v3
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -952,8 +961,8 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a list of orders
-         * @summary Get a list of orders
+         * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+         * @summary Get a list of orders.
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
          * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
@@ -984,6 +993,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {boolean} [includeFees] Set flag to true to include fee object for orders
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrdersResponse>> {
@@ -1040,7 +1050,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = OrdersApiFp(configuration)
     return {
         /**
-         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.
+         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Cancel an order
          * @param {string} id Order ID to cancel
          * @param {CancelOrderRequest} cancelOrderRequest cancel an order
@@ -1048,6 +1058,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         cancelOrder(id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CancelOrderResponse> {
@@ -1068,13 +1079,14 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cancelOrderV3(id, cancelOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.
+         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Create an order
          * @param {CreateOrderRequest} createOrderRequest create an order
          * @param {string} [xImxEthAddress] eth address
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createOrder(createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateOrderResponse> {
@@ -1094,13 +1106,14 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.createOrderV3(createOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get an order
+         * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Get an order
          * @param {string} id Order ID
          * @param {boolean} [includeFees] Set flag to true to include fee body for the order
          * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getOrder(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<Order> {
@@ -1120,18 +1133,19 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getOrderV3(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a signable cancel order message
-         * @summary Get a signable cancel order message
+         * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+         * @summary Sign cancel order message
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         getSignableCancelOrder(getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options?: any): AxiosPromise<GetSignableCancelOrderResponse> {
             return localVarFp.getSignableCancelOrder(getSignableCancelOrderRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a signable cancel order message (V3)
-         * @summary Get a signable cancel order message (V3)
+         * Generate a signable cancel order message (V3)
+         * @summary Generate a signable cancel order message (V3)
          * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1140,8 +1154,8 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getSignableCancelOrderV3(getSignableCancelOrderRequest, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a signable order request (V3)
-         * @summary Get a signable order request (V3)
+         * Generate a signable order request (V3)
+         * @summary Generate a signable order request (V3)
          * @param {GetSignableOrderRequestV3} getSignableOrderRequestV3 get a signable order v3
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1150,8 +1164,8 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getSignableOrder(getSignableOrderRequestV3, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a list of orders
-         * @summary Get a list of orders
+         * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+         * @summary Get a list of orders.
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
          * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
@@ -1182,6 +1196,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
          * @param {boolean} [includeFees] Set flag to true to include fee object for orders
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options?: any): AxiosPromise<ListOrdersResponse> {
@@ -1922,10 +1937,11 @@ export interface OrdersApiListOrdersV3Request {
  */
 export class OrdersApi extends BaseAPI {
     /**
-     * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.
+     * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
      * @summary Cancel an order
      * @param {OrdersApiCancelOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
@@ -1946,10 +1962,11 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.
+     * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
      * @summary Create an order
      * @param {OrdersApiCreateOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
@@ -1970,10 +1987,11 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Get an order
+     * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
      * @summary Get an order
      * @param {OrdersApiGetOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
@@ -1994,10 +2012,11 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Get a signable cancel order message
-     * @summary Get a signable cancel order message
+     * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+     * @summary Sign cancel order message
      * @param {OrdersApiGetSignableCancelOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
@@ -2006,8 +2025,8 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Get a signable cancel order message (V3)
-     * @summary Get a signable cancel order message (V3)
+     * Generate a signable cancel order message (V3)
+     * @summary Generate a signable cancel order message (V3)
      * @param {OrdersApiGetSignableCancelOrderV3Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2018,8 +2037,8 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Get a signable order request (V3)
-     * @summary Get a signable order request (V3)
+     * Generate a signable order request (V3)
+     * @summary Generate a signable order request (V3)
      * @param {OrdersApiGetSignableOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -2030,10 +2049,11 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Get a list of orders
-     * @summary Get a list of orders
+     * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
+     * @summary Get a list of orders.
      * @param {OrdersApiListOrdersRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof OrdersApi
      */
