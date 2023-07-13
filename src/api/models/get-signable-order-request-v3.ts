@@ -42,7 +42,7 @@ export interface GetSignableOrderRequestV3 {
      */
     'amount_sell': string;
     /**
-     * ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour
+     * ExpirationTimestamp in Unix time in hours. Note: will be rounded down to the nearest hour
      * @type {number}
      * @memberof GetSignableOrderRequestV3
      */
