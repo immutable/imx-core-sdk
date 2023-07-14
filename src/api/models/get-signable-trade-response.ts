@@ -48,7 +48,7 @@ export interface GetSignableTradeResponse {
      */
     'asset_id_sell': string;
     /**
-     * Expiration timestamp for this order
+     * ExpirationTimestamp in Unix time in hours. Note: will be rounded down to the nearest hour
      * @type {number}
      * @memberof GetSignableTradeResponse
      */

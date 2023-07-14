@@ -48,7 +48,7 @@ export interface TokenData {
      */
     'quantity': string;
     /**
-     * Quantity of this asset with the sum of all fees applied to the asset
+     * [DEPRECATED for v3 endpoints] Quantity of this asset with the sum of all fees applied to the asset. Replaced by quantity_with_fees in maker_fees / taker_fees depending on the type of order. Refer https://docs.x.immutable.com/docs/maker-taker-fees/#new-maker-taker-fields-and-the-deprecation-of-quantity_with_fees-in-buy-and-sell.
      * @type {string}
      * @memberof TokenData
      */

@@ -24,7 +24,7 @@ import { FeeEntry } from './fee-entry';
  */
 export interface GetSignableTradeRequest {
     /**
-     * ExpirationTimestamp in Unix time. Note: will be rounded down to the nearest hour
+     * ExpirationTimestamp in Unix time in hours. Note: will be rounded down to the nearest hour
      * @type {number}
      * @memberof GetSignableTradeRequest
      */
