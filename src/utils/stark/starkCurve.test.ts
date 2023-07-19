@@ -33,7 +33,7 @@ describe('Key generation', () => {
     );
   });
 
-  it('Random Eth Private Key hashed with no index, should generate correct legacy legacy (imx-sdk-js) stark key', async () => {
+  it('Random Eth Private Key hashed with no index, should generate correct legacy (imx-sdk-js) stark key', async () => {
     const signer = new Wallet(
       '0x4aee6bb7807a684341e39303fb1292f1c66b0f0bcac81407d10e80ba9202fc4a',
     );
@@ -62,7 +62,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x07d14076863573a2310a948472512331416ceb655a304b1811a127e6c710e350', // Compatible with legacy.GrindKey, With Expected Index of 0,0,0,... // Hash Iterated 2 times
+      '0x07d14076863573a2310a948472512331416ceb655a304b1811a127e6c710e350', // Compatible with legacy.GrindKey, with Expected Index of 0,0,0,... // Hash Iterated 2 times
     );
   });
 
@@ -74,7 +74,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x07ca61905954bdd858ae63704b111da5ca52b30a21fa9aaeee9aef9b24e89607', // Compatible with GrindKeyV1 // With Expected Index of 0,1,2,...
+      '0x07ca61905954bdd858ae63704b111da5ca52b30a21fa9aaeee9aef9b24e89607', // Compatible with GrindKeyV1, with Expected Index of 0,1,2,... // Hash Iterated 1 time
     );
   });
 
@@ -86,7 +86,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x0157c6efcb2c69604c1b46ffeb568b3b10ea7093da762e1daf66b59d9b63b5f9', // Compatible with GrindKeyV1 // With Expected Index of 0,1,2,...
+      '0x0157c6efcb2c69604c1b46ffeb568b3b10ea7093da762e1daf66b59d9b63b5f9', // Compatible with GrindKeyV1, with Expected Index of 0,1,2,... // Hash Iterated 2 times
     );
   });
 
@@ -98,7 +98,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x04eb684f7318d2b90ef8703e6cd77e362414f4997934ee3c99ee50db3411dfef', // Compatible with GrindKeyV1 // With Expected Index of 0,1,2,...
+      '0x04eb684f7318d2b90ef8703e6cd77e362414f4997934ee3c99ee50db3411dfef', // Compatible with GrindKeyV1, with Expected Index of 0,1,2,... // Hash Iterated 0 times
     );
   });
 
@@ -110,7 +110,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x03aa9edf4a5b33f623d3dd37a6df62e5590f172fd4d1a9483532464aa13bcbb9', // Compatible with core-sdk GrindKey // With Expected Index of 0,0,1,...
+      '0x03aa9edf4a5b33f623d3dd37a6df62e5590f172fd4d1a9483532464aa13bcbb9', // Compatible with core-sdk GrindKey, with Expected Index of 0,0,1,... // Hash Iterated 1 time
     );
   });
 
@@ -122,7 +122,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x057a8278637277ebaaa63b000185507eb847eec8f69c7758fc10a490d0226e7d', // Compatible with core-sdk GrindKey // With Expected Index of 0,0,1,...
+      '0x057a8278637277ebaaa63b000185507eb847eec8f69c7758fc10a490d0226e7d', // Compatible with core-sdk GrindKey, with Expected Index of 0,0,1,... // Hash Iterated 2 times
     );
   });
 
