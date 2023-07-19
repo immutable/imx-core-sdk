@@ -157,7 +157,7 @@ export async function getStarkPublicKeyFromImx(
 ): Promise<{ starkPublicKey: string; accountNotFound: boolean } | undefined> {
   try {
     const imxClient = new ImmutableX(Config.PRODUCTION);
-    // Check if the generated stark public key matches with the existing account value for that user.
+    // Query existing account value for the given user (ethAddress).
     const user = await imxClient.getUser(ethAddress);
     if (user.accounts.length > 0) {
       return { starkPublicKey: user.accounts[0], accountNotFound: false };

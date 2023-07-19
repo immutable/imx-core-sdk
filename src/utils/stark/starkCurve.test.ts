@@ -33,6 +33,39 @@ describe('Key generation', () => {
     );
   });
 
+  it('Random Eth Private Key hashed with no index, should generate correct legacy legacy (imx-sdk-js) stark key', async () => {
+    const signer = new Wallet(
+      '0x4aee6bb7807a684341e39303fb1292f1c66b0f0bcac81407d10e80ba9202fc4a',
+    );
+    const starkKey = await generateLegacyStarkPrivateKey(signer);
+    const starkPublicKey = createStarkSigner(starkKey).getAddress();
+    expect(starkPublicKey).toEqual(
+      '0x3c35bb183cc613d57e6c823a6c7a17a14fba9dc65a5ece97a87020e32cbbd9', // Compatible with legacy.GrindKey, With Expected Index of 0,0,0,... // Hash Iterated 0 times
+    );
+  });
+
+  it('Eth Private Key hashed with index once, should generate correct legacy (imx-sdk-js) stark key', async () => {
+    const signer = new Wallet(
+      '0xabb730db6bd22a773263c9266b0e157e6a9985c75ff68c68fdebdef3e500892c',
+    );
+    const starkKey = await generateLegacyStarkPrivateKey(signer);
+    const starkPublicKey = createStarkSigner(starkKey).getAddress();
+    expect(starkPublicKey).toEqual(
+      '0x0743a17b8a566fe39cfebc41db631210bf328b91ae6c3968f1f9a96ac48a02aa', // Compatible with legacy.GrindKey, With Expected Index of 0,0,0,... // Hash Iterated 1 time
+    );
+  });
+
+  it('Eth Private Key hashed with index more than once, should generate correct legacy (imx-sdk-js) stark key', async () => {
+    const signer = new Wallet(
+      '0x2b9b32d0ed8863016001ffb15af781dca725b1581a3d4d61c0e2c4c0c03ede8a',
+    );
+    const starkKey = await generateLegacyStarkPrivateKey(signer);
+    const starkPublicKey = createStarkSigner(starkKey).getAddress();
+    expect(starkPublicKey).toEqual(
+      '0x07d14076863573a2310a948472512331416ceb655a304b1811a127e6c710e350', // Compatible with legacy.GrindKey, With Expected Index of 0,0,0,... // Hash Iterated 2 times
+    );
+  });
+
   it('Eth Private Key hashed with index once, should generate Legacy Stark key backwards compatible with versions between 1.0.0-beta.3 to 2.0.0', async () => {
     const signer = new Wallet(
       '0x1a245f2fa7c4f04a65d45a3877ad00b1423d081490dcc1a7050c8d7c11ec5c8f',
@@ -100,7 +133,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x05f8f00b03e896cb8c02a936bab73623fc3651fddabfe0d28fbc309c63642c10', // Index 1
+      '0x05f8f00b03e896cb8c02a936bab73623fc3651fddabfe0d28fbc309c63642c10', // Hash Iterated 1 time
     );
   });
 
@@ -111,7 +144,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x04d34c9f519b2a3538b02c4e939188b591065eb8c2f210277c6ed1de85b16fab', // Index 2
+      '0x04d34c9f519b2a3538b02c4e939188b591065eb8c2f210277c6ed1de85b16fab', // Hash Iterated 2 times
     );
   });
 
@@ -122,7 +155,7 @@ describe('Key generation', () => {
     const starkKey = await generateLegacyStarkPrivateKey(signer);
     const starkPublicKey = createStarkSigner(starkKey).getAddress();
     expect(starkPublicKey).toEqual(
-      '0x06e6ac4bb44f3295b881532452f90eccb5601314fafe306db17684b47aa388bd', // Index 0
+      '0x06e6ac4bb44f3295b881532452f90eccb5601314fafe306db17684b47aa388bd', // Hash Iterated 0 times
     );
   });
 });
