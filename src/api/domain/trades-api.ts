@@ -43,13 +43,14 @@ import { TradesCreateTradeRequest } from '../models';
 export const TradesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.
+         * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createTradeV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Create a Trade between two parties
          * @param {CreateTradeRequestV1} createTradeRequest create a trade
          * @param {string} [xImxEthAddress] eth address
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createTrade: async (createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -145,8 +146,8 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get a signable trade V3 message
-         * @summary Get a signable trade V3 message
+         * Generate a signable trade message (V3)
+         * @summary Generate a signable trade message (V3)
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -215,7 +216,7 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get a list of trades
+         * Get a list of trades.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listTradesV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Get a list of trades
          * @param {string} [partyATokenType] Party A\&#39;s (buy order) token type of currency used to buy
          * @param {string} [partyATokenAddress] Party A\&#39;s (buy order) token address of currency used to buy
@@ -224,14 +225,15 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [partyBTokenId] Party B\&#39;s (sell order) token id of NFT sold
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'} [orderBy] Property to sort by
+         * @param {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
-        listTrades: async (partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity', direction?: string, minTimestamp?: string, maxTimestamp?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listTrades: async (partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity', direction?: string, minTimestamp?: string, maxTimestamp?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/trades`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -309,14 +311,14 @@ export const TradesApiAxiosParamCreator = function (configuration?: Configuratio
          * @param {string} [partyBTokenId] Party B\&#39;s (sell order) token id of NFT sold
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'} [orderBy] Property to sort by
+         * @param {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTradesV3: async (partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp', direction?: string, minTimestamp?: string, maxTimestamp?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listTradesV3: async (partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp', direction?: string, minTimestamp?: string, maxTimestamp?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v3/trades`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -395,13 +397,14 @@ export const TradesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TradesApiAxiosParamCreator(configuration)
     return {
         /**
-         * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.
+         * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createTradeV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Create a Trade between two parties
          * @param {CreateTradeRequestV1} createTradeRequest create a trade
          * @param {string} [xImxEthAddress] eth address
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createTrade(createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTradeResponse>> {
@@ -423,8 +426,8 @@ export const TradesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a signable trade V3 message
-         * @summary Get a signable trade V3 message
+         * Generate a signable trade message (V3)
+         * @summary Generate a signable trade message (V3)
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -445,7 +448,7 @@ export const TradesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Get a list of trades
+         * Get a list of trades.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listTradesV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Get a list of trades
          * @param {string} [partyATokenType] Party A\&#39;s (buy order) token type of currency used to buy
          * @param {string} [partyATokenAddress] Party A\&#39;s (buy order) token address of currency used to buy
@@ -454,14 +457,15 @@ export const TradesApiFp = function(configuration?: Configuration) {
          * @param {string} [partyBTokenId] Party B\&#39;s (sell order) token id of NFT sold
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'} [orderBy] Property to sort by
+         * @param {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
-        async listTrades(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTradesResponse>> {
+        async listTrades(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTradesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listTrades(partyATokenType, partyATokenAddress, partyBTokenType, partyBTokenAddress, partyBTokenId, pageSize, cursor, orderBy, direction, minTimestamp, maxTimestamp, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -475,14 +479,14 @@ export const TradesApiFp = function(configuration?: Configuration) {
          * @param {string} [partyBTokenId] Party B\&#39;s (sell order) token id of NFT sold
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'} [orderBy] Property to sort by
+         * @param {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listTradesV3(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTradesResponse>> {
+        async listTradesV3(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTradesResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listTradesV3(partyATokenType, partyATokenAddress, partyBTokenType, partyBTokenAddress, partyBTokenId, pageSize, cursor, orderBy, direction, minTimestamp, maxTimestamp, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -497,13 +501,14 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = TradesApiFp(configuration)
     return {
         /**
-         * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.
+         * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createTradeV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Create a Trade between two parties
          * @param {CreateTradeRequestV1} createTradeRequest create a trade
          * @param {string} [xImxEthAddress] eth address
          * @param {string} [xImxEthSignature] eth signature
          * @param {string} [authorization] Authorization header
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createTrade(createTradeRequest: CreateTradeRequestV1, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateTradeResponse> {
@@ -523,8 +528,8 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.createTradeV3(createTradeRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a signable trade V3 message
-         * @summary Get a signable trade V3 message
+         * Generate a signable trade message (V3)
+         * @summary Generate a signable trade message (V3)
          * @param {GetSignableTradeRequest} getSignableTradeRequest get a signable trade
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -543,7 +548,7 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.getTrade(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * Get a list of trades
+         * Get a list of trades.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listTradesV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
          * @summary Get a list of trades
          * @param {string} [partyATokenType] Party A\&#39;s (buy order) token type of currency used to buy
          * @param {string} [partyATokenAddress] Party A\&#39;s (buy order) token address of currency used to buy
@@ -552,14 +557,15 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
          * @param {string} [partyBTokenId] Party B\&#39;s (sell order) token id of NFT sold
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'} [orderBy] Property to sort by
+         * @param {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
-        listTrades(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: any): AxiosPromise<ListTradesResponse> {
+        listTrades(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: any): AxiosPromise<ListTradesResponse> {
             return localVarFp.listTrades(partyATokenType, partyATokenAddress, partyBTokenType, partyBTokenAddress, partyBTokenId, pageSize, cursor, orderBy, direction, minTimestamp, maxTimestamp, options).then((request) => request(axios, basePath));
         },
         /**
@@ -572,14 +578,14 @@ export const TradesApiFactory = function (configuration?: Configuration, basePat
          * @param {string} [partyBTokenId] Party B\&#39;s (sell order) token id of NFT sold
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'} [orderBy] Property to sort by
+         * @param {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [minTimestamp] Minimum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {string} [maxTimestamp] Maximum timestamp for this trade, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTradesV3(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: any): AxiosPromise<ListTradesResponse> {
+        listTradesV3(partyATokenType?: string, partyATokenAddress?: string, partyBTokenType?: string, partyBTokenAddress?: string, partyBTokenId?: string, pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp', direction?: string, minTimestamp?: string, maxTimestamp?: string, options?: any): AxiosPromise<ListTradesResponse> {
             return localVarFp.listTradesV3(partyATokenType, partyATokenAddress, partyBTokenType, partyBTokenAddress, partyBTokenId, pageSize, cursor, orderBy, direction, minTimestamp, maxTimestamp, options).then((request) => request(axios, basePath));
         },
     };
@@ -740,10 +746,10 @@ export interface TradesApiListTradesRequest {
 
     /**
      * Property to sort by
-     * @type {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'}
+     * @type {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'}
      * @memberof TradesApiListTrades
      */
-    readonly orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'
+    readonly orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity'
 
     /**
      * Direction to sort (asc/desc)
@@ -824,10 +830,10 @@ export interface TradesApiListTradesV3Request {
 
     /**
      * Property to sort by
-     * @type {'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'}
+     * @type {'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'}
      * @memberof TradesApiListTradesV3
      */
-    readonly orderBy?: 'created_at' | 'updated_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'
+    readonly orderBy?: 'created_at' | 'transaction_id' | 'party_a_sold_quantity' | 'party_b_sold_quantity' | 'timestamp' | 'updated_timestamp'
 
     /**
      * Direction to sort (asc/desc)
@@ -859,10 +865,11 @@ export interface TradesApiListTradesV3Request {
  */
 export class TradesApi extends BaseAPI {
     /**
-     * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.
+     * Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createTradeV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
      * @summary Create a Trade between two parties
      * @param {TradesApiCreateTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof TradesApi
      */
@@ -883,8 +890,8 @@ export class TradesApi extends BaseAPI {
     }
 
     /**
-     * Get a signable trade V3 message
-     * @summary Get a signable trade V3 message
+     * Generate a signable trade message (V3)
+     * @summary Generate a signable trade message (V3)
      * @param {TradesApiGetSignableTradeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -907,10 +914,11 @@ export class TradesApi extends BaseAPI {
     }
 
     /**
-     * Get a list of trades
+     * Get a list of trades.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listTradesV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
      * @summary Get a list of trades
      * @param {TradesApiListTradesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof TradesApi
      */
