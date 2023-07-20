@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-plusplus */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import assert from 'assert';
 import BN from 'bn.js';
 import { ec } from 'elliptic';
@@ -83,13 +84,17 @@ export function getKeyPair(privateKey: string): ec.KeyPair {
   return starkEc.keyFromPrivate(privateKey, 'hex');
 }
 
-export function getKeyPairFromPath(seed: string, path: string): ec.KeyPair {
-  assert(isHexPrefixed(seed), MISSING_HEX_PREFIX);
-  const privateKey = hdkey
+export function getPrivateKeyFromPath(seed: string, path: string): string {
+  return hdkey
     .fromMasterSeed(Buffer.from(seed.slice(2), 'hex')) // assuming seed is '0x...'
     .derivePath(path)
     .getWallet()
     .getPrivateKeyString();
+}
+
+export function getKeyPairFromPath(seed: string, path: string): ec.KeyPair {
+  assert(isHexPrefixed(seed), MISSING_HEX_PREFIX);
+  const privateKey = getPrivateKeyFromPath(seed, path);
   return getKeyPair(grindKey(privateKey));
 }
 

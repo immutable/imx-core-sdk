@@ -1,7 +1,7 @@
 import { ec } from 'elliptic';
 import * as encUtils from 'enc-utils';
 import { StarkSigner } from '../../types';
-import { starkEc } from '../legacy/crypto';
+import { starkEc } from './legacy/crypto';
 import BN from 'bn.js';
 import { Errors } from '../../workflows/errors';
 
