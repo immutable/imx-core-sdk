@@ -218,6 +218,8 @@ async function getKeyFromPath(
   }
 
   // If the user account matches with generated stark public key user, just return Stark Private Key.
+  // const registeredStarkPublicKeyBN = new BN(encUtils.removeHexPrefix(imxResponse?.starkPublicKey), 16);
+
   if (
     imxResponse?.starkPublicKey ===
     createStarkSigner(starkPrivateKey).getAddress()
