@@ -220,20 +220,19 @@ async function getKeyFromPath(
   if (imxResponse.accountNotFound) {
     return starkPrivateKey;
   }
-  const starkPublicKey = imxResponse.starkPublicKey;
 
-  // If the user account matches with generated stark public key user, just return Stark Private Key.
   const registeredStarkPublicKeyBN = new BN(
-    encUtils.removeHexPrefix(starkPublicKey),
+    encUtils.removeHexPrefix(imxResponse.starkPublicKey),
     16,
   );
 
-  let computedStarkPublicKey = await createStarkSigner(
-    starkPrivateKey,
-  ).getAddress();
+  let starkPublicKey = await createStarkSigner(starkPrivateKey).getAddress();
+
+  // If the user account matches with generated stark public key user, just return Stark Private Key.
   if (
-    registeredStarkPublicKeyBN ===
-    new BN(encUtils.removeHexPrefix(computedStarkPublicKey), 16)
+    registeredStarkPublicKeyBN.eq(
+      new BN(encUtils.removeHexPrefix(starkPublicKey), 16),
+    )
   ) {
     return starkPrivateKey;
   }
@@ -244,12 +243,14 @@ async function getKeyFromPath(
   // If we are here, we found the account but did not match with the recorded user account.
   // Lets try to use grindKeyV201 method from backwards compatible logic to generate a key and see if that matches.
   const starkPrivateKeyV201Compatible = grindKeyV201(privateKeySeed);
-  computedStarkPublicKey = await createStarkSigner(
+  starkPublicKey = await createStarkSigner(
     starkPrivateKeyV201Compatible,
   ).getAddress();
+
   if (
-    registeredStarkPublicKeyBN ===
-    new BN(encUtils.removeHexPrefix(computedStarkPublicKey), 16)
+    registeredStarkPublicKeyBN.eq(
+      new BN(encUtils.removeHexPrefix(starkPublicKey), 16),
+    )
   ) {
     return starkPrivateKeyV201Compatible;
   }
@@ -259,12 +260,12 @@ async function getKeyFromPath(
 
   const privateKeyString = legacy.getPrivateKeyFromPath(seed, path);
   const starkPrivateKeyLegacy = legacy.grindKey(privateKeyString);
-  computedStarkPublicKey = await createStarkSigner(
-    starkPrivateKeyLegacy,
-  ).getAddress();
+  starkPublicKey = await createStarkSigner(starkPrivateKeyLegacy).getAddress();
+
   if (
-    registeredStarkPublicKeyBN ===
-    new BN(encUtils.removeHexPrefix(computedStarkPublicKey), 16)
+    registeredStarkPublicKeyBN.eq(
+      new BN(encUtils.removeHexPrefix(starkPublicKey), 16),
+    )
   ) {
     return starkPrivateKeyLegacy;
   }
