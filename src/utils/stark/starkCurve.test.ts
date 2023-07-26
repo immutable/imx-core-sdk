@@ -110,7 +110,7 @@ describe('Key generation', () => {
           '0x06e6ac4bb44f3295b881532452f90eccb5601314fafe306db17684b47aa388bd', // Hash Iterated 0 times
       },
     ];
-    for (const test of tests) {
+    tests.forEach(test => {
       it(test.name, async () => {
         const expectedStarkPubKeyBN = new BN(
           encUtils.removeHexPrefix(test.wantPublicKey),
@@ -126,7 +126,7 @@ describe('Key generation', () => {
         );
         expect(starkPublicKeyBN).toEqual(expectedStarkPubKeyBN);
       });
-    }
+    });
   });
 });
 
