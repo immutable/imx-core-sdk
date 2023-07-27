@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- API docs update
 - Added support to generate backwards compatible stark key using `generateLegacyStarkPrivateKey` for accounts created using `imx-sdk-js` versions before 1.43.5
 
 ## [2.0.1] - 2023-06-16
