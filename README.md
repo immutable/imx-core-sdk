@@ -368,6 +368,10 @@ The `package.json` will contain the value of the previous release:
    - Choose `yes` to use changelog and `package.json`
    - Add a tag if required \* this step can be skipped by replying `no`
    - Push to remote by using `yes`
+4. Go to https://github.com/immutable/imx-core-sdk/actions/workflows/publish.yaml and find the "Run workflow" button on the left.
+5. Click the button and select the `main` branch from dropdown.
+6. Put the `Tag to publish`  value as worked out by above step 3
+7. Click "run workflow" button. This will trigger a "NPM Publish" action.
 
 #### Alpha/Beta release:
 
