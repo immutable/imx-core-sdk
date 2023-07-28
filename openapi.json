@@ -2687,6 +2687,7 @@
         ],
         "summary": "Get details of a trade with the given ID",
         "operationId": "getTrade",
+        "deprecated": true,
         "parameters": [
           {
             "type": "string",
@@ -2701,6 +2702,18 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/Trade"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -4937,6 +4950,48 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/CreateTradeResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v3/trades/{id}": {
+      "get": {
+        "description": "Get details of a trade with the given ID",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "trades"
+        ],
+        "summary": "Get details of a trade with the given ID",
+        "operationId": "getTradeV3",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Trade ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Trade"
             }
           },
           "400": {
