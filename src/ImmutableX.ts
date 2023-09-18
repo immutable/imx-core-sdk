@@ -724,7 +724,7 @@ export class ImmutableX {
    */
   public getTrade(request: TradesApiGetTradeRequest) {
     return this.tradesApi
-      .getTrade(request)
+      .getTradeV3(request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
