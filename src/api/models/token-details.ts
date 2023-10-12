@@ -51,7 +51,7 @@ export interface TokenDetails {
      */
     'symbol': string;
     /**
-     * Address of the ERC721 contract
+     * Address of the ERC20 contract
      * @type {string}
      * @memberof TokenDetails
      */

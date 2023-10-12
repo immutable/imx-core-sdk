@@ -54,7 +54,7 @@ export interface GetSignableOrderRequestV3 {
      */
     'fees'?: Array<FeeEntry>;
     /**
-     * SplitFees dictates whether fees will be split between maker & taker, set split_fees to true when submitting signing to v3 endpoints and vice versa for v1
+     * SplitFees is a deprecated field. It\'s value is ignored.
      * @type {boolean}
      * @memberof GetSignableOrderRequestV3
      */

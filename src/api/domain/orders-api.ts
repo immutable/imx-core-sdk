@@ -27,8 +27,6 @@ import { CancelOrderRequest } from '../models';
 // @ts-ignore
 import { CancelOrderResponse } from '../models';
 // @ts-ignore
-import { CreateOrderRequest } from '../models';
-// @ts-ignore
 import { CreateOrderRequestV3 } from '../models';
 // @ts-ignore
 import { CreateOrderResponse } from '../models';
@@ -41,11 +39,7 @@ import { GetSignableOrderRequestV3 } from '../models';
 // @ts-ignore
 import { GetSignableOrderResponse } from '../models';
 // @ts-ignore
-import { ListOrdersResponse } from '../models';
-// @ts-ignore
 import { ListOrdersResponseV3 } from '../models';
-// @ts-ignore
-import { Order } from '../models';
 // @ts-ignore
 import { OrderV3 } from '../models';
 /**
@@ -54,62 +48,6 @@ import { OrderV3 } from '../models';
  */
 export const OrdersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
-        /**
-         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Cancel an order
-         * @param {string} id Order ID to cancel
-         * @param {CancelOrderRequest} cancelOrderRequest cancel an order
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {string} [authorization] Authorization header
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        cancelOrder: async (id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('cancelOrder', 'id', id)
-            // verify required parameter 'cancelOrderRequest' is not null or undefined
-            assertParamExists('cancelOrder', 'cancelOrderRequest', cancelOrderRequest)
-            const localVarPath = `/v1/orders/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (xImxEthAddress != null) {
-                localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
-            }
-
-            if (xImxEthSignature != null) {
-                localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
-            }
-
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(cancelOrderRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
         /**
          * Cancel an order (V3)
          * @summary Cancel an order (V3)
@@ -166,59 +104,7 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Create an order
-         * @param {CreateOrderRequest} createOrderRequest create an order
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {string} [authorization] Authorization header
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        createOrder: async (createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createOrderRequest' is not null or undefined
-            assertParamExists('createOrder', 'createOrderRequest', createOrderRequest)
-            const localVarPath = `/v1/orders`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (xImxEthAddress != null) {
-                localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
-            }
-
-            if (xImxEthSignature != null) {
-                localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
-            }
-
-            if (authorization != null) {
-                localVarHeaderParameter['Authorization'] = String(authorization);
-            }
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createOrderRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Create an order using the v3 orderbook. Currently only buy NFT orders are supported.
+         * Create an order using the v3 orderbook.
          * @summary Create an order (V3)
          * @param {CreateOrderRequestV3} createOrderRequest create an order
          * @param {string} [xImxEthAddress] eth address
@@ -269,56 +155,6 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             };
         },
         /**
-         * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Get an order
-         * @param {string} id Order ID
-         * @param {boolean} [includeFees] Set flag to true to include fee body for the order
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getOrder: async (id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getOrder', 'id', id)
-            const localVarPath = `/v1/orders/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (includeFees !== undefined) {
-                localVarQueryParameter['include_fees'] = includeFees;
-            }
-
-            if (auxiliaryFeePercentages !== undefined) {
-                localVarQueryParameter['auxiliary_fee_percentages'] = auxiliaryFeePercentages;
-            }
-
-            if (auxiliaryFeeRecipients !== undefined) {
-                localVarQueryParameter['auxiliary_fee_recipients'] = auxiliaryFeeRecipients;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
          * Get an order (V3)
          * @summary Get an order (V3)
          * @param {string} id Order ID
@@ -361,43 +197,6 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Sign cancel order message
-         * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getSignableCancelOrder: async (getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'getSignableCancelOrderRequest' is not null or undefined
-            assertParamExists('getSignableCancelOrder', 'getSignableCancelOrderRequest', getSignableCancelOrderRequest)
-            const localVarPath = `/v1/signable-cancel-order-details`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(getSignableCancelOrderRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -470,182 +269,6 @@ export const OrdersApiAxiosParamCreator = function (configuration?: Configuratio
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(getSignableOrderRequestV3, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Get a list of orders.
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [user] Ethereum address of the user who submitted this order
-         * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-         * @param {string} [minTimestamp] Filter orders to include those with created_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [maxTimestamp] Filter orders to include those with created_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMinTimestamp] Filter orders to include those with updated_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Filter orders to include those with updated_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [buyTokenType] Token type of the asset this order buys
-         * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
-         * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
-         * @param {string} [buyTokenAddress] Token address of the asset this order buys
-         * @param {string} [buyTokenName] Token name of the asset this order buys
-         * @param {string} [buyMinQuantity] Min quantity for the asset this order buys
-         * @param {string} [buyMaxQuantity] Max quantity for the asset this order buys
-         * @param {string} [buyMetadata] JSON-encoded metadata filters for the asset this order buys
-         * @param {string} [sellTokenType] Token type of the asset this order sells
-         * @param {string} [sellTokenId] ERC721 Token ID of the asset this order sells
-         * @param {string} [sellAssetId] Internal IMX ID of the asset this order sells
-         * @param {string} [sellTokenAddress] Token address of the asset this order sells
-         * @param {string} [sellTokenName] Token name of the asset this order sells
-         * @param {string} [sellMinQuantity] Min quantity for the asset this order sells
-         * @param {string} [sellMaxQuantity] Max quantity for the asset this order sells
-         * @param {string} [sellMetadata] JSON-encoded metadata filters for the asset this order sells
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-         * @param {boolean} [includeFees] Set flag to true to include fee object for orders
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        listOrders: async (pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/orders`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (pageSize !== undefined) {
-                localVarQueryParameter['page_size'] = pageSize;
-            }
-
-            if (cursor !== undefined) {
-                localVarQueryParameter['cursor'] = cursor;
-            }
-
-            if (orderBy !== undefined) {
-                localVarQueryParameter['order_by'] = orderBy;
-            }
-
-            if (direction !== undefined) {
-                localVarQueryParameter['direction'] = direction;
-            }
-
-            if (user !== undefined) {
-                localVarQueryParameter['user'] = user;
-            }
-
-            if (status !== undefined) {
-                localVarQueryParameter['status'] = status;
-            }
-
-            if (minTimestamp !== undefined) {
-                localVarQueryParameter['min_timestamp'] = minTimestamp;
-            }
-
-            if (maxTimestamp !== undefined) {
-                localVarQueryParameter['max_timestamp'] = maxTimestamp;
-            }
-
-            if (updatedMinTimestamp !== undefined) {
-                localVarQueryParameter['updated_min_timestamp'] = updatedMinTimestamp;
-            }
-
-            if (updatedMaxTimestamp !== undefined) {
-                localVarQueryParameter['updated_max_timestamp'] = updatedMaxTimestamp;
-            }
-
-            if (buyTokenType !== undefined) {
-                localVarQueryParameter['buy_token_type'] = buyTokenType;
-            }
-
-            if (buyTokenId !== undefined) {
-                localVarQueryParameter['buy_token_id'] = buyTokenId;
-            }
-
-            if (buyAssetId !== undefined) {
-                localVarQueryParameter['buy_asset_id'] = buyAssetId;
-            }
-
-            if (buyTokenAddress !== undefined) {
-                localVarQueryParameter['buy_token_address'] = buyTokenAddress;
-            }
-
-            if (buyTokenName !== undefined) {
-                localVarQueryParameter['buy_token_name'] = buyTokenName;
-            }
-
-            if (buyMinQuantity !== undefined) {
-                localVarQueryParameter['buy_min_quantity'] = buyMinQuantity;
-            }
-
-            if (buyMaxQuantity !== undefined) {
-                localVarQueryParameter['buy_max_quantity'] = buyMaxQuantity;
-            }
-
-            if (buyMetadata !== undefined) {
-                localVarQueryParameter['buy_metadata'] = buyMetadata;
-            }
-
-            if (sellTokenType !== undefined) {
-                localVarQueryParameter['sell_token_type'] = sellTokenType;
-            }
-
-            if (sellTokenId !== undefined) {
-                localVarQueryParameter['sell_token_id'] = sellTokenId;
-            }
-
-            if (sellAssetId !== undefined) {
-                localVarQueryParameter['sell_asset_id'] = sellAssetId;
-            }
-
-            if (sellTokenAddress !== undefined) {
-                localVarQueryParameter['sell_token_address'] = sellTokenAddress;
-            }
-
-            if (sellTokenName !== undefined) {
-                localVarQueryParameter['sell_token_name'] = sellTokenName;
-            }
-
-            if (sellMinQuantity !== undefined) {
-                localVarQueryParameter['sell_min_quantity'] = sellMinQuantity;
-            }
-
-            if (sellMaxQuantity !== undefined) {
-                localVarQueryParameter['sell_max_quantity'] = sellMaxQuantity;
-            }
-
-            if (sellMetadata !== undefined) {
-                localVarQueryParameter['sell_metadata'] = sellMetadata;
-            }
-
-            if (auxiliaryFeePercentages !== undefined) {
-                localVarQueryParameter['auxiliary_fee_percentages'] = auxiliaryFeePercentages;
-            }
-
-            if (auxiliaryFeeRecipients !== undefined) {
-                localVarQueryParameter['auxiliary_fee_recipients'] = auxiliaryFeeRecipients;
-            }
-
-            if (includeFees !== undefined) {
-                localVarQueryParameter['include_fees'] = includeFees;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -838,22 +461,6 @@ export const OrdersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = OrdersApiAxiosParamCreator(configuration)
     return {
         /**
-         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Cancel an order
-         * @param {string} id Order ID to cancel
-         * @param {CancelOrderRequest} cancelOrderRequest cancel an order
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {string} [authorization] Authorization header
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async cancelOrder(id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CancelOrderResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.cancelOrder(id, cancelOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Cancel an order (V3)
          * @summary Cancel an order (V3)
          * @param {string} id Order ID to cancel
@@ -869,22 +476,7 @@ export const OrdersApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Create an order
-         * @param {CreateOrderRequest} createOrderRequest create an order
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {string} [authorization] Authorization header
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async createOrder(createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateOrderResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrder(createOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Create an order using the v3 orderbook. Currently only buy NFT orders are supported.
+         * Create an order using the v3 orderbook.
          * @summary Create an order (V3)
          * @param {CreateOrderRequestV3} createOrderRequest create an order
          * @param {string} [xImxEthAddress] eth address
@@ -895,21 +487,6 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          */
         async createOrderV3(createOrderRequest: CreateOrderRequestV3, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateOrderResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createOrderV3(createOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Get an order
-         * @param {string} id Order ID
-         * @param {boolean} [includeFees] Set flag to true to include fee body for the order
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getOrder(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Order>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrder(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -924,18 +501,6 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          */
         async getOrderV3(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<OrderV3>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getOrderV3(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Sign cancel order message
-         * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async getSignableCancelOrder(getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableCancelOrderResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableCancelOrder(getSignableCancelOrderRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -958,46 +523,6 @@ export const OrdersApiFp = function(configuration?: Configuration) {
          */
         async getSignableOrder(getSignableOrderRequestV3: GetSignableOrderRequestV3, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableOrderResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableOrder(getSignableOrderRequestV3, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Get a list of orders.
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [user] Ethereum address of the user who submitted this order
-         * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-         * @param {string} [minTimestamp] Filter orders to include those with created_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [maxTimestamp] Filter orders to include those with created_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMinTimestamp] Filter orders to include those with updated_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Filter orders to include those with updated_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [buyTokenType] Token type of the asset this order buys
-         * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
-         * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
-         * @param {string} [buyTokenAddress] Token address of the asset this order buys
-         * @param {string} [buyTokenName] Token name of the asset this order buys
-         * @param {string} [buyMinQuantity] Min quantity for the asset this order buys
-         * @param {string} [buyMaxQuantity] Max quantity for the asset this order buys
-         * @param {string} [buyMetadata] JSON-encoded metadata filters for the asset this order buys
-         * @param {string} [sellTokenType] Token type of the asset this order sells
-         * @param {string} [sellTokenId] ERC721 Token ID of the asset this order sells
-         * @param {string} [sellAssetId] Internal IMX ID of the asset this order sells
-         * @param {string} [sellTokenAddress] Token address of the asset this order sells
-         * @param {string} [sellTokenName] Token name of the asset this order sells
-         * @param {string} [sellMinQuantity] Min quantity for the asset this order sells
-         * @param {string} [sellMaxQuantity] Max quantity for the asset this order sells
-         * @param {string} [sellMetadata] JSON-encoded metadata filters for the asset this order sells
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-         * @param {boolean} [includeFees] Set flag to true to include fee object for orders
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        async listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListOrdersResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.listOrders(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, updatedMinTimestamp, updatedMaxTimestamp, buyTokenType, buyTokenId, buyAssetId, buyTokenAddress, buyTokenName, buyMinQuantity, buyMaxQuantity, buyMetadata, sellTokenType, sellTokenId, sellAssetId, sellTokenAddress, sellTokenName, sellMinQuantity, sellMaxQuantity, sellMetadata, auxiliaryFeePercentages, auxiliaryFeeRecipients, includeFees, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1050,21 +575,6 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
     const localVarFp = OrdersApiFp(configuration)
     return {
         /**
-         * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Cancel an order
-         * @param {string} id Order ID to cancel
-         * @param {CancelOrderRequest} cancelOrderRequest cancel an order
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {string} [authorization] Authorization header
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        cancelOrder(id: string, cancelOrderRequest: CancelOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CancelOrderResponse> {
-            return localVarFp.cancelOrder(id, cancelOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
-        },
-        /**
          * Cancel an order (V3)
          * @summary Cancel an order (V3)
          * @param {string} id Order ID to cancel
@@ -1079,21 +589,7 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
             return localVarFp.cancelOrderV3(id, cancelOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
-         * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Create an order
-         * @param {CreateOrderRequest} createOrderRequest create an order
-         * @param {string} [xImxEthAddress] eth address
-         * @param {string} [xImxEthSignature] eth signature
-         * @param {string} [authorization] Authorization header
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        createOrder(createOrderRequest: CreateOrderRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateOrderResponse> {
-            return localVarFp.createOrder(createOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Create an order using the v3 orderbook. Currently only buy NFT orders are supported.
+         * Create an order using the v3 orderbook.
          * @summary Create an order (V3)
          * @param {CreateOrderRequestV3} createOrderRequest create an order
          * @param {string} [xImxEthAddress] eth address
@@ -1104,20 +600,6 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          */
         createOrderV3(createOrderRequest: CreateOrderRequestV3, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateOrderResponse> {
             return localVarFp.createOrderV3(createOrderRequest, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Get an order
-         * @param {string} id Order ID
-         * @param {boolean} [includeFees] Set flag to true to include fee body for the order
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getOrder(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<Order> {
-            return localVarFp.getOrder(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
         },
         /**
          * Get an order (V3)
@@ -1131,17 +613,6 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          */
         getOrderV3(id: string, includeFees?: boolean, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: any): AxiosPromise<OrderV3> {
             return localVarFp.getOrderV3(id, includeFees, auxiliaryFeePercentages, auxiliaryFeeRecipients, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Sign cancel order message
-         * @param {GetSignableCancelOrderRequest} getSignableCancelOrderRequest get a signable cancel order
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        getSignableCancelOrder(getSignableCancelOrderRequest: GetSignableCancelOrderRequest, options?: any): AxiosPromise<GetSignableCancelOrderResponse> {
-            return localVarFp.getSignableCancelOrder(getSignableCancelOrderRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Generate a signable cancel order message (V3)
@@ -1162,45 +633,6 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
          */
         getSignableOrder(getSignableOrderRequestV3: GetSignableOrderRequestV3, options?: any): AxiosPromise<GetSignableOrderResponse> {
             return localVarFp.getSignableOrder(getSignableOrderRequestV3, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-         * @summary Get a list of orders.
-         * @param {number} [pageSize] Page size of the result
-         * @param {string} [cursor] Cursor
-         * @param {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'} [orderBy] Property to sort by
-         * @param {string} [direction] Direction to sort (asc/desc)
-         * @param {string} [user] Ethereum address of the user who submitted this order
-         * @param {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'} [status] Status of this order
-         * @param {string} [minTimestamp] Filter orders to include those with created_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [maxTimestamp] Filter orders to include those with created_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMinTimestamp] Filter orders to include those with updated_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [updatedMaxTimestamp] Filter orders to include those with updated_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-         * @param {string} [buyTokenType] Token type of the asset this order buys
-         * @param {string} [buyTokenId] ERC721 Token ID of the asset this order buys
-         * @param {string} [buyAssetId] Internal IMX ID of the asset this order buys
-         * @param {string} [buyTokenAddress] Token address of the asset this order buys
-         * @param {string} [buyTokenName] Token name of the asset this order buys
-         * @param {string} [buyMinQuantity] Min quantity for the asset this order buys
-         * @param {string} [buyMaxQuantity] Max quantity for the asset this order buys
-         * @param {string} [buyMetadata] JSON-encoded metadata filters for the asset this order buys
-         * @param {string} [sellTokenType] Token type of the asset this order sells
-         * @param {string} [sellTokenId] ERC721 Token ID of the asset this order sells
-         * @param {string} [sellAssetId] Internal IMX ID of the asset this order sells
-         * @param {string} [sellTokenAddress] Token address of the asset this order sells
-         * @param {string} [sellTokenName] Token name of the asset this order sells
-         * @param {string} [sellMinQuantity] Min quantity for the asset this order sells
-         * @param {string} [sellMaxQuantity] Max quantity for the asset this order sells
-         * @param {string} [sellMetadata] JSON-encoded metadata filters for the asset this order sells
-         * @param {string} [auxiliaryFeePercentages] Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-         * @param {string} [auxiliaryFeeRecipients] Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-         * @param {boolean} [includeFees] Set flag to true to include fee object for orders
-         * @param {*} [options] Override http request option.
-         * @deprecated
-         * @throws {RequiredError}
-         */
-        listOrders(pageSize?: number, cursor?: string, orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at', direction?: string, user?: string, status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive', minTimestamp?: string, maxTimestamp?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, buyTokenType?: string, buyTokenId?: string, buyAssetId?: string, buyTokenAddress?: string, buyTokenName?: string, buyMinQuantity?: string, buyMaxQuantity?: string, buyMetadata?: string, sellTokenType?: string, sellTokenId?: string, sellAssetId?: string, sellTokenAddress?: string, sellTokenName?: string, sellMinQuantity?: string, sellMaxQuantity?: string, sellMetadata?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, includeFees?: boolean, options?: any): AxiosPromise<ListOrdersResponse> {
-            return localVarFp.listOrders(pageSize, cursor, orderBy, direction, user, status, minTimestamp, maxTimestamp, updatedMinTimestamp, updatedMaxTimestamp, buyTokenType, buyTokenId, buyAssetId, buyTokenAddress, buyTokenName, buyMinQuantity, buyMaxQuantity, buyMetadata, sellTokenType, sellTokenId, sellAssetId, sellTokenAddress, sellTokenName, sellMinQuantity, sellMaxQuantity, sellMetadata, auxiliaryFeePercentages, auxiliaryFeeRecipients, includeFees, options).then((request) => request(axios, basePath));
         },
         /**
          * Get a list of orders (V3)
@@ -1242,48 +674,6 @@ export const OrdersApiFactory = function (configuration?: Configuration, basePat
         },
     };
 };
-
-/**
- * Request parameters for cancelOrder operation in OrdersApi.
- * @export
- * @interface OrdersApiCancelOrderRequest
- */
-export interface OrdersApiCancelOrderRequest {
-    /**
-     * Order ID to cancel
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly id: string
-
-    /**
-     * cancel an order
-     * @type {CancelOrderRequest}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly cancelOrderRequest: CancelOrderRequest
-
-    /**
-     * eth address
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly xImxEthAddress?: string
-
-    /**
-     * eth signature
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly xImxEthSignature?: string
-
-    /**
-     * Authorization header
-     * @type {string}
-     * @memberof OrdersApiCancelOrder
-     */
-    readonly authorization?: string
-}
 
 /**
  * Request parameters for cancelOrderV3 operation in OrdersApi.
@@ -1328,41 +718,6 @@ export interface OrdersApiCancelOrderV3Request {
 }
 
 /**
- * Request parameters for createOrder operation in OrdersApi.
- * @export
- * @interface OrdersApiCreateOrderRequest
- */
-export interface OrdersApiCreateOrderRequest {
-    /**
-     * create an order
-     * @type {CreateOrderRequest}
-     * @memberof OrdersApiCreateOrder
-     */
-    readonly createOrderRequest: CreateOrderRequest
-
-    /**
-     * eth address
-     * @type {string}
-     * @memberof OrdersApiCreateOrder
-     */
-    readonly xImxEthAddress?: string
-
-    /**
-     * eth signature
-     * @type {string}
-     * @memberof OrdersApiCreateOrder
-     */
-    readonly xImxEthSignature?: string
-
-    /**
-     * Authorization header
-     * @type {string}
-     * @memberof OrdersApiCreateOrder
-     */
-    readonly authorization?: string
-}
-
-/**
  * Request parameters for createOrderV3 operation in OrdersApi.
  * @export
  * @interface OrdersApiCreateOrderV3Request
@@ -1395,41 +750,6 @@ export interface OrdersApiCreateOrderV3Request {
      * @memberof OrdersApiCreateOrderV3
      */
     readonly authorization?: string
-}
-
-/**
- * Request parameters for getOrder operation in OrdersApi.
- * @export
- * @interface OrdersApiGetOrderRequest
- */
-export interface OrdersApiGetOrderRequest {
-    /**
-     * Order ID
-     * @type {string}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly id: string
-
-    /**
-     * Set flag to true to include fee body for the order
-     * @type {boolean}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly includeFees?: boolean
-
-    /**
-     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @type {string}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly auxiliaryFeePercentages?: string
-
-    /**
-     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-     * @type {string}
-     * @memberof OrdersApiGetOrder
-     */
-    readonly auxiliaryFeeRecipients?: string
 }
 
 /**
@@ -1468,20 +788,6 @@ export interface OrdersApiGetOrderV3Request {
 }
 
 /**
- * Request parameters for getSignableCancelOrder operation in OrdersApi.
- * @export
- * @interface OrdersApiGetSignableCancelOrderRequest
- */
-export interface OrdersApiGetSignableCancelOrderRequest {
-    /**
-     * get a signable cancel order
-     * @type {GetSignableCancelOrderRequest}
-     * @memberof OrdersApiGetSignableCancelOrder
-     */
-    readonly getSignableCancelOrderRequest: GetSignableCancelOrderRequest
-}
-
-/**
  * Request parameters for getSignableCancelOrderV3 operation in OrdersApi.
  * @export
  * @interface OrdersApiGetSignableCancelOrderV3Request
@@ -1507,216 +813,6 @@ export interface OrdersApiGetSignableOrderRequest {
      * @memberof OrdersApiGetSignableOrder
      */
     readonly getSignableOrderRequestV3: GetSignableOrderRequestV3
-}
-
-/**
- * Request parameters for listOrders operation in OrdersApi.
- * @export
- * @interface OrdersApiListOrdersRequest
- */
-export interface OrdersApiListOrdersRequest {
-    /**
-     * Page size of the result
-     * @type {number}
-     * @memberof OrdersApiListOrders
-     */
-    readonly pageSize?: number
-
-    /**
-     * Cursor
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly cursor?: string
-
-    /**
-     * Property to sort by
-     * @type {'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'}
-     * @memberof OrdersApiListOrders
-     */
-    readonly orderBy?: 'created_at' | 'expired_at' | 'sell_quantity' | 'buy_quantity' | 'buy_quantity_with_fees' | 'updated_at'
-
-    /**
-     * Direction to sort (asc/desc)
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly direction?: string
-
-    /**
-     * Ethereum address of the user who submitted this order
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly user?: string
-
-    /**
-     * Status of this order
-     * @type {'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'}
-     * @memberof OrdersApiListOrders
-     */
-    readonly status?: 'active' | 'filled' | 'cancelled' | 'expired' | 'inactive'
-
-    /**
-     * Filter orders to include those with created_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly minTimestamp?: string
-
-    /**
-     * Filter orders to include those with created_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly maxTimestamp?: string
-
-    /**
-     * Filter orders to include those with updated_at timestamps after this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly updatedMinTimestamp?: string
-
-    /**
-     * Filter orders to include those with updated_at timestamps before this time, in ISO 8601 UTC format. Example: \&#39;2022-05-27T00:10:22Z\&#39;
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly updatedMaxTimestamp?: string
-
-    /**
-     * Token type of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenType?: string
-
-    /**
-     * ERC721 Token ID of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenId?: string
-
-    /**
-     * Internal IMX ID of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyAssetId?: string
-
-    /**
-     * Token address of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenAddress?: string
-
-    /**
-     * Token name of the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyTokenName?: string
-
-    /**
-     * Min quantity for the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyMinQuantity?: string
-
-    /**
-     * Max quantity for the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyMaxQuantity?: string
-
-    /**
-     * JSON-encoded metadata filters for the asset this order buys
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly buyMetadata?: string
-
-    /**
-     * Token type of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenType?: string
-
-    /**
-     * ERC721 Token ID of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenId?: string
-
-    /**
-     * Internal IMX ID of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellAssetId?: string
-
-    /**
-     * Token address of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenAddress?: string
-
-    /**
-     * Token name of the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellTokenName?: string
-
-    /**
-     * Min quantity for the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellMinQuantity?: string
-
-    /**
-     * Max quantity for the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellMaxQuantity?: string
-
-    /**
-     * JSON-encoded metadata filters for the asset this order sells
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly sellMetadata?: string
-
-    /**
-     * Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly auxiliaryFeePercentages?: string
-
-    /**
-     * Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages
-     * @type {string}
-     * @memberof OrdersApiListOrders
-     */
-    readonly auxiliaryFeeRecipients?: string
-
-    /**
-     * Set flag to true to include fee object for orders
-     * @type {boolean}
-     * @memberof OrdersApiListOrders
-     */
-    readonly includeFees?: boolean
 }
 
 /**
@@ -1937,19 +1033,6 @@ export interface OrdersApiListOrdersV3Request {
  */
 export class OrdersApi extends BaseAPI {
     /**
-     * Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-     * @summary Cancel an order
-     * @param {OrdersApiCancelOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof OrdersApi
-     */
-    public cancelOrder(requestParameters: OrdersApiCancelOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).cancelOrder(requestParameters.id, requestParameters.cancelOrderRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
      * Cancel an order (V3)
      * @summary Cancel an order (V3)
      * @param {OrdersApiCancelOrderV3Request} requestParameters Request parameters.
@@ -1962,20 +1045,7 @@ export class OrdersApi extends BaseAPI {
     }
 
     /**
-     * Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-     * @summary Create an order
-     * @param {OrdersApiCreateOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof OrdersApi
-     */
-    public createOrder(requestParameters: OrdersApiCreateOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).createOrder(requestParameters.createOrderRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Create an order using the v3 orderbook. Currently only buy NFT orders are supported.
+     * Create an order using the v3 orderbook.
      * @summary Create an order (V3)
      * @param {OrdersApiCreateOrderV3Request} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1984,19 +1054,6 @@ export class OrdersApi extends BaseAPI {
      */
     public createOrderV3(requestParameters: OrdersApiCreateOrderV3Request, options?: AxiosRequestConfig) {
         return OrdersApiFp(this.configuration).createOrderV3(requestParameters.createOrderRequest, requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.authorization, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get an order.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-     * @summary Get an order
-     * @param {OrdersApiGetOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof OrdersApi
-     */
-    public getOrder(requestParameters: OrdersApiGetOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).getOrder(requestParameters.id, requestParameters.includeFees, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2009,19 +1066,6 @@ export class OrdersApi extends BaseAPI {
      */
     public getOrderV3(requestParameters: OrdersApiGetOrderV3Request, options?: AxiosRequestConfig) {
         return OrdersApiFp(this.configuration).getOrderV3(requestParameters.id, requestParameters.includeFees, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Sign cancel order message.  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-     * @summary Sign cancel order message
-     * @param {OrdersApiGetSignableCancelOrderRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof OrdersApi
-     */
-    public getSignableCancelOrder(requestParameters: OrdersApiGetSignableCancelOrderRequest, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).getSignableCancelOrder(requestParameters.getSignableCancelOrderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -2046,19 +1090,6 @@ export class OrdersApi extends BaseAPI {
      */
     public getSignableOrder(requestParameters: OrdersApiGetSignableOrderRequest, options?: AxiosRequestConfig) {
         return OrdersApiFp(this.configuration).getSignableOrder(requestParameters.getSignableOrderRequestV3, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Get a list of orders  This version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.  Deprecation date - Mon, 01 May 2023  Sunset date - Fri, 01 Sept 2023
-     * @summary Get a list of orders.
-     * @param {OrdersApiListOrdersRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @deprecated
-     * @throws {RequiredError}
-     * @memberof OrdersApi
-     */
-    public listOrders(requestParameters: OrdersApiListOrdersRequest = {}, options?: AxiosRequestConfig) {
-        return OrdersApiFp(this.configuration).listOrders(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.minTimestamp, requestParameters.maxTimestamp, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.buyTokenType, requestParameters.buyTokenId, requestParameters.buyAssetId, requestParameters.buyTokenAddress, requestParameters.buyTokenName, requestParameters.buyMinQuantity, requestParameters.buyMaxQuantity, requestParameters.buyMetadata, requestParameters.sellTokenType, requestParameters.sellTokenId, requestParameters.sellAssetId, requestParameters.sellTokenAddress, requestParameters.sellTokenName, requestParameters.sellMinQuantity, requestParameters.sellMaxQuantity, requestParameters.sellMetadata, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, requestParameters.includeFees, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

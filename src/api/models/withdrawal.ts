@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { Token } from './token';
+import { WithdrawalToken } from './withdrawal-token';
 
 /**
  * 
@@ -49,10 +49,10 @@ export interface Withdrawal {
     'timestamp': string;
     /**
      * 
-     * @type {Token}
+     * @type {WithdrawalToken}
      * @memberof Withdrawal
      */
-    'token': Token;
+    'token': WithdrawalToken;
     /**
      * Sequential ID of this transaction
      * @type {number}

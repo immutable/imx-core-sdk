@@ -27,17 +27,17 @@ import { CreateTransferRequest } from '../models';
 // @ts-ignore
 import { CreateTransferRequestV1 } from '../models';
 // @ts-ignore
-import { CreateTransferResponse } from '../models';
-// @ts-ignore
 import { CreateTransferResponseV1 } from '../models';
+// @ts-ignore
+import { CreateTransferResponseV2 } from '../models';
 // @ts-ignore
 import { GetSignableTransferRequest } from '../models';
 // @ts-ignore
-import { GetSignableTransferRequestV1 } from '../models';
-// @ts-ignore
-import { GetSignableTransferResponse } from '../models';
+import { GetSignableTransferRequestV2 } from '../models';
 // @ts-ignore
 import { GetSignableTransferResponseV1 } from '../models';
+// @ts-ignore
+import { GetSignableTransferResponseV2 } from '../models';
 // @ts-ignore
 import { ListTransfersResponse } from '../models';
 // @ts-ignore
@@ -153,11 +153,11 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Gets bulk details of a signable transfer
          * @summary Gets bulk details of a signable transfer
-         * @param {GetSignableTransferRequest} getSignableTransferRequestV2 get details of signable transfer
+         * @param {GetSignableTransferRequestV2} getSignableTransferRequestV2 get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransfer: async (getSignableTransferRequestV2: GetSignableTransferRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSignableTransfer: async (getSignableTransferRequestV2: GetSignableTransferRequestV2, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'getSignableTransferRequestV2' is not null or undefined
             assertParamExists('getSignableTransfer', 'getSignableTransferRequestV2', getSignableTransferRequestV2)
             const localVarPath = `/v2/signable-transfer-details`;
@@ -189,11 +189,11 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
-         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
+         * @param {GetSignableTransferRequest} getSignableTransferRequest get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransferV1: async (getSignableTransferRequest: GetSignableTransferRequestV1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getSignableTransferV1: async (getSignableTransferRequest: GetSignableTransferRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'getSignableTransferRequest' is not null or undefined
             assertParamExists('getSignableTransferV1', 'getSignableTransferRequest', getSignableTransferRequest)
             const localVarPath = `/v1/signable-transfer-details`;
@@ -261,7 +261,7 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
          * @summary Get a list of transfers
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'} [orderBy] Property to sort by
+         * @param {'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this transfer
          * @param {string} [receiver] Ethereum address of the user who received this transfer
@@ -279,7 +279,7 @@ export const TransfersApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTransfers: async (pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key', direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        listTransfers: async (pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key', direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/transfers`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -391,7 +391,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createTransfer(createTransferRequestV2: CreateTransferRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTransferResponse>> {
+        async createTransfer(createTransferRequestV2: CreateTransferRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateTransferResponseV2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createTransfer(createTransferRequestV2, xImxEthAddress, xImxEthSignature, authorization, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -412,22 +412,22 @@ export const TransfersApiFp = function(configuration?: Configuration) {
         /**
          * Gets bulk details of a signable transfer
          * @summary Gets bulk details of a signable transfer
-         * @param {GetSignableTransferRequest} getSignableTransferRequestV2 get details of signable transfer
+         * @param {GetSignableTransferRequestV2} getSignableTransferRequestV2 get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSignableTransfer(getSignableTransferRequestV2: GetSignableTransferRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableTransferResponse>> {
+        async getSignableTransfer(getSignableTransferRequestV2: GetSignableTransferRequestV2, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableTransferResponseV2>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableTransfer(getSignableTransferRequestV2, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
-         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
+         * @param {GetSignableTransferRequest} getSignableTransferRequest get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequestV1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableTransferResponseV1>> {
+        async getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableTransferResponseV1>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableTransferV1(getSignableTransferRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -447,7 +447,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
          * @summary Get a list of transfers
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'} [orderBy] Property to sort by
+         * @param {'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this transfer
          * @param {string} [receiver] Ethereum address of the user who received this transfer
@@ -465,7 +465,7 @@ export const TransfersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async listTransfers(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key', direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTransfersResponse>> {
+        async listTransfers(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key', direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListTransfersResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listTransfers(pageSize, cursor, orderBy, direction, user, receiver, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -489,7 +489,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createTransfer(createTransferRequestV2: CreateTransferRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateTransferResponse> {
+        createTransfer(createTransferRequestV2: CreateTransferRequest, xImxEthAddress?: string, xImxEthSignature?: string, authorization?: string, options?: any): AxiosPromise<CreateTransferResponseV2> {
             return localVarFp.createTransfer(createTransferRequestV2, xImxEthAddress, xImxEthSignature, authorization, options).then((request) => request(axios, basePath));
         },
         /**
@@ -508,21 +508,21 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
         /**
          * Gets bulk details of a signable transfer
          * @summary Gets bulk details of a signable transfer
-         * @param {GetSignableTransferRequest} getSignableTransferRequestV2 get details of signable transfer
+         * @param {GetSignableTransferRequestV2} getSignableTransferRequestV2 get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransfer(getSignableTransferRequestV2: GetSignableTransferRequest, options?: any): AxiosPromise<GetSignableTransferResponse> {
+        getSignableTransfer(getSignableTransferRequestV2: GetSignableTransferRequestV2, options?: any): AxiosPromise<GetSignableTransferResponseV2> {
             return localVarFp.getSignableTransfer(getSignableTransferRequestV2, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets details of a signable transfer
          * @summary Gets details of a signable transfer
-         * @param {GetSignableTransferRequestV1} getSignableTransferRequest get details of signable transfer
+         * @param {GetSignableTransferRequest} getSignableTransferRequest get details of signable transfer
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequestV1, options?: any): AxiosPromise<GetSignableTransferResponseV1> {
+        getSignableTransferV1(getSignableTransferRequest: GetSignableTransferRequest, options?: any): AxiosPromise<GetSignableTransferResponseV1> {
             return localVarFp.getSignableTransferV1(getSignableTransferRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -540,7 +540,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
          * @summary Get a list of transfers
          * @param {number} [pageSize] Page size of the result
          * @param {string} [cursor] Cursor
-         * @param {'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'} [orderBy] Property to sort by
+         * @param {'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'} [orderBy] Property to sort by
          * @param {string} [direction] Direction to sort (asc/desc)
          * @param {string} [user] Ethereum address of the user who submitted this transfer
          * @param {string} [receiver] Ethereum address of the user who received this transfer
@@ -558,7 +558,7 @@ export const TransfersApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        listTransfers(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key', direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: any): AxiosPromise<ListTransfersResponse> {
+        listTransfers(pageSize?: number, cursor?: string, orderBy?: 'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key', direction?: string, user?: string, receiver?: string, status?: 'success' | 'failure', minTimestamp?: string, maxTimestamp?: string, tokenType?: string, tokenId?: string, assetId?: string, tokenAddress?: string, tokenName?: string, minQuantity?: string, maxQuantity?: string, metadata?: string, options?: any): AxiosPromise<ListTransfersResponse> {
             return localVarFp.listTransfers(pageSize, cursor, orderBy, direction, user, receiver, status, minTimestamp, maxTimestamp, tokenType, tokenId, assetId, tokenAddress, tokenName, minQuantity, maxQuantity, metadata, options).then((request) => request(axios, basePath));
         },
     };
@@ -642,10 +642,10 @@ export interface TransfersApiCreateTransferV1Request {
 export interface TransfersApiGetSignableTransferRequest {
     /**
      * get details of signable transfer
-     * @type {GetSignableTransferRequest}
+     * @type {GetSignableTransferRequestV2}
      * @memberof TransfersApiGetSignableTransfer
      */
-    readonly getSignableTransferRequestV2: GetSignableTransferRequest
+    readonly getSignableTransferRequestV2: GetSignableTransferRequestV2
 }
 
 /**
@@ -656,10 +656,10 @@ export interface TransfersApiGetSignableTransferRequest {
 export interface TransfersApiGetSignableTransferV1Request {
     /**
      * get details of signable transfer
-     * @type {GetSignableTransferRequestV1}
+     * @type {GetSignableTransferRequest}
      * @memberof TransfersApiGetSignableTransferV1
      */
-    readonly getSignableTransferRequest: GetSignableTransferRequestV1
+    readonly getSignableTransferRequest: GetSignableTransferRequest
 }
 
 /**
@@ -698,10 +698,10 @@ export interface TransfersApiListTransfersRequest {
 
     /**
      * Property to sort by
-     * @type {'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'}
+     * @type {'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'}
      * @memberof TransfersApiListTransfers
      */
-    readonly orderBy?: 'transaction_id' | 'updated_at' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'
+    readonly orderBy?: 'transaction_id' | 'created_at' | 'sender_ether_key' | 'receiver_ether_key'
 
     /**
      * Direction to sort (asc/desc)

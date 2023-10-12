@@ -23,6 +23,8 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { APIError } from '../models';
 // @ts-ignore
+import { ApiSDKVersionCheckResponse } from '../models';
+// @ts-ignore
 import { CreateProjectRequest } from '../models';
 // @ts-ignore
 import { CreateProjectResponse } from '../models';
@@ -43,6 +45,7 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateProjectRequest} createProjectRequest create a project
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createProject: async (iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -198,6 +201,53 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Checks the SDK Version of caller against the current SDK Version and returns a message.
+         * @summary Checks the SDK Version of caller against the current SDK Version
+         * @param {string} details Runtime Details
+         * @param {string} [version] SDK Version
+         * @param {string} [id] Runtime ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSdkVersion: async (details: string, version?: string, id?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'details' is not null or undefined
+            assertParamExists('getSdkVersion', 'details', details)
+            const localVarPath = `/v1/projects/sdk`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (details !== undefined) {
+                localVarQueryParameter['details'] = details;
+            }
+
+            if (version !== undefined) {
+                localVarQueryParameter['version'] = version;
+            }
+
+            if (id !== undefined) {
+                localVarQueryParameter['id'] = id;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -215,6 +265,7 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateProjectRequest} createProjectRequest create a project
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createProject(iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateProjectResponse>> {
@@ -250,6 +301,19 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProjects(iMXSignature, iMXTimestamp, pageSize, cursor, orderBy, direction, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
+        /**
+         * Checks the SDK Version of caller against the current SDK Version and returns a message.
+         * @summary Checks the SDK Version of caller against the current SDK Version
+         * @param {string} details Runtime Details
+         * @param {string} [version] SDK Version
+         * @param {string} [id] Runtime ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSdkVersion(details: string, version?: string, id?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiSDKVersionCheckResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSdkVersion(details, version, id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
     }
 };
 
@@ -267,6 +331,7 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateProjectRequest} createProjectRequest create a project
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createProject(iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options?: any): AxiosPromise<CreateProjectResponse> {
@@ -298,6 +363,18 @@ export const ProjectsApiFactory = function (configuration?: Configuration, baseP
          */
         getProjects(iMXSignature: string, iMXTimestamp: string, pageSize?: number, cursor?: string, orderBy?: string, direction?: string, options?: any): AxiosPromise<GetProjectsResponse> {
             return localVarFp.getProjects(iMXSignature, iMXTimestamp, pageSize, cursor, orderBy, direction, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Checks the SDK Version of caller against the current SDK Version and returns a message.
+         * @summary Checks the SDK Version of caller against the current SDK Version
+         * @param {string} details Runtime Details
+         * @param {string} [version] SDK Version
+         * @param {string} [id] Runtime ID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSdkVersion(details: string, version?: string, id?: string, options?: any): AxiosPromise<ApiSDKVersionCheckResponse> {
+            return localVarFp.getSdkVersion(details, version, id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -408,6 +485,34 @@ export interface ProjectsApiGetProjectsRequest {
 }
 
 /**
+ * Request parameters for getSdkVersion operation in ProjectsApi.
+ * @export
+ * @interface ProjectsApiGetSdkVersionRequest
+ */
+export interface ProjectsApiGetSdkVersionRequest {
+    /**
+     * Runtime Details
+     * @type {string}
+     * @memberof ProjectsApiGetSdkVersion
+     */
+    readonly details: string
+
+    /**
+     * SDK Version
+     * @type {string}
+     * @memberof ProjectsApiGetSdkVersion
+     */
+    readonly version?: string
+
+    /**
+     * Runtime ID
+     * @type {string}
+     * @memberof ProjectsApiGetSdkVersion
+     */
+    readonly id?: string
+}
+
+/**
  * ProjectsApi - object-oriented interface
  * @export
  * @class ProjectsApi
@@ -419,6 +524,7 @@ export class ProjectsApi extends BaseAPI {
      * @summary Create a project
      * @param {ProjectsApiCreateProjectRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ProjectsApi
      */
@@ -448,5 +554,17 @@ export class ProjectsApi extends BaseAPI {
      */
     public getProjects(requestParameters: ProjectsApiGetProjectsRequest, options?: AxiosRequestConfig) {
         return ProjectsApiFp(this.configuration).getProjects(requestParameters.iMXSignature, requestParameters.iMXTimestamp, requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Checks the SDK Version of caller against the current SDK Version and returns a message.
+     * @summary Checks the SDK Version of caller against the current SDK Version
+     * @param {ProjectsApiGetSdkVersionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProjectsApi
+     */
+    public getSdkVersion(requestParameters: ProjectsApiGetSdkVersionRequest, options?: AxiosRequestConfig) {
+        return ProjectsApiFp(this.configuration).getSdkVersion(requestParameters.details, requestParameters.version, requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }

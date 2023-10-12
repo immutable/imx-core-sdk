@@ -54,7 +54,7 @@ import {
   TokensApiGetTokenRequest,
   TokensApiListTokensRequest,
   TradesApi,
-  TradesApiGetTradeRequest,
+  TradesApiGetTradeV3Request,
   TradesApiListTradesV3Request,
   TransfersApi,
   TransfersApiGetTransferRequest,
@@ -722,7 +722,7 @@ export class ImmutableX {
    * @returns a promise that resolves with the requested Trade
    * @throws {@link index.IMXError}
    */
-  public getTrade(request: TradesApiGetTradeRequest) {
+  public getTrade(request: TradesApiGetTradeV3Request) {
     return this.tradesApi
       .getTradeV3(request)
       .then(res => res.data)

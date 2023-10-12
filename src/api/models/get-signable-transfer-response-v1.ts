@@ -51,6 +51,12 @@ export interface GetSignableTransferResponseV1 {
      */
     'payload_hash': string;
     /**
+     * EIP-712 encoding of the StarkEx transfer transaction to be displayed to the user
+     * @type {string}
+     * @memberof GetSignableTransferResponseV1
+     */
+    'readable_transaction': string;
+    /**
      * Receiver of the transfer
      * @type {string}
      * @memberof GetSignableTransferResponseV1
@@ -80,5 +86,11 @@ export interface GetSignableTransferResponseV1 {
      * @memberof GetSignableTransferResponseV1
      */
     'signable_message': string;
+    /**
+     * IMX signed readable_transaction and payload_hash
+     * @type {string}
+     * @memberof GetSignableTransferResponseV1
+     */
+    'verification_signature': string;
 }
 

@@ -4,7 +4,7 @@ import {
   GetSignableCancelOrderRequest,
   GetSignableOrderRequest,
   OrdersApi,
-  OrdersApiCreateOrderRequest,
+  OrdersApiCreateOrderV3Request,
 } from '../api';
 import { UnsignedOrderRequest, WalletConnection } from '../types';
 import { signRaw } from '../utils';
@@ -54,7 +54,7 @@ export async function createOrderWorkflow({
 
   const resp = getSignableOrderResponse.data;
 
-  const orderParams: OrdersApiCreateOrderRequest = {
+  const orderParams: OrdersApiCreateOrderV3Request = {
     createOrderRequest: {
       amount_buy: resp.amount_buy,
       amount_sell: resp.amount_sell,
