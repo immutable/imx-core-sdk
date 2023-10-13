@@ -77,7 +77,7 @@ export async function getSignableRegistrationOnchain(
   return {
     operator_signature: response.data.operator_signature,
     payload_hash: response.data.payload_hash,
-    readable_transaction: '',
-    verification_signature: '',
+    readable_transaction: response.data.readable_transaction,
+    verification_signature: response.data.verification_signature,
   };
 }
