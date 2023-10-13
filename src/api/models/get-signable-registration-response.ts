@@ -32,17 +32,5 @@ export interface GetSignableRegistrationResponse {
      * @memberof GetSignableRegistrationResponse
      */
     'payload_hash': string;
-    /**
-     * EIP-712 encoding of the StarkEx Register User request to be displayed to the user
-     * @type {string}
-     * @memberof GetSignableRegistrationResponse
-     */
-    'readable_transaction': string;
-    /**
-     * IMX signed readable_transaction and payload_hash
-     * @type {string}
-     * @memberof GetSignableRegistrationResponse
-     */
-    'verification_signature': string;
 }
 

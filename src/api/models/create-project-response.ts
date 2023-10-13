@@ -21,10 +21,10 @@
  */
 export interface CreateProjectResponse {
     /**
-     * The project group ID
-     * @type {string}
+     * The project ID
+     * @type {number}
      * @memberof CreateProjectResponse
      */
-    'id': string;
+    'id': number;
 }
 

@@ -18,7 +18,7 @@
 import { AssetProperties } from './asset-properties';
 // May contain unused imports in some cases
 // @ts-ignore
-import { AssetPropertiesCollection } from './asset-properties-collection';
+import { CollectionDetails } from './collection-details';
 
 /**
  * @type TokenDataProperties

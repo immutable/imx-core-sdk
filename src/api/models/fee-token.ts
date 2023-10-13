@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeTokenData } from './fee-token-data';
+import { FeeData } from './fee-data';
 
 /**
  * 
@@ -25,10 +25,10 @@ import { FeeTokenData } from './fee-token-data';
 export interface FeeToken {
     /**
      * 
-     * @type {FeeTokenData}
+     * @type {FeeData}
      * @memberof FeeToken
      */
-    'data'?: FeeTokenData;
+    'data'?: FeeData;
     /**
      * Fee token type. One of ETH/ERC20
      * @type {string}

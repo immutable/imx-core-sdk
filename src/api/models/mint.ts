@@ -18,7 +18,7 @@
 import { Fee } from './fee';
 // May contain unused imports in some cases
 // @ts-ignore
-import { MintToken } from './mint-token';
+import { Token } from './token';
 
 /**
  * 
@@ -46,10 +46,10 @@ export interface Mint {
     'timestamp': string;
     /**
      * 
-     * @type {MintToken}
+     * @type {Token}
      * @memberof Mint
      */
-    'token': MintToken;
+    'token': Token;
     /**
      * Sequential ID of transaction in Immutable X
      * @type {number}

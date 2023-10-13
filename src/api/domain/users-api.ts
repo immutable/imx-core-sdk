@@ -33,8 +33,6 @@ import { GetSignableRegistrationResponse } from '../models';
 // @ts-ignore
 import { GetUsersApiResponse } from '../models';
 // @ts-ignore
-import { RegisterPassportUserResult } from '../models';
-// @ts-ignore
 import { RegisterUserRequest } from '../models';
 // @ts-ignore
 import { RegisterUserResponse } from '../models';
@@ -280,7 +278,7 @@ export const UsersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerPassportUser(authorization: string, registerPassportUserRequest: ApiRegisterPassportUserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RegisterPassportUserResult>> {
+        async registerPassportUser(authorization: string, registerPassportUserRequest: ApiRegisterPassportUserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.registerPassportUser(authorization, registerPassportUserRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -343,7 +341,7 @@ export const UsersApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerPassportUser(authorization: string, registerPassportUserRequest: ApiRegisterPassportUserRequest, options?: any): AxiosPromise<RegisterPassportUserResult> {
+        registerPassportUser(authorization: string, registerPassportUserRequest: ApiRegisterPassportUserRequest, options?: any): AxiosPromise<object> {
             return localVarFp.registerPassportUser(authorization, registerPassportUserRequest, options).then((request) => request(axios, basePath));
         },
         /**

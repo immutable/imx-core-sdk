@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { GetSignableDepositRequestToken } from './get-signable-deposit-request-token';
+import { SignableToken } from './signable-token';
 
 /**
  * 
@@ -31,10 +31,10 @@ export interface GetSignableDepositRequest {
     'amount': string;
     /**
      * 
-     * @type {GetSignableDepositRequestToken}
+     * @type {SignableToken}
      * @memberof GetSignableDepositRequest
      */
-    'token': GetSignableDepositRequestToken;
+    'token': SignableToken;
     /**
      * User who is depositing
      * @type {string}
