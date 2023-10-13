@@ -17,32 +17,28 @@
 /**
  * 
  * @export
- * @interface Project
+ * @interface CreateProjectGroupRequest
  */
-export interface Project {
+export interface CreateProjectGroupRequest {
     /**
-     * The project ChainType
+     * The chain type
      * @type {string}
-     * @memberof Project
+     * @memberof CreateProjectGroupRequest
      */
-    'chain_type'?: string;
-    /**
-     * The project group ID
-     * @type {string}
-     * @memberof Project
-     */
-    'id': string;
+    'chain_type': CreateProjectGroupRequestChainTypeEnum;
     /**
      * The project group name
      * @type {string}
-     * @memberof Project
+     * @memberof CreateProjectGroupRequest
      */
     'name': string;
-    /**
-     * The organisation ID that the project belongs to
-     * @type {string}
-     * @memberof Project
-     */
-    'org_id'?: string;
 }
+
+export const CreateProjectGroupRequestChainTypeEnum = {
+    Starkex: 'starkex',
+    Zkevm: 'zkevm'
+} as const;
+
+export type CreateProjectGroupRequestChainTypeEnum = typeof CreateProjectGroupRequestChainTypeEnum[keyof typeof CreateProjectGroupRequestChainTypeEnum];
+
 

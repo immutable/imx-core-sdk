@@ -13,18 +13,15 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { CollectionDetails } from './collection-details';
 
 /**
- * 
+ * @type AssetWithOrdersCollection
+ * Information about the collection to which this asset belongs
  * @export
- * @interface CreateProjectResponse
  */
-export interface CreateProjectResponse {
-    /**
-     * The project group ID
-     * @type {string}
-     * @memberof CreateProjectResponse
-     */
-    'id': string;
-}
+export type AssetWithOrdersCollection = CollectionDetails;
+
 

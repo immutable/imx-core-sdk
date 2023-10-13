@@ -17,32 +17,26 @@
 /**
  * 
  * @export
- * @interface Project
+ * @interface RegisterPassportUserResult
  */
-export interface Project {
+export interface RegisterPassportUserResult {
     /**
-     * The project ChainType
+     * The ether key of the user
      * @type {string}
-     * @memberof Project
+     * @memberof RegisterPassportUserResult
      */
-    'chain_type'?: string;
+    'ether_key'?: string;
     /**
-     * The project group ID
+     * The stark key of the user
      * @type {string}
-     * @memberof Project
+     * @memberof RegisterPassportUserResult
      */
-    'id': string;
+    'stark_key'?: string;
     /**
-     * The project group name
+     * The admin key of the user
      * @type {string}
-     * @memberof Project
+     * @memberof RegisterPassportUserResult
      */
-    'name': string;
-    /**
-     * The organisation ID that the project belongs to
-     * @type {string}
-     * @memberof Project
-     */
-    'org_id'?: string;
+    'user_admin_key'?: string;
 }
 

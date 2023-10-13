@@ -13,18 +13,15 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { SignableToken } from './signable-token';
 
 /**
- * 
+ * @type GetSignableWithdrawalRequestToken
+ * Token to withdraw
  * @export
- * @interface CreateProjectResponse
  */
-export interface CreateProjectResponse {
-    /**
-     * The project group ID
-     * @type {string}
-     * @memberof CreateProjectResponse
-     */
-    'id': string;
-}
+export type GetSignableWithdrawalRequestToken = SignableToken;
+
 

@@ -27,10 +27,22 @@ export interface GetSignableRegistrationOffchainResponse {
      */
     'payload_hash': string;
     /**
+     * EIP-712 encoding of the StarkEx Register User Offchain request to be displayed to the user
+     * @type {string}
+     * @memberof GetSignableRegistrationOffchainResponse
+     */
+    'readable_transaction': string;
+    /**
      * Message to sign with L1 wallet to register user offchain
      * @type {string}
      * @memberof GetSignableRegistrationOffchainResponse
      */
     'signable_message': string;
+    /**
+     * IMX signed readable_transaction and payload_hash
+     * @type {string}
+     * @memberof GetSignableRegistrationOffchainResponse
+     */
+    'verification_signature': string;
 }
 

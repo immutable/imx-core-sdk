@@ -13,18 +13,15 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { Range } from './range';
 
 /**
- * 
+ * @type CollectionFilterRange
+ * Range of values for this property
  * @export
- * @interface CreateProjectResponse
  */
-export interface CreateProjectResponse {
-    /**
-     * The project group ID
-     * @type {string}
-     * @memberof CreateProjectResponse
-     */
-    'id': string;
-}
+export type CollectionFilterRange = Range;
+
 

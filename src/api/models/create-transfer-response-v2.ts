@@ -17,14 +17,14 @@
 /**
  * 
  * @export
- * @interface CreateProjectResponse
+ * @interface CreateTransferResponseV2
  */
-export interface CreateProjectResponse {
+export interface CreateTransferResponseV2 {
     /**
-     * The project group ID
-     * @type {string}
-     * @memberof CreateProjectResponse
+     * List of transfer IDs
+     * @type {Array<number>}
+     * @memberof CreateTransferResponseV2
      */
-    'id': string;
+    'transfer_ids': Array<number>;
 }
 

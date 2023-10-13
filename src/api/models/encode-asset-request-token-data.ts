@@ -13,18 +13,15 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { EncodeAssetTokenData } from './encode-asset-token-data';
 
 /**
- * 
+ * @type EncodeAssetRequestTokenData
+ * Extra token information to be encoded
  * @export
- * @interface CreateProjectResponse
  */
-export interface CreateProjectResponse {
-    /**
-     * The project group ID
-     * @type {string}
-     * @memberof CreateProjectResponse
-     */
-    'id': string;
-}
+export type EncodeAssetRequestTokenData = EncodeAssetTokenData;
+
 

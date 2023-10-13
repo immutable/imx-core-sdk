@@ -17,14 +17,14 @@
 /**
  * 
  * @export
- * @interface CreateProjectResponse
+ * @interface EngineRegisterUserResult
  */
-export interface CreateProjectResponse {
+export interface EngineRegisterUserResult {
     /**
-     * The project group ID
+     * 
      * @type {string}
-     * @memberof CreateProjectResponse
+     * @memberof EngineRegisterUserResult
      */
-    'id': string;
+    'tx_hash'?: string;
 }
 

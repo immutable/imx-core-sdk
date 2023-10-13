@@ -13,18 +13,15 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { OrderDetails } from './order-details';
 
 /**
- * 
+ * @type AssetWithOrdersOrders
+ * Open orders for this asset
  * @export
- * @interface CreateProjectResponse
  */
-export interface CreateProjectResponse {
-    /**
-     * The project group ID
-     * @type {string}
-     * @memberof CreateProjectResponse
-     */
-    'id': string;
-}
+export type AssetWithOrdersOrders = OrderDetails;
+
 

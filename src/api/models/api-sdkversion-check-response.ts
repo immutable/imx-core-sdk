@@ -13,35 +13,30 @@
  */
 
 
-// May contain unused imports in some cases
-// @ts-ignore
-import { FeeTokenData } from './fee-token-data';
 
 /**
  * 
  * @export
- * @interface FeeToken
+ * @interface ApiSDKVersionCheckResponse
  */
-export interface FeeToken {
+export interface ApiSDKVersionCheckResponse {
     /**
      * 
-     * @type {FeeTokenData}
-     * @memberof FeeToken
-     */
-    'data'?: FeeTokenData;
-    /**
-     * Fee token type. One of ETH/ERC20
      * @type {string}
-     * @memberof FeeToken
+     * @memberof ApiSDKVersionCheckResponse
      */
-    'type'?: FeeTokenTypeEnum;
+    'message'?: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ApiSDKVersionCheckResponse
+     */
+    'ok'?: boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof ApiSDKVersionCheckResponse
+     */
+    'runtimeId'?: string;
 }
-
-export const FeeTokenTypeEnum = {
-    Eth: 'ETH',
-    Erc20: 'ERC20'
-} as const;
-
-export type FeeTokenTypeEnum = typeof FeeTokenTypeEnum[keyof typeof FeeTokenTypeEnum];
-
 

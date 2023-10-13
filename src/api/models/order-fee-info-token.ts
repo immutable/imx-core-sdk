@@ -15,10 +15,10 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeData } from './fee-data';
+import { FeeToken } from './fee-token';
 // May contain unused imports in some cases
 // @ts-ignore
-import { FeeToken } from './fee-token';
+import { FeeTokenData } from './fee-token-data';
 
 /**
  * @type OrderFeeInfoToken
