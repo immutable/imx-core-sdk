@@ -103,7 +103,7 @@ export class Workflows {
   }
 
   private async validateChain(signer: Signer) {
-    const chainID = await signer.getChainId();
+    const chainID = await signer.ChainId;
 
     if (!this.isChainValid(chainID))
       throw new Error(
