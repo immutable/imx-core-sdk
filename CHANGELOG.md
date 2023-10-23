@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2023-10-23
+
+### Deprecated
+
+- Deprecation of the `POST v1/projects` endpoint. Use the [Immutable Developer Hub](https://hub.immutable.com) to create projects instead.
+
 ## [2.2.0] - 2023-09-12
+
 - Rerouted getTrade to v3 endpoint
 
 ## [2.1.0] - 2023-07-28
@@ -26,14 +33,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support to generate backwards compatible stark key using `generateLegacyStarkPrivateKey` for accounts created using `imx-sdk-js` versions before 1.43.5
 
 ## [2.0.1] - 2023-06-16
+
 - Fix for bug in generateLegacyStarkPrivateKey for some wallets, see https://github.com/immutable/imx-core-sdk/pull/334 for details.
 
 ## [2.0.0] - 2023-04-26
+
 - Updated getOrder, listOrders, cancelOrder and listTrades to use thew new upgraded v3 endpoints
 
 ## [1.0.1] - 2023-02-01
 
 ## [1.1.0] - 2023-04-18
+
 - Added support for listings & bids for the upgraded v3 endpoints of orders and trades
 
 ### Added
