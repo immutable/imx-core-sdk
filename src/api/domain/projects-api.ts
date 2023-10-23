@@ -43,6 +43,7 @@ export const ProjectsApiAxiosParamCreator = function (configuration?: Configurat
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateProjectRequest} createProjectRequest create a project
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         createProject: async (iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
@@ -215,6 +216,7 @@ export const ProjectsApiFp = function(configuration?: Configuration) {
          * @param {string} iMXTimestamp Unix Epoc timestamp
          * @param {CreateProjectRequest} createProjectRequest create a project
          * @param {*} [options] Override http request option.
+         * @deprecated
          * @throws {RequiredError}
          */
         async createProject(iMXSignature: string, iMXTimestamp: string, createProjectRequest: CreateProjectRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateProjectResponse>> {
