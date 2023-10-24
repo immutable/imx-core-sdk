@@ -3,7 +3,7 @@ import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
   try {
-    const walletConnection = await generateWalletConnection('goerli');
+    const walletConnection = await generateWalletConnection('sepolia');
 
     // IMX class client
     const client = new ImmutableX(Config.SANDBOX);
