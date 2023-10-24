@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] - 2023-10-24
+- Updated README.md and examples to use sepolia in sandbox environment.
+- Replace AlchemyProvider with EtherscanProvider for sepolia network in examples.
+
 ## [2.3.0] - 2023-10-24
 - Updated ethers to enable sepolia network
 - Updated configuration to use sepolia in sandbox environment.
