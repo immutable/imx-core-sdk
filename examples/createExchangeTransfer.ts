@@ -6,7 +6,7 @@ import {
 import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
-  const walletConnection = await generateWalletConnection('goerli');
+  const walletConnection = await generateWalletConnection('sepolia');
 
   const imxClient = new ImmutableX(Config.SANDBOX);
 

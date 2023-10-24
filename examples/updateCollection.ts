@@ -6,7 +6,7 @@ import { generateWalletConnection } from './libs/walletConnection';
     // IMX class client
     const client = new ImmutableX(Config.SANDBOX);
 
-    const walletConnection = await generateWalletConnection('goerli');
+    const walletConnection = await generateWalletConnection('sepolia');
 
     const collectionAddress = ''; // collection address
 

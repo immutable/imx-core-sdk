@@ -2,7 +2,7 @@ import { ImmutableX, Config, GetSignableTradeRequest } from '@imtbl/core-sdk';
 import { generateWalletConnection } from './libs/walletConnection';
 
 (async () => {
-  const walletConnection = await generateWalletConnection('goerli');
+  const walletConnection = await generateWalletConnection('sepolia');
 
   const imxClient = new ImmutableX(Config.SANDBOX);
 

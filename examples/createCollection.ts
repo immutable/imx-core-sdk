@@ -1,13 +1,13 @@
-import { AlchemyProvider } from '@ethersproject/providers';
+import { EtherscanProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { ImmutableX, Config, CreateCollectionRequest } from '@imtbl/core-sdk';
 import { requireEnvironmentVariable } from './libs/utils';
 
 (async () => {
   const privateKey = requireEnvironmentVariable('PRIVATE_KEY');
-  const alchemyKey = requireEnvironmentVariable('ALCHEMY_API_KEY');
+  const etherscanKey = requireEnvironmentVariable('ETHERSCAN_API_KEY');
   const wallet = new Wallet(privateKey);
-  const provider = new AlchemyProvider('goerli', alchemyKey);
+  const provider = new EtherscanProvider('sepolia', etherscanKey);
   const signer = wallet.connect(provider);
 
   const imxClient = new ImmutableX(Config.SANDBOX);
