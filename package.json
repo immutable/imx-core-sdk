@@ -94,7 +94,7 @@
     "elliptic": "^6.5.4",
     "enc-utils": "^3.0.0",
     "ethereumjs-wallet": "^1.0.2",
-    "ethers": "^5.6.9",
+    "ethers": "^5.7.1",
     "hash.js": "^1.1.7"
   }
 }
