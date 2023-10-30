@@ -41,7 +41,7 @@ yarn add @imtbl/core-sdk
 Initialize the Core SDK client with the network on which you want your application to run (see [all networks available](./src/config/config.ts)):
 | Param | Description |
 | -- | -- |
-| `Config.SANDBOX` | The default test network (currently, it is Goërli) |
+| `Config.SANDBOX` | The default test network (currently, it is Sepolia) |
 | `Config.PRODUCTION` | Ethereum network |
 
 ```ts
@@ -99,13 +99,13 @@ ImmutableX provides two Stark key generation methods:
 
 If your user has a Stark key that was generated using the deterministic method, the Core SDK provides a way for you to retrieve this key using the [generateLegacyStarkPrivateKey()](https://github.com/immutable/imx-core-sdk/blob/83f800956f541f338b3267ec7cb16e039182dfa6/src/utils/stark/starkCurve.ts#L152) method:
 ```ts
-import { AlchemyProvider } from '@ethersproject/providers';
+import { EtherscanProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { generateLegacyStarkPrivateKey } from '@imtbl/core-sdk';
 
 // Create Ethereum signer
-const ethNetwork = 'goerli'; // Or 'mainnet'
-const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
+const ethNetwork = 'sepolia'; // Or 'mainnet'
+const provider = new EtherscanProvider(ethNetwork, ETHERSCAN_API_KEY);
 const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 
 // Get the legacy Stark private key
@@ -161,13 +161,13 @@ The second option provides an application with an interface to the user's accoun
 The Core SDK provides functionality for applications to generate Stark (L2) [signers](/src/utils/stark/starkSigner.ts#L60).
 
 ```ts
-import { AlchemyProvider } from '@ethersproject/providers';
+import { EtherscanProvider } from '@ethersproject/providers';
 import { Wallet } from '@ethersproject/wallet';
 import { createStarkSigner } from '@imtbl/core-sdk';
 
 // Create Ethereum signer
-const ethNetwork = 'goerli'; // Or 'mainnet'
-const provider = new AlchemyProvider(ethNetwork, YOUR_ALCHEMY_API_KEY);
+const ethNetwork = 'sepolia'; // Or 'mainnet'
+const provider = new EtherscanProvider(ethNetwork, ETHERSCAN_API_KEY);
 const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 
 // Create Stark signer

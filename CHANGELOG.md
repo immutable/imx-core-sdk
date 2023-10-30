@@ -12,8 +12,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- all `v1/trade` functionality, use `v3/trade` instead
-- all `v1/order` functionality, use `v3/order` instead
+- all `v1/trade` functions, use `v3/trade` instead
+- all `v1/order` functions, use `v3/order` instead
+
+## [2.3.1] - 2023-10-24
+- Updated README.md and examples to use sepolia in sandbox environment.
+- Replace AlchemyProvider with EtherscanProvider for sepolia network in examples.
+
+## [2.3.0] - 2023-10-24
+- Updated ethers to enable sepolia network
+- Updated configuration to use sepolia in sandbox environment.
 
 ## [2.2.0] - 2023-09-12
 - Rerouted getTrade to v3 endpoint

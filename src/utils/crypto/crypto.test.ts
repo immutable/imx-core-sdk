@@ -4,7 +4,7 @@ import { Wallet } from '@ethersproject/wallet';
 
 describe('signRaw()', () => {
   test('Correctly signs string', async () => {
-    const provider = getDefaultProvider('goerli', {});
+    const provider = getDefaultProvider('sepolia', {});
     const signer = new Wallet(
       '5c7b4b5cad9a3fc7b1ba235a49cd74e615488a18b0d6a531739fd1062935104d',
     ).connect(provider);
@@ -19,7 +19,7 @@ describe('signRaw()', () => {
 
 describe('signMessage()', () => {
   test('Correctly signs message', async () => {
-    const provider = getDefaultProvider('goerli', {});
+    const provider = getDefaultProvider('sepolia', {});
     const signer = new Wallet(
       '5c7b4b5cad9a3fc7b1ba235a49cd74e615488a18b0d6a531739fd1062935104d',
     ).connect(provider);
