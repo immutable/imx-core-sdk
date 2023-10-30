@@ -1551,232 +1551,9 @@
         }
       }
     },
-    "/v1/orders": {
-      "get": {
-        "description": "Get a list of orders\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listOrdersV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "orders"
-        ],
-        "summary": "Get a list of orders.",
-        "operationId": "listOrders",
-        "deprecated": true,
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Page size of the result",
-            "name": "page_size",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Cursor",
-            "name": "cursor",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "created_at",
-              "expired_at",
-              "sell_quantity",
-              "buy_quantity",
-              "buy_quantity_with_fees",
-              "updated_at"
-            ],
-            "type": "string",
-            "description": "Property to sort by",
-            "name": "order_by",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Direction to sort (asc/desc)",
-            "name": "direction",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Ethereum address of the user who submitted this order",
-            "name": "user",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "active",
-              "filled",
-              "cancelled",
-              "expired",
-              "inactive"
-            ],
-            "type": "string",
-            "description": "Status of this order",
-            "name": "status",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Filter orders to include those with created_at timestamps after this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "min_timestamp",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Filter orders to include those with created_at timestamps before this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "max_timestamp",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Filter orders to include those with updated_at timestamps after this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "updated_min_timestamp",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Filter orders to include those with updated_at timestamps before this time, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "updated_max_timestamp",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Token type of the asset this order buys",
-            "name": "buy_token_type",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "ERC721 Token ID of the asset this order buys",
-            "name": "buy_token_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Internal IMX ID of the asset this order buys",
-            "name": "buy_asset_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Token address of the asset this order buys",
-            "name": "buy_token_address",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Token name of the asset this order buys",
-            "name": "buy_token_name",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Min quantity for the asset this order buys",
-            "name": "buy_min_quantity",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Max quantity for the asset this order buys",
-            "name": "buy_max_quantity",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "JSON-encoded metadata filters for the asset this order buys",
-            "name": "buy_metadata",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Token type of the asset this order sells",
-            "name": "sell_token_type",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "ERC721 Token ID of the asset this order sells",
-            "name": "sell_token_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Internal IMX ID of the asset this order sells",
-            "name": "sell_asset_id",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Token address of the asset this order sells",
-            "name": "sell_token_address",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Token name of the asset this order sells",
-            "name": "sell_token_name",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Min quantity for the asset this order sells",
-            "name": "sell_min_quantity",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Max quantity for the asset this order sells",
-            "name": "sell_max_quantity",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "JSON-encoded metadata filters for the asset this order sells",
-            "name": "sell_metadata",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients",
-            "name": "auxiliary_fee_percentages",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages",
-            "name": "auxiliary_fee_recipients",
-            "in": "query"
-          },
-          {
-            "type": "boolean",
-            "description": "Set flag to true to include fee object for orders",
-            "name": "include_fees",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/ListOrdersResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      },
+    "/v1/passport/users": {
       "post": {
-        "description": "Create an order. Use https://docs.x.immutable.com/reference#/operations/getSignableOrder to get request body params.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
+        "description": "Registers a passport user",
         "consumes": [
           "application/json"
         ],
@@ -1784,45 +1561,33 @@
           "application/json"
         ],
         "tags": [
-          "orders"
+          "users"
         ],
-        "summary": "Create an order",
-        "operationId": "createOrder",
-        "deprecated": true,
+        "summary": "Registers a passport user",
+        "operationId": "RegisterPassportUser",
         "parameters": [
-          {
-            "type": "string",
-            "description": "eth address",
-            "name": "x-imx-eth-address",
-            "in": "header"
-          },
-          {
-            "type": "string",
-            "description": "eth signature",
-            "name": "x-imx-eth-signature",
-            "in": "header"
-          },
           {
             "type": "string",
             "description": "Authorization header",
             "name": "Authorization",
-            "in": "header"
+            "in": "header",
+            "required": true
           },
           {
-            "description": "create an order",
-            "name": "CreateOrderRequest",
+            "description": "Register Passport User",
+            "name": "RegisterPassportUserRequest",
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CreateOrderRequest"
+              "$ref": "#/definitions/api.RegisterPassportUserRequest"
             }
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK",
+          "201": {
+            "description": "Created",
             "schema": {
-              "$ref": "#/definitions/CreateOrderResponse"
+              "$ref": "#/definitions/RegisterPassportUserResult"
             }
           },
           "400": {
@@ -1831,72 +1596,8 @@
               "$ref": "#/definitions/APIError"
             }
           },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      }
-    },
-    "/v1/orders/{id}": {
-      "get": {
-        "description": "Get an order.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "orders"
-        ],
-        "summary": "Get an order",
-        "operationId": "getOrder",
-        "deprecated": true,
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Order ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          },
-          {
-            "type": "boolean",
-            "description": "Set flag to true to include fee body for the order",
-            "name": "include_fees",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Comma separated string of fee percentages that are to be paired with auxiliary_fee_recipients",
-            "name": "auxiliary_fee_percentages",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Comma separated string of fee recipients that are to be paired with auxiliary_fee_percentages",
-            "name": "auxiliary_fee_recipients",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Order"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "404": {
-            "description": "Not Found",
+          "401": {
+            "description": "Unauthorized",
             "schema": {
               "$ref": "#/definitions/APIError"
             }
@@ -1905,65 +1606,6 @@
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      },
-      "delete": {
-        "description": "Cancel an order. Use https://docs.x.immutable.com/reference#/operations/getSignableCancelOrder to get request body params.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/cancelOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "orders"
-        ],
-        "summary": "Cancel an order",
-        "operationId": "cancelOrder",
-        "deprecated": true,
-        "parameters": [
-          {
-            "type": "string",
-            "description": "eth address",
-            "name": "x-imx-eth-address",
-            "in": "header"
-          },
-          {
-            "type": "string",
-            "description": "eth signature",
-            "name": "x-imx-eth-signature",
-            "in": "header"
-          },
-          {
-            "type": "string",
-            "description": "Authorization header",
-            "name": "Authorization",
-            "in": "header"
-          },
-          {
-            "description": "cancel an order",
-            "name": "CancelOrderRequest",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CancelOrderRequest"
-            }
-          },
-          {
-            "type": "string",
-            "description": "Order ID to cancel",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/CancelOrderResponse"
             }
           }
         }
@@ -2069,6 +1711,7 @@
         ],
         "summary": "Create a project",
         "operationId": "createProject",
+        "deprecated": true,
         "parameters": [
           {
             "description": "create a project",
@@ -2115,6 +1758,63 @@
           },
           "403": {
             "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v1/projects/sdk": {
+      "get": {
+        "description": "Checks the SDK Version of caller against the current SDK Version and returns a message.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "projects"
+        ],
+        "summary": "Checks the SDK Version of caller against the current SDK Version",
+        "operationId": "getSdkVersion",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "Runtime Details",
+            "name": "details",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "SDK Version",
+            "name": "version",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "Runtime ID",
+            "name": "id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api.SDKVersionCheckResponse"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/APIError"
             }
@@ -2194,42 +1894,6 @@
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      }
-    },
-    "/v1/signable-cancel-order-details": {
-      "post": {
-        "description": "Sign cancel order message.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/getSignableCancelOrderV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "orders"
-        ],
-        "summary": "Sign cancel order message",
-        "operationId": "getSignableCancelOrder",
-        "deprecated": true,
-        "parameters": [
-          {
-            "description": "get a signable cancel order",
-            "name": "GetSignableCancelOrderRequest",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/GetSignableCancelOrderRequest"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/GetSignableCancelOrderResponse"
             }
           }
         }
@@ -2385,7 +2049,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GetSignableTransferRequestV1"
+              "$ref": "#/definitions/GetSignableTransferRequest"
             }
           }
         ],
@@ -2528,197 +2192,6 @@
         }
       }
     },
-    "/v1/trades": {
-      "get": {
-        "description": "Get a list of trades.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/listTradesV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "trades"
-        ],
-        "summary": "Get a list of trades",
-        "operationId": "listTrades",
-        "deprecated": true,
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Party A's (buy order) token type of currency used to buy",
-            "name": "party_a_token_type",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Party A's (buy order) token address of currency used to buy",
-            "name": "party_a_token_address",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Party B's (sell order) token type of NFT sold - always ERC721",
-            "name": "party_b_token_type",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Party B's (sell order) collection address of NFT sold",
-            "name": "party_b_token_address",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Party B's (sell order) token id of NFT sold",
-            "name": "party_b_token_id",
-            "in": "query"
-          },
-          {
-            "type": "integer",
-            "description": "Page size of the result",
-            "name": "page_size",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Cursor",
-            "name": "cursor",
-            "in": "query"
-          },
-          {
-            "enum": [
-              "created_at",
-              "transaction_id",
-              "party_a_sold_quantity",
-              "party_b_sold_quantity"
-            ],
-            "type": "string",
-            "description": "Property to sort by",
-            "name": "order_by",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Direction to sort (asc/desc)",
-            "name": "direction",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Minimum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "min_timestamp",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Maximum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
-            "name": "max_timestamp",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/ListTradesResponse"
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Create a trade. Use https://docs.x.immutable.com/reference#/operations/getSignableTrade to get request body params.\n\nThis version of the endpoint is deprecated, the latest version can be found at https://docs.x.immutable.com/reference/#/operations/createTradeV3.\n\nDeprecation date - Mon, 01 May 2023\n\nSunset date - Fri, 01 Sept 2023",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "trades"
-        ],
-        "summary": "Create a Trade between two parties",
-        "operationId": "createTrade",
-        "deprecated": true,
-        "parameters": [
-          {
-            "type": "string",
-            "description": "eth address",
-            "name": "x-imx-eth-address",
-            "in": "header"
-          },
-          {
-            "type": "string",
-            "description": "eth signature",
-            "name": "x-imx-eth-signature",
-            "in": "header"
-          },
-          {
-            "type": "string",
-            "description": "Authorization header",
-            "name": "Authorization",
-            "in": "header"
-          },
-          {
-            "description": "create a trade",
-            "name": "CreateTradeRequest",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/CreateTradeRequestV1"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/CreateTradeResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v1/trades/{id}": {
-      "get": {
-        "description": "Get details of a trade with the given ID",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "trades"
-        ],
-        "summary": "Get details of a trade with the given ID",
-        "operationId": "getTrade",
-        "deprecated": true,
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Trade ID",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/Trade"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      }
-    },
     "/v1/transfers": {
       "get": {
         "description": "Get a list of transfers",
@@ -2746,7 +2219,6 @@
           {
             "enum": [
               "transaction_id",
-              "updated_at",
               "created_at",
               "sender_ether_key",
               "receiver_ether_key"
@@ -3040,66 +2512,6 @@
         }
       }
     },
-    "/v1/passport/users": {
-      "post": {
-        "description": "Registers a passport user",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "users"
-        ],
-        "summary": "Registers a passport user",
-        "operationId": "RegisterPassportUser",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Authorization header",
-            "name": "Authorization",
-            "in": "header",
-            "required": true
-          },
-          {
-            "description": "Register Passport User",
-            "name": "RegisterPassportUserRequest",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/api.RegisterPassportUserRequest"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content",
-            "schema": {
-              "type": "object"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      }
-    },
     "/v1/users/{user}": {
       "get": {
         "description": "Get stark keys for a registered user",
@@ -3276,7 +2688,7 @@
         }
       },
       "post": {
-        "description": "Creates a withdrawal",
+        "description": "Creates a withdrawal. Use https://docs.x.immutable.com/reference#/operations/getSignableWithdrawal to get request body params.",
         "consumes": [
           "application/json"
         ],
@@ -3944,7 +3356,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GetSignableTransferRequest"
+              "$ref": "#/definitions/GetSignableTransferRequestV2"
             }
           }
         ],
@@ -3952,7 +3364,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/GetSignableTransferResponse"
+              "$ref": "#/definitions/GetSignableTransferResponseV2"
             }
           },
           "400": {
@@ -4029,7 +3441,7 @@
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/CreateTransferResponse"
+              "$ref": "#/definitions/CreateTransferResponseV2"
             }
           },
           "400": {
@@ -4476,7 +3888,7 @@
         }
       },
       "post": {
-        "description": "Create an order using the v3 orderbook. Currently only buy NFT orders are supported.",
+        "description": "Create an order using the v3 orderbook.",
         "consumes": [
           "application/json"
         ],
@@ -4871,13 +4283,13 @@
           },
           {
             "type": "string",
-            "description": "Minimum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "description": "Minimum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-06-27T00:10:22Z'",
             "name": "min_timestamp",
             "in": "query"
           },
           {
             "type": "string",
-            "description": "Maximum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-05-27T00:10:22Z'",
+            "description": "Maximum timestamp for this trade, in ISO 8601 UTC format. Example: '2022-06-27T00:10:22Z'",
             "name": "max_timestamp",
             "in": "query"
           }
@@ -4904,7 +4316,7 @@
         }
       },
       "post": {
-        "description": "Create a Trade. Currently only buy order is supported.",
+        "description": "Create a Trade.",
         "consumes": [
           "application/json"
         ],
@@ -5070,8 +4482,7 @@
       ],
       "properties": {
         "collection": {
-          "description": "Information about the collection to which this asset belongs",
-          "$ref": "#/definitions/CollectionDetails"
+          "$ref": "#/definitions/assetCollection"
         },
         "created_at": {
           "description": "Timestamp of when the asset was created",
@@ -5110,8 +4521,7 @@
           "x-nullable": true
         },
         "orders": {
-          "description": "[DEPRECATED] Open orders for this asset will always return empty. Use GET /orders",
-          "$ref": "#/definitions/OrderDetails"
+          "$ref": "#/definitions/assetOrders"
         },
         "status": {
           "description": "Status of this asset (where it is in the system)",
@@ -5145,8 +4555,7 @@
       "type": "object",
       "properties": {
         "collection": {
-          "description": "Details of this asset's collection",
-          "$ref": "#/definitions/CollectionDetails"
+          "$ref": "#/definitions/assetPropertiesCollection"
         },
         "image_url": {
           "description": "Image URL of this asset",
@@ -5176,8 +4585,7 @@
       ],
       "properties": {
         "collection": {
-          "description": "Information about the collection to which this asset belongs",
-          "$ref": "#/definitions/CollectionDetails"
+          "$ref": "#/definitions/assetWithOrdersCollection"
         },
         "created_at": {
           "description": "Timestamp of when the asset was created",
@@ -5216,8 +4624,7 @@
           "x-nullable": true
         },
         "orders": {
-          "description": "Open orders for this asset",
-          "$ref": "#/definitions/OrderDetails"
+          "$ref": "#/definitions/assetWithOrdersOrders"
         },
         "status": {
           "description": "Status of this asset (where it is in the system)",
@@ -5402,8 +4809,7 @@
           "type": "string"
         },
         "range": {
-          "description": "Range of values for this property",
-          "$ref": "#/definitions/Range"
+          "$ref": "#/definitions/collectionFilterRange"
         },
         "type": {
           "description": "Type of this filter",
@@ -5492,7 +4898,10 @@
     },
     "CreateMetadataRefreshRequest": {
       "type": "object",
-      "required": ["collection_address", "token_ids"],
+      "required": [
+        "collection_address",
+        "token_ids"
+      ],
       "properties": {
         "collection_address": {
           "description": "The collection contract address",
@@ -5681,6 +5090,27 @@
         }
       }
     },
+    "CreateProjectGroupRequest": {
+      "type": "object",
+      "required": [
+        "chain_type",
+        "name"
+      ],
+      "properties": {
+        "chain_type": {
+          "description": "The chain type",
+          "type": "string",
+          "enum": [
+            "starkex",
+            "zkevm"
+          ]
+        },
+        "name": {
+          "description": "The project group name",
+          "type": "string"
+        }
+      }
+    },
     "CreateProjectRequest": {
       "type": "object",
       "required": [
@@ -5710,8 +5140,8 @@
       ],
       "properties": {
         "id": {
-          "description": "The project ID",
-          "type": "integer"
+          "description": "The project group ID",
+          "type": "string"
         }
       }
     },
@@ -5926,6 +5356,21 @@
         }
       }
     },
+    "CreateTransferResponseV2": {
+      "type": "object",
+      "required": [
+        "transfer_ids"
+      ],
+      "properties": {
+        "transfer_ids": {
+          "description": "List of transfer IDs",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    },
     "CreateWithdrawalRequest": {
       "type": "object",
       "required": [
@@ -6028,8 +5473,7 @@
           "type": "string"
         },
         "token": {
-          "description": "Details of the asset being deposited",
-          "$ref": "#/definitions/Token"
+          "$ref": "#/definitions/depositToken"
         },
         "transaction_id": {
           "description": "Sequential ID of this transaction within Immutable X",
@@ -6179,7 +5623,11 @@
     },
     "FeeInfo": {
       "type": "object",
-      "required": ["asset_id", "fee_limit", "source_vault_id"],
+      "required": [
+        "asset_id",
+        "fee_limit",
+        "source_vault_id"
+      ],
       "properties": {
         "asset_id": {
           "description": "ID of the asset these fees relate to",
@@ -6199,7 +5647,7 @@
       "type": "object",
       "properties": {
         "data": {
-          "$ref": "#/definitions/FeeData"
+          "$ref": "#/definitions/feeTokenData"
         },
         "type": {
           "description": "Fee token type. One of ETH/ERC20",
@@ -6348,7 +5796,9 @@
       "required": [
         "order_id",
         "payload_hash",
-        "signable_message"
+        "readable_transaction",
+        "signable_message",
+        "verification_signature"
       ],
       "properties": {
         "order_id": {
@@ -6359,8 +5809,16 @@
           "description": "Hash of the payload to be signed for cancel order",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx cancel order request to be displayed to the user",
+          "type": "string"
+        },
         "signable_message": {
           "description": "Message to sign from wallet to confirm cancel order",
+          "type": "string"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
           "type": "string"
         }
       }
@@ -6378,8 +5836,7 @@
           "type": "string"
         },
         "token": {
-          "description": "Details of the token the user is depositing",
-          "$ref": "#/definitions/SignableToken"
+          "$ref": "#/definitions/getSignableDepositRequestToken"
         },
         "user": {
           "description": "User who is depositing",
@@ -6494,7 +5951,7 @@
           }
         },
         "split_fees": {
-          "description": "SplitFees dictates whether fees will be split between maker \u0026 taker, set split_fees to true when submitting signing to v3 endpoints and vice versa for v1",
+          "description": "SplitFees is a deprecated field. It's value is ignored.",
           "type": "boolean"
         },
         "token_buy": {
@@ -6519,10 +5976,12 @@
         "expiration_timestamp",
         "nonce",
         "payload_hash",
+        "readable_transaction",
         "signable_message",
         "stark_key",
         "vault_id_buy",
-        "vault_id_sell"
+        "vault_id_sell",
+        "verification_signature"
       ],
       "properties": {
         "amount_buy": {
@@ -6556,6 +6015,10 @@
           "description": "Hash of the payload to be signed for signable order",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx order transaction to be displayed to the user",
+          "type": "string"
+        },
         "signable_message": {
           "description": "Message to sign with L1 wallet to confirm order request",
           "type": "string"
@@ -6571,6 +6034,10 @@
         "vault_id_sell": {
           "description": "ID of the vault to sell from",
           "type": "integer"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
+          "type": "string"
         }
       }
     },
@@ -6578,15 +6045,25 @@
       "type": "object",
       "required": [
         "payload_hash",
-        "signable_message"
+        "readable_transaction",
+        "signable_message",
+        "verification_signature"
       ],
       "properties": {
         "payload_hash": {
           "description": "Hash of the payload to be signed for user registration offchain",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx Register User Offchain request to be displayed to the user",
+          "type": "string"
+        },
         "signable_message": {
           "description": "Message to sign with L1 wallet to register user offchain",
+          "type": "string"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
           "type": "string"
         }
       }
@@ -6612,7 +6089,9 @@
       "type": "object",
       "required": [
         "operator_signature",
-        "payload_hash"
+        "payload_hash",
+        "readable_transaction",
+        "verification_signature"
       ],
       "properties": {
         "operator_signature": {
@@ -6621,6 +6100,14 @@
         },
         "payload_hash": {
           "description": "Hash of the payload to be signed for user registration",
+          "type": "string"
+        },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx Register User request to be displayed to the user",
+          "type": "string"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
           "type": "string"
         }
       }
@@ -6663,10 +6150,12 @@
         "expiration_timestamp",
         "nonce",
         "payload_hash",
+        "readable_transaction",
         "signable_message",
         "stark_key",
         "vault_id_buy",
-        "vault_id_sell"
+        "vault_id_sell",
+        "verification_signature"
       ],
       "properties": {
         "amount_buy": {
@@ -6700,6 +6189,10 @@
           "description": "Payload Hash",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx trade transaction to be displayed to the user",
+          "type": "string"
+        },
         "signable_message": {
           "description": "Message to sign with L1 wallet to confirm trade request",
           "type": "string"
@@ -6715,6 +6208,10 @@
         "vault_id_sell": {
           "description": "ID of the vault to sell from",
           "type": "integer"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
+          "type": "string"
         }
       }
     },
@@ -6752,6 +6249,10 @@
           "description": "Payload Hash",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx trade transaction to be displayed to the user",
+          "type": "string"
+        },
         "signable_message": {
           "description": "Message to sign with L1 wallet to confirm trade request",
           "type": "string"
@@ -6767,26 +6268,36 @@
         "vault_id_sell": {
           "description": "ID of the vault to sell from",
           "type": "integer"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
+          "type": "string"
         }
       }
     },
     "GetSignableTransferRequest": {
       "type": "object",
       "required": [
-        "sender_ether_key",
-        "signable_requests"
+        "amount",
+        "receiver",
+        "sender",
+        "token"
       ],
       "properties": {
-        "sender_ether_key": {
+        "amount": {
+          "description": "Amount of the token to transfer",
+          "type": "string"
+        },
+        "receiver": {
+          "description": "Ethereum address of the receiving user",
+          "type": "string"
+        },
+        "sender": {
           "description": "Ethereum address of the transferring user",
           "type": "string"
         },
-        "signable_requests": {
-          "description": "List of signable transfer details",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/SignableTransferDetails"
-          }
+        "token": {
+          "$ref": "#/definitions/getSignableTransferRequestToken"
         }
       }
     },
@@ -6814,6 +6325,26 @@
         "token": {
           "description": "Token to transfer",
           "$ref": "#/definitions/SignableToken"
+        }
+      }
+    },
+    "GetSignableTransferRequestV2": {
+      "type": "object",
+      "required": [
+        "sender_ether_key",
+        "signable_requests"
+      ],
+      "properties": {
+        "sender_ether_key": {
+          "description": "Ethereum address of the transferring user",
+          "type": "string"
+        },
+        "signable_requests": {
+          "description": "List of signable transfer details",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignableTransferDetailsV2"
+          }
         }
       }
     },
@@ -6850,10 +6381,12 @@
         "expiration_timestamp",
         "nonce",
         "payload_hash",
+        "readable_transaction",
         "receiver_stark_key",
         "receiver_vault_id",
         "sender_vault_id",
-        "signable_message"
+        "signable_message",
+        "verification_signature"
       ],
       "properties": {
         "amount": {
@@ -6876,6 +6409,10 @@
           "description": "Hash of the payload",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx transfer transaction to be displayed to the user",
+          "type": "string"
+        },
         "receiver_stark_key": {
           "description": "Receiver of the transfer",
           "type": "string"
@@ -6895,6 +6432,35 @@
         "signable_message": {
           "description": "Message to sign with L1 wallet to confirm transfer request",
           "type": "string"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
+          "type": "string"
+        }
+      }
+    },
+    "GetSignableTransferResponseV2": {
+      "type": "object",
+      "required": [
+        "sender_stark_key",
+        "signable_message",
+        "signable_responses"
+      ],
+      "properties": {
+        "sender_stark_key": {
+          "description": "Sender of the transfer",
+          "type": "string"
+        },
+        "signable_message": {
+          "description": "Message to sign with L1 wallet to confirm transfer request",
+          "type": "string"
+        },
+        "signable_responses": {
+          "description": "List of transfer responses without the sender stark key",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SignableTransferResponseDetails"
+          }
         }
       }
     },
@@ -6911,8 +6477,7 @@
           "type": "string"
         },
         "token": {
-          "description": "Token to withdraw",
-          "$ref": "#/definitions/SignableToken"
+          "$ref": "#/definitions/getSignableWithdrawalRequestToken"
         },
         "user": {
           "description": "Ethereum address of the user who is making this withdrawal",
@@ -6927,9 +6492,11 @@
         "asset_id",
         "nonce",
         "payload_hash",
+        "readable_transaction",
         "signable_message",
         "stark_key",
-        "vault_id"
+        "vault_id",
+        "verification_signature"
       ],
       "properties": {
         "amount": {
@@ -6948,6 +6515,10 @@
           "description": "Encoded payload hash",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx withdrawal request to be displayed to the user",
+          "type": "string"
+        },
         "signable_message": {
           "description": "Message to sign with L1 wallet to verity withdrawal request",
           "type": "string"
@@ -6959,6 +6530,10 @@
         "vault_id": {
           "description": "ID of the vault we are withdrawing from",
           "type": "integer"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
+          "type": "string"
         }
       }
     },
@@ -7024,7 +6599,11 @@
     },
     "ListBalancesResponse": {
       "type": "object",
-      "required": ["cursor", "remaining", "result"],
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -7145,7 +6724,11 @@
     },
     "ListOrdersResponseV3": {
       "type": "object",
-      "required": ["cursor", "remaining", "result"],
+      "required": [
+        "cursor",
+        "remaining",
+        "result"
+      ],
       "properties": {
         "cursor": {
           "description": "Generated cursor returned by previous query",
@@ -7379,7 +6962,9 @@
     },
     "MetadataSchemaRequest": {
       "type": "object",
-      "required": ["name"],
+      "required": [
+        "name"
+      ],
       "properties": {
         "filterable": {
           "description": "Sets the metadata as filterable",
@@ -7428,8 +7013,7 @@
           "type": "string"
         },
         "token": {
-          "description": "Details of the asset which has been minted",
-          "$ref": "#/definitions/Token"
+          "$ref": "#/definitions/mintToken"
         },
         "transaction_id": {
           "description": "Sequential ID of transaction in Immutable X",
@@ -7806,56 +7390,24 @@
     "Project": {
       "type": "object",
       "required": [
-        "collection_limit_expires_at",
-        "collection_monthly_limit",
-        "collection_remaining",
-        "company_name",
-        "contact_email",
         "id",
-        "mint_limit_expires_at",
-        "mint_monthly_limit",
-        "mint_remaining",
         "name"
       ],
       "properties": {
-        "collection_limit_expires_at": {
-          "description": "The current period expiry date for collection limit",
-          "type": "string"
-        },
-        "collection_monthly_limit": {
-          "description": "The total monthly collection limit",
-          "type": "integer"
-        },
-        "collection_remaining": {
-          "description": "The number of collection remaining in the current period",
-          "type": "integer"
-        },
-        "company_name": {
-          "description": "The company name",
-          "type": "string"
-        },
-        "contact_email": {
-          "description": "The project contact email (must be registered as a developer account with Immutable at https://hub.immutable.com)",
+        "chain_type": {
+          "description": "The project ChainType",
           "type": "string"
         },
         "id": {
-          "description": "The project ID",
-          "type": "integer"
-        },
-        "mint_limit_expires_at": {
-          "description": "The current period expiry date for mint operation limit",
+          "description": "The project group ID",
           "type": "string"
         },
-        "mint_monthly_limit": {
-          "description": "The total monthly mint operation limit",
-          "type": "integer"
-        },
-        "mint_remaining": {
-          "description": "The number of mint operation remaining in the current period",
-          "type": "integer"
-        },
         "name": {
-          "description": "The project name",
+          "description": "The project group name",
+          "type": "string"
+        },
+        "org_id": {
+          "description": "The organisation ID that the project belongs to",
           "type": "string"
         }
       }
@@ -7873,19 +7425,16 @@
         }
       }
     },
-    "RegisterUserRequest": {
+    "RegisterPassportUserRequest": {
       "type": "object",
       "required": [
         "eth_signature",
         "ether_key",
         "stark_key",
-        "stark_signature"
+        "stark_signature",
+        "user_id"
       ],
       "properties": {
-        "email": {
-          "description": "User email",
-          "type": "string"
-        },
         "eth_signature": {
           "description": "Eth signature",
           "type": "string"
@@ -7901,10 +7450,31 @@
         "stark_signature": {
           "description": "Payload signature",
           "type": "string"
+        },
+        "user_id": {
+          "description": "The auth0 user id",
+          "type": "string"
         }
       }
     },
-    "api.RegisterPassportUserRequest": {
+    "RegisterPassportUserResult": {
+      "type": "object",
+      "properties": {
+        "ether_key": {
+          "description": "The ether key of the user",
+          "type": "string"
+        },
+        "stark_key": {
+          "description": "The stark key of the user",
+          "type": "string"
+        },
+        "user_admin_key": {
+          "description": "The admin key of the user",
+          "type": "string"
+        }
+      }
+    },
+    "RegisterUserRequest": {
       "type": "object",
       "required": [
         "eth_signature",
@@ -7913,6 +7483,10 @@
         "stark_signature"
       ],
       "properties": {
+        "email": {
+          "description": "User email",
+          "type": "string"
+        },
         "eth_signature": {
           "description": "Eth signature",
           "type": "string"
@@ -7973,8 +7547,28 @@
           "type": "string"
         },
         "token": {
-          "description": "Token to transfer",
-          "$ref": "#/definitions/SignableToken"
+          "$ref": "#/definitions/signableTransferDetailsToken"
+        }
+      }
+    },
+    "SignableTransferDetailsV2": {
+      "type": "object",
+      "required": [
+        "amount",
+        "receiver",
+        "token"
+      ],
+      "properties": {
+        "amount": {
+          "description": "Amount of the token to transfer",
+          "type": "string"
+        },
+        "receiver": {
+          "description": "Ethereum address of the receiving user",
+          "type": "string"
+        },
+        "token": {
+          "$ref": "#/definitions/signableTransferDetailsV2Token"
         }
       }
     },
@@ -7986,10 +7580,12 @@
         "expiration_timestamp",
         "nonce",
         "payload_hash",
+        "readable_transaction",
         "receiver_stark_key",
         "receiver_vault_id",
         "sender_vault_id",
-        "token"
+        "token",
+        "verification_signature"
       ],
       "properties": {
         "amount": {
@@ -8012,6 +7608,10 @@
           "description": "Hash of the payload to be signed for transfer",
           "type": "string"
         },
+        "readable_transaction": {
+          "description": "EIP-712 encoding of the StarkEx transfer request to be displayed to the user",
+          "type": "string"
+        },
         "receiver_stark_key": {
           "description": "Receiver of the transfer",
           "type": "string"
@@ -8025,8 +7625,11 @@
           "type": "integer"
         },
         "token": {
-          "description": "Token in request to match in SDK implementation",
-          "$ref": "#/definitions/SignableToken"
+          "$ref": "#/definitions/signableTransferResponseDetailsToken"
+        },
+        "verification_signature": {
+          "description": "IMX signed readable_transaction and payload_hash",
+          "type": "string"
         }
       }
     },
@@ -8129,7 +7732,7 @@
           "type": "string"
         },
         "token_address": {
-          "description": "Address of the ERC721 contract",
+          "description": "Address of the ERC20 contract",
           "type": "string"
         }
       }
@@ -8220,8 +7823,7 @@
           "x-nullable": true
         },
         "token": {
-          "description": "Token transferred by the user",
-          "$ref": "#/definitions/Token"
+          "$ref": "#/definitions/transferToken"
         },
         "transaction_id": {
           "description": "Sequential transaction ID",
@@ -8359,8 +7961,7 @@
           "type": "string"
         },
         "token": {
-          "description": "Details of the asset this user is withdrawing",
-          "$ref": "#/definitions/Token"
+          "$ref": "#/definitions/withdrawalToken"
         },
         "transaction_id": {
           "description": "Sequential ID of this transaction",
@@ -8456,6 +8057,47 @@
         }
       }
     },
+    "api.RegisterPassportUserRequest": {
+      "type": "object",
+      "required": [
+        "eth_signature",
+        "ether_key",
+        "stark_key",
+        "stark_signature"
+      ],
+      "properties": {
+        "eth_signature": {
+          "description": "Eth signature",
+          "type": "string"
+        },
+        "ether_key": {
+          "description": "The ether key of the user",
+          "type": "string"
+        },
+        "stark_key": {
+          "description": "Public stark key of the user",
+          "type": "string"
+        },
+        "stark_signature": {
+          "description": "Payload signature",
+          "type": "string"
+        }
+      }
+    },
+    "api.SDKVersionCheckResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "runtimeId": {
+          "type": "string"
+        }
+      }
+    },
     "apiOrderV3Buy": {
       "description": "Details of the asset being bought",
       "allOf": [
@@ -8492,6 +8134,98 @@
       ],
       "x-go-gen-location": "models"
     },
+    "assetCollection": {
+      "description": "Information about the collection to which this asset belongs",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CollectionDetails"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "assetOrders": {
+      "description": "[DEPRECATED] Open orders for this asset will always return empty. Use GET /orders",
+      "allOf": [
+        {
+          "$ref": "#/definitions/OrderDetails"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "assetPropertiesCollection": {
+      "description": "Details of this asset's collection",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CollectionDetails"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "assetWithOrdersCollection": {
+      "description": "Information about the collection to which this asset belongs",
+      "allOf": [
+        {
+          "$ref": "#/definitions/CollectionDetails"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "assetWithOrdersOrders": {
+      "description": "Open orders for this asset",
+      "allOf": [
+        {
+          "$ref": "#/definitions/OrderDetails"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "collection.Collection": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "collectionImageURL": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "iconURL": {
+          "type": "string"
+        },
+        "lastCollectionEventID": {
+          "type": "string"
+        },
+        "metadataAPIURL": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "projectID": {
+          "type": "integer"
+        },
+        "projectOwnerAddress": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "collectionFilterRange": {
+      "description": "Range of values for this property",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Range"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
     "contract.CreateAPIRequest": {
       "type": "object",
       "properties": {
@@ -8523,12 +8257,20 @@
       ],
       "x-go-gen-location": "models"
     },
+    "depositToken": {
+      "description": "Details of the asset being deposited",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
     "encodeAssetRequestToken": {
       "type": "object",
       "properties": {
         "data": {
-          "description": "Extra token information to be encoded",
-          "$ref": "#/definitions/EncodeAssetTokenData"
+          "$ref": "#/definitions/encodeAssetRequestTokenData"
         },
         "type": {
           "description": "The type of the token to be encoded",
@@ -8541,6 +8283,23 @@
         }
       },
       "x-go-gen-location": "models"
+    },
+    "encodeAssetRequestTokenData": {
+      "description": "Extra token information to be encoded",
+      "allOf": [
+        {
+          "$ref": "#/definitions/EncodeAssetTokenData"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "engine.RegisterUserResult": {
+      "type": "object",
+      "properties": {
+        "tx_hash": {
+          "type": "string"
+        }
+      }
     },
     "exchange.CreateExchangeAndURLResponse": {
       "type": "object",
@@ -8574,6 +8333,15 @@
       "allOf": [
         {
           "$ref": "#/definitions/FeeData"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableDepositRequestToken": {
+      "description": "Details of the token the user is depositing",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
         }
       ],
       "x-go-gen-location": "models"
@@ -8650,6 +8418,24 @@
       ],
       "x-go-gen-location": "models"
     },
+    "getSignableTransferRequestToken": {
+      "description": "Token to transfer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "getSignableWithdrawalRequestToken": {
+      "description": "Token to withdraw",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
     "lambdas.APIError": {
       "type": "object",
       "properties": {
@@ -8670,6 +8456,15 @@
           "type": "integer"
         }
       }
+    },
+    "mintToken": {
+      "description": "Details of the asset which has been minted",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
     },
     "nftprimarytransaction.CreateAPIRequest": {
       "type": "object",
@@ -8976,6 +8771,33 @@
         }
       }
     },
+    "signableTransferDetailsToken": {
+      "description": "Token to transfer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "signableTransferDetailsV2Token": {
+      "description": "Token to transfer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "signableTransferResponseDetailsToken": {
+      "description": "Token in request to match in SDK implementation",
+      "allOf": [
+        {
+          "$ref": "#/definitions/SignableToken"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
     "store.MakerTakerFee": {
       "type": "object",
       "required": [
@@ -9112,6 +8934,24 @@
       "allOf": [
         {
           "$ref": "#/definitions/FeeInfo"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "transferToken": {
+      "description": "Token transferred by the user",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
+        }
+      ],
+      "x-go-gen-location": "models"
+    },
+    "withdrawalToken": {
+      "description": "Details of the asset this user is withdrawing",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Token"
         }
       ],
       "x-go-gen-location": "models"

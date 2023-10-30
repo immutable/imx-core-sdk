@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Updated
+
+- A range of types, as per the current swagger definition of the Immutable X API
+
+### Removed
+
+- all `v1/trade` functions, use `v3/trade` instead
+- all `v1/order` functions, use `v3/order` instead
+
 ## [2.3.1] - 2023-10-24
 - Updated README.md and examples to use sepolia in sandbox environment.
 - Replace AlchemyProvider with EtherscanProvider for sepolia network in examples.

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { SignableToken } from './signable-token';
+import { SignableTransferResponseDetailsToken } from './signable-transfer-response-details-token';
 
 /**
  * 
@@ -54,6 +54,12 @@ export interface SignableTransferResponseDetails {
      */
     'payload_hash': string;
     /**
+     * EIP-712 encoding of the StarkEx transfer request to be displayed to the user
+     * @type {string}
+     * @memberof SignableTransferResponseDetails
+     */
+    'readable_transaction': string;
+    /**
      * Receiver of the transfer
      * @type {string}
      * @memberof SignableTransferResponseDetails
@@ -73,9 +79,15 @@ export interface SignableTransferResponseDetails {
     'sender_vault_id': number;
     /**
      * 
-     * @type {SignableToken}
+     * @type {SignableTransferResponseDetailsToken}
      * @memberof SignableTransferResponseDetails
      */
-    'token': SignableToken;
+    'token': SignableTransferResponseDetailsToken;
+    /**
+     * IMX signed readable_transaction and payload_hash
+     * @type {string}
+     * @memberof SignableTransferResponseDetails
+     */
+    'verification_signature': string;
 }
 

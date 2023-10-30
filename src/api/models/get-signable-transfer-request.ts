@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { SignableTransferDetails } from './signable-transfer-details';
+import { GetSignableTransferRequestToken } from './get-signable-transfer-request-token';
 
 /**
  * 
@@ -24,16 +24,28 @@ import { SignableTransferDetails } from './signable-transfer-details';
  */
 export interface GetSignableTransferRequest {
     /**
+     * Amount of the token to transfer
+     * @type {string}
+     * @memberof GetSignableTransferRequest
+     */
+    'amount': string;
+    /**
+     * Ethereum address of the receiving user
+     * @type {string}
+     * @memberof GetSignableTransferRequest
+     */
+    'receiver': string;
+    /**
      * Ethereum address of the transferring user
      * @type {string}
      * @memberof GetSignableTransferRequest
      */
-    'sender_ether_key': string;
+    'sender': string;
     /**
-     * List of signable transfer details
-     * @type {Array<SignableTransferDetails>}
+     * 
+     * @type {GetSignableTransferRequestToken}
      * @memberof GetSignableTransferRequest
      */
-    'signable_requests': Array<SignableTransferDetails>;
+    'token': GetSignableTransferRequestToken;
 }
 

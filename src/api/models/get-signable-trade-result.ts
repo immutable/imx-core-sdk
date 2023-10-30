@@ -72,6 +72,12 @@ export interface GetSignableTradeResult {
      */
     'payload_hash'?: string;
     /**
+     * EIP-712 encoding of the StarkEx trade transaction to be displayed to the user
+     * @type {string}
+     * @memberof GetSignableTradeResult
+     */
+    'readable_transaction'?: string;
+    /**
      * Message to sign with L1 wallet to confirm trade request
      * @type {string}
      * @memberof GetSignableTradeResult
@@ -95,5 +101,11 @@ export interface GetSignableTradeResult {
      * @memberof GetSignableTradeResult
      */
     'vault_id_sell'?: number;
+    /**
+     * IMX signed readable_transaction and payload_hash
+     * @type {string}
+     * @memberof GetSignableTradeResult
+     */
+    'verification_signature'?: string;
 }
 
