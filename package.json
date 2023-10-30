@@ -50,7 +50,7 @@
     "@babel/preset-env": "^7.12.7",
     "@babel/preset-typescript": "^7.12.7",
     "@nomiclabs/hardhat-ethers": "^2.0.5",
-    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts": "^5.0.0",
     "@release-it/keep-a-changelog": "^3.0.0",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.0",
