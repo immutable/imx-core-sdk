@@ -92,3 +92,14 @@ export const Config = {
 
   createConfig: createConfig,
 };
+
+export enum ContractVersion {
+  V3,
+  V4,
+  V5,
+}
+
+export const contractAddressToVersion = new Map<string, ContractVersion>([
+  ['0x5FDCCA53617f4d2b9134B29090C87D01058e27e9', ContractVersion.V3], // Mainnet
+  ['0x2d5C349fD8464DA06a3f90b4B0E9195F3d1b7F98', ContractVersion.V3], // Sandbox
+]);
