@@ -132,15 +132,6 @@ export async function depositEthWorkflow(
         coreContract,
         usersApi,
       );
-    } else {
-      return executeDepositEth(
-        signer,
-        amount,
-        assetType,
-        starkPublicKey,
-        vaultId,
-        coreContract,
-      );
     }
   }
 
