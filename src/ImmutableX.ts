@@ -226,6 +226,15 @@ export class ImmutableX {
       });
   }
 
+  public getStarkExContractVersion() {
+    return this.assetApi
+      .getStarkExContractVersion()
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
   /**
    * Create a Collection
    * @param ethSigner - the L1 signer
