@@ -56,3 +56,8 @@ export type UnsignedExchangeTransferRequest = ExchangeTokenAmount & {
    */
   transactionID: string;
 };
+
+export interface StarkExContractVersion {
+  version: string;
+  message: string;
+}

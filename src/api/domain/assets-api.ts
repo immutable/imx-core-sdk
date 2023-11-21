@@ -185,23 +185,6 @@ export const AssetsApiAxiosParamCreator = function (configuration?: Configuratio
                 options: localVarRequestOptions,
             };
         },
-
-        getContractVersion: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/starkex-contract-version`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -249,11 +232,6 @@ export const AssetsApiFp = function(configuration?: Configuration) {
          */
         async listAssets(pageSize?: number, cursor?: string, orderBy?: 'updated_at' | 'name', direction?: string, user?: string, status?: 'eth' | 'imx' | 'preparing_withdrawal' | 'withdrawable' | 'burned', name?: string, metadata?: string, sellOrders?: boolean, buyOrders?: boolean, includeFees?: boolean, collection?: string, updatedMinTimestamp?: string, updatedMaxTimestamp?: string, auxiliaryFeePercentages?: string, auxiliaryFeeRecipients?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ListAssetsResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.listAssets(pageSize, cursor, orderBy, direction, user, status, name, metadata, sellOrders, buyOrders, includeFees, collection, updatedMinTimestamp, updatedMaxTimestamp, auxiliaryFeePercentages, auxiliaryFeeRecipients, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-
-        async getStarkExContractVersion(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StarkExContractVersion>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getContractVersion(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -483,13 +461,4 @@ export class AssetsApi extends BaseAPI {
     public listAssets(requestParameters: AssetsApiListAssetsRequest = {}, options?: AxiosRequestConfig) {
         return AssetsApiFp(this.configuration).listAssets(requestParameters.pageSize, requestParameters.cursor, requestParameters.orderBy, requestParameters.direction, requestParameters.user, requestParameters.status, requestParameters.name, requestParameters.metadata, requestParameters.sellOrders, requestParameters.buyOrders, requestParameters.includeFees, requestParameters.collection, requestParameters.updatedMinTimestamp, requestParameters.updatedMaxTimestamp, requestParameters.auxiliaryFeePercentages, requestParameters.auxiliaryFeeRecipients, options).then((request) => request(this.axios, this.basePath));
     }
-
-    public getStarkExContractVersion(options?: AxiosRequestConfig) {
-        return AssetsApiFp(this.configuration).getStarkExContractVersion(options).then((request) => request(this.axios, this.basePath));
-    }
-}
-
-export interface StarkExContractVersion {
-    'version': string;
-    'message': string;
 }

@@ -227,11 +227,11 @@ export class ImmutableX {
   }
 
   public getStarkExContractVersion() {
-    return this.assetApi
+    return this.workflows
       .getStarkExContractVersion()
-      .then(res => res.data)
+      .then(res => parseInt(res.data.version.charAt(0)))
       .catch(err => {
-        throw formatError(err);
+        return 0;
       });
   }
 

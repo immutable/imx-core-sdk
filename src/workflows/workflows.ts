@@ -37,6 +37,7 @@ import {
   ERC20Token,
   EthSigner,
   UnsignedExchangeTransferRequest,
+  StarkExContractVersion,
 } from '../types';
 import { Registration__factory } from '../contracts';
 import {
@@ -61,6 +62,7 @@ import { createTradeWorkflow } from './trades';
 import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
 import { exchangeTransfersWorkflow } from './exchangeTransfers';
+import axios, { AxiosResponse } from 'axios';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -131,6 +133,15 @@ export class Workflows {
     const l2Address = await walletConnection.starkSigner.getAddress();
 
     return isRegisteredOnChainWorkflow(l2Address, registrationContract);
+  }
+
+  public async getStarkExContractVersion(): Promise<
+    AxiosResponse<StarkExContractVersion>
+  > {
+    const options = {
+      baseURL: this.config.apiConfiguration.basePath + '/v1',
+    };
+    return axios.get(`/starkex-contract-version`, options);
   }
 
   public async mint(signer: Signer, request: UnsignedMintRequest) {
