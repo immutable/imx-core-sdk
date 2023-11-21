@@ -229,9 +229,9 @@ export class ImmutableX {
   public getStarkExContractVersion() {
     return this.workflows
       .getStarkExContractVersion()
-      .then(res => parseInt(res.data.version.charAt(0)))
+      .then(res => res.data)
       .catch(err => {
-        return 0;
+        throw formatError(err);
       });
   }
 
