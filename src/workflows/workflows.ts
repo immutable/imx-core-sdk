@@ -63,6 +63,11 @@ import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
 import { exchangeTransfersWorkflow } from './exchangeTransfers';
 import axios, { AxiosResponse } from 'axios';
+import {
+  depositEthWorkflowV4,
+  depositERC20WorkflowV4,
+  depositERC721WorkflowV4,
+} from './depositV4';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -190,54 +195,104 @@ export class Workflows {
   }
 
   public async deposit(signer: Signer, deposit: TokenAmount) {
+    const res = await this.getStarkExContractVersion();
+    const starkExContract = res.data;
+    const version = parseInt(starkExContract.version.charAt(0));
     switch (deposit.type) {
       case 'ETH':
-        return this.depositEth(signer, deposit);
+        return this.depositEth(signer, deposit, version);
       case 'ERC20':
-        return this.depositERC20(signer, deposit);
+        return this.depositERC20(signer, deposit, version);
       case 'ERC721':
-        return this.depositERC721(signer, deposit);
+        return this.depositERC721(signer, deposit, version);
     }
   }
 
-  private async depositEth(signer: Signer, deposit: ETHAmount) {
+  private async depositEth(
+    signer: Signer,
+    deposit: ETHAmount,
+    version: number,
+  ) {
     await this.validateChain(signer);
 
-    return depositEthWorkflowV3(
-      signer,
-      deposit,
-      this.depositsApi,
-      this.usersApi,
-      this.encodingApi,
-      this.config,
-    );
+    if (version === 3) {
+      return depositEthWorkflowV3(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.usersApi,
+        this.encodingApi,
+        this.config,
+      );
+    } else if (version >= 4) {
+      return depositEthWorkflowV4(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.encodingApi,
+        this.config,
+      );
+    }
+
+    throw new Error('Unsupported StarkEx version');
   }
 
-  private async depositERC20(signer: Signer, deposit: ERC20Amount) {
+  private async depositERC20(
+    signer: Signer,
+    deposit: ERC20Amount,
+    version: number,
+  ) {
     await this.validateChain(signer);
 
-    return depositERC20WorkflowV3(
-      signer,
-      deposit,
-      this.depositsApi,
-      this.usersApi,
-      this.tokensApi,
-      this.encodingApi,
-      this.config,
-    );
+    if (version === 3) {
+      return depositERC20WorkflowV3(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.usersApi,
+        this.tokensApi,
+        this.encodingApi,
+        this.config,
+      );
+    } else if (version >= 4) {
+      return depositERC20WorkflowV4(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.tokensApi,
+        this.encodingApi,
+        this.config,
+      );
+    }
+    throw new Error('Unsupported StarkEx version');
   }
 
-  private async depositERC721(signer: Signer, deposit: ERC721Token) {
+  private async depositERC721(
+    signer: Signer,
+    deposit: ERC721Token,
+    version: number,
+  ) {
     await this.validateChain(signer);
 
-    return depositERC721WorkflowV3(
-      signer,
-      deposit,
-      this.depositsApi,
-      this.usersApi,
-      this.encodingApi,
-      this.config,
-    );
+    if (version === 3) {
+      return depositERC721WorkflowV3(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.usersApi,
+        this.encodingApi,
+        this.config,
+      );
+    } else if (version >= 4) {
+      return depositERC721WorkflowV4(
+        signer,
+        deposit,
+        this.depositsApi,
+        this.encodingApi,
+        this.config,
+      );
+    }
+    throw new Error('Unsupported StarkEx version');
   }
 
   public async prepareWithdrawal(

@@ -1,16 +1,7 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
-import { DepositsApi, EncodingApi, UsersApi } from '../../api';
-import {
-  Core,
-  Core__factory,
-  IERC721__factory,
-  Registration__factory,
-} from '../../contracts';
-import {
-  getSignableRegistrationOnchain,
-  isRegisteredOnChainWorkflow,
-} from '../registration';
+import { DepositsApi, EncodingApi } from '../../api';
+import { Core, Core__factory, IERC721__factory } from '../../contracts';
 import { ERC721Token } from '../../types';
 import { ImmutableXConfiguration } from '../../config';
 
@@ -41,7 +32,6 @@ export async function depositERC721WorkflowV4(
   signer: Signer,
   deposit: ERC721Token,
   depositsApi: DepositsApi,
-  usersApi: UsersApi,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
 ): Promise<TransactionResponse> {
@@ -90,37 +80,12 @@ export async function depositERC721WorkflowV4(
     signer,
   );
 
-  const registrationContract = Registration__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
-    signer,
-  );
-
-  const isRegistered = await isRegisteredOnChainWorkflow(
-    starkPublicKey,
-    registrationContract,
-  );
-
   // Approve whether an amount of token from an account can be spent by a third-party account
   const tokenContract = IERC721__factory.connect(deposit.tokenAddress, signer);
   const operator = config.ethConfiguration.coreContractAddress;
   const isApprovedForAll = await tokenContract.isApprovedForAll(user, operator);
   if (!isApprovedForAll) {
     await tokenContract.setApprovalForAll(operator, true);
-  }
-
-  if (!isRegistered) {
-    const signableResult = await getSignableRegistrationOnchain(
-      user,
-      starkPublicKey,
-      usersApi,
-    );
-
-    // Note: proxy registration contract registerAndDepositNft method is not used as it currently fails erc721 transfer ownership check
-    await coreContract.registerUser(
-      user,
-      starkPublicKey,
-      signableResult.operator_signature,
-    );
   }
 
   return executeDepositERC721(
