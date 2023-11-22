@@ -114,15 +114,6 @@ export class ImmutableX {
     this.workflows = new Workflows(config);
   }
 
-  public getStarkExContractVersion() {
-    return this.workflows
-      .getStarkExContractVersion()
-      .then(res => res.data)
-      .catch(err => {
-        throw formatError(err);
-      });
-  }
-
   /**
    * Deposit based on a token type. For unregistered Users, the Deposit will be combined with a registration in order to register the User first
    * @param ethSigner - the L1 signer
