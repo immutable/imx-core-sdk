@@ -11,7 +11,7 @@ describe('getContractVersion', () => {
     jest.clearAllMocks();
   });
 
-  it('should return 3 when contract is 3.0.3', async () => {
+  it('should return contract version 3.0.3', async () => {
     const workflows = new Workflows(Config.SANDBOX);
     mockedAxios.get.mockResolvedValueOnce({
       data: {
