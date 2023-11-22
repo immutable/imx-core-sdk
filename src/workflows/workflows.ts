@@ -184,9 +184,9 @@ export class Workflows {
     AxiosResponse<StarkExContractVersion>
   > {
     const options = {
-      baseURL: this.config.apiConfiguration.basePath + '/v1',
+      baseURL: this.config.apiConfiguration.basePath,
     };
-    return axios.get(`/starkex-contract-version`, options);
+    return axios.get(`/v1/starkex-contract-version`, options);
   }
 
   public async deposit(signer: Signer, deposit: TokenAmount) {
