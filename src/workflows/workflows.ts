@@ -47,9 +47,9 @@ import {
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
 import {
-  depositERC20Workflow,
-  depositERC721Workflow,
-  depositEthWorkflow,
+  depositERC20WorkflowV3,
+  depositERC721WorkflowV3,
+  depositEthWorkflowV3,
 } from './depositV3';
 import {
   completeERC20WithdrawalWorkflow,
@@ -203,7 +203,7 @@ export class Workflows {
   private async depositEth(signer: Signer, deposit: ETHAmount) {
     await this.validateChain(signer);
 
-    return depositEthWorkflow(
+    return depositEthWorkflowV3(
       signer,
       deposit,
       this.depositsApi,
@@ -216,7 +216,7 @@ export class Workflows {
   private async depositERC20(signer: Signer, deposit: ERC20Amount) {
     await this.validateChain(signer);
 
-    return depositERC20Workflow(
+    return depositERC20WorkflowV3(
       signer,
       deposit,
       this.depositsApi,
@@ -230,7 +230,7 @@ export class Workflows {
   private async depositERC721(signer: Signer, deposit: ERC721Token) {
     await this.validateChain(signer);
 
-    return depositERC721Workflow(
+    return depositERC721WorkflowV3(
       signer,
       deposit,
       this.depositsApi,

@@ -69,7 +69,7 @@ async function executeRegisterAndDepositERC20(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function depositERC20Workflow(
+export async function depositERC20WorkflowV4(
   signer: Signer,
   deposit: ERC20Amount,
   depositsApi: DepositsApi,

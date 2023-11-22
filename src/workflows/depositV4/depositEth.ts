@@ -59,7 +59,7 @@ async function executeDepositEth(
   return signer.sendTransaction({ ...populatedTransaction, value: amount });
 }
 
-export async function depositEthWorkflow(
+export async function depositEthWorkflowV4(
   signer: Signer,
   deposit: ETHAmount,
   depositsApi: DepositsApi,
