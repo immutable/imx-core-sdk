@@ -180,7 +180,7 @@ export class Workflows {
     });
   }
 
-  public async getStarkExContractVersion(): Promise<
+  private async getStarkExContractVersion(): Promise<
     AxiosResponse<StarkExContractVersion>
   > {
     const options = {
