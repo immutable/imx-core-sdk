@@ -50,7 +50,7 @@ import {
   depositERC20Workflow,
   depositERC721Workflow,
   depositEthWorkflow,
-} from './deposit';
+} from './depositV3';
 import {
   completeERC20WithdrawalWorkflow,
   completeERC721WithdrawalWorkflow,
