@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Critical Babel security vulnerability
 - vm2 security vulnerability
 
 ## [2.4.0] - 2023-10-30
