@@ -1,8 +1,17 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
-import { DepositsApi, EncodingApi, TokensApi } from '../../api';
+import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from '@ethersproject/units';
-import { Core, Core__factory, IERC20__factory } from '../../contracts';
+import {
+  Core,
+  Core__factory,
+  IERC20__factory,
+  Registration__factory,
+} from '../../contracts';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
 import { ERC20Amount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ImmutableXConfiguration } from '../../config';
@@ -30,10 +39,41 @@ async function executeDepositERC20(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function depositERC20WorkflowV4(
+async function executeRegisterAndDepositERC20(
+  signer: Signer,
+  quantizedAmount: BigNumber,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Core,
+  usersApi: UsersApi,
+): Promise<TransactionResponse> {
+  const etherKey = await signer.getAddress();
+
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositERC20(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature,
+      assetType,
+      vaultId,
+      quantizedAmount,
+    );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
+export async function depositERC20Workflow(
   signer: Signer,
   deposit: ERC20Amount,
   depositsApi: DepositsApi,
+  usersApi: UsersApi,
   tokensApi: TokensApi,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
@@ -95,12 +135,34 @@ export async function depositERC20WorkflowV4(
     signer,
   );
 
-  return executeDepositERC20(
+  const registrationContract = Registration__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
     signer,
-    quantizedAmount,
-    assetType,
-    starkPublicKey,
-    vaultId,
-    coreContract,
   );
+
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
+
+  if (!isRegistered) {
+    return executeRegisterAndDepositERC20(
+      signer,
+      quantizedAmount,
+      assetType,
+      starkPublicKey,
+      vaultId,
+      coreContract,
+      usersApi,
+    );
+  } else {
+    return executeDepositERC20(
+      signer,
+      quantizedAmount,
+      assetType,
+      starkPublicKey,
+      vaultId,
+      coreContract,
+    );
+  }
 }

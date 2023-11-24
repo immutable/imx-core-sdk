@@ -37,7 +37,7 @@ async function executeDepositERC721(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function depositERC721WorkflowV3(
+export async function depositERC721Workflow(
   signer: Signer,
   deposit: ERC721Token,
   depositsApi: DepositsApi,

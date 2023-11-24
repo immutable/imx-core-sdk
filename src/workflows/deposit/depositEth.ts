@@ -1,14 +1,47 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
-import { DepositsApi, EncodingApi } from '../../api';
+import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { parseUnits } from '@ethersproject/units';
-import { Core, Core__factory } from '../../contracts';
+import { Core, Core__factory, Registration__factory } from '../../contracts';
+import {
+  getSignableRegistrationOnchain,
+  isRegisteredOnChainWorkflow,
+} from '../registration';
 import { ETHAmount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
 import { ImmutableXConfiguration } from '../../config';
 
 interface ETHTokenData {
   decimals: number;
+}
+
+async function executeRegisterAndDepositEth(
+  signer: Signer,
+  amount: BigNumber,
+  assetType: string,
+  starkPublicKey: string,
+  vaultId: number,
+  contract: Core,
+  usersApi: UsersApi,
+): Promise<TransactionResponse> {
+  const etherKey = await signer.getAddress();
+
+  const signableResult = await getSignableRegistrationOnchain(
+    etherKey,
+    starkPublicKey,
+    usersApi,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndDepositEth(
+      etherKey,
+      starkPublicKey,
+      signableResult.operator_signature,
+      assetType,
+      vaultId,
+    );
+
+  return signer.sendTransaction({ ...populatedTransaction, value: amount });
 }
 
 async function executeDepositEth(
@@ -26,10 +59,11 @@ async function executeDepositEth(
   return signer.sendTransaction({ ...populatedTransaction, value: amount });
 }
 
-export async function depositEthWorkflowV4(
+export async function depositEthWorkflow(
   signer: Signer,
   deposit: ETHAmount,
   depositsApi: DepositsApi,
+  usersApi: UsersApi,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
 ): Promise<TransactionResponse> {
@@ -70,12 +104,34 @@ export async function depositEthWorkflowV4(
     signer,
   );
 
-  return executeDepositEth(
+  const registrationContract = Registration__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
     signer,
-    amount,
-    assetType,
-    starkPublicKey,
-    vaultId,
-    coreContract,
   );
+
+  const isRegistered = await isRegisteredOnChainWorkflow(
+    starkPublicKey,
+    registrationContract,
+  );
+
+  if (!isRegistered) {
+    return executeRegisterAndDepositEth(
+      signer,
+      amount,
+      assetType,
+      starkPublicKey,
+      vaultId,
+      coreContract,
+      usersApi,
+    );
+  } else {
+    return executeDepositEth(
+      signer,
+      amount,
+      assetType,
+      starkPublicKey,
+      vaultId,
+      coreContract,
+    );
+  }
 }
