@@ -7,6 +7,9 @@
 </div>
 
 ---
+# 🚨 This library is no longer maintained 🚨
+
+If you're building apps with Immutable, please use [Immutable's Unified SDK](https://github.com/immutable/ts-immutable-sdk)
 
 # Immutable Core SDK in Typescript
 
