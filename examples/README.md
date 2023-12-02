@@ -335,7 +335,7 @@ yarn get-withdrawal
 ```
 ## List withdrawal
 
-Update [lisWithdrawals.ts](./listWithdrawals.ts#L10) the desired field and then run
+Update [listWithdrawals.ts](./listWithdrawals.ts#L10) the desired field and then run
 
 ```sh
 yarn list-withdrawals
