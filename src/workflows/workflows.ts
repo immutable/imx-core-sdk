@@ -55,6 +55,7 @@ import {
   completeERC20WithdrawalWorkflow,
   completeERC721WithdrawalWorkflow,
   completeEthWithdrawalWorkflow,
+  prepareWithdrawalV2Workflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
@@ -246,11 +247,36 @@ export class Workflows {
   ) {
     await this.validateChain(walletConnection.ethSigner);
 
-    return prepareWithdrawalWorkflow({
-      ...walletConnection,
-      ...request,
-      withdrawalsApi: this.withdrawalsApi,
-    });
+    const starkExContract = await this.getStarkExContractVersion();
+    const majorContractVersion = await this.parseMajorContractVersion(
+      starkExContract.data.version,
+    );
+
+    if (majorContractVersion === 3) {
+      return prepareWithdrawalWorkflow({
+        ...walletConnection,
+        ...request,
+        withdrawalsApi: this.withdrawalsApi,
+      });
+    }
+
+    if (majorContractVersion >= 4) {
+      return prepareWithdrawalV2Workflow({
+        ...walletConnection,
+        ...request,
+        withdrawalsApi: this.withdrawalsApi,
+      });
+    }
+
+    throw new Error(
+      'The wallet used for this operation is not from the correct network.',
+    );
+  }
+
+  private async parseMajorContractVersion(
+    contractVersion: string,
+  ): Promise<number> {
+    return parseInt(contractVersion.charAt(0));
   }
 
   public completeWithdrawal(
