@@ -70,7 +70,9 @@ models/create-transfer-request.ts
 models/create-transfer-response-v1.ts
 models/create-transfer-response-v2.ts
 models/create-transfer-response.ts
+models/create-withdrawal-request-v2.ts
 models/create-withdrawal-request.ts
+models/create-withdrawal-response-v2.ts
 models/create-withdrawal-response.ts
 models/currency-with-limits.ts
 models/deposit-token.ts
@@ -124,6 +126,7 @@ models/get-signable-transfer-response-v2.ts
 models/get-signable-transfer-response.ts
 models/get-signable-withdrawal-request-token.ts
 models/get-signable-withdrawal-request.ts
+models/get-signable-withdrawal-response-v2.ts
 models/get-signable-withdrawal-response.ts
 models/get-transactions-response.ts
 models/get-users-api-response.ts
