@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface CreateTradeResponse
+ * @interface GetPrimarySaleNotImplementedBodyAllOf0
  */
-export interface CreateTradeResponse {
+export interface GetPrimarySaleNotImplementedBodyAllOf0 {
     /**
-     * Request ID as a reference for an asynchronous trade creation request
+     * Link to IMX documentation that can help resolve this error
      * @type {string}
-     * @memberof CreateTradeResponse
+     * @memberof GetPrimarySaleNotImplementedBodyAllOf0
      */
-    'request_id'?: string;
+    'link': string;
     /**
-     * [DEPRECATED] Unused field that always returns an empty string. The presence of a trade_id signifies that a trade was successful.
+     * Error Message
      * @type {string}
-     * @memberof CreateTradeResponse
+     * @memberof GetPrimarySaleNotImplementedBodyAllOf0
      */
-    'status': string;
+    'message': string;
     /**
-     * ID of trade within Immutable X
-     * @type {number}
-     * @memberof CreateTradeResponse
+     * Trace ID of the initial request
+     * @type {string}
+     * @memberof GetPrimarySaleNotImplementedBodyAllOf0
      */
-    'trade_id': number;
+    'trace_id': string;
 }
 

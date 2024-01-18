@@ -17,26 +17,26 @@
 /**
  * 
  * @export
- * @interface CreateTradeResponse
+ * @interface SignableCreatePrimarySaleOKBodyFeeInfo
  */
-export interface CreateTradeResponse {
+export interface SignableCreatePrimarySaleOKBodyFeeInfo {
     /**
-     * Request ID as a reference for an asynchronous trade creation request
+     * Asset ID of fee token
      * @type {string}
-     * @memberof CreateTradeResponse
+     * @memberof SignableCreatePrimarySaleOKBodyFeeInfo
      */
-    'request_id'?: string;
+    'asset_id'?: string;
     /**
-     * [DEPRECATED] Unused field that always returns an empty string. The presence of a trade_id signifies that a trade was successful.
+     * Fee limit of transaction - total fee amount
      * @type {string}
-     * @memberof CreateTradeResponse
+     * @memberof SignableCreatePrimarySaleOKBodyFeeInfo
      */
-    'status': string;
+    'fee_limit'?: string;
     /**
-     * ID of trade within Immutable X
+     * Vault ID of fee payer
      * @type {number}
-     * @memberof CreateTradeResponse
+     * @memberof SignableCreatePrimarySaleOKBodyFeeInfo
      */
-    'trade_id': number;
+    'source_vault_id'?: number;
 }
 
