@@ -247,9 +247,9 @@ export class Workflows {
   ) {
     await this.validateChain(walletConnection.ethSigner);
 
-    const starkExContract = await this.getStarkExContractVersion();
+    const starkExContractInfo = await this.getStarkExContractVersion();
     const majorContractVersion = await this.parseMajorContractVersion(
-      starkExContract.data.version,
+      starkExContractInfo.data.version,
     );
 
     if (majorContractVersion === 3) {
