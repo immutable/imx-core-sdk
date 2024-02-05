@@ -54,7 +54,7 @@ async function executeWithdrawEth(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function completeEthWithdrawalWorkflow(
+export async function completeEthWithdrawalV1Workflow(
   signer: Signer,
   starkPublicKey: string,
   encodingApi: EncodingApi,
@@ -94,4 +94,25 @@ export async function completeEthWithdrawalWorkflow(
       coreContract,
     );
   }
+}
+
+export async function completeEthWithdrawalV2Workflow(
+  signer: Signer,
+  ownerKey: string,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+) {
+  const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
+
+  const coreContract = Core__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    signer,
+  );
+
+  return executeWithdrawEth(
+    signer,
+    assetType.asset_type,
+    ownerKey,
+    coreContract,
+  );
 }

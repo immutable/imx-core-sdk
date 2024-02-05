@@ -75,7 +75,7 @@ function getMintingBlob(token: MintableERC721Withdrawal): string {
   return encUtils.sanitizeHex(encUtils.utf8ToHex(`{${id}}:{${blueprint}}`));
 }
 
-async function completeMintableERC721Withdrawal(
+async function completeMintableERC721WithdrawalV1(
   signer: Signer,
   starkPublicKey: string,
   token: MintableERC721Withdrawal,
@@ -130,6 +130,39 @@ async function completeMintableERC721Withdrawal(
   }
 }
 
+async function completeMintableERC721WithdrawalV2(
+  signer: Signer,
+  ownerKey: string,
+  token: MintableERC721Withdrawal,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+) {
+  const assetType = await getEncodeAssetInfo(
+    'mintable-asset',
+    'ERC721',
+    encodingApi,
+    {
+      id: token.data.id,
+      token_address: token.data.tokenAddress,
+      ...(token.data.blueprint && { blueprint: token.data.blueprint }),
+    },
+  );
+  const mintingBlob = getMintingBlob(token);
+
+  const coreContract = Core__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    signer,
+  );
+
+  return executeWithdrawMintableERC721(
+    signer,
+    assetType.asset_type,
+    ownerKey,
+    mintingBlob,
+    coreContract,
+  );
+}
+
 async function executeRegisterAndWithdrawERC721(
   signer: Signer,
   assetType: string,
@@ -173,7 +206,7 @@ async function executeWithdrawERC721(
   return signer.sendTransaction(populatedTransaction);
 }
 
-async function completeERC721Withdrawal(
+async function completeERC721WithdrawalV1(
   signer: Signer,
   starkPublicKey: string,
   token: ERC721Token,
@@ -221,7 +254,33 @@ async function completeERC721Withdrawal(
   }
 }
 
-export async function completeERC721WithdrawalWorkflow(
+async function completeERC721WithdrawalV2(
+  signer: Signer,
+  ownerKey: string,
+  token: ERC721Token,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+) {
+  const assetType = await getEncodeAssetInfo('asset', 'ERC721', encodingApi, {
+    token_id: token.tokenId,
+    token_address: token.tokenAddress,
+  });
+
+  const coreContract = Core__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    signer,
+  );
+
+  return executeWithdrawERC721(
+    signer,
+    assetType.asset_type,
+    ownerKey,
+    token.tokenId,
+    coreContract,
+  );
+}
+
+export async function completeERC721WithdrawalV1Workflow(
   signer: Signer,
   starkPublicKey: string,
   token: ERC721Token,
@@ -238,7 +297,7 @@ export async function completeERC721WithdrawalWorkflow(
       tokenId,
     })
     .then(mintableToken =>
-      completeMintableERC721Withdrawal(
+      completeMintableERC721WithdrawalV1(
         signer,
         starkPublicKey,
         {
@@ -257,12 +316,58 @@ export async function completeERC721WithdrawalWorkflow(
     .catch(error => {
       if (error.response?.status === 404) {
         // token is already minted on L1
-        return completeERC721Withdrawal(
+        return completeERC721WithdrawalV1(
           signer,
           starkPublicKey,
           token,
           encodingApi,
           usersApi,
+          config,
+        );
+      }
+      throw error; // unable to recover from any other kind of error
+    });
+}
+
+export async function completeERC721WithdrawalV2Workflow(
+  signer: Signer,
+  ownerKey: string,
+  token: ERC721Token,
+  encodingApi: EncodingApi,
+  mintsApi: MintsApi,
+  config: ImmutableXConfiguration,
+) {
+  const tokenAddress = token.tokenAddress;
+  const tokenId = token.tokenId;
+  return await mintsApi
+    .getMintableTokenDetailsByClientTokenId({
+      tokenAddress,
+      tokenId,
+    })
+    .then(mintableToken =>
+      completeMintableERC721WithdrawalV2(
+        signer,
+        ownerKey,
+        {
+          type: 'ERC721',
+          data: {
+            id: tokenId,
+            tokenAddress: tokenAddress,
+            blueprint: mintableToken.data.blueprint,
+          },
+        },
+        encodingApi,
+        config,
+      ),
+    )
+    .catch(error => {
+      if (error.response?.status === 404) {
+        // token is already minted on L1
+        return completeERC721WithdrawalV2(
+          signer,
+          ownerKey,
+          token,
+          encodingApi,
           config,
         );
       }

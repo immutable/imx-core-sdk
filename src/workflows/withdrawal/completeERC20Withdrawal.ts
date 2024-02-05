@@ -55,7 +55,7 @@ async function executeWithdrawERC20(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function completeERC20WithdrawalWorkflow(
+export async function completeERC20WithdrawalV1Workflow(
   signer: Signer,
   starkPublicKey: string,
   token: ERC20Token,
@@ -98,4 +98,23 @@ export async function completeERC20WithdrawalWorkflow(
       coreContract,
     );
   }
+}
+
+export async function completeERC20WithdrawalV2Workflow(
+  signer: Signer,
+  ownerKey: string,
+  token: ERC20Token,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+) {
+  const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
+    token_address: token.tokenAddress,
+  });
+
+  const coreContract = Core__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    signer,
+  );
+
+  executeWithdrawERC20(signer, assetType.asset_type, ownerKey, coreContract);
 }

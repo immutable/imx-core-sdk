@@ -53,9 +53,12 @@ import {
   depositEthWorkflow,
 } from './deposit';
 import {
-  completeERC20WithdrawalWorkflow,
-  completeERC721WithdrawalWorkflow,
-  completeEthWithdrawalWorkflow,
+  completeERC20WithdrawalV1Workflow,
+  completeERC20WithdrawalV2Workflow,
+  completeERC721WithdrawalV1Workflow,
+  completeERC721WithdrawalV2Workflow,
+  completeEthWithdrawalV1Workflow,
+  completeEthWithdrawalV2Workflow,
   prepareWithdrawalV2Workflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
@@ -305,12 +308,33 @@ export class Workflows {
   private async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
     await this.validateChain(signer);
 
-    return completeEthWithdrawalWorkflow(
-      signer,
-      starkPublicKey,
-      this.encodingApi,
-      this.usersApi,
-      this.config,
+    const starkExContractInfo = await this.getStarkExContractVersion();
+    const majorContractVersion = await this.parseMajorContractVersion(
+      starkExContractInfo.data.version,
+    );
+
+    if (majorContractVersion === 3) {
+      return completeEthWithdrawalV1Workflow(
+        signer,
+        starkPublicKey,
+        this.encodingApi,
+        this.usersApi,
+        this.config,
+      );
+    }
+
+    if (majorContractVersion >= 4) {
+      const ethAddress = await signer.getAddress();
+      return completeEthWithdrawalV2Workflow(
+        signer,
+        ethAddress,
+        this.encodingApi,
+        this.config,
+      );
+    }
+
+    throw new Error(
+      `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
     );
   }
 
@@ -321,13 +345,35 @@ export class Workflows {
   ) {
     await this.validateChain(signer);
 
-    return completeERC20WithdrawalWorkflow(
-      signer,
-      starkPublicKey,
-      token,
-      this.encodingApi,
-      this.usersApi,
-      this.config,
+    const starkExContractInfo = await this.getStarkExContractVersion();
+    const majorContractVersion = await this.parseMajorContractVersion(
+      starkExContractInfo.data.version,
+    );
+
+    if (majorContractVersion === 3) {
+      return completeERC20WithdrawalV1Workflow(
+        signer,
+        starkPublicKey,
+        token,
+        this.encodingApi,
+        this.usersApi,
+        this.config,
+      );
+    }
+
+    if (majorContractVersion >= 4) {
+      const ethAddress = await signer.getAddress();
+      return completeERC20WithdrawalV2Workflow(
+        signer,
+        ethAddress,
+        token,
+        this.encodingApi,
+        this.config,
+      );
+    }
+
+    throw new Error(
+      `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
     );
   }
 
@@ -338,14 +384,37 @@ export class Workflows {
   ) {
     await this.validateChain(signer);
 
-    return completeERC721WithdrawalWorkflow(
-      signer,
-      starkPublicKey,
-      token,
-      this.encodingApi,
-      this.mintsApi,
-      this.usersApi,
-      this.config,
+    const starkExContractInfo = await this.getStarkExContractVersion();
+    const majorContractVersion = await this.parseMajorContractVersion(
+      starkExContractInfo.data.version,
+    );
+
+    if (majorContractVersion === 3) {
+      return completeERC721WithdrawalV1Workflow(
+        signer,
+        starkPublicKey,
+        token,
+        this.encodingApi,
+        this.mintsApi,
+        this.usersApi,
+        this.config,
+      );
+    }
+
+    if (majorContractVersion >= 4) {
+      const ethAddress = await signer.getAddress();
+      return completeERC721WithdrawalV2Workflow(
+        signer,
+        ethAddress,
+        token,
+        this.encodingApi,
+        this.mintsApi,
+        this.config,
+      );
+    }
+
+    throw new Error(
+      `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
     );
   }
 
