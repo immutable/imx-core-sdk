@@ -354,22 +354,6 @@ export class Workflows {
     });
   }
 
-  /**
-   * IMX authorisation header functions
-   */
-  public async createProject(
-    ethSigner: EthSigner,
-    createProjectRequest: CreateProjectRequest,
-  ) {
-    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
-
-    return this.projectsApi.createProject({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-      createProjectRequest,
-    });
-  }
-
   public async getProject(ethSigner: EthSigner, id: string) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
