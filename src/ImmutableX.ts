@@ -48,6 +48,7 @@ import {
   OrdersApi,
   OrdersApiGetOrderV3Request,
   OrdersApiListOrdersV3Request,
+  PrimarySalesApiSignableCreatePrimarySaleRequest,
   ProjectsApi,
   TokensApi,
   TokensApiGetTokenRequest,
@@ -947,6 +948,24 @@ export class ImmutableX {
   ) {
     return this.nftCheckoutPrimaryApi
       .getNftPrimaryTransactions(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a PrimarySale
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Trade
+   * @throws {@link index.IMXError}
+   */
+  public createPrimarySale(
+    walletConnection: WalletConnection,
+    request: PrimarySalesApiSignableCreatePrimarySaleRequest,
+  ) {
+    return this.workflows
+      .createPrimarySale(walletConnection, request)
       .catch(err => {
         throw formatError(err);
       });
