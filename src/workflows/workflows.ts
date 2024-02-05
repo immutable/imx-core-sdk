@@ -269,7 +269,7 @@ export class Workflows {
     }
 
     throw new Error(
-      'The wallet used for this operation is not from the correct network.',
+      `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
     );
   }
 
