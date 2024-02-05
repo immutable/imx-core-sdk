@@ -12,7 +12,6 @@ import {
   GetSignableTradeRequest,
   TradesApi,
   ProjectsApi,
-  CreateProjectRequest,
   CollectionsApi,
   CreateCollectionRequest,
   UpdateCollectionRequest,
