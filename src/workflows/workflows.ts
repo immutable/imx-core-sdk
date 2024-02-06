@@ -12,7 +12,6 @@ import {
   GetSignableTradeRequest,
   TradesApi,
   ProjectsApi,
-  CreateProjectRequest,
   CollectionsApi,
   CreateCollectionRequest,
   UpdateCollectionRequest,
@@ -351,22 +350,6 @@ export class Workflows {
       ...walletConnection,
       request,
       tradesApi: this.tradesApi,
-    });
-  }
-
-  /**
-   * IMX authorisation header functions
-   */
-  public async createProject(
-    ethSigner: EthSigner,
-    createProjectRequest: CreateProjectRequest,
-  ) {
-    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
-
-    return this.projectsApi.createProject({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-      createProjectRequest,
     });
   }
 

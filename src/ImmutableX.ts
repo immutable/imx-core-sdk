@@ -24,7 +24,6 @@ import {
   CollectionsApiListCollectionsRequest,
   CreateCollectionRequest,
   CreateMetadataRefreshRequest,
-  CreateProjectRequest,
   DepositsApi,
   DepositsApiGetDepositRequest,
   DepositsApiListDepositsRequest,
@@ -447,25 +446,6 @@ export class ImmutableX {
   ) {
     return this.workflows
       .createMetadataRefresh(ethSigner, request)
-      .then(res => res.data)
-      .catch(err => {
-        throw formatError(err);
-      });
-  }
-
-  /**
-   * Create a Project
-   * @param ethSigner - the L1 signer
-   * @param request - the request object containing the parameters to be provided in the API request
-   * @returns a promise that resolves with the created Project
-   * @throws {@link index.IMXError}
-   */
-  public async createProject(
-    ethSigner: EthSigner,
-    request: CreateProjectRequest,
-  ) {
-    return this.workflows
-      .createProject(ethSigner, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
