@@ -248,7 +248,7 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
          * @throws {RequiredError}
          */
         signableCreatePrimarySale: async (body?: SignableCreatePrimarySaleParamsBody, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/v1/signable-primary-sale-details`;
+            const localVarPath = `/v1/primary_sales/signable-primary-sale-details`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;

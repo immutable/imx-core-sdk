@@ -1733,6 +1733,63 @@
         }
       }
     },
+    "/v1/primary_sales/signable-primary-sale-details": {
+      "post": {
+        "description": "[Experimental] Signable Create Primary Sale.  This endpoint is experimental and may change in the future.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "primary-sales"
+        ],
+        "summary": "[Experimental] Signable Create Primary Sale",
+        "operationId": "SignableCreatePrimarySale",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/signableCreatePrimarySaleParamsBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK response.",
+            "schema": {
+              "$ref": "#/definitions/signableCreatePrimarySaleOKBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request (400)",
+            "schema": {
+              "$ref": "#/definitions/signableCreatePrimarySaleBadRequestBody"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found (404)",
+            "schema": {
+              "$ref": "#/definitions/signableCreatePrimarySaleNotFoundBody"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error (500)",
+            "schema": {
+              "$ref": "#/definitions/signableCreatePrimarySaleInternalServerErrorBody"
+            }
+          },
+          "501": {
+            "description": "Not Implemented Error (501)",
+            "schema": {
+              "$ref": "#/definitions/signableCreatePrimarySaleNotImplementedBody"
+            }
+          }
+        }
+      }
+    },
     "/v1/primary_sales/{id}": {
       "get": {
         "description": "[Experimental] Get a single primary sale by ID. This endpoint is experimental and may change in the future.",
@@ -2174,63 +2231,6 @@
             "description": "OK",
             "schema": {
               "$ref": "#/definitions/GetSignableDepositResponse"
-            }
-          }
-        }
-      }
-    },
-    "/v1/signable-primary-sale-details": {
-      "post": {
-        "description": "[Experimental] Signable Create Primary Sale.  This endpoint is experimental and may change in the future.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "primary-sales"
-        ],
-        "summary": "[Experimental] Signable Create Primary Sale",
-        "operationId": "SignableCreatePrimarySale",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/signableCreatePrimarySaleParamsBody"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK response.",
-            "schema": {
-              "$ref": "#/definitions/signableCreatePrimarySaleOKBody"
-            }
-          },
-          "400": {
-            "description": "Bad Request (400)",
-            "schema": {
-              "$ref": "#/definitions/signableCreatePrimarySaleBadRequestBody"
-            }
-          },
-          "404": {
-            "description": "The specified resource was not found (404)",
-            "schema": {
-              "$ref": "#/definitions/signableCreatePrimarySaleNotFoundBody"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error (500)",
-            "schema": {
-              "$ref": "#/definitions/signableCreatePrimarySaleInternalServerErrorBody"
-            }
-          },
-          "501": {
-            "description": "Not Implemented Error (501)",
-            "schema": {
-              "$ref": "#/definitions/signableCreatePrimarySaleNotImplementedBody"
             }
           }
         }
@@ -8846,6 +8846,7 @@
             "INVALID",
             "IN_PROGRESS",
             "ACCEPTED",
+            "FAILED",
             "REJECTED",
             "EXPIRED"
           ]
@@ -9488,6 +9489,7 @@
             "INVALID",
             "IN_PROGRESS",
             "ACCEPTED",
+            "FAILED",
             "REJECTED",
             "EXPIRED"
           ]
@@ -11428,6 +11430,7 @@
             "INVALID",
             "IN_PROGRESS",
             "ACCEPTED",
+            "FAILED",
             "REJECTED",
             "EXPIRED"
           ]
