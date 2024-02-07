@@ -109,6 +109,7 @@ export const CreatePrimarySaleCreatedBodyResultStatusEnum = {
     Invalid: 'INVALID',
     InProgress: 'IN_PROGRESS',
     Accepted: 'ACCEPTED',
+    Failed: 'FAILED',
     Rejected: 'REJECTED',
     Expired: 'EXPIRED'
 } as const;
