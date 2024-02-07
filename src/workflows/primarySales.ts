@@ -57,6 +57,7 @@ export async function CreatePrimarySaleWorkflow({
       payment_recipient_vault_id: resp.payment_recipient_vault_id,
       items_recipient_ether_key: resp.items_recipient_ether_key,
       expiration_timestamp: resp.expiration_timestamp,
+      fees: resp.fees,
       nonce: resp.nonce,
       stark_signature: starkSignature,
     },
