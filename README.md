@@ -149,17 +149,13 @@ These operations add to or update data in Immutable's databases and typically re
 
 ### How do applications generate and use signers?
 
-Signers are abstractions of user accounts that can be used to sign transactions. A user's private key is required to generate them.
-
-There are two ways to get signers in your application:
-1. [Generate your own by obtaining and using the user's private keys](#1-generate-your-own-signers)
-2. [Use our Wallet SDK to connect to a user's wallet application](#2-generate-signers-using-the-wallet-sdk)
+Signers are abstractions of user accounts that can be used to sign transactions. A user's private key is required to generate them. [Generate your own by obtaining and using the user's private keys](#generate-your-own-signers).
 
 The first option, where an application obtains a user's private key directly, is risky because these keys allow anyone in possession of them full control of an account.
 
 The second option provides an application with an interface to the user's account by prompting the user to connect with their wallet application (ie. mobile or browser wallet). Once connected the app can begin asking the user to sign transactions and messages without having to reveal their private key.
 
-### 1. Generate L1 and L2 signers
+### Generate your own signers
 
 The Core SDK provides functionality for applications to generate Stark (L2) [signers](/src/utils/stark/starkSigner.ts#L60).
 
@@ -176,12 +172,6 @@ const ethSigner = new Wallet(YOUR_PRIVATE_ETH_KEY).connect(provider);
 // Create Stark signer
 const starkSigner = createStarkSigner(YOUR_STARK_PRIVATE_KEY);
 ```
-
-### 2. Generate signers using the Wallet SDK
-
-The [Wallet SDK Web](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/overview) provides connections to Metamask and WalletConnect browser wallets.
-
-See [this guide](https://docs.x.immutable.com/sdk-docs/wallet-sdk-web/quickstart) for how to set this up.
 
 ### Examples
 
