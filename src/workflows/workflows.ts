@@ -64,7 +64,10 @@ import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
 import { exchangeTransfersWorkflow } from './exchangeTransfers';
 import axios, { AxiosResponse } from 'axios';
-import { CreatePrimarySaleWorkflow } from './primarySales';
+import {
+  CreatePrimarySaleWorkflow,
+  AcceptPrimarySalesWorkflow,
+} from './primarySales';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -524,6 +527,14 @@ export class Workflows {
     return CreatePrimarySaleWorkflow({
       ...walletConnection,
       request,
+      primarySalesApi: this.primarySalesApi,
+    });
+  }
+
+  public async acceptPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
+    return AcceptPrimarySalesWorkflow({
+      ethSigner,
+      primarySaleId,
       primarySalesApi: this.primarySalesApi,
     });
   }

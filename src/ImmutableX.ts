@@ -970,4 +970,19 @@ export class ImmutableX {
         throw formatError(err);
       });
   }
+
+  /**
+   * Accept a PrimarySale
+   * @param ethSigner - eth signer matching the 'studio_ether_key' of the primary sale
+   * @param primarySaleId - id of the primary sale accepting
+   * @returns a promise that resolves with the created Trade
+   * @throws {@link index.IMXError}
+   */
+  public acceptPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
+    return this.workflows
+      .acceptPrimarySale(ethSigner, primarySaleId)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
 }
