@@ -1,4 +1,9 @@
 import {
+  AcceptPrimarySaleBadRequestBody,
+  AcceptPrimarySaleForbiddenBody,
+  AcceptPrimarySaleNotFoundBody,
+  AcceptPrimarySaleOKBody,
+  AcceptPrimarySaleUnauthorizedBody,
   CreatePrimarySaleBadRequestBody,
   CreatePrimarySaleCreatedBody,
   CreatePrimarySaleForbiddenBody,
@@ -8,11 +13,17 @@ import {
   PrimarySalesApiCreatePrimarySaleRequest,
   PrimarySalesApiSignableCreatePrimarySaleRequest,
 } from '../api';
-import { WalletConnection } from '../types';
+import { EthSigner, WalletConnection } from '../types';
 import { signRaw } from '../utils';
 
 type CreatePrimarySaleWorkflowParams = WalletConnection & {
   request: PrimarySalesApiSignableCreatePrimarySaleRequest;
+  primarySalesApi: PrimarySalesApi;
+};
+
+type AcceptPrimarySaleWorkflowParams = {
+  ethSigner: EthSigner;
+  primarySaleId: number;
   primarySalesApi: PrimarySalesApi;
 };
 
@@ -22,6 +33,13 @@ type CreatePrimarySaleResponse =
   | CreatePrimarySaleForbiddenBody
   | CreatePrimarySaleUnauthorizedBody
   | CreatePrimarySaleNotFoundBody;
+
+type AcceptPrimarySaleResponse =
+  | AcceptPrimarySaleOKBody
+  | AcceptPrimarySaleBadRequestBody
+  | AcceptPrimarySaleForbiddenBody
+  | AcceptPrimarySaleNotFoundBody
+  | AcceptPrimarySaleUnauthorizedBody;
 
 export async function CreatePrimarySaleWorkflow({
   ethSigner,
@@ -75,5 +93,36 @@ export async function CreatePrimarySaleWorkflow({
 
   return {
     ...createPrimarySaleResp.data,
+  };
+}
+
+export async function AcceptPrimarySalesWorkflow({
+  ethSigner,
+  primarySalesApi,
+  primarySaleId,
+}: AcceptPrimarySaleWorkflowParams): Promise<AcceptPrimarySaleResponse> {
+  const signableAcceptPrimarySaleResult =
+    await primarySalesApi.signableAcceptPrimarySale({
+      id: primarySaleId,
+    });
+
+  const signableMessage = signableAcceptPrimarySaleResult.data.signable_message;
+
+  const signature = await signRaw(signableMessage, ethSigner);
+
+  const acceptPrimarySaleResp = await primarySalesApi.acceptPrimarySale(
+    {
+      id: primarySaleId,
+    },
+    {
+      headers: {
+        'x-imx-eth-address': await ethSigner.getAddress(),
+        'x-imx-eth-signature': signature,
+      },
+    },
+  );
+
+  return {
+    ...acceptPrimarySaleResp.data,
   };
 }
