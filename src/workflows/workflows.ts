@@ -73,6 +73,7 @@ import {
   AcceptPrimarySalesWorkflow,
   RejectPrimarySalesWorkflow,
 } from './primarySales';
+import { TransactionResponse } from '@ethersproject/providers';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -290,22 +291,11 @@ export class Workflows {
     return parseInt(contractVersion.charAt(0));
   }
 
-  public completeWithdrawal(
+  public async completeWithdrawal(
     signer: Signer,
     starkPublicKey: string,
     token: AnyToken,
-  ) {
-    switch (token.type) {
-      case 'ETH':
-        return this.completeEthWithdrawal(signer, starkPublicKey);
-      case 'ERC20':
-        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
-      case 'ERC721':
-        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
-    }
-  }
-
-  private async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
+  ): Promise<TransactionResponse> {
     await this.validateChain(signer);
 
     const starkExContractInfo = await this.getStarkExContractVersion();
@@ -314,107 +304,114 @@ export class Workflows {
     );
 
     if (majorContractVersion === 3) {
-      return completeEthWithdrawalV1Workflow(
-        signer,
-        starkPublicKey,
-        this.encodingApi,
-        this.usersApi,
-        this.config,
-      );
-    }
-
-    if (majorContractVersion >= 4) {
+      switch (token.type) {
+        case 'ETH':
+          return this.completeEthWithdrawalV1(signer, starkPublicKey);
+        case 'ERC20':
+          return this.completeERC20WithdrawalV1(signer, starkPublicKey, token);
+        case 'ERC721':
+          return this.completeERC721WithdrawalV1(signer, starkPublicKey, token);
+      }
+    } else if (majorContractVersion >= 4) {
       const ethAddress = await signer.getAddress();
-      return completeEthWithdrawalV2Workflow(
-        signer,
-        ethAddress,
-        this.encodingApi,
-        this.config,
+
+      switch (token.type) {
+        case 'ETH':
+          return this.completeEthWithdrawalV2(signer, ethAddress);
+        case 'ERC20':
+          return this.completeERC20WithdrawalV2(signer, ethAddress, token);
+        case 'ERC721':
+          return this.completeERC721WithdrawalV2(signer, ethAddress, token);
+      }
+    } else {
+      throw new Error(
+        `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
       );
     }
+  }
 
-    throw new Error(
-      `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
+  private async completeEthWithdrawalV1(
+    signer: Signer,
+    starkPublicKey: string,
+  ): Promise<TransactionResponse> {
+    return completeEthWithdrawalV1Workflow(
+      signer,
+      starkPublicKey,
+      this.encodingApi,
+      this.usersApi,
+      this.config,
     );
   }
 
-  private async completeERC20Withdrawal(
+  private async completeEthWithdrawalV2(
+    signer: Signer,
+    ownerKey: string,
+  ): Promise<TransactionResponse> {
+    return completeEthWithdrawalV2Workflow(
+      signer,
+      ownerKey,
+      this.encodingApi,
+      this.config,
+    );
+  }
+
+  private async completeERC20WithdrawalV1(
     signer: Signer,
     starkPublicKey: string,
     token: ERC20Token,
-  ) {
-    await this.validateChain(signer);
-
-    const starkExContractInfo = await this.getStarkExContractVersion();
-    const majorContractVersion = await this.parseMajorContractVersion(
-      starkExContractInfo.data.version,
-    );
-
-    if (majorContractVersion === 3) {
-      return completeERC20WithdrawalV1Workflow(
-        signer,
-        starkPublicKey,
-        token,
-        this.encodingApi,
-        this.usersApi,
-        this.config,
-      );
-    }
-
-    if (majorContractVersion >= 4) {
-      const ethAddress = await signer.getAddress();
-      return completeERC20WithdrawalV2Workflow(
-        signer,
-        ethAddress,
-        token,
-        this.encodingApi,
-        this.config,
-      );
-    }
-
-    throw new Error(
-      `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
+  ): Promise<TransactionResponse> {
+    return completeERC20WithdrawalV1Workflow(
+      signer,
+      starkPublicKey,
+      token,
+      this.encodingApi,
+      this.usersApi,
+      this.config,
     );
   }
 
-  private async completeERC721Withdrawal(
+  private async completeERC20WithdrawalV2(
+    signer: Signer,
+    ownerKey: string,
+    token: ERC20Token,
+  ): Promise<TransactionResponse> {
+    return completeERC20WithdrawalV2Workflow(
+      signer,
+      ownerKey,
+      token,
+      this.encodingApi,
+      this.config,
+    );
+  }
+
+  private async completeERC721WithdrawalV1(
     signer: Signer,
     starkPublicKey: string,
     token: ERC721Token,
-  ) {
-    await this.validateChain(signer);
-
-    const starkExContractInfo = await this.getStarkExContractVersion();
-    const majorContractVersion = await this.parseMajorContractVersion(
-      starkExContractInfo.data.version,
+  ): Promise<TransactionResponse> {
+    return completeERC721WithdrawalV1Workflow(
+      signer,
+      starkPublicKey,
+      token,
+      this.encodingApi,
+      this.mintsApi,
+      this.usersApi,
+      this.config,
     );
+  }
 
-    if (majorContractVersion === 3) {
-      return completeERC721WithdrawalV1Workflow(
-        signer,
-        starkPublicKey,
-        token,
-        this.encodingApi,
-        this.mintsApi,
-        this.usersApi,
-        this.config,
-      );
-    }
-
-    if (majorContractVersion >= 4) {
-      const ethAddress = await signer.getAddress();
-      return completeERC721WithdrawalV2Workflow(
-        signer,
-        ethAddress,
-        token,
-        this.encodingApi,
-        this.mintsApi,
-        this.config,
-      );
-    }
-
-    throw new Error(
-      `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
+  private async completeERC721WithdrawalV2(
+    signer: Signer,
+    ownerKey: string,
+    token: ERC721Token,
+  ): Promise<TransactionResponse> {
+    return completeERC721WithdrawalV2Workflow(
+      signer,
+      ownerKey,
+      token,
+      this.encodingApi,
+      this.mintsApi,
+      this.config,
     );
   }
 
