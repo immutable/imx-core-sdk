@@ -288,7 +288,7 @@ export async function completeERC721WithdrawalV1Workflow(
   mintsApi: MintsApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const tokenAddress = token.tokenAddress;
   const tokenId = token.tokenId;
   return await mintsApi
@@ -336,7 +336,7 @@ export async function completeERC721WithdrawalV2Workflow(
   encodingApi: EncodingApi,
   mintsApi: MintsApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const tokenAddress = token.tokenAddress;
   const tokenId = token.tokenId;
   return await mintsApi

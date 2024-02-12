@@ -60,7 +60,7 @@ export async function completeEthWithdrawalV1Workflow(
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   const coreContract = Core__factory.connect(
@@ -101,7 +101,7 @@ export async function completeEthWithdrawalV2Workflow(
   ownerKey: string,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   const coreContract = Core__factory.connect(

@@ -62,7 +62,7 @@ export async function completeERC20WithdrawalV1Workflow(
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
     token_address: token.tokenAddress,
   });
@@ -106,7 +106,7 @@ export async function completeERC20WithdrawalV2Workflow(
   token: ERC20Token,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
     token_address: token.tokenAddress,
   });
@@ -116,5 +116,10 @@ export async function completeERC20WithdrawalV2Workflow(
     signer,
   );
 
-  executeWithdrawERC20(signer, assetType.asset_type, ownerKey, coreContract);
+  return executeWithdrawERC20(
+    signer,
+    assetType.asset_type,
+    ownerKey,
+    coreContract,
+  );
 }
