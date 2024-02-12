@@ -14,6 +14,7 @@ import {
   isRegisteredOnChainWorkflow,
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
+import { RegistrationV2__factory } from 'src/contracts/factories/contracts';
 
 async function executeRegisterAndWithdrawERC20(
   signer: Signer,
@@ -102,7 +103,6 @@ export async function completeERC20WithdrawalV1Workflow(
 
 export async function completeERC20WithdrawalV2Workflow(
   signer: Signer,
-  ownerKey: string,
   token: ERC20Token,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
@@ -116,10 +116,38 @@ export async function completeERC20WithdrawalV2Workflow(
     signer,
   );
 
+  const ownerKey = await signer.getAddress();
   return executeWithdrawERC20(
     signer,
     assetType.asset_type,
     ownerKey,
     coreContract,
   );
+}
+
+export async function completeAllERC20WithdrawalWorkflow(
+  signer: Signer,
+  starkPublicKey: string,
+  token: ERC20Token,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
+    token_address: token.tokenAddress,
+  });
+
+  const registrationContract = RegistrationV2__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    signer,
+  );
+
+  const ethAddress = await signer.getAddress();
+  const populatedTransaction =
+    await registrationContract.populateTransaction.withdrawAll(
+      ethAddress,
+      starkPublicKey,
+      assetType.asset_id,
+    );
+
+  return signer.sendTransaction(populatedTransaction);
 }

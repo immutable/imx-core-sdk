@@ -13,6 +13,7 @@ import {
   isRegisteredOnChainWorkflow,
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
+import { RegistrationV2__factory } from 'src/contracts/factories/contracts';
 
 async function executeRegisterAndWithdrawEth(
   signer: Signer,
@@ -98,7 +99,6 @@ export async function completeEthWithdrawalV1Workflow(
 
 export async function completeEthWithdrawalV2Workflow(
   signer: Signer,
-  ownerKey: string,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
 ): Promise<TransactionResponse> {
@@ -109,10 +109,36 @@ export async function completeEthWithdrawalV2Workflow(
     signer,
   );
 
+  const ownerKey = await signer.getAddress();
+
   return executeWithdrawEth(
     signer,
     assetType.asset_type,
     ownerKey,
     coreContract,
   );
+}
+
+export async function completeAllEthWithdrawalWorkflow(
+  signer: Signer,
+  starkPublicKey: string,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
+
+  const registrationContract = RegistrationV2__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    signer,
+  );
+
+  const ethAddress = await signer.getAddress();
+  const populatedTransaction =
+    await registrationContract.populateTransaction.withdrawAll(
+      ethAddress,
+      starkPublicKey,
+      assetType.asset_id,
+    );
+
+  return signer.sendTransaction(populatedTransaction);
 }
