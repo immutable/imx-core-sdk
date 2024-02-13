@@ -13,13 +13,26 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "contract Core",
+        internalType: "address payable",
         name: "_imx",
         type: "address",
       },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    inputs: [],
+    name: "getVersion",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
   },
   {
     inputs: [],
@@ -77,6 +90,72 @@ const _abi = [
       },
     ],
     name: "registerAndWithdrawAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "ethKey",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "starkKey",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "uint256",
+        name: "assetType",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "registerAndWithdrawNft",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "ethKey",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "starkKey",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "signature",
+        type: "bytes",
+      },
+      {
+        internalType: "uint256",
+        name: "assetType",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "mintingBlob",
+        type: "bytes",
+      },
+    ],
+    name: "registerWithdrawAndMint",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

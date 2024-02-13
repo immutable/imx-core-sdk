@@ -24,20 +24,30 @@ import type {
 
 export interface RegistrationV2Interface extends utils.Interface {
   functions: {
+    "getVersion()": FunctionFragment;
     "imx()": FunctionFragment;
     "isRegistered(uint256)": FunctionFragment;
     "registerAndWithdrawAll(address,uint256,bytes,uint256)": FunctionFragment;
+    "registerAndWithdrawNft(address,uint256,bytes,uint256,uint256)": FunctionFragment;
+    "registerWithdrawAndMint(address,uint256,bytes,uint256,bytes)": FunctionFragment;
     "withdrawAll(uint256,uint256,uint256)": FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | "getVersion"
       | "imx"
       | "isRegistered"
       | "registerAndWithdrawAll"
+      | "registerAndWithdrawNft"
+      | "registerWithdrawAndMint"
       | "withdrawAll"
   ): FunctionFragment;
 
+  encodeFunctionData(
+    functionFragment: "getVersion",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "imx", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "isRegistered",
@@ -48,10 +58,19 @@ export interface RegistrationV2Interface extends utils.Interface {
     values: [string, BigNumberish, BytesLike, BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "registerAndWithdrawNft",
+    values: [string, BigNumberish, BytesLike, BigNumberish, BigNumberish]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "registerWithdrawAndMint",
+    values: [string, BigNumberish, BytesLike, BigNumberish, BytesLike]
+  ): string;
+  encodeFunctionData(
     functionFragment: "withdrawAll",
     values: [BigNumberish, BigNumberish, BigNumberish]
   ): string;
 
+  decodeFunctionResult(functionFragment: "getVersion", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "imx", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "isRegistered",
@@ -59,6 +78,14 @@ export interface RegistrationV2Interface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "registerAndWithdrawAll",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerAndWithdrawNft",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerWithdrawAndMint",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -96,6 +123,8 @@ export interface RegistrationV2 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    getVersion(overrides?: CallOverrides): Promise<[string]>;
+
     imx(overrides?: CallOverrides): Promise<[string]>;
 
     isRegistered(
@@ -111,6 +140,24 @@ export interface RegistrationV2 extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
 
+    registerAndWithdrawNft(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
+    registerWithdrawAndMint(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      mintingBlob: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<ContractTransaction>;
+
     withdrawAll(
       ethKey: BigNumberish,
       starkKey: BigNumberish,
@@ -118,6 +165,8 @@ export interface RegistrationV2 extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<ContractTransaction>;
   };
+
+  getVersion(overrides?: CallOverrides): Promise<string>;
 
   imx(overrides?: CallOverrides): Promise<string>;
 
@@ -134,6 +183,24 @@ export interface RegistrationV2 extends BaseContract {
     overrides?: Overrides & { from?: string }
   ): Promise<ContractTransaction>;
 
+  registerAndWithdrawNft(
+    ethKey: string,
+    starkKey: BigNumberish,
+    signature: BytesLike,
+    assetType: BigNumberish,
+    tokenId: BigNumberish,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
+  registerWithdrawAndMint(
+    ethKey: string,
+    starkKey: BigNumberish,
+    signature: BytesLike,
+    assetType: BigNumberish,
+    mintingBlob: BytesLike,
+    overrides?: Overrides & { from?: string }
+  ): Promise<ContractTransaction>;
+
   withdrawAll(
     ethKey: BigNumberish,
     starkKey: BigNumberish,
@@ -142,6 +209,8 @@ export interface RegistrationV2 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    getVersion(overrides?: CallOverrides): Promise<string>;
+
     imx(overrides?: CallOverrides): Promise<string>;
 
     isRegistered(
@@ -157,6 +226,24 @@ export interface RegistrationV2 extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    registerAndWithdrawNft(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      tokenId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    registerWithdrawAndMint(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      mintingBlob: BytesLike,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     withdrawAll(
       ethKey: BigNumberish,
       starkKey: BigNumberish,
@@ -168,6 +255,8 @@ export interface RegistrationV2 extends BaseContract {
   filters: {};
 
   estimateGas: {
+    getVersion(overrides?: CallOverrides): Promise<BigNumber>;
+
     imx(overrides?: CallOverrides): Promise<BigNumber>;
 
     isRegistered(
@@ -183,6 +272,24 @@ export interface RegistrationV2 extends BaseContract {
       overrides?: Overrides & { from?: string }
     ): Promise<BigNumber>;
 
+    registerAndWithdrawNft(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
+    registerWithdrawAndMint(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      mintingBlob: BytesLike,
+      overrides?: Overrides & { from?: string }
+    ): Promise<BigNumber>;
+
     withdrawAll(
       ethKey: BigNumberish,
       starkKey: BigNumberish,
@@ -192,6 +299,8 @@ export interface RegistrationV2 extends BaseContract {
   };
 
   populateTransaction: {
+    getVersion(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     imx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isRegistered(
@@ -204,6 +313,24 @@ export interface RegistrationV2 extends BaseContract {
       starkKey: BigNumberish,
       signature: BytesLike,
       assetType: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    registerAndWithdrawNft(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      tokenId: BigNumberish,
+      overrides?: Overrides & { from?: string }
+    ): Promise<PopulatedTransaction>;
+
+    registerWithdrawAndMint(
+      ethKey: string,
+      starkKey: BigNumberish,
+      signature: BytesLike,
+      assetType: BigNumberish,
+      mintingBlob: BytesLike,
       overrides?: Overrides & { from?: string }
     ): Promise<PopulatedTransaction>;
 
