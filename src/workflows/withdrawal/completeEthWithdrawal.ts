@@ -7,6 +7,7 @@ import {
   Core__factory,
   Registration,
   Registration__factory,
+  RegistrationV2__factory,
 } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
@@ -14,8 +15,7 @@ import {
   signRegisterEthAddress,
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
-import { RegistrationV2__factory } from 'src/contracts/factories/contracts';
-import { WalletConnection } from 'src/types';
+import { WalletConnection } from '../../types';
 
 async function executeRegisterAndWithdrawEth(
   signer: Signer,

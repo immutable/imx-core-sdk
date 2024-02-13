@@ -7,6 +7,7 @@ import {
   Core__factory,
   Registration,
   Registration__factory,
+  RegistrationV2__factory,
 } from '../../contracts';
 import { ERC20Token, WalletConnection } from '../../types';
 import {
@@ -15,7 +16,6 @@ import {
   signRegisterEthAddress,
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
-import { RegistrationV2__factory } from 'src/contracts/factories/contracts';
 
 async function executeRegisterAndWithdrawERC20(
   signer: Signer,
