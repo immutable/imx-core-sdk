@@ -3,3 +3,4 @@
 /* eslint-disable */
 export type { Core } from "./Core";
 export type { Registration } from "./Registration";
+export type { RegistrationV2 } from "./RegistrationV2";
