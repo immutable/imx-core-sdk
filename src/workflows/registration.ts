@@ -3,9 +3,12 @@ import {
   GetSignableRegistrationResponse,
   RegisterUserResponse,
 } from '../api';
-import { WalletConnection } from '../types';
-import { signRaw } from '../utils';
+import { StarkSigner, WalletConnection } from '../types';
+import { signRaw, starkEcOrder } from '../utils';
 import { Registration } from '../contracts';
+import { solidityKeccak256 } from 'ethers/lib/utils';
+import BN from 'bn.js';
+import * as encUtils from 'enc-utils';
 
 type registerOffchainWorkflowParams = WalletConnection & {
   usersApi: UsersApi;
@@ -80,4 +83,19 @@ export async function getSignableRegistrationOnchain(
     readable_transaction: response.data.readable_transaction,
     verification_signature: response.data.verification_signature,
   };
+}
+
+export async function signRegisterEthAddress(
+  starkSigner: StarkSigner,
+  ethAddress: string,
+  starkPublicKey: string,
+): Promise<string> {
+  const hash: string = solidityKeccak256(
+    ['string', 'address', 'uint256'],
+    ['UserRegistration:', ethAddress, starkPublicKey],
+  );
+  const msgHash: BN = new BN(encUtils.removeHexPrefix(hash), 16);
+  const modMsgHash: BN = msgHash.mod(starkEcOrder);
+  const starkSignature = await starkSigner.signMessage(modMsgHash.toString(16));
+  return starkSignature;
 }
