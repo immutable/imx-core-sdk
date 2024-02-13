@@ -62,6 +62,8 @@ import {
   completeEthWithdrawalV2Workflow,
   prepareWithdrawalV2Workflow,
   prepareWithdrawalWorkflow,
+  registerAndCompleteAllERC20WithdrawalWorkflow,
+  registerAndCompleteAllEthWithdrawalWorkflow,
 } from './withdrawal';
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
@@ -288,7 +290,6 @@ export class Workflows {
 
   public async completeWithdrawal(
     walletConnection: WalletConnection,
-    starkPublicKey: string,
     token: AnyToken,
   ): Promise<TransactionResponse> {
     await this.validateChain(walletConnection.ethSigner);
@@ -297,6 +298,7 @@ export class Workflows {
     const majorContractVersion = await this.parseMajorContractVersion(
       starkExContractInfo.data.version,
     );
+    const starkPublicKey = await walletConnection.starkSigner.getAddress();
 
     if (majorContractVersion === 3) {
       switch (token.type) {
@@ -366,6 +368,112 @@ export class Workflows {
         case 'ERC20':
           return completeAllERC20WithdrawalWorkflow(
             walletConnection.ethSigner,
+            starkPublicKey,
+            token,
+            this.encodingApi,
+            this.config,
+          );
+        case 'ERC721':
+          // for ERC721, if the v3 balance > 0, then the v4 balance is 0
+          return this.completeERC721WithdrawalV2(
+            walletConnection.ethSigner,
+            starkPublicKey,
+            token,
+          );
+      }
+    }
+    if (v4Balance.gt(0)) {
+      return this.completeWithdrawalV2(
+        walletConnection.ethSigner,
+        ethAddress,
+        token,
+      );
+    }
+    throw new Error('Nothing to withdraw');
+  }
+
+  public async registerAndCompleteWithdrawal(
+    walletConnection: WalletConnection,
+    token: AnyToken,
+  ): Promise<TransactionResponse> {
+    await this.validateChain(walletConnection.ethSigner);
+
+    const starkExContractInfo = await this.getStarkExContractVersion();
+    const majorContractVersion = await this.parseMajorContractVersion(
+      starkExContractInfo.data.version,
+    );
+    const starkPublicKey = await walletConnection.starkSigner.getAddress();
+
+    if (majorContractVersion === 3) {
+      switch (token.type) {
+        case 'ETH':
+          return this.completeEthWithdrawalV1(
+            walletConnection.ethSigner,
+            starkPublicKey,
+          );
+        case 'ERC20':
+          return this.completeERC20WithdrawalV1(
+            walletConnection.ethSigner,
+            starkPublicKey,
+            token,
+          );
+        case 'ERC721':
+          return this.completeERC721WithdrawalV1(
+            walletConnection.ethSigner,
+            starkPublicKey,
+            token,
+          );
+      }
+    } else if (majorContractVersion >= 4) {
+      return this.registerAndCompleteWithdrawalAll(
+        walletConnection,
+        starkPublicKey,
+        token,
+      );
+    } else {
+      throw new Error(
+        `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
+      );
+    }
+  }
+
+  private async registerAndCompleteWithdrawalAll(
+    walletConnection: WalletConnection,
+    starkPublicKey: string,
+    token: AnyToken,
+  ): Promise<TransactionResponse> {
+    const ethAddress = await walletConnection.ethSigner.getAddress();
+    const v3Balance = await getWithdrawalBalanceWorkflow(
+      walletConnection.ethSigner,
+      starkPublicKey,
+      this.encodingApi,
+      this.config,
+    );
+    const v4Balance = await getWithdrawalBalanceWorkflow(
+      walletConnection.ethSigner,
+      ethAddress,
+      this.encodingApi,
+      this.config,
+    );
+
+    if (v3Balance.gt(0)) {
+      const isRegistered = await this.isRegisteredOnchain(walletConnection);
+      if (isRegistered) {
+        throw new Error('User is already registered on-chain');
+      }
+      switch (token.type) {
+        case 'ETH':
+          return registerAndCompleteAllEthWithdrawalWorkflow(
+            walletConnection,
+            ethAddress,
+            starkPublicKey,
+            this.encodingApi,
+            this.config,
+          );
+        case 'ERC20':
+          return registerAndCompleteAllERC20WithdrawalWorkflow(
+            walletConnection,
+            ethAddress,
             starkPublicKey,
             token,
             this.encodingApi,

@@ -11,9 +11,11 @@ import {
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
+  signRegisterEthAddress,
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import { RegistrationV2__factory } from 'src/contracts/factories/contracts';
+import { WalletConnection } from 'src/types';
 
 async function executeRegisterAndWithdrawEth(
   signer: Signer,
@@ -141,4 +143,35 @@ export async function completeAllEthWithdrawalWorkflow(
     );
 
   return signer.sendTransaction(populatedTransaction);
+}
+
+export async function registerAndCompleteAllEthWithdrawalWorkflow(
+  walletConnection: WalletConnection,
+  ethAddress: string,
+  starkPublicKey: string,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
+
+  const registrationContract = RegistrationV2__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    walletConnection.ethSigner,
+  );
+
+  const starkSignature = await signRegisterEthAddress(
+    walletConnection.starkSigner,
+    ethAddress,
+    starkPublicKey,
+  );
+
+  const populatedTransaction =
+    await registrationContract.populateTransaction.registerAndWithdrawAll(
+      ethAddress,
+      starkPublicKey,
+      starkSignature,
+      assetType.asset_id,
+    );
+
+  return walletConnection.ethSigner.sendTransaction(populatedTransaction);
 }
