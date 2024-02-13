@@ -17,3 +17,5 @@ export type { Core } from './contracts/Core';
 export { Core__factory } from './factories/contracts/Core__factory';
 export type { Registration } from './contracts/Registration';
 export { Registration__factory } from './factories/contracts/Registration__factory';
+export type { RegistrationV2 } from './contracts/RegistrationV2';
+export { RegistrationV2__factory } from './factories/contracts/RegistrationV2__factory';
