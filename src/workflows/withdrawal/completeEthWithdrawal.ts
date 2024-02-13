@@ -7,13 +7,13 @@ import {
   Core__factory,
   Registration,
   Registration__factory,
+  RegistrationV2__factory,
 } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
-import { RegistrationV2__factory } from 'src/contracts/factories/contracts';
 
 async function executeRegisterAndWithdrawEth(
   signer: Signer,
