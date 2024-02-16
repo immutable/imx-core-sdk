@@ -344,6 +344,7 @@ export class Workflows {
       walletConnection.ethSigner,
       starkPublicKey,
       ethAddress,
+      token,
     );
 
     if (v3Balance.gt(0)) {
@@ -390,17 +391,22 @@ export class Workflows {
     signer: Signer,
     starkPublicKey: string,
     ethAddress: string,
+    token: AnyToken,
   ): Promise<{ v3Balance: BigNumber; v4Balance: BigNumber }> {
     const v3Balance = await getWithdrawalBalanceWorkflow(
       signer,
       starkPublicKey,
+      token,
       this.encodingApi,
+      this.mintsApi,
       this.config,
     );
     const v4Balance = await getWithdrawalBalanceWorkflow(
       signer,
       ethAddress,
+      token,
       this.encodingApi,
+      this.mintsApi,
       this.config,
     );
     return { v3Balance, v4Balance };
