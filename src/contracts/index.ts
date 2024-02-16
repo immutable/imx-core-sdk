@@ -15,5 +15,7 @@ export type { IERC165 } from './@openzeppelin/contracts/utils/introspection/IERC
 export { IERC165__factory } from './factories/@openzeppelin/contracts/utils/introspection/IERC165__factory';
 export type { Core } from './contracts/Core';
 export { Core__factory } from './factories/contracts/Core__factory';
+export type { StarkV4 } from './contracts/StarkV4';
+export { StarkV4__factory } from './factories/contracts/StarkV4__factory';
 export type { Registration } from './contracts/Registration';
 export { Registration__factory } from './factories/contracts/Registration__factory';

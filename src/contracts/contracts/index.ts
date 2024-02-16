@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Core } from "./Core";
+export type { StarkV4 } from "./StarkV4";
 export type { Registration } from "./Registration";
