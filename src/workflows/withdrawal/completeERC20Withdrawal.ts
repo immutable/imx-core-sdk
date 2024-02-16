@@ -5,6 +5,7 @@ import { ImmutableXConfiguration } from '../../config';
 import {
   Core,
   Core__factory,
+  StarkV4__factory,
   Registration,
   Registration__factory,
   RegistrationV2__factory,
@@ -111,18 +112,19 @@ export async function completeERC20WithdrawalV2Workflow(
     token_address: token.tokenAddress,
   });
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV4__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const ownerKey = await signer.getAddress();
-  return executeWithdrawERC20(
-    signer,
-    assetType.asset_type,
+
+  const populatedTransaction = await coreContract.populateTransaction.withdraw(
     ownerKey,
-    coreContract,
+    assetType.asset_type,
   );
+
+  return signer.sendTransaction(populatedTransaction);
 }
 
 export async function completeAllERC20WithdrawalWorkflow(
