@@ -1,4 +1,3 @@
-import { Signer } from '@ethersproject/abstract-signer';
 import {
   DepositsApi,
   EncodingApi,
@@ -68,9 +67,11 @@ import { createTradeWorkflow } from './trades';
 import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
 import { exchangeTransfersWorkflow } from './exchangeTransfers';
-import axios, { AxiosResponse } from 'axios';
-import { TransactionResponse } from '@ethersproject/providers';
 import { getWithdrawalBalanceWorkflow } from './withdrawal/getBalance';
+import axios, { AxiosResponse } from 'axios';
+import { BigNumber } from 'ethers';
+import { Signer } from '@ethersproject/abstract-signer';
+import { TransactionResponse } from '@ethersproject/providers';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -319,9 +320,11 @@ export class Workflows {
           );
       }
     } else if (majorContractVersion >= 4) {
+      const ethAddress = await walletConnection.ethSigner.getAddress();
       return this.completeWithdrawalAll(
         walletConnection,
         starkPublicKey,
+        ethAddress,
         token,
       );
     } else {
@@ -334,20 +337,13 @@ export class Workflows {
   private async completeWithdrawalAll(
     walletConnection: WalletConnection,
     starkPublicKey: string,
+    ethAddress: string,
     token: AnyToken,
   ): Promise<TransactionResponse> {
-    const ethAddress = await walletConnection.ethSigner.getAddress();
-    const v3Balance = await getWithdrawalBalanceWorkflow(
+    const { v3Balance, v4Balance } = await this.getWithdrawalBalances(
       walletConnection.ethSigner,
       starkPublicKey,
-      this.encodingApi,
-      this.config,
-    );
-    const v4Balance = await getWithdrawalBalanceWorkflow(
-      walletConnection.ethSigner,
       ethAddress,
-      this.encodingApi,
-      this.config,
     );
 
     if (v3Balance.gt(0)) {
@@ -388,6 +384,26 @@ export class Workflows {
       );
     }
     throw new Error('Nothing to withdraw');
+  }
+
+  private async getWithdrawalBalances(
+    signer: Signer,
+    starkPublicKey: string,
+    ethAddress: string,
+  ): Promise<{ v3Balance: BigNumber; v4Balance: BigNumber }> {
+    const v3Balance = await getWithdrawalBalanceWorkflow(
+      signer,
+      starkPublicKey,
+      this.encodingApi,
+      this.config,
+    );
+    const v4Balance = await getWithdrawalBalanceWorkflow(
+      signer,
+      ethAddress,
+      this.encodingApi,
+      this.config,
+    );
+    return { v3Balance, v4Balance };
   }
 
   private async completeWithdrawalV2(
