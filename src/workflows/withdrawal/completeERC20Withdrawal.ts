@@ -7,6 +7,7 @@ import {
   StarkV3__factory,
   Registration,
   Registration__factory,
+  StarkV4__factory,
 } from '../../contracts';
 import { ERC20Token } from '../../types';
 import {
@@ -111,15 +112,15 @@ export async function completeERC20WithdrawalV2Workflow(
     token_address: token.tokenAddress,
   });
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV4__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
 
-  return executeWithdrawERC20(
-    signer,
-    assetType.asset_type,
+  const populatedTransaction = await coreContract.populateTransaction.withdraw(
     ownerKey,
-    coreContract,
+    assetType.asset_type,
   );
+
+  return signer.sendTransaction(populatedTransaction);
 }
