@@ -28,6 +28,17 @@ export class StandardStarkSigner implements StarkSigner {
     );
   }
 
+  public async sign(msg: string): Promise<ec.Signature> {
+    return this.keyPair.sign(this.fixMsgHashLen(msg));
+  }
+
+  public getYCoordinate(): string {
+    return encUtils.sanitizeBytes(
+      this.keyPair.getPublic().getY().toString(16),
+      2,
+    );
+  }
+
   /*
  The function _truncateToN in lib/elliptic/ec/index.js does a shift-right of delta bits,
  if delta is positive, where
@@ -59,4 +70,19 @@ export class StandardStarkSigner implements StarkSigner {
  */
 export function createStarkSigner(starkPrivateKey: string): StarkSigner {
   return new StandardStarkSigner(starkPrivateKey);
+}
+
+export function serializePackedSignature(
+  sig: ec.Signature,
+  pubY: string,
+): string {
+  return encUtils.sanitizeHex(
+    encUtils.padLeft(sig.r.toString(16), 64) +
+      encUtils.padLeft(sig.s.toString(16), 64, '0') +
+      encUtils.padLeft(
+        new BN(encUtils.removeHexPrefix(pubY), 'hex').toString(16),
+        64,
+        '0',
+      ),
+  );
 }
