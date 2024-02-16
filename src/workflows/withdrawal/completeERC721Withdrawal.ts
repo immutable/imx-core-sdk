@@ -5,6 +5,7 @@ import {
   Core__factory,
   Registration,
   Registration__factory,
+  StarkV4__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
 import { ERC721Token } from '../../types';
@@ -289,18 +290,18 @@ async function completeMintableERC721WithdrawalV2(
   );
   const mintingBlob = getMintingBlob(token);
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV4__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
 
-  return executeWithdrawMintableERC721(
-    signer,
-    assetType.asset_type,
-    ownerKey,
-    mintingBlob,
-    coreContract,
-  );
+  const populatedTransaction =
+    await coreContract.populateTransaction.withdrawAndMint(
+      ownerKey,
+      assetType.asset_type,
+      mintingBlob,
+    );
+  return signer.sendTransaction(populatedTransaction);
 }
 
 async function completeERC721WithdrawalV2(
@@ -315,18 +316,18 @@ async function completeERC721WithdrawalV2(
     token_address: token.tokenAddress,
   });
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV4__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
 
-  return executeWithdrawERC721(
-    signer,
-    assetType.asset_type,
-    ownerKey,
-    token.tokenId,
-    coreContract,
-  );
+  const populatedTransaction =
+    await coreContract.populateTransaction.withdrawNft(
+      ownerKey,
+      assetType.asset_type,
+      token.tokenId,
+    );
+  return signer.sendTransaction(populatedTransaction);
 }
 
 export async function completeERC721WithdrawalV2Workflow(

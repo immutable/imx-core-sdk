@@ -5,6 +5,7 @@ import { ImmutableXConfiguration } from '../../config';
 import {
   Core,
   Core__factory,
+  StarkV4__factory,
   Registration,
   Registration__factory,
   RegistrationV2__factory,
@@ -106,19 +107,19 @@ export async function completeEthWithdrawalV2Workflow(
 ): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV4__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
 
   const ownerKey = await signer.getAddress();
 
-  return executeWithdrawEth(
-    signer,
-    assetType.asset_type,
+  const populatedTransaction = await coreContract.populateTransaction.withdraw(
     ownerKey,
-    coreContract,
+    assetType.asset_type,
   );
+
+  return signer.sendTransaction(populatedTransaction);
 }
 
 export async function completeAllEthWithdrawalWorkflow(
