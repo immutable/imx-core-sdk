@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Core__factory } from "./Core__factory";
+export { StarkV4__factory } from "./StarkV4__factory";
 export { Registration__factory } from "./Registration__factory";
 export { RegistrationV2__factory } from "./RegistrationV2__factory";
