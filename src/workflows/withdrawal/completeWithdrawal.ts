@@ -1,13 +1,13 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { AnyToken } from 'src/types';
+import { EncodingApi, MintsApi, UsersApi } from 'src/api';
+import { ImmutableXConfiguration } from 'src/config';
 import {
   completeAllEthWithdrawalWorkflow,
   completeEthWithdrawalV1Workflow,
   completeEthWithdrawalV2Workflow,
 } from './completeEthWithdrawal';
-import { EncodingApi, MintsApi, UsersApi } from 'src/api';
-import { ImmutableXConfiguration } from 'src/config';
 import {
   completeAllERC20WithdrawalWorkflow,
   completeERC20WithdrawalV1Workflow,

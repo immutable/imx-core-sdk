@@ -2,8 +2,8 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import {
-  Core,
-  Core__factory,
+  StarkV3,
+  StarkV3__factory,
   IERC721__factory,
   Registration__factory,
 } from '../../contracts';
@@ -25,7 +25,7 @@ async function executeDepositERC721(
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
-  contract: Core,
+  contract: StarkV3,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction.depositNft(
     starkPublicKey,
@@ -85,7 +85,7 @@ export async function depositERC721Workflow(
   const starkPublicKey = signableDepositResult.data.stark_key;
   const vaultId = signableDepositResult.data.vault_id;
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV3__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );

@@ -53,6 +53,11 @@ import {
   prepareWithdrawalV2Workflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
+import {
+  completeAllWithdrawalWorkflow,
+  completeWithdrawalV1Workflow,
+  completeWithdrawalV2Workflow,
+} from './withdrawal/completeWithdrawal';
 import { cancelOrderWorkflow, createOrderWorkflow } from './orders';
 import { createTradeWorkflow } from './trades';
 import { generateIMXAuthorisationHeaders } from '../utils';
@@ -63,11 +68,6 @@ import axios, { AxiosResponse } from 'axios';
 import { BigNumber } from 'ethers';
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
-import {
-  completeAllWithdrawalWorkflow,
-  completeWithdrawalV1Workflow,
-  completeWithdrawalV2Workflow,
-} from './withdrawal/completeWithdrawal';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -296,6 +296,7 @@ export class Workflows {
     const starkPublicKey = await walletConnection.starkSigner.getAddress();
 
     if (majorContractVersion === 3) {
+      const starkPublicKey = await walletConnection.starkSigner.getAddress();
       return completeWithdrawalV1Workflow(
         walletConnection.ethSigner,
         starkPublicKey,
