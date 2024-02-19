@@ -1,5 +1,6 @@
 import { ec } from 'elliptic';
 import { Signer as EthSigner } from '@ethersproject/abstract-signer';
+import { ec } from 'elliptic';
 
 export { EthSigner };
 
@@ -23,6 +24,7 @@ export interface StarkSigner {
   sign(message: string): Promise<ec.Signature>;
 
   getYCoordinate(): string;
+
   /**
    * Get the Signer address
    * @returns the Signer's checksum address
