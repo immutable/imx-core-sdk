@@ -103,7 +103,6 @@ export async function completeERC20WithdrawalV1Workflow(
 
 export async function completeERC20WithdrawalV2Workflow(
   signer: Signer,
-  ownerKey: string,
   token: ERC20Token,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
@@ -116,6 +115,8 @@ export async function completeERC20WithdrawalV2Workflow(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
+
+  const ownerKey = await signer.getAddress();
 
   const populatedTransaction = await coreContract.populateTransaction.withdraw(
     ownerKey,

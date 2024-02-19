@@ -99,7 +99,6 @@ export async function completeEthWithdrawalV1Workflow(
 
 export async function completeEthWithdrawalV2Workflow(
   signer: Signer,
-  ownerKey: string,
   encodingApi: EncodingApi,
   config: ImmutableXConfiguration,
 ): Promise<TransactionResponse> {
@@ -109,6 +108,8 @@ export async function completeEthWithdrawalV2Workflow(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
+
+  const ownerKey = await signer.getAddress();
 
   const populatedTransaction = await coreContract.populateTransaction.withdraw(
     ownerKey,
