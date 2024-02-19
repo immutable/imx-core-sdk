@@ -42,6 +42,7 @@ import { Registration__factory } from '../contracts';
 import {
   isRegisteredOnChainWorkflow,
   registerOffchainWorkflow,
+  registerOnchainWorkflow,
 } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
@@ -129,6 +130,12 @@ export class Workflows {
       ...walletConnection,
       usersApi: this.usersApi,
     });
+  }
+
+  public async registerOnchain(walletConnection: WalletConnection) {
+    await this.validateChain(walletConnection.ethSigner);
+
+    return registerOnchainWorkflow(walletConnection, this.config);
   }
 
   public async isRegisteredOnchain(walletConnection: WalletConnection) {
