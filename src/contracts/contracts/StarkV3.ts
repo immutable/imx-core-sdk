@@ -27,7 +27,7 @@ import type {
   OnEvent,
 } from "../common";
 
-export interface CoreInterface extends utils.Interface {
+export interface StarkV3Interface extends utils.Interface {
   functions: {
     "announceAvailabilityVerifierRemovalIntent(address)": FunctionFragment;
     "announceVerifierRemovalIntent(address)": FunctionFragment;
@@ -864,12 +864,12 @@ export type LogWithdrawalPerformedEvent = TypedEvent<
 export type LogWithdrawalPerformedEventFilter =
   TypedEventFilter<LogWithdrawalPerformedEvent>;
 
-export interface Core extends BaseContract {
+export interface StarkV3 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CoreInterface;
+  interface: StarkV3Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

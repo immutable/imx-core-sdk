@@ -1,4 +1,3 @@
-import { ec } from 'elliptic';
 import { Signer as EthSigner } from '@ethersproject/abstract-signer';
 import { ec } from 'elliptic';
 

@@ -3,8 +3,8 @@ import { TransactionResponse } from '@ethersproject/providers';
 import { EncodingApi, UsersApi } from '../../api';
 import { ImmutableXConfiguration } from '../../config';
 import {
-  Core,
-  Core__factory,
+  StarkV3,
+  StarkV3__factory,
   StarkV4__factory,
   Registration,
   Registration__factory,
@@ -48,7 +48,7 @@ async function executeWithdrawEth(
   signer: Signer,
   assetType: string,
   starkPublicKey: string,
-  contract: Core,
+  contract: StarkV3,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction.withdraw(
     starkPublicKey,
@@ -67,7 +67,7 @@ export async function completeEthWithdrawalV1Workflow(
 ): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV3__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );

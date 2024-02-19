@@ -1,8 +1,8 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { EncodingApi, MintsApi, UsersApi } from '../../api';
 import {
-  Core,
-  Core__factory,
+  StarkV3,
+  StarkV3__factory,
   Registration,
   RegistrationV2__factory,
   Registration__factory,
@@ -33,7 +33,7 @@ async function executeWithdrawMintableERC721(
   assetType: string,
   starkPublicKey: string,
   mintingBlob: string,
-  contract: Core,
+  contract: StarkV3,
 ): Promise<TransactionResponse> {
   const populatedTransaction =
     await contract.populateTransaction.withdrawAndMint(
@@ -98,7 +98,7 @@ async function completeMintableERC721WithdrawalV1(
   );
   const mintingBlob = getMintingBlob(token);
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV3__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
@@ -166,7 +166,7 @@ async function executeWithdrawERC721(
   assetType: string,
   starkPublicKey: string,
   tokenId: string,
-  contract: Core,
+  contract: StarkV3,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction.withdrawNft(
     starkPublicKey,
@@ -189,7 +189,7 @@ async function completeERC721WithdrawalV1(
     token_address: token.tokenAddress,
   });
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV3__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
@@ -446,13 +446,13 @@ export async function completeERC721WithdrawalV2Workflow(
 
 export async function registerAndCompleteERC721WithdrawalWorkflow(
   walletConnection: WalletConnection,
+  ethAddress: string,
+  starkPublicKey: string,
   token: ERC721Token,
   encodingApi: EncodingApi,
   mintsApi: MintsApi,
   config: ImmutableXConfiguration,
 ): Promise<TransactionResponse> {
-  const ethAddress = await walletConnection.ethSigner.getAddress();
-  const starkPublicKey = await walletConnection.starkSigner.getAddress();
   const starkSignature = await signRegisterEthAddress(
     walletConnection.starkSigner,
     ethAddress,
