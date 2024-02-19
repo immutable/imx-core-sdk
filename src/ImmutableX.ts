@@ -637,18 +637,16 @@ export class ImmutableX {
   /**
    * Completes a Withdrawal
    * @param walletConnection - the pair of L1/L2 signers
-   * @param starkPublicKey - the Signer address
    * @param token - the token
    * @returns a promise that resolves with the transaction
    * @throws {@link index.IMXError}
    */
   public completeWithdrawal(
     walletConnection: WalletConnection,
-    starkPublicKey: string,
     token: AnyToken,
   ) {
     return this.workflows
-      .completeWithdrawal(walletConnection, starkPublicKey, token)
+      .completeWithdrawal(walletConnection, token)
       .catch(err => {
         throw formatError(err);
       });
