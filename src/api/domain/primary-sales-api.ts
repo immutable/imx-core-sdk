@@ -63,6 +63,22 @@ import { GetPrimarySaleNotImplementedBody } from '../models';
 // @ts-ignore
 import { GetPrimarySaleOKBody } from '../models';
 // @ts-ignore
+import { RejectPrimarySaleBadRequestBody } from '../models';
+// @ts-ignore
+import { RejectPrimarySaleForbiddenBody } from '../models';
+// @ts-ignore
+import { RejectPrimarySaleInternalServerErrorBody } from '../models';
+// @ts-ignore
+import { RejectPrimarySaleNotFoundBody } from '../models';
+// @ts-ignore
+import { RejectPrimarySaleNotImplementedBody } from '../models';
+// @ts-ignore
+import { RejectPrimarySaleOKBody } from '../models';
+// @ts-ignore
+import { RejectPrimarySaleUnauthorizedBody } from '../models';
+// @ts-ignore
+import { RejectPrimarySaleUnprocessableEntityBody } from '../models';
+// @ts-ignore
 import { SignableAcceptPrimarySaleBadRequestBody } from '../models';
 // @ts-ignore
 import { SignableAcceptPrimarySaleInternalServerErrorBody } from '../models';
@@ -86,6 +102,18 @@ import { SignableCreatePrimarySaleNotImplementedBody } from '../models';
 import { SignableCreatePrimarySaleOKBody } from '../models';
 // @ts-ignore
 import { SignableCreatePrimarySaleParamsBody } from '../models';
+// @ts-ignore
+import { SignableRejectPrimarySaleBadRequestBody } from '../models';
+// @ts-ignore
+import { SignableRejectPrimarySaleInternalServerErrorBody } from '../models';
+// @ts-ignore
+import { SignableRejectPrimarySaleNotFoundBody } from '../models';
+// @ts-ignore
+import { SignableRejectPrimarySaleNotImplementedBody } from '../models';
+// @ts-ignore
+import { SignableRejectPrimarySaleOKBody } from '../models';
+// @ts-ignore
+import { SignableRejectPrimarySaleUnprocessableEntityBody } from '../models';
 /**
  * PrimarySalesApi - axios parameter creator
  * @export
@@ -207,6 +235,46 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
+         * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary [Experimental] Reject Primary Sale
+         * @param {number} id Global Primary Sale identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectPrimarySale: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('rejectPrimarySale', 'id', id)
+            const localVarPath = `/v1/primary_sales/{id}/reject`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ImxEthAddress required
+            await setApiKeyToObject(localVarHeaderParameter, "x-imx-eth-address", configuration)
+
+            // authentication ImxEthSignature required
+            await setApiKeyToObject(localVarHeaderParameter, "x-imx-eth-signature", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
          * @summary [Experimental] Signable Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
@@ -274,6 +342,40 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary [Experimental] Signable Reject Primary Sale
+         * @param {number} id Global Primary Sale identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signableRejectPrimarySale: async (id: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('signableRejectPrimarySale', 'id', id)
+            const localVarPath = `/v1/primary_sales/{id}/signable-reject-details`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -318,6 +420,17 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary [Experimental] Reject Primary Sale
+         * @param {number} id Global Primary Sale identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rejectPrimarySale(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RejectPrimarySaleOKBody>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rejectPrimarySale(id, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
          * @summary [Experimental] Signable Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
@@ -337,6 +450,17 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
          */
         async signableCreatePrimarySale(body?: SignableCreatePrimarySaleParamsBody, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignableCreatePrimarySaleOKBody>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.signableCreatePrimarySale(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary [Experimental] Signable Reject Primary Sale
+         * @param {number} id Global Primary Sale identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async signableRejectPrimarySale(id: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignableRejectPrimarySaleOKBody>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.signableRejectPrimarySale(id, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -380,6 +504,16 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
             return localVarFp.getPrimarySale(id, options).then((request) => request(axios, basePath));
         },
         /**
+         * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary [Experimental] Reject Primary Sale
+         * @param {number} id Global Primary Sale identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rejectPrimarySale(id: number, options?: any): AxiosPromise<RejectPrimarySaleOKBody> {
+            return localVarFp.rejectPrimarySale(id, options).then((request) => request(axios, basePath));
+        },
+        /**
          * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
          * @summary [Experimental] Signable Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
@@ -398,6 +532,16 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
          */
         signableCreatePrimarySale(body?: SignableCreatePrimarySaleParamsBody, options?: any): AxiosPromise<SignableCreatePrimarySaleOKBody> {
             return localVarFp.signableCreatePrimarySale(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary [Experimental] Signable Reject Primary Sale
+         * @param {number} id Global Primary Sale identifier
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        signableRejectPrimarySale(id: number, options?: any): AxiosPromise<SignableRejectPrimarySaleOKBody> {
+            return localVarFp.signableRejectPrimarySale(id, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -445,6 +589,20 @@ export interface PrimarySalesApiGetPrimarySaleRequest {
 }
 
 /**
+ * Request parameters for rejectPrimarySale operation in PrimarySalesApi.
+ * @export
+ * @interface PrimarySalesApiRejectPrimarySaleRequest
+ */
+export interface PrimarySalesApiRejectPrimarySaleRequest {
+    /**
+     * Global Primary Sale identifier
+     * @type {number}
+     * @memberof PrimarySalesApiRejectPrimarySale
+     */
+    readonly id: number
+}
+
+/**
  * Request parameters for signableAcceptPrimarySale operation in PrimarySalesApi.
  * @export
  * @interface PrimarySalesApiSignableAcceptPrimarySaleRequest
@@ -470,6 +628,20 @@ export interface PrimarySalesApiSignableCreatePrimarySaleRequest {
      * @memberof PrimarySalesApiSignableCreatePrimarySale
      */
     readonly body?: SignableCreatePrimarySaleParamsBody
+}
+
+/**
+ * Request parameters for signableRejectPrimarySale operation in PrimarySalesApi.
+ * @export
+ * @interface PrimarySalesApiSignableRejectPrimarySaleRequest
+ */
+export interface PrimarySalesApiSignableRejectPrimarySaleRequest {
+    /**
+     * Global Primary Sale identifier
+     * @type {number}
+     * @memberof PrimarySalesApiSignableRejectPrimarySale
+     */
+    readonly id: number
 }
 
 /**
@@ -516,6 +688,18 @@ export class PrimarySalesApi extends BaseAPI {
     }
 
     /**
+     * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
+     * @summary [Experimental] Reject Primary Sale
+     * @param {PrimarySalesApiRejectPrimarySaleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrimarySalesApi
+     */
+    public rejectPrimarySale(requestParameters: PrimarySalesApiRejectPrimarySaleRequest, options?: AxiosRequestConfig) {
+        return PrimarySalesApiFp(this.configuration).rejectPrimarySale(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
      * @summary [Experimental] Signable Accept Primary Sale
      * @param {PrimarySalesApiSignableAcceptPrimarySaleRequest} requestParameters Request parameters.
@@ -537,5 +721,17 @@ export class PrimarySalesApi extends BaseAPI {
      */
     public signableCreatePrimarySale(requestParameters: PrimarySalesApiSignableCreatePrimarySaleRequest = {}, options?: AxiosRequestConfig) {
         return PrimarySalesApiFp(this.configuration).signableCreatePrimarySale(requestParameters.body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+     * @summary [Experimental] Signable Reject Primary Sale
+     * @param {PrimarySalesApiSignableRejectPrimarySaleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrimarySalesApi
+     */
+    public signableRejectPrimarySale(requestParameters: PrimarySalesApiSignableRejectPrimarySaleRequest, options?: AxiosRequestConfig) {
+        return PrimarySalesApiFp(this.configuration).signableRejectPrimarySale(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 }
