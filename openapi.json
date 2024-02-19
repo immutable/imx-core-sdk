@@ -11,9 +11,9 @@
       "url": "https://support.immutable.com",
       "email": "support@immutable.com"
     },
-    "version": "3.0.0"
+    "version": "3.0"
   },
-  "host": "api.sandbox.immutable.com",
+  "host": "api.sandbox.x.immutable.com",
   "basePath": "/",
   "paths": {
     "/v1/assets": {
@@ -1980,6 +1980,146 @@
             "description": "Not Implemented Error (501)",
             "schema": {
               "$ref": "#/definitions/signableAcceptPrimarySaleNotImplementedBody"
+            }
+          }
+        }
+      }
+    },
+    "/v1/primary_sales/{id}/reject": {
+      "post": {
+        "security": [
+          {
+            "ImxEthAddress": [],
+            "ImxEthSignature": []
+          }
+        ],
+        "description": "[Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "primary-sales"
+        ],
+        "summary": "[Experimental] Reject Primary Sale",
+        "operationId": "RejectPrimarySale",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "description": "Global Primary Sale identifier",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK response.",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleOKBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request (400)",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleBadRequestBody"
+            }
+          },
+          "401": {
+            "description": "Unauthorised Request (401)",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleUnauthorizedBody"
+            }
+          },
+          "403": {
+            "description": "Forbidden (403)",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleForbiddenBody"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found (404)",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleNotFoundBody"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (422)",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleUnprocessableEntityBody"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error (500)",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleInternalServerErrorBody"
+            }
+          },
+          "501": {
+            "description": "Not Implemented Error (501)",
+            "schema": {
+              "$ref": "#/definitions/rejectPrimarySaleNotImplementedBody"
+            }
+          }
+        }
+      }
+    },
+    "/v1/primary_sales/{id}/signable-reject-details": {
+      "post": {
+        "description": "[Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "primary-sales"
+        ],
+        "summary": "[Experimental] Signable Reject Primary Sale",
+        "operationId": "SignableRejectPrimarySale",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "description": "Global Primary Sale identifier",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK response.",
+            "schema": {
+              "$ref": "#/definitions/signableRejectPrimarySaleOKBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request (400)",
+            "schema": {
+              "$ref": "#/definitions/signableRejectPrimarySaleBadRequestBody"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found (404)",
+            "schema": {
+              "$ref": "#/definitions/signableRejectPrimarySaleNotFoundBody"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (422)",
+            "schema": {
+              "$ref": "#/definitions/signableRejectPrimarySaleUnprocessableEntityBody"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error (500)",
+            "schema": {
+              "$ref": "#/definitions/signableRejectPrimarySaleInternalServerErrorBody"
+            }
+          },
+          "501": {
+            "description": "Not Implemented Error (501)",
+            "schema": {
+              "$ref": "#/definitions/signableRejectPrimarySaleNotImplementedBody"
             }
           }
         }
@@ -11924,6 +12064,574 @@
         }
       }
     },
+    "rejectPrimarySaleBadRequestBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/rejectPrimarySaleBadRequestBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/rejectPrimarySaleBadRequestBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleBadRequestBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleBadRequestBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "VALIDATION_ERROR"
+          ],
+          "example": "VALIDATION_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleForbiddenBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/rejectPrimarySaleForbiddenBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/rejectPrimarySaleForbiddenBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleForbiddenBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleForbiddenBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "AUTHENTICATION_ERROR"
+          ],
+          "example": "AUTHENTICATION_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleInternalServerErrorBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/rejectPrimarySaleInternalServerErrorBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/rejectPrimarySaleInternalServerErrorBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleInternalServerErrorBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleInternalServerErrorBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "INTERNAL_SERVER_ERROR"
+          ],
+          "example": "INTERNAL_SERVER_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleNotFoundBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/rejectPrimarySaleNotFoundBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/rejectPrimarySaleNotFoundBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleNotFoundBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleNotFoundBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "RESOURCE_NOT_FOUND"
+          ],
+          "example": "RESOURCE_NOT_FOUND"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleNotImplementedBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/rejectPrimarySaleNotImplementedBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/rejectPrimarySaleNotImplementedBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleNotImplementedBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleNotImplementedBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "NOT_IMPLEMENTED_ERROR"
+          ],
+          "example": "NOT_IMPLEMENTED_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleOKBody": {
+      "type": "object",
+      "required": [
+        "result"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/rejectPrimarySaleOKBodyResult"
+        }
+      },
+      "x-go-gen-location": "operations",
+      "example": {
+        "result": {
+          "id": 1
+        }
+      }
+    },
+    "rejectPrimarySaleOKBodyResult": {
+      "type": "object",
+      "required": [
+        "id",
+        "studio_ether_key",
+        "buyer_ether_key",
+        "payment_recipient_ether_key",
+        "items_recipient_ether_key",
+        "payment_token",
+        "payment_amount",
+        "studio_data",
+        "status",
+        "expires_at",
+        "created_at",
+        "updated_at"
+      ],
+      "properties": {
+        "buyer_ether_key": {
+          "description": "Ethereum address of the buyer",
+          "type": "string",
+          "example": "0x123"
+        },
+        "created_at": {
+          "description": "Time the primary sale was created",
+          "type": "string",
+          "format": "date-time",
+          "example": "2022-03-07T07:20:50.52Z"
+        },
+        "expires_at": {
+          "description": "Time the primary sale expires",
+          "type": "string",
+          "format": "date-time",
+          "example": "2022-03-07T07:20:50.52Z"
+        },
+        "fees": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/rejectPrimarySaleOKBodyResultFeesItems"
+          }
+        },
+        "id": {
+          "description": "Global Primary Sale identifier",
+          "type": "integer",
+          "format": "int64",
+          "example": 123
+        },
+        "items_recipient_ether_key": {
+          "description": "Ethereum address of the items receiver",
+          "type": "string",
+          "example": "0x123"
+        },
+        "payment_amount": {
+          "description": "Fee inclusive amount of the transfer",
+          "type": "string",
+          "example": "102000"
+        },
+        "payment_recipient_ether_key": {
+          "description": "Ethereum address of the payment receiver",
+          "type": "string",
+          "example": "0x123"
+        },
+        "payment_token": {},
+        "status": {
+          "description": "The primary sale status",
+          "type": "string",
+          "enum": [
+            "PENDING",
+            "ACTIVE",
+            "INVALID",
+            "IN_PROGRESS",
+            "ACCEPTED",
+            "FAILED",
+            "REJECTED",
+            "EXPIRED"
+          ]
+        },
+        "studio_data": {
+          "description": "Arbitrary data defined by the selling party (e.g. game studio) to identify the primary sale. We suggest signing this payload to verify authenticity when processing.",
+          "type": "string"
+        },
+        "studio_ether_key": {
+          "description": "Ethereum address of the studio operating the primary sale, will be used to verify in completion",
+          "type": "string",
+          "example": "0x64E3F78E6C55299d004D45EF43ADaf5A7D83c9B8"
+        },
+        "updated_at": {
+          "description": "Time the primary sale was updated",
+          "type": "string",
+          "format": "date-time",
+          "example": "2022-03-07T07:20:50.52Z"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleOKBodyResultFeesItems": {
+      "description": "Fee required to be paid for a primary sale",
+      "type": "object",
+      "required": [
+        "type",
+        "percentage",
+        "amount",
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "description": "Ethereum address of the fee recipient",
+          "type": "string",
+          "example": "0x64E3F78E6C55299d004D45EF43ADaf5A7D83c9B8"
+        },
+        "amount": {
+          "description": "Fee amount",
+          "type": "string",
+          "example": "1000000000000000000"
+        },
+        "percentage": {
+          "description": "Fee percentage in basis points (e.g. 200 for 2%)",
+          "type": "integer",
+          "example": 200
+        },
+        "type": {
+          "description": "Fee type",
+          "type": "string",
+          "enum": [
+            "ECOSYSTEM",
+            "PROTOCOL"
+          ],
+          "example": "PRIMARY_SALE"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleUnauthorizedBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/rejectPrimarySaleUnauthorizedBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/rejectPrimarySaleUnauthorizedBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleUnauthorizedBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleUnauthorizedBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "UNAUTHORISED_REQUEST"
+          ],
+          "example": "UNAUTHORISED_REQUEST"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleUnprocessableEntityBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/rejectPrimarySaleUnprocessableEntityBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/rejectPrimarySaleUnprocessableEntityBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleUnprocessableEntityBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "rejectPrimarySaleUnprocessableEntityBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "UNPROCESSABLE_ENTITY_ERROR"
+          ],
+          "example": "UNPROCESSABLE_ENTITY_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
     "signableAcceptPrimarySaleBadRequestBody": {
       "allOf": [
         {
@@ -12714,6 +13422,320 @@
           "description": "Fee percentage in basis points (e.g. 200 for 2%)",
           "type": "integer",
           "example": 200
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleBadRequestBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleBadRequestBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleBadRequestBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleBadRequestBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleBadRequestBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "VALIDATION_ERROR"
+          ],
+          "example": "VALIDATION_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleInternalServerErrorBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleInternalServerErrorBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleInternalServerErrorBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleInternalServerErrorBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleInternalServerErrorBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "INTERNAL_SERVER_ERROR"
+          ],
+          "example": "INTERNAL_SERVER_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleNotFoundBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleNotFoundBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleNotFoundBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleNotFoundBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleNotFoundBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "RESOURCE_NOT_FOUND"
+          ],
+          "example": "RESOURCE_NOT_FOUND"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleNotImplementedBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleNotImplementedBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleNotImplementedBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleNotImplementedBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleNotImplementedBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "NOT_IMPLEMENTED_ERROR"
+          ],
+          "example": "NOT_IMPLEMENTED_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleOKBody": {
+      "type": "object",
+      "required": [
+        "signable_message"
+      ],
+      "properties": {
+        "signable_message": {
+          "description": "Hashed Ethereum payload of the request",
+          "type": "string",
+          "example": "0x123"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleUnprocessableEntityBody": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleUnprocessableEntityBodyAllOf0"
+        },
+        {
+          "$ref": "#/definitions/signableRejectPrimarySaleUnprocessableEntityBodyAllOf1"
+        }
+      ],
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleUnprocessableEntityBodyAllOf0": {
+      "type": "object",
+      "required": [
+        "message",
+        "link",
+        "trace_id"
+      ],
+      "properties": {
+        "link": {
+          "description": "Link to IMX documentation that can help resolve this error",
+          "type": "string",
+          "example": "https://docs.x.immutable.com/reference/#/"
+        },
+        "message": {
+          "description": "Error Message",
+          "type": "string",
+          "example": "all fields must be provided"
+        },
+        "trace_id": {
+          "description": "Trace ID of the initial request",
+          "type": "string",
+          "example": "e47634b79a5cd6894ddc9639ec4aad26"
+        }
+      },
+      "x-go-gen-location": "operations"
+    },
+    "signableRejectPrimarySaleUnprocessableEntityBodyAllOf1": {
+      "type": "object",
+      "required": [
+        "code",
+        "details"
+      ],
+      "properties": {
+        "code": {
+          "description": "Error Code",
+          "type": "string",
+          "enum": [
+            "UNPROCESSABLE_ENTITY_ERROR"
+          ],
+          "example": "UNPROCESSABLE_ENTITY_ERROR"
+        },
+        "details": {
+          "description": "Additional details to help resolve the error",
+          "type": "object",
+          "x-nullable": true
         }
       },
       "x-go-gen-location": "operations"
