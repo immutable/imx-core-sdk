@@ -4,15 +4,17 @@ import {
   Core,
   Core__factory,
   Registration,
+  RegistrationV2__factory,
   Registration__factory,
   StarkV4__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
-import { ERC721Token } from '../../types';
+import { ERC721Token, WalletConnection } from '../../types';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
+  signRegisterEthAddress,
 } from '../registration';
 import { TransactionResponse } from '@ethersproject/providers';
 import { ImmutableXConfiguration } from '../../config';
@@ -330,6 +332,72 @@ async function completeERC721WithdrawalV2(
   return signer.sendTransaction(populatedTransaction);
 }
 
+async function registerAndCompleteMintableERC721WithdrawalV2(
+  signer: Signer,
+  ethAddress: string,
+  starkPublicKey: string,
+  starkSignature: string,
+  token: MintableERC721Withdrawal,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+) {
+  const assetType = await getEncodeAssetInfo(
+    'mintable-asset',
+    'ERC721',
+    encodingApi,
+    {
+      id: token.data.id,
+      token_address: token.data.tokenAddress,
+      ...(token.data.blueprint && { blueprint: token.data.blueprint }),
+    },
+  );
+  const mintingBlob = getMintingBlob(token);
+  const contract = RegistrationV2__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    signer,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerWithdrawAndMint(
+      ethAddress,
+      starkPublicKey,
+      starkSignature,
+      assetType.asset_type,
+      mintingBlob,
+    );
+  return signer.sendTransaction(populatedTransaction);
+}
+
+async function registerAndCompleteERC721WithdrawalV2(
+  signer: Signer,
+  ethAddress: string,
+  starkPublicKey: string,
+  starkSignature: string,
+  token: ERC721Token,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+) {
+  const assetType = await getEncodeAssetInfo('asset', 'ERC721', encodingApi, {
+    token_id: token.tokenId,
+    token_address: token.tokenAddress,
+  });
+
+  const contract = RegistrationV2__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    signer,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerAndWithdrawNft(
+      ethAddress,
+      starkPublicKey,
+      starkSignature,
+      assetType.asset_type,
+      token.tokenId,
+    );
+  return signer.sendTransaction(populatedTransaction);
+}
+
 export async function completeERC721WithdrawalV2Workflow(
   signer: Signer,
   ownerKey: string,
@@ -367,6 +435,63 @@ export async function completeERC721WithdrawalV2Workflow(
         return completeERC721WithdrawalV2(
           signer,
           ownerKey,
+          token,
+          encodingApi,
+          config,
+        );
+      }
+      throw error; // unable to recover from any other kind of error
+    });
+}
+
+export async function registerAndCompleteERC721WithdrawalWorkflow(
+  walletConnection: WalletConnection,
+  token: ERC721Token,
+  encodingApi: EncodingApi,
+  mintsApi: MintsApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const ethAddress = await walletConnection.ethSigner.getAddress();
+  const starkPublicKey = await walletConnection.starkSigner.getAddress();
+  const starkSignature = await signRegisterEthAddress(
+    walletConnection.starkSigner,
+    ethAddress,
+    starkPublicKey,
+  );
+  const tokenAddress = token.tokenAddress;
+  const tokenId = token.tokenId;
+
+  return await mintsApi
+    .getMintableTokenDetailsByClientTokenId({
+      tokenAddress,
+      tokenId,
+    })
+    .then(async mintableToken =>
+      registerAndCompleteMintableERC721WithdrawalV2(
+        walletConnection.ethSigner,
+        ethAddress,
+        starkPublicKey,
+        starkSignature,
+        {
+          type: 'ERC721',
+          data: {
+            id: tokenId,
+            tokenAddress: tokenAddress,
+            blueprint: mintableToken.data.blueprint,
+          },
+        },
+        encodingApi,
+        config,
+      ),
+    )
+    .catch(error => {
+      if (error.response?.status === 404) {
+        // token is already minted on L1
+        return registerAndCompleteERC721WithdrawalV2(
+          walletConnection.ethSigner,
+          ethAddress,
+          starkPublicKey,
+          starkSignature,
           token,
           encodingApi,
           config,
