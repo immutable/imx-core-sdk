@@ -33,7 +33,6 @@ import {
   ETHAmount,
   ERC20Amount,
   AnyToken,
-  ERC20Token,
   EthSigner,
   UnsignedExchangeTransferRequest,
   StarkExContractVersion,
@@ -51,14 +50,6 @@ import {
   depositEthWorkflow,
 } from './deposit';
 import {
-  completeAllERC20WithdrawalWorkflow,
-  completeAllEthWithdrawalWorkflow,
-  completeERC20WithdrawalV1Workflow,
-  completeERC20WithdrawalV2Workflow,
-  completeERC721WithdrawalV1Workflow,
-  completeERC721WithdrawalV2Workflow,
-  completeEthWithdrawalV1Workflow,
-  completeEthWithdrawalV2Workflow,
   prepareWithdrawalV2Workflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
@@ -72,6 +63,11 @@ import axios, { AxiosResponse } from 'axios';
 import { BigNumber } from 'ethers';
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
+import {
+  completeAllWithdrawalWorkflow,
+  completeWithdrawalV1Workflow,
+  completeWithdrawalV2Workflow,
+} from './withdrawal/completeWithdrawal';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -300,10 +296,14 @@ export class Workflows {
     const starkPublicKey = await walletConnection.starkSigner.getAddress();
 
     if (majorContractVersion === 3) {
-      return this.completeWithdrawalV1(
+      return completeWithdrawalV1Workflow(
         walletConnection.ethSigner,
         starkPublicKey,
         token,
+        this.encodingApi,
+        this.usersApi,
+        this.mintsApi,
+        this.config,
       );
     } else if (majorContractVersion >= 4) {
       return this.completeWithdrawalAll(
@@ -334,19 +334,25 @@ export class Workflows {
     if (v3Balance.gt(0)) {
       const isRegistered = await this.isRegisteredOnchain(walletConnection);
       if (isRegistered) {
-        return this.completeAllWithdrawal(
-          walletConnection,
+        return completeAllWithdrawalWorkflow(
+          walletConnection.ethSigner,
           starkPublicKey,
           token,
+          this.encodingApi,
+          this.mintsApi,
+          this.config,
         );
       }
       throw new Error('User unregistered');
     }
     if (v4Balance.gt(0)) {
-      return this.completeWithdrawalV2(
+      return completeWithdrawalV2Workflow(
         walletConnection.ethSigner,
         ethAddress,
         token,
+        this.encodingApi,
+        this.mintsApi,
+        this.config,
       );
     }
     throw new Error('Nothing to withdraw');
@@ -375,148 +381,6 @@ export class Workflows {
       this.config,
     );
     return { v3Balance, v4Balance };
-  }
-
-  private async completeWithdrawalV1(
-    signer: Signer,
-    starkPublicKey: string,
-    token: AnyToken,
-  ): Promise<TransactionResponse> {
-    switch (token.type) {
-      case 'ETH':
-        return this.completeEthWithdrawalV1(signer, starkPublicKey);
-      case 'ERC20':
-        return this.completeERC20WithdrawalV1(signer, starkPublicKey, token);
-      case 'ERC721':
-        return this.completeERC721WithdrawalV1(signer, starkPublicKey, token);
-    }
-  }
-
-  private async completeWithdrawalV2(
-    signer: Signer,
-    ownerKey: string,
-    token: AnyToken,
-  ): Promise<TransactionResponse> {
-    switch (token.type) {
-      case 'ETH':
-        return this.completeEthWithdrawalV2(signer);
-      case 'ERC20':
-        return this.completeERC20WithdrawalV2(signer, token);
-      case 'ERC721':
-        return this.completeERC721WithdrawalV2(signer, ownerKey, token);
-    }
-  }
-
-  private async completeEthWithdrawalV1(
-    signer: Signer,
-    starkPublicKey: string,
-  ): Promise<TransactionResponse> {
-    return completeEthWithdrawalV1Workflow(
-      signer,
-      starkPublicKey,
-      this.encodingApi,
-      this.usersApi,
-      this.config,
-    );
-  }
-
-  private async completeEthWithdrawalV2(
-    signer: Signer,
-  ): Promise<TransactionResponse> {
-    return completeEthWithdrawalV2Workflow(
-      signer,
-      this.encodingApi,
-      this.config,
-    );
-  }
-
-  private async completeERC20WithdrawalV1(
-    signer: Signer,
-    starkPublicKey: string,
-    token: ERC20Token,
-  ): Promise<TransactionResponse> {
-    return completeERC20WithdrawalV1Workflow(
-      signer,
-      starkPublicKey,
-      token,
-      this.encodingApi,
-      this.usersApi,
-      this.config,
-    );
-  }
-
-  private async completeERC20WithdrawalV2(
-    signer: Signer,
-    token: ERC20Token,
-  ): Promise<TransactionResponse> {
-    return completeERC20WithdrawalV2Workflow(
-      signer,
-      token,
-      this.encodingApi,
-      this.config,
-    );
-  }
-
-  private async completeERC721WithdrawalV1(
-    signer: Signer,
-    starkPublicKey: string,
-    token: ERC721Token,
-  ): Promise<TransactionResponse> {
-    return completeERC721WithdrawalV1Workflow(
-      signer,
-      starkPublicKey,
-      token,
-      this.encodingApi,
-      this.mintsApi,
-      this.usersApi,
-      this.config,
-    );
-  }
-
-  private async completeERC721WithdrawalV2(
-    signer: Signer,
-    ownerKey: string,
-    token: ERC721Token,
-  ): Promise<TransactionResponse> {
-    return completeERC721WithdrawalV2Workflow(
-      signer,
-      ownerKey,
-      token,
-      this.encodingApi,
-      this.mintsApi,
-      this.config,
-    );
-  }
-
-  private async completeAllWithdrawal(
-    walletConnection: WalletConnection,
-    starkPublicKey: string,
-    token: AnyToken,
-  ) {
-    switch (token.type) {
-      case 'ETH':
-        return completeAllEthWithdrawalWorkflow(
-          walletConnection.ethSigner,
-          starkPublicKey,
-          this.encodingApi,
-          this.config,
-        );
-      case 'ERC20':
-        return completeAllERC20WithdrawalWorkflow(
-          walletConnection.ethSigner,
-          starkPublicKey,
-          token,
-          this.encodingApi,
-          this.config,
-        );
-      case 'ERC721':
-        // for ERC721, if the v3 balance > 0, then the v4 balance is 0
-        return this.completeERC721WithdrawalV2(
-          walletConnection.ethSigner,
-          starkPublicKey,
-          token,
-        );
-    }
   }
 
   public async createOrder(
