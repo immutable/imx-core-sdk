@@ -12,6 +12,11 @@ import {
   PrimarySalesApi,
   PrimarySalesApiCreatePrimarySaleRequest,
   PrimarySalesApiSignableCreatePrimarySaleRequest,
+  RejectPrimarySaleOKBody,
+  RejectPrimarySaleBadRequestBody,
+  RejectPrimarySaleForbiddenBody,
+  RejectPrimarySaleNotFoundBody,
+  RejectPrimarySaleUnauthorizedBody,
 } from '../api';
 import { EthSigner, WalletConnection } from '../types';
 import { signRaw } from '../utils';
@@ -22,6 +27,12 @@ type CreatePrimarySaleWorkflowParams = WalletConnection & {
 };
 
 type AcceptPrimarySaleWorkflowParams = {
+  ethSigner: EthSigner;
+  primarySaleId: number;
+  primarySalesApi: PrimarySalesApi;
+};
+
+type RejectPrimarySaleWorkflowParams = {
   ethSigner: EthSigner;
   primarySaleId: number;
   primarySalesApi: PrimarySalesApi;
@@ -40,6 +51,13 @@ type AcceptPrimarySaleResponse =
   | AcceptPrimarySaleForbiddenBody
   | AcceptPrimarySaleNotFoundBody
   | AcceptPrimarySaleUnauthorizedBody;
+
+type RejectPrimarySaleResponse =
+  | RejectPrimarySaleOKBody
+  | RejectPrimarySaleBadRequestBody
+  | RejectPrimarySaleForbiddenBody
+  | RejectPrimarySaleNotFoundBody
+  | RejectPrimarySaleUnauthorizedBody;
 
 export async function CreatePrimarySaleWorkflow({
   ethSigner,
@@ -124,5 +142,36 @@ export async function AcceptPrimarySalesWorkflow({
 
   return {
     ...acceptPrimarySaleResp.data,
+  };
+}
+
+export async function RejectPrimarySalesWorkflow({
+  ethSigner,
+  primarySalesApi,
+  primarySaleId,
+}: RejectPrimarySaleWorkflowParams): Promise<RejectPrimarySaleResponse> {
+  const signableRejectPrimarySaleResult =
+    await primarySalesApi.signableRejectPrimarySale({
+      id: primarySaleId,
+    });
+
+  const signableMessage = signableRejectPrimarySaleResult.data.signable_message;
+
+  const signature = await signRaw(signableMessage, ethSigner);
+
+  const rejectPrimarySaleResp = await primarySalesApi.rejectPrimarySale(
+    {
+      id: primarySaleId,
+    },
+    {
+      headers: {
+        'x-imx-eth-address': await ethSigner.getAddress(),
+        'x-imx-eth-signature': signature,
+      },
+    },
+  );
+
+  return {
+    ...rejectPrimarySaleResp.data,
   };
 }
