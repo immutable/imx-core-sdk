@@ -24,7 +24,6 @@ import {
   CollectionsApiListCollectionsRequest,
   CreateCollectionRequest,
   CreateMetadataRefreshRequest,
-  CreateProjectRequest,
   DepositsApi,
   DepositsApiGetDepositRequest,
   DepositsApiListDepositsRequest,
@@ -49,6 +48,7 @@ import {
   OrdersApi,
   OrdersApiGetOrderV3Request,
   OrdersApiListOrdersV3Request,
+  PrimarySalesApiSignableCreatePrimarySaleRequest,
   ProjectsApi,
   TokensApi,
   TokensApiGetTokenRequest,
@@ -447,25 +447,6 @@ export class ImmutableX {
   ) {
     return this.workflows
       .createMetadataRefresh(ethSigner, request)
-      .then(res => res.data)
-      .catch(err => {
-        throw formatError(err);
-      });
-  }
-
-  /**
-   * Create a Project
-   * @param ethSigner - the L1 signer
-   * @param request - the request object containing the parameters to be provided in the API request
-   * @returns a promise that resolves with the created Project
-   * @throws {@link index.IMXError}
-   */
-  public async createProject(
-    ethSigner: EthSigner,
-    request: CreateProjectRequest,
-  ) {
-    return this.workflows
-      .createProject(ethSigner, request)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -967,6 +948,39 @@ export class ImmutableX {
   ) {
     return this.nftCheckoutPrimaryApi
       .getNftPrimaryTransactions(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a PrimarySale
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Trade
+   * @throws {@link index.IMXError}
+   */
+  public createPrimarySale(
+    walletConnection: WalletConnection,
+    request: PrimarySalesApiSignableCreatePrimarySaleRequest,
+  ) {
+    return this.workflows
+      .createPrimarySale(walletConnection, request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Accept a PrimarySale
+   * @param ethSigner - eth signer matching the 'studio_ether_key' of the primary sale
+   * @param primarySaleId - id of the primary sale accepting
+   * @returns a promise that resolves with the created Trade
+   * @throws {@link index.IMXError}
+   */
+  public acceptPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
+    return this.workflows
+      .acceptPrimarySale(ethSigner, primarySaleId)
       .catch(err => {
         throw formatError(err);
       });

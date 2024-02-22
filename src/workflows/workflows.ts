@@ -12,7 +12,6 @@ import {
   GetSignableTradeRequest,
   TradesApi,
   ProjectsApi,
-  CreateProjectRequest,
   CollectionsApi,
   CreateCollectionRequest,
   UpdateCollectionRequest,
@@ -22,6 +21,8 @@ import {
   MetadataRefreshesApi,
   CreateMetadataRefreshRequest,
   ExchangesApi,
+  PrimarySalesApiSignableCreatePrimarySaleRequest,
+  PrimarySalesApi,
 } from '../api';
 import {
   UnsignedMintRequest,
@@ -64,6 +65,10 @@ import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
 import { exchangeTransfersWorkflow } from './exchangeTransfers';
 import axios, { AxiosResponse } from 'axios';
+import {
+  CreatePrimarySaleWorkflow,
+  AcceptPrimarySalesWorkflow,
+} from './primarySales';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -80,6 +85,7 @@ export class Workflows {
   private readonly metadataApi: MetadataApi;
   private readonly metadataRefreshesApi: MetadataRefreshesApi;
   private readonly exchangesApi: ExchangesApi;
+  private readonly primarySalesApi: PrimarySalesApi;
 
   private isChainValid(chainID: number) {
     return chainID === this.config.ethConfiguration.chainID;
@@ -103,6 +109,7 @@ export class Workflows {
     this.metadataApi = new MetadataApi(apiConfiguration);
     this.metadataRefreshesApi = new MetadataRefreshesApi(apiConfiguration);
     this.exchangesApi = new ExchangesApi(apiConfiguration);
+    this.primarySalesApi = new PrimarySalesApi(apiConfiguration);
   }
 
   private async validateChain(signer: Signer) {
@@ -380,22 +387,6 @@ export class Workflows {
     });
   }
 
-  /**
-   * IMX authorisation header functions
-   */
-  public async createProject(
-    ethSigner: EthSigner,
-    createProjectRequest: CreateProjectRequest,
-  ) {
-    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
-
-    return this.projectsApi.createProject({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-      createProjectRequest,
-    });
-  }
-
   public async getProject(ethSigner: EthSigner, id: string) {
     const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
 
@@ -550,6 +541,27 @@ export class Workflows {
       xImxEthTimestamp: imxAuthHeaders.timestamp,
       xImxEthAddress: ethAddress,
       createMetadataRefreshRequest: request,
+    });
+  }
+
+  public async createPrimarySale(
+    walletConnection: WalletConnection,
+    request: PrimarySalesApiSignableCreatePrimarySaleRequest,
+  ) {
+    await this.validateChain(walletConnection.ethSigner);
+
+    return CreatePrimarySaleWorkflow({
+      ...walletConnection,
+      request,
+      primarySalesApi: this.primarySalesApi,
+    });
+  }
+
+  public async acceptPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
+    return AcceptPrimarySalesWorkflow({
+      ethSigner,
+      primarySaleId,
+      primarySalesApi: this.primarySalesApi,
     });
   }
 }
