@@ -68,6 +68,7 @@ import axios, { AxiosResponse } from 'axios';
 import {
   CreatePrimarySaleWorkflow,
   AcceptPrimarySalesWorkflow,
+  RejectPrimarySalesWorkflow,
 } from './primarySales';
 
 export class Workflows {
@@ -559,6 +560,14 @@ export class Workflows {
 
   public async acceptPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
     return AcceptPrimarySalesWorkflow({
+      ethSigner,
+      primarySaleId,
+      primarySalesApi: this.primarySalesApi,
+    });
+  }
+
+  public async rejectPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
+    return RejectPrimarySalesWorkflow({
       ethSigner,
       primarySaleId,
       primarySalesApi: this.primarySalesApi,
