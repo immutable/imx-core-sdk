@@ -23,11 +23,15 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 // @ts-ignore
 import { CreateWithdrawalRequest } from '../models';
 // @ts-ignore
+import { CreateWithdrawalRequestV2 } from '../models';
+// @ts-ignore
 import { CreateWithdrawalResponse } from '../models';
 // @ts-ignore
 import { GetSignableWithdrawalRequest } from '../models';
 // @ts-ignore
 import { GetSignableWithdrawalResponse } from '../models';
+// @ts-ignore
+import { GetSignableWithdrawalResponseV2 } from '../models';
 // @ts-ignore
 import { ListWithdrawalsResponse } from '../models';
 // @ts-ignore
@@ -89,6 +93,56 @@ export const WithdrawalsApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * Creates a withdrawal. Use https://docs.x.immutable.com/reference#/operations/getSignableWithdrawal to get request body params.
+         * @summary Creates a withdrawal of a token for starkex contracts that are higher than v3
+         * @param {string} xImxEthAddress eth address
+         * @param {string} xImxEthSignature eth signature
+         * @param {CreateWithdrawalRequestV2} createWithdrawalRequestV2 create a withdrawal
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWithdrawalV2: async (xImxEthAddress: string, xImxEthSignature: string, createWithdrawalRequestV2: CreateWithdrawalRequestV2, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'xImxEthAddress' is not null or undefined
+            assertParamExists('createWithdrawalV2', 'xImxEthAddress', xImxEthAddress)
+            // verify required parameter 'xImxEthSignature' is not null or undefined
+            assertParamExists('createWithdrawalV2', 'xImxEthSignature', xImxEthSignature)
+            // verify required parameter 'createWithdrawalRequestV2' is not null or undefined
+            assertParamExists('createWithdrawalV2', 'createWithdrawalRequestV2', createWithdrawalRequestV2)
+            const localVarPath = `/v2/withdrawals`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (xImxEthAddress != null) {
+                localVarHeaderParameter['x-imx-eth-address'] = String(xImxEthAddress);
+            }
+
+            if (xImxEthSignature != null) {
+                localVarHeaderParameter['x-imx-eth-signature'] = String(xImxEthSignature);
+            }
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createWithdrawalRequestV2, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Gets details of a signable withdrawal
          * @summary Gets details of a signable withdrawal
          * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
@@ -99,6 +153,42 @@ export const WithdrawalsApiAxiosParamCreator = function (configuration?: Configu
             // verify required parameter 'getSignableWithdrawalRequest' is not null or undefined
             assertParamExists('getSignableWithdrawal', 'getSignableWithdrawalRequest', getSignableWithdrawalRequest)
             const localVarPath = `/v1/signable-withdrawal-details`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(getSignableWithdrawalRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Gets details of a signable withdrawal
+         * @summary Gets details of a signable withdrawal for starkex contracts that are higher than v3
+         * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSignableWithdrawalV2: async (getSignableWithdrawalRequest: GetSignableWithdrawalRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'getSignableWithdrawalRequest' is not null or undefined
+            assertParamExists('getSignableWithdrawalV2', 'getSignableWithdrawalRequest', getSignableWithdrawalRequest)
+            const localVarPath = `/v2/signable-withdrawal-details`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -302,6 +392,19 @@ export const WithdrawalsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Creates a withdrawal. Use https://docs.x.immutable.com/reference#/operations/getSignableWithdrawal to get request body params.
+         * @summary Creates a withdrawal of a token for starkex contracts that are higher than v3
+         * @param {string} xImxEthAddress eth address
+         * @param {string} xImxEthSignature eth signature
+         * @param {CreateWithdrawalRequestV2} createWithdrawalRequestV2 create a withdrawal
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createWithdrawalV2(xImxEthAddress: string, xImxEthSignature: string, createWithdrawalRequestV2: CreateWithdrawalRequestV2, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateWithdrawalResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createWithdrawalV2(xImxEthAddress, xImxEthSignature, createWithdrawalRequestV2, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Gets details of a signable withdrawal
          * @summary Gets details of a signable withdrawal
          * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
@@ -310,6 +413,17 @@ export const WithdrawalsApiFp = function(configuration?: Configuration) {
          */
         async getSignableWithdrawal(getSignableWithdrawalRequest: GetSignableWithdrawalRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableWithdrawalResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableWithdrawal(getSignableWithdrawalRequest, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Gets details of a signable withdrawal
+         * @summary Gets details of a signable withdrawal for starkex contracts that are higher than v3
+         * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSignableWithdrawalV2(getSignableWithdrawalRequest: GetSignableWithdrawalRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetSignableWithdrawalResponseV2>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSignableWithdrawalV2(getSignableWithdrawalRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -374,6 +488,18 @@ export const WithdrawalsApiFactory = function (configuration?: Configuration, ba
             return localVarFp.createWithdrawal(xImxEthAddress, xImxEthSignature, createWithdrawalRequest, options).then((request) => request(axios, basePath));
         },
         /**
+         * Creates a withdrawal. Use https://docs.x.immutable.com/reference#/operations/getSignableWithdrawal to get request body params.
+         * @summary Creates a withdrawal of a token for starkex contracts that are higher than v3
+         * @param {string} xImxEthAddress eth address
+         * @param {string} xImxEthSignature eth signature
+         * @param {CreateWithdrawalRequestV2} createWithdrawalRequestV2 create a withdrawal
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createWithdrawalV2(xImxEthAddress: string, xImxEthSignature: string, createWithdrawalRequestV2: CreateWithdrawalRequestV2, options?: any): AxiosPromise<CreateWithdrawalResponse> {
+            return localVarFp.createWithdrawalV2(xImxEthAddress, xImxEthSignature, createWithdrawalRequestV2, options).then((request) => request(axios, basePath));
+        },
+        /**
          * Gets details of a signable withdrawal
          * @summary Gets details of a signable withdrawal
          * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
@@ -382,6 +508,16 @@ export const WithdrawalsApiFactory = function (configuration?: Configuration, ba
          */
         getSignableWithdrawal(getSignableWithdrawalRequest: GetSignableWithdrawalRequest, options?: any): AxiosPromise<GetSignableWithdrawalResponse> {
             return localVarFp.getSignableWithdrawal(getSignableWithdrawalRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * Gets details of a signable withdrawal
+         * @summary Gets details of a signable withdrawal for starkex contracts that are higher than v3
+         * @param {GetSignableWithdrawalRequest} getSignableWithdrawalRequest get details of signable withdrawal
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSignableWithdrawalV2(getSignableWithdrawalRequest: GetSignableWithdrawalRequest, options?: any): AxiosPromise<GetSignableWithdrawalResponseV2> {
+            return localVarFp.getSignableWithdrawalV2(getSignableWithdrawalRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets details of withdrawal with the given ID
@@ -452,6 +588,34 @@ export interface WithdrawalsApiCreateWithdrawalRequest {
 }
 
 /**
+ * Request parameters for createWithdrawalV2 operation in WithdrawalsApi.
+ * @export
+ * @interface WithdrawalsApiCreateWithdrawalV2Request
+ */
+export interface WithdrawalsApiCreateWithdrawalV2Request {
+    /**
+     * eth address
+     * @type {string}
+     * @memberof WithdrawalsApiCreateWithdrawalV2
+     */
+    readonly xImxEthAddress: string
+
+    /**
+     * eth signature
+     * @type {string}
+     * @memberof WithdrawalsApiCreateWithdrawalV2
+     */
+    readonly xImxEthSignature: string
+
+    /**
+     * create a withdrawal
+     * @type {CreateWithdrawalRequestV2}
+     * @memberof WithdrawalsApiCreateWithdrawalV2
+     */
+    readonly createWithdrawalRequestV2: CreateWithdrawalRequestV2
+}
+
+/**
  * Request parameters for getSignableWithdrawal operation in WithdrawalsApi.
  * @export
  * @interface WithdrawalsApiGetSignableWithdrawalRequest
@@ -461,6 +625,20 @@ export interface WithdrawalsApiGetSignableWithdrawalRequest {
      * get details of signable withdrawal
      * @type {GetSignableWithdrawalRequest}
      * @memberof WithdrawalsApiGetSignableWithdrawal
+     */
+    readonly getSignableWithdrawalRequest: GetSignableWithdrawalRequest
+}
+
+/**
+ * Request parameters for getSignableWithdrawalV2 operation in WithdrawalsApi.
+ * @export
+ * @interface WithdrawalsApiGetSignableWithdrawalV2Request
+ */
+export interface WithdrawalsApiGetSignableWithdrawalV2Request {
+    /**
+     * get details of signable withdrawal
+     * @type {GetSignableWithdrawalRequest}
+     * @memberof WithdrawalsApiGetSignableWithdrawalV2
      */
     readonly getSignableWithdrawalRequest: GetSignableWithdrawalRequest
 }
@@ -632,6 +810,18 @@ export class WithdrawalsApi extends BaseAPI {
     }
 
     /**
+     * Creates a withdrawal. Use https://docs.x.immutable.com/reference#/operations/getSignableWithdrawal to get request body params.
+     * @summary Creates a withdrawal of a token for starkex contracts that are higher than v3
+     * @param {WithdrawalsApiCreateWithdrawalV2Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WithdrawalsApi
+     */
+    public createWithdrawalV2(requestParameters: WithdrawalsApiCreateWithdrawalV2Request, options?: AxiosRequestConfig) {
+        return WithdrawalsApiFp(this.configuration).createWithdrawalV2(requestParameters.xImxEthAddress, requestParameters.xImxEthSignature, requestParameters.createWithdrawalRequestV2, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Gets details of a signable withdrawal
      * @summary Gets details of a signable withdrawal
      * @param {WithdrawalsApiGetSignableWithdrawalRequest} requestParameters Request parameters.
@@ -641,6 +831,18 @@ export class WithdrawalsApi extends BaseAPI {
      */
     public getSignableWithdrawal(requestParameters: WithdrawalsApiGetSignableWithdrawalRequest, options?: AxiosRequestConfig) {
         return WithdrawalsApiFp(this.configuration).getSignableWithdrawal(requestParameters.getSignableWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Gets details of a signable withdrawal
+     * @summary Gets details of a signable withdrawal for starkex contracts that are higher than v3
+     * @param {WithdrawalsApiGetSignableWithdrawalV2Request} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WithdrawalsApi
+     */
+    public getSignableWithdrawalV2(requestParameters: WithdrawalsApiGetSignableWithdrawalV2Request, options?: AxiosRequestConfig) {
+        return WithdrawalsApiFp(this.configuration).getSignableWithdrawalV2(requestParameters.getSignableWithdrawalRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

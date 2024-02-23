@@ -13,18 +13,15 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import { Collection } from './collection';
 
 /**
- * 
+ * @type SummarizedCollectionCollection
+ * Collection and it\'s metadata
  * @export
- * @interface EngineRegisterUserResult
  */
-export interface EngineRegisterUserResult {
-    /**
-     * 
-     * @type {string}
-     * @memberof EngineRegisterUserResult
-     */
-    'tx_hash'?: string;
-}
+export type SummarizedCollectionCollection = Collection;
+
 

@@ -15,7 +15,7 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { ApiSummarizedCollection } from './api-summarized-collection';
+import { SummarizedCollection } from './summarized-collection';
 
 /**
  * 
@@ -37,9 +37,9 @@ export interface ApiSummarizeCollectionsResponse {
     'remaining': number;
     /**
      * Collections matching query parameters
-     * @type {Array<ApiSummarizedCollection>}
+     * @type {Array<SummarizedCollection>}
      * @memberof ApiSummarizeCollectionsResponse
      */
-    'result': Array<ApiSummarizedCollection>;
+    'result': Array<SummarizedCollection>;
 }
 

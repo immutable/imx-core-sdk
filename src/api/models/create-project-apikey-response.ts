@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface CreateProjectResponse
+ * @interface CreateProjectAPIKeyResponse
  */
-export interface CreateProjectResponse {
+export interface CreateProjectAPIKeyResponse {
     /**
-     * The environment ID
+     * 
      * @type {string}
-     * @memberof CreateProjectResponse
+     * @memberof CreateProjectAPIKeyResponse
      */
-    'environment_id': string;
-    /**
-     * The project ID
-     * @type {number}
-     * @memberof CreateProjectResponse
-     */
-    'id': number;
+    'key': string;
 }
 
