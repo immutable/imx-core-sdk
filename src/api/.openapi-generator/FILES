@@ -109,6 +109,7 @@ models/create-primary-sale-params-body.ts
 models/create-primary-sale-unauthorized-body-all-of0.ts
 models/create-primary-sale-unauthorized-body-all-of1.ts
 models/create-primary-sale-unauthorized-body.ts
+models/create-project-apikey-response.ts
 models/create-project-group-request.ts
 models/create-project-request.ts
 models/create-project-response.ts
@@ -132,7 +133,6 @@ models/encode-asset-request-token.ts
 models/encode-asset-request.ts
 models/encode-asset-response.ts
 models/encode-asset-token-data.ts
-models/engine-register-user-result.ts
 models/exchange-create-exchange-and-urlresponse.ts
 models/exchange.ts
 models/experimental-create-primary-sale-bad-request-body-all-of0.ts
@@ -367,6 +367,8 @@ models/signable-transfer-response-details-token.ts
 models/signable-transfer-response-details.ts
 models/store-maker-taker-fee.ts
 models/success-response.ts
+models/summarized-collection-collection.ts
+models/summarized-collection.ts
 models/token-data-oaigen.ts
 models/token-data-properties.ts
 models/token-data.ts

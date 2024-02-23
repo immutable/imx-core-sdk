@@ -398,25 +398,6 @@ export class Workflows {
     });
   }
 
-  public async getProjects(
-    ethSigner: EthSigner,
-    pageSize?: number,
-    cursor?: string,
-    orderBy?: string,
-    direction?: string,
-  ) {
-    const imxAuthHeaders = await generateIMXAuthorisationHeaders(ethSigner);
-
-    return this.projectsApi.getProjects({
-      iMXSignature: imxAuthHeaders.signature,
-      iMXTimestamp: imxAuthHeaders.timestamp,
-      pageSize,
-      cursor,
-      orderBy,
-      direction,
-    });
-  }
-
   public async createCollection(
     ethSigner: EthSigner,
     createCollectionRequest: CreateCollectionRequest,
