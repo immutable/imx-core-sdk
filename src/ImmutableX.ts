@@ -470,6 +470,31 @@ export class ImmutableX {
   }
 
   /**
+   * Get Projects owned by the given User
+   * @param ethSigner - the L1 signer
+   * @param pageSize - the page size of the result
+   * @param cursor - the cursor
+   * @param orderBy - the property to sort by
+   * @param direction - direction to sort (asc/desc)
+   * @returns a promise that resolves with the requested Projects
+   * @throws {@link index.IMXError}
+   */
+  public async getProjects(
+    ethSigner: EthSigner,
+    pageSize?: number,
+    cursor?: string,
+    orderBy?: string,
+    direction?: string,
+  ) {
+    return this.workflows
+      .getProjects(ethSigner, pageSize, cursor, orderBy, direction)
+      .then(res => res.data)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
    * Get the token Balances of the User
    * @param request - the request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested Balance
