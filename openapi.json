@@ -406,7 +406,7 @@
           {
             "type": "string",
             "description": "Comma separated list of wallet addresses",
-            "name": "users",
+            "name": "user",
             "in": "query",
             "required": true
           }
@@ -1924,67 +1924,6 @@
         }
       }
     },
-    "/v1/primary_sales/{id}/signable-accept-details": {
-      "post": {
-        "description": "[Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.",
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "primary-sales"
-        ],
-        "summary": "[Experimental] Signable Accept Primary Sale",
-        "operationId": "SignableAcceptPrimarySale",
-        "parameters": [
-          {
-            "type": "integer",
-            "format": "int64",
-            "description": "Global Primary Sale identifier",
-            "name": "id",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK response.",
-            "schema": {
-              "$ref": "#/definitions/signableAcceptPrimarySaleOKBody"
-            }
-          },
-          "400": {
-            "description": "Bad Request (400)",
-            "schema": {
-              "$ref": "#/definitions/signableAcceptPrimarySaleBadRequestBody"
-            }
-          },
-          "404": {
-            "description": "The specified resource was not found (404)",
-            "schema": {
-              "$ref": "#/definitions/signableAcceptPrimarySaleNotFoundBody"
-            }
-          },
-          "422": {
-            "description": "Unprocessable Entity (422)",
-            "schema": {
-              "$ref": "#/definitions/signableAcceptPrimarySaleUnprocessableEntityBody"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error (500)",
-            "schema": {
-              "$ref": "#/definitions/signableAcceptPrimarySaleInternalServerErrorBody"
-            }
-          },
-          "501": {
-            "description": "Not Implemented Error (501)",
-            "schema": {
-              "$ref": "#/definitions/signableAcceptPrimarySaleNotImplementedBody"
-            }
-          }
-        }
-      }
-    },
     "/v1/primary_sales/{id}/reject": {
       "post": {
         "security": [
@@ -2064,6 +2003,67 @@
         }
       }
     },
+    "/v1/primary_sales/{id}/signable-accept-details": {
+      "post": {
+        "description": "[Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.",
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "primary-sales"
+        ],
+        "summary": "[Experimental] Signable Accept Primary Sale",
+        "operationId": "SignableAcceptPrimarySale",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "description": "Global Primary Sale identifier",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK response.",
+            "schema": {
+              "$ref": "#/definitions/signableAcceptPrimarySaleOKBody"
+            }
+          },
+          "400": {
+            "description": "Bad Request (400)",
+            "schema": {
+              "$ref": "#/definitions/signableAcceptPrimarySaleBadRequestBody"
+            }
+          },
+          "404": {
+            "description": "The specified resource was not found (404)",
+            "schema": {
+              "$ref": "#/definitions/signableAcceptPrimarySaleNotFoundBody"
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity (422)",
+            "schema": {
+              "$ref": "#/definitions/signableAcceptPrimarySaleUnprocessableEntityBody"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error (500)",
+            "schema": {
+              "$ref": "#/definitions/signableAcceptPrimarySaleInternalServerErrorBody"
+            }
+          },
+          "501": {
+            "description": "Not Implemented Error (501)",
+            "schema": {
+              "$ref": "#/definitions/signableAcceptPrimarySaleNotImplementedBody"
+            }
+          }
+        }
+      }
+    },
     "/v1/primary_sales/{id}/signable-reject-details": {
       "post": {
         "description": "[Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.",
@@ -2120,151 +2120,6 @@
             "description": "Not Implemented Error (501)",
             "schema": {
               "$ref": "#/definitions/signableRejectPrimarySaleNotImplementedBody"
-            }
-          }
-        }
-      }
-    },
-    "/v1/projects": {
-      "get": {
-        "description": "Get projects",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "projects"
-        ],
-        "summary": "Get projects",
-        "operationId": "getProjects",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "Page size of the result",
-            "name": "page_size",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Cursor",
-            "name": "cursor",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Property to sort by",
-            "name": "order_by",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Direction to sort (asc/desc)",
-            "name": "direction",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "String created by signing wallet address and timestamp",
-            "name": "IMX-Signature",
-            "in": "header",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "Unix Epoc timestamp",
-            "name": "IMX-Timestamp",
-            "in": "header",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/GetProjectsResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          }
-        }
-      }
-    },
-    "/v1/projects/sdk": {
-      "get": {
-        "description": "Checks the SDK Version of caller against the current SDK Version and returns a message.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "tags": [
-          "projects"
-        ],
-        "summary": "Checks the SDK Version of caller against the current SDK Version",
-        "operationId": "getSdkVersion",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "Runtime Details",
-            "name": "details",
-            "in": "query",
-            "required": true
-          },
-          {
-            "type": "string",
-            "description": "SDK Version",
-            "name": "version",
-            "in": "query"
-          },
-          {
-            "type": "string",
-            "description": "Runtime ID",
-            "name": "id",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/api.SDKVersionCheckResponse"
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "schema": {
-              "$ref": "#/definitions/APIError"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/APIError"
             }
           }
         }
@@ -3896,6 +3751,41 @@
         }
       }
     },
+    "/v2/signable-withdrawal-details": {
+      "post": {
+        "description": "Gets details of a signable withdrawal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "withdrawals"
+        ],
+        "summary": "Gets details of a signable withdrawal for starkex contracts that are higher than v3",
+        "operationId": "getSignableWithdrawalV2",
+        "parameters": [
+          {
+            "description": "get details of signable withdrawal",
+            "name": "GetSignableWithdrawalRequest",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetSignableWithdrawalRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/GetSignableWithdrawalResponseV2"
+            }
+          }
+        }
+      }
+    },
     "/v2/transfers": {
       "post": {
         "description": "Create a new transfer request. Use https://docs.x.immutable.com/reference#/operations/getSignableTransfer to get request body params.",
@@ -3968,6 +3858,55 @@
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/APIError"
+            }
+          }
+        }
+      }
+    },
+    "/v2/withdrawals": {
+      "post": {
+        "description": "Creates a withdrawal. Use https://docs.x.immutable.com/reference#/operations/getSignableWithdrawal to get request body params.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "withdrawals"
+        ],
+        "summary": "Creates a withdrawal of a token for starkex contracts that are higher than v3",
+        "operationId": "createWithdrawalV2",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "eth address",
+            "name": "x-imx-eth-address",
+            "in": "header",
+            "required": true
+          },
+          {
+            "type": "string",
+            "description": "eth signature",
+            "name": "x-imx-eth-signature",
+            "in": "header",
+            "required": true
+          },
+          {
+            "description": "create a withdrawal",
+            "name": "CreateWithdrawalRequestV2",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateWithdrawalRequestV2"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CreateWithdrawalResponse"
             }
           }
         }
@@ -5592,6 +5531,17 @@
         }
       }
     },
+    "CreateProjectAPIKeyResponse": {
+      "type": "object",
+      "required": [
+        "key"
+      ],
+      "properties": {
+        "key": {
+          "type": "string"
+        }
+      }
+    },
     "CreateProjectGroupRequest": {
       "type": "object",
       "required": [
@@ -5638,12 +5588,17 @@
     "CreateProjectResponse": {
       "type": "object",
       "required": [
+        "environment_id",
         "id"
       ],
       "properties": {
-        "id": {
-          "description": "The project group ID",
+        "environment_id": {
+          "description": "The environment ID",
           "type": "string"
+        },
+        "id": {
+          "description": "The project ID",
+          "type": "integer"
         }
       }
     },
@@ -8015,24 +7970,88 @@
     "Project": {
       "type": "object",
       "required": [
+        "collection_limit_expires_at",
+        "collection_monthly_limit",
+        "collection_remaining",
+        "company_name",
+        "contact_email",
         "id",
+        "mint_limit_expires_at",
+        "mint_monthly_limit",
+        "mint_remaining",
         "name"
       ],
       "properties": {
+        "api_key": {
+          "description": "API key for the project. This is only for zkevm project. This API is not for increasing rate limit yet.",
+          "type": "string"
+        },
         "chain_type": {
           "description": "The project ChainType",
           "type": "string"
         },
-        "id": {
-          "description": "The project group ID",
+        "collection_limit_expires_at": {
+          "description": "The current period expiry date for collection limit",
           "type": "string"
         },
+        "collection_monthly_limit": {
+          "description": "The total monthly collection limit",
+          "type": "integer"
+        },
+        "collection_remaining": {
+          "description": "The number of collection remaining in the current period",
+          "type": "integer"
+        },
+        "company_name": {
+          "description": "The company name",
+          "type": "string"
+        },
+        "contact_email": {
+          "description": "The project contact email (must be registered as a developer account with Immutable at https://hub.immutable.com)",
+          "type": "string"
+        },
+        "environment_id": {
+          "description": "The environment ID",
+          "type": "string"
+        },
+        "environment_name": {
+          "description": "The user environment name correlating to this project",
+          "type": "string"
+        },
+        "id": {
+          "description": "The project ID",
+          "type": "integer"
+        },
+        "mint_limit_expires_at": {
+          "description": "The current period expiry date for mint operation limit",
+          "type": "string"
+        },
+        "mint_monthly_limit": {
+          "description": "The total monthly mint operation limit",
+          "type": "integer"
+        },
+        "mint_remaining": {
+          "description": "The number of mint operation remaining in the current period",
+          "type": "integer"
+        },
         "name": {
-          "description": "The project group name",
+          "description": "The project name",
           "type": "string"
         },
         "org_id": {
           "description": "The organisation ID that the project belongs to",
+          "type": "string"
+        },
+        "project_group_id": {
+          "description": "Project group id",
+          "type": "string"
+        },
+        "publishable_key": {
+          "description": "The public publishable_key for the project",
+          "type": "string"
+        },
+        "publishable_key_created_at": {
+          "description": "The public publishable_key created time",
           "type": "string"
         }
       }
@@ -8266,6 +8285,30 @@
       "properties": {
         "result": {
           "type": "string"
+        }
+      }
+    },
+    "SummarizedCollection": {
+      "type": "object",
+      "required": [
+        "collection",
+        "owned_token_count",
+        "owners"
+      ],
+      "properties": {
+        "collection": {
+          "$ref": "#/definitions/summarizedCollectionCollection"
+        },
+        "owned_token_count": {
+          "description": "Combined amount of tokens owned by the provided wallets",
+          "type": "integer"
+        },
+        "owners": {
+          "description": "Subset of the provided wallets that own at least one token in this collection",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -9311,7 +9354,7 @@
           "description": "Collections matching query parameters",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/api.SummarizedCollection"
+            "$ref": "#/definitions/SummarizedCollection"
           }
         }
       }
@@ -10168,14 +10211,6 @@
         }
       ],
       "x-go-gen-location": "models"
-    },
-    "engine.RegisterUserResult": {
-      "type": "object",
-      "properties": {
-        "tx_hash": {
-          "type": "string"
-        }
-      }
     },
     "exchange.CreateExchangeAndURLResponse": {
       "type": "object",
@@ -13785,6 +13820,15 @@
           "type": "string"
         }
       }
+    },
+    "summarizedCollectionCollection": {
+      "description": "Collection and it's metadata",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Collection"
+        }
+      ],
+      "x-go-gen-location": "models"
     },
     "tokenDataOAIGen": {
       "description": "Token details of this asset",
