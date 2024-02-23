@@ -15,16 +15,13 @@
 
 // May contain unused imports in some cases
 // @ts-ignore
-import { GetSignableTradeResult } from './get-signable-trade-result';
-// May contain unused imports in some cases
-// @ts-ignore
-import { GetSignableTradeResultFeeInfo } from './get-signable-trade-result-fee-info';
+import { Collection } from './collection';
 
 /**
- * @type GetSignableTradeResponseResult
- * Signable trade result
+ * @type SummarizedCollectionCollection
+ * Collection and it\'s metadata
  * @export
  */
-export type GetSignableTradeResponseResult = GetSignableTradeResult;
+export type SummarizedCollectionCollection = Collection;
 
 
