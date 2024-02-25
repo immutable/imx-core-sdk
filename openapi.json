@@ -14003,7 +14003,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError400"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -14013,7 +14013,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError403"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -14023,7 +14023,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError500"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -14033,7 +14033,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError404"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -14043,7 +14043,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError501"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -14053,7 +14053,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError429"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -14063,7 +14063,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError401"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
@@ -14073,7 +14073,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError422"
+              "$ref": "#/definitions/APIError"
             }
           }
         },
