@@ -5938,58 +5938,6 @@
         }
       }
     },
-    "CreateWithdrawalRequestV2": {
-      "type": "object",
-      "required": [
-        "sender_stark_key",
-        "sender_vault_id",
-        "receiver_stark_key",
-        "receiver_vault_id",
-        "amount",
-        "asset_id",
-        "expiration_timestamp",
-        "nonce",
-        "verification_signature"
-      ],
-      "properties": {
-        "sender_stark_key": {
-          "description": "Sender of the withdrawal",
-          "type": "string"
-        },
-        "sender_vault_id": {
-          "description": "ID of the vault being withdrawn from",
-          "type": "integer"
-        },
-        "receiver_stark_key": {
-          "description": "Receiver of the transfer (l1 eth wallet)",
-          "type": "string"
-        },
-        "receiver_vault_id": {
-          "description": "ID of the vault being transferred to (special vault = 0 used for withdrawal operations)",
-          "type": "integer"
-        },
-        "amount": {
-          "description": "Amount of the asset being withdrawn",
-          "type": "string"
-        },
-        "asset_id": {
-          "description": "ID of the asset being withdrawn",
-          "type": "string"
-        },
-        "expiration_timestamp": {
-          "description": "",
-          "type": "integer"
-        },
-        "nonce": {
-          "description": "Nonce of the withdrawal",
-          "type": "integer"
-        },
-        "stark_signature": {
-          "description": "Payload signature",
-          "type": "string"
-        }
-      }
-    },
     "CreateWithdrawalResponseV2": {
       "type": "object",
       "required": [
