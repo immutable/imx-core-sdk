@@ -5938,28 +5938,6 @@
         }
       }
     },
-    "CreateWithdrawalResponseV2": {
-      "type": "object",
-      "required": [
-        "status",
-        "time",
-        "withdrawal_id"
-      ],
-      "properties": {
-        "status": {
-          "description": "Status of the withdrawal",
-          "type": "string"
-        },
-        "time": {
-          "description": "Time of the withdrawal",
-          "type": "integer"
-        },
-        "withdrawal_id": {
-          "description": "ID of the withdrawal",
-          "type": "integer"
-        }
-      }
-    },
     "CurrencyWithLimits": {
       "type": "object",
       "properties": {

@@ -123,7 +123,6 @@ models/create-transfer-response-v2.ts
 models/create-transfer-response.ts
 models/create-withdrawal-request-v2.ts
 models/create-withdrawal-request.ts
-models/create-withdrawal-response-v2.ts
 models/create-withdrawal-response.ts
 models/currency-with-limits.ts
 models/deposit-token.ts

@@ -97,7 +97,6 @@ export * from './create-transfer-response-v2';
 export * from './create-withdrawal-request';
 export * from './create-withdrawal-request-v2';
 export * from './create-withdrawal-response';
-export * from './create-withdrawal-response-v2';
 export * from './currency-with-limits';
 export * from './deposit';
 export * from './deposit-token';

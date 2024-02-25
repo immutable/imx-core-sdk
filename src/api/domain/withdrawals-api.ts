@@ -27,8 +27,6 @@ import { CreateWithdrawalRequestV2 } from '../models';
 // @ts-ignore
 import { CreateWithdrawalResponse } from '../models';
 // @ts-ignore
-import { CreateWithdrawalResponseV2 } from '../models';
-// @ts-ignore
 import { GetSignableWithdrawalRequest } from '../models';
 // @ts-ignore
 import { GetSignableWithdrawalResponse } from '../models';
