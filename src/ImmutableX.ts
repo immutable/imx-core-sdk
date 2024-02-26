@@ -24,7 +24,6 @@ import {
   CollectionsApiListCollectionsRequest,
   CreateCollectionRequest,
   CreateMetadataRefreshRequest,
-  CreateProjectRequest,
   DepositsApi,
   DepositsApiGetDepositRequest,
   DepositsApiListDepositsRequest,
@@ -49,6 +48,7 @@ import {
   OrdersApi,
   OrdersApiGetOrderV3Request,
   OrdersApiListOrdersV3Request,
+  PrimarySalesApiSignableCreatePrimarySaleRequest,
   ProjectsApi,
   TokensApi,
   TokensApiGetTokenRequest,
@@ -454,25 +454,6 @@ export class ImmutableX {
   }
 
   /**
-   * Create a Project
-   * @param ethSigner - the L1 signer
-   * @param request - the request object containing the parameters to be provided in the API request
-   * @returns a promise that resolves with the created Project
-   * @throws {@link index.IMXError}
-   */
-  public async createProject(
-    ethSigner: EthSigner,
-    request: CreateProjectRequest,
-  ) {
-    return this.workflows
-      .createProject(ethSigner, request)
-      .then(res => res.data)
-      .catch(err => {
-        throw formatError(err);
-      });
-  }
-
-  /**
    * Get a Project
    * @param ethSigner - the L1 signer
    * @param id - the Project ID
@@ -482,31 +463,6 @@ export class ImmutableX {
   public async getProject(ethSigner: EthSigner, id: string) {
     return this.workflows
       .getProject(ethSigner, id)
-      .then(res => res.data)
-      .catch(err => {
-        throw formatError(err);
-      });
-  }
-
-  /**
-   * Get Projects owned by the given User
-   * @param ethSigner - the L1 signer
-   * @param pageSize - the page size of the result
-   * @param cursor - the cursor
-   * @param orderBy - the property to sort by
-   * @param direction - direction to sort (asc/desc)
-   * @returns a promise that resolves with the requested Projects
-   * @throws {@link index.IMXError}
-   */
-  public async getProjects(
-    ethSigner: EthSigner,
-    pageSize?: number,
-    cursor?: string,
-    orderBy?: string,
-    direction?: string,
-  ) {
-    return this.workflows
-      .getProjects(ethSigner, pageSize, cursor, orderBy, direction)
       .then(res => res.data)
       .catch(err => {
         throw formatError(err);
@@ -965,6 +921,54 @@ export class ImmutableX {
   ) {
     return this.nftCheckoutPrimaryApi
       .getNftPrimaryTransactions(request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Create a PrimarySale
+   * @param walletConnection - the pair of L1/L2 signers
+   * @param request - the request object to be provided in the API request
+   * @returns a promise that resolves with the created Trade
+   * @throws {@link index.IMXError}
+   */
+  public createPrimarySale(
+    walletConnection: WalletConnection,
+    request: PrimarySalesApiSignableCreatePrimarySaleRequest,
+  ) {
+    return this.workflows
+      .createPrimarySale(walletConnection, request)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Accept a PrimarySale
+   * @param ethSigner - eth signer matching the 'studio_ether_key' of the primary sale
+   * @param primarySaleId - id of the primary sale accepting
+   * @returns a promise that resolves with the accepted PrimarySale
+   * @throws {@link index.IMXError}
+   */
+  public acceptPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
+    return this.workflows
+      .acceptPrimarySale(ethSigner, primarySaleId)
+      .catch(err => {
+        throw formatError(err);
+      });
+  }
+
+  /**
+   * Reject a PrimarySale
+   * @param ethSigner - eth signer matching the 'studio_ether_key' of the primary sale
+   * @param primarySaleId - id of the primary sale to be rejected
+   * @returns a promise that resolves with the rejected PrimarySale
+   * @throws {@link index.IMXError}
+   */
+  public rejectPrimarySale(ethSigner: EthSigner, primarySaleId: number) {
+    return this.workflows
+      .rejectPrimarySale(ethSigner, primarySaleId)
       .catch(err => {
         throw formatError(err);
       });

@@ -25,7 +25,7 @@ jobs:
         run: echo "Version - ${{github.event.inputs.tag}}"
 
       - name: Read .nvmrc
-        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_OUTPUT
         id: nvm
 
       - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
@@ -39,7 +39,7 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Cache node modules
         uses: actions/cache@v3
@@ -65,6 +65,6 @@ jobs:
       - name: Publish package
         uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.PLATFORM_SA_NPM_TOKEN }}
+          token: ${{ secrets.IMX_CORE_SDK_NPM_TOKEN }}
           access: public
           tag: ${{ (contains(github.event.inputs.tag, 'alpha') && 'alpha') || (contains(github.event.inputs.tag, 'beta') && 'beta') || 'latest' }}
