@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `completeWithdrawal` has been updated to use V2 withdrawal logic for StarkEx V4 contract.
 - [BREAKING CHANGE] `completeWithdrawal` now requires `WalletConnection` instead of Eth Signer.
 
-## [2.6.0] - 2024-02-26
+
+## [2.6.1] - 2024-02-26
 
 ### Added
 
