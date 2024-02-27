@@ -1,11 +1,11 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { EncodingApi, MintsApi, UsersApi } from '../../api';
 import {
-  StarkV3,
-  StarkV3__factory,
+  Core,
+  Core__factory,
   Registration,
   Registration__factory,
-  StarkV4__factory,
+  CoreV4__factory,
 } from '../../contracts';
 import * as encUtils from 'enc-utils';
 import { ERC721Token } from '../../types';
@@ -31,7 +31,7 @@ async function executeWithdrawMintableERC721(
   assetType: string,
   starkPublicKey: string,
   mintingBlob: string,
-  contract: StarkV3,
+  contract: Core,
 ): Promise<TransactionResponse> {
   const populatedTransaction =
     await contract.populateTransaction.withdrawAndMint(
@@ -96,7 +96,7 @@ async function completeMintableERC721WithdrawalV1(
   );
   const mintingBlob = getMintingBlob(token);
 
-  const coreContract = StarkV3__factory.connect(
+  const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
@@ -164,7 +164,7 @@ async function executeWithdrawERC721(
   assetType: string,
   starkPublicKey: string,
   tokenId: string,
-  contract: StarkV3,
+  contract: Core,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction.withdrawNft(
     starkPublicKey,
@@ -187,7 +187,7 @@ async function completeERC721WithdrawalV1(
     token_address: token.tokenAddress,
   });
 
-  const coreContract = StarkV3__factory.connect(
+  const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
@@ -290,7 +290,7 @@ async function completeMintableERC721WithdrawalV2(
   );
   const mintingBlob = getMintingBlob(token);
 
-  const coreContract = StarkV4__factory.connect(
+  const coreContract = CoreV4__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
@@ -316,7 +316,7 @@ async function completeERC721WithdrawalV2(
     token_address: token.tokenAddress,
   });
 
-  const coreContract = StarkV4__factory.connect(
+  const coreContract = CoreV4__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );

@@ -25,9 +25,10 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../common";
+  PromiseOrValue,
+} from "../../common";
 
-export interface StarkV3Interface extends utils.Interface {
+export interface CoreInterface extends utils.Interface {
   functions: {
     "announceAvailabilityVerifierRemovalIntent(address)": FunctionFragment;
     "announceVerifierRemovalIntent(address)": FunctionFragment;
@@ -161,75 +162,124 @@ export interface StarkV3Interface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "announceAvailabilityVerifierRemovalIntent",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "announceVerifierRemovalIntent",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "deposit(uint256,uint256,uint256)",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "deposit(uint256,uint256,uint256,uint256)",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "depositCancel",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "depositERC20",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "depositEth",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "depositNft",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "depositNftReclaim",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "depositReclaim",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "escape",
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "freezeRequest",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "fullWithdrawalRequest",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getAssetInfo",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getCancellationRequest",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getDepositBalance",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getEthKey",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getFullWithdrawalRequest",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getLastBatchId",
@@ -245,11 +295,15 @@ export interface StarkV3Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getQuantizedDepositBalance",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "getQuantum",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "getRegisteredAvailabilityVerifiers",
@@ -273,20 +327,29 @@ export interface StarkV3Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getWithdrawalBalance",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "isAvailabilityVerifier",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "isFrozen", values?: undefined): string;
-  encodeFunctionData(functionFragment: "isOperator", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "isOperator",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "isTokenAdmin",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "isUserAdmin", values: [string]): string;
-  encodeFunctionData(functionFragment: "isVerifier", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "isUserAdmin",
+    values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "isVerifier",
+    values: [PromiseOrValue<string>]
+  ): string;
   encodeFunctionData(
     functionFragment: "mainAcceptGovernance",
     values?: undefined
@@ -297,107 +360,139 @@ export interface StarkV3Interface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "mainIsGovernor",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "mainNominateNewGovernor",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "mainRemoveGovernor",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "onERC721Received",
-    values: [string, string, BigNumberish, BytesLike]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerAndDepositERC20",
     values: [
-      string,
-      BigNumberish,
-      BytesLike,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
     ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerAndDepositEth",
-    values: [string, BigNumberish, BytesLike, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerAvailabilityVerifier",
-    values: [string, string]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerOperator",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerToken",
-    values: [BigNumberish, BytesLike]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerTokenAdmin",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerUser",
-    values: [string, BigNumberish, BytesLike]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerUserAdmin",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerVerifier",
-    values: [string, string]
+    values: [PromiseOrValue<string>, PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "removeAvailabilityVerifier",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "removeVerifier",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(functionFragment: "unFreeze", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "unregisterOperator",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "unregisterTokenAdmin",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "unregisterUserAdmin",
-    values: [string]
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "updateState",
-    values: [BigNumberish[], BigNumberish[]]
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]]
   ): string;
   encodeFunctionData(
     functionFragment: "withdraw",
-    values: [BigNumberish, BigNumberish]
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawAndMint",
-    values: [BigNumberish, BigNumberish, BytesLike]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawNft",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawNftTo",
-    values: [BigNumberish, BigNumberish, BigNumberish, string]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawTo",
-    values: [BigNumberish, BigNumberish, string]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>
+    ]
   ): string;
 
   decodeFunctionResult(
@@ -864,12 +959,12 @@ export type LogWithdrawalPerformedEvent = TypedEvent<
 export type LogWithdrawalPerformedEventFilter =
   TypedEventFilter<LogWithdrawalPerformedEvent>;
 
-export interface StarkV3 extends BaseContract {
+export interface Core extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: StarkV3Interface;
+  interface: CoreInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -892,122 +987,122 @@ export interface StarkV3 extends BaseContract {
 
   functions: {
     announceAvailabilityVerifierRemovalIntent(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     announceVerifierRemovalIntent(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "deposit(uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     "deposit(uint256,uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     depositCancel(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     depositERC20(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     depositEth(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     depositNft(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     depositNftReclaim(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     depositReclaim(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     escape(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      assetId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     freezeRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     fullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getAssetInfo(
-      assetType: BigNumberish,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string] & { assetInfo: string }>;
 
     getCancellationRequest(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { request: BigNumber }>;
 
     getDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { balance: BigNumber }>;
 
     getEthKey(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[string] & { ethKey: string }>;
 
     getFullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { res: BigNumber }>;
 
@@ -1024,23 +1119,23 @@ export interface StarkV3 extends BaseContract {
     ): Promise<[BigNumber] & { height: BigNumber }>;
 
     getQuantizedDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { balance: BigNumber }>;
 
     getQuantum(
-      presumedAssetType: BigNumberish,
+      presumedAssetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { quantum: BigNumber }>;
 
     getRegisteredAvailabilityVerifiers(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getRegisteredVerifiers(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     getSequenceNumber(
@@ -1056,315 +1151,318 @@ export interface StarkV3 extends BaseContract {
     ): Promise<[BigNumber] & { height: BigNumber }>;
 
     getWithdrawalBalance(
-      ownerKey: BigNumberish,
-      assetId: BigNumberish,
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber] & { balance: BigNumber }>;
 
     isAvailabilityVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isFrozen(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     isVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mainAcceptGovernance(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mainCancelNomination(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mainIsGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mainNominateNewGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     mainRemoveGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerAndDepositERC20(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerAndDepositEth(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerAvailabilityVerifier(
-      arg0: string,
-      arg1: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerToken(
-      arg0: BigNumberish,
-      arg1: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerUser(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerVerifier(
-      arg0: string,
-      arg1: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     removeAvailabilityVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     removeVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     unFreeze(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     unregisterOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     unregisterTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     unregisterUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     updateState(
-      publicInput: BigNumberish[],
-      applicationData: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      publicInput: PromiseOrValue<BigNumberish>[],
+      applicationData: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdraw(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdrawAndMint(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdrawNft(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdrawNftTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: BigNumberish,
-      arg3: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdrawTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
   announceAvailabilityVerifierRemovalIntent(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   announceVerifierRemovalIntent(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "deposit(uint256,uint256,uint256)"(
-    starkKey: BigNumberish,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   "deposit(uint256,uint256,uint256,uint256)"(
-    starkKey: BigNumberish,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    quantizedAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    quantizedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   depositCancel(
-    starkKey: BigNumberish,
-    assetId: BigNumberish,
-    vaultId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetId: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   depositERC20(
-    starkKey: BigNumberish,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    quantizedAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    quantizedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   depositEth(
-    starkKey: BigNumberish,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   depositNft(
-    starkKey: BigNumberish,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   depositNftReclaim(
-    starkKey: BigNumberish,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   depositReclaim(
-    starkKey: BigNumberish,
-    assetId: BigNumberish,
-    vaultId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetId: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   escape(
-    starkKey: BigNumberish,
-    vaultId: BigNumberish,
-    assetId: BigNumberish,
-    quantizedAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    assetId: PromiseOrValue<BigNumberish>,
+    quantizedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   freezeRequest(
-    starkKey: BigNumberish,
-    vaultId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   fullWithdrawalRequest(
-    starkKey: BigNumberish,
-    vaultId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    starkKey: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getAssetInfo(
-    assetType: BigNumberish,
+    assetType: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<string>;
 
   getCancellationRequest(
-    starkKey: BigNumberish,
-    assetId: BigNumberish,
-    vaultId: BigNumberish,
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetId: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getDepositBalance(
-    starkKey: BigNumberish,
-    assetId: BigNumberish,
-    vaultId: BigNumberish,
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetId: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
-  getEthKey(starkKey: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getEthKey(
+    starkKey: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<string>;
 
   getFullWithdrawalRequest(
-    starkKey: BigNumberish,
-    vaultId: BigNumberish,
+    starkKey: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
@@ -1375,23 +1473,23 @@ export interface StarkV3 extends BaseContract {
   getOrderTreeHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   getQuantizedDepositBalance(
-    starkKey: BigNumberish,
-    assetId: BigNumberish,
-    vaultId: BigNumberish,
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetId: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getQuantum(
-    presumedAssetType: BigNumberish,
+    presumedAssetType: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   getRegisteredAvailabilityVerifiers(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getRegisteredVerifiers(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   getSequenceNumber(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1401,318 +1499,318 @@ export interface StarkV3 extends BaseContract {
   getVaultTreeHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   getWithdrawalBalance(
-    ownerKey: BigNumberish,
-    assetId: BigNumberish,
+    ownerKey: PromiseOrValue<BigNumberish>,
+    assetId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
   isAvailabilityVerifier(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isFrozen(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isOperator(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isTokenAdmin(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isUserAdmin(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   isVerifier(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mainAcceptGovernance(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mainCancelNomination(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mainIsGovernor(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mainNominateNewGovernor(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   mainRemoveGovernor(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   onERC721Received(
-    arg0: string,
-    arg1: string,
-    arg2: BigNumberish,
-    arg3: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    arg3: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerAndDepositERC20(
-    ethKey: string,
-    starkKey: BigNumberish,
-    signature: BytesLike,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    quantizedAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    ethKey: PromiseOrValue<string>,
+    starkKey: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    quantizedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerAndDepositEth(
-    ethKey: string,
-    starkKey: BigNumberish,
-    signature: BytesLike,
-    assetType: BigNumberish,
-    vaultId: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> }
+    ethKey: PromiseOrValue<string>,
+    starkKey: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    assetType: PromiseOrValue<BigNumberish>,
+    vaultId: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerAvailabilityVerifier(
-    arg0: string,
-    arg1: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerOperator(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerToken(
-    arg0: BigNumberish,
-    arg1: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerTokenAdmin(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerUser(
-    arg0: string,
-    arg1: BigNumberish,
-    arg2: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    arg2: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerUserAdmin(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerVerifier(
-    arg0: string,
-    arg1: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   removeAvailabilityVerifier(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   removeVerifier(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   unFreeze(
-    overrides?: Overrides & { from?: string | Promise<string> }
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   unregisterOperator(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   unregisterTokenAdmin(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   unregisterUserAdmin(
-    arg0: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   updateState(
-    publicInput: BigNumberish[],
-    applicationData: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> }
+    publicInput: PromiseOrValue<BigNumberish>[],
+    applicationData: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdraw(
-    ownerKey: BigNumberish,
-    assetType: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    ownerKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdrawAndMint(
-    ownerKey: BigNumberish,
-    assetType: BigNumberish,
-    mintingBlob: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    ownerKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    mintingBlob: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdrawNft(
-    ownerKey: BigNumberish,
-    assetType: BigNumberish,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    ownerKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdrawNftTo(
-    arg0: BigNumberish,
-    arg1: BigNumberish,
-    arg2: BigNumberish,
-    arg3: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    arg2: PromiseOrValue<BigNumberish>,
+    arg3: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdrawTo(
-    arg0: BigNumberish,
-    arg1: BigNumberish,
-    arg2: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    arg2: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
     announceAvailabilityVerifierRemovalIntent(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     announceVerifierRemovalIntent(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "deposit(uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     "deposit(uint256,uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositCancel(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositERC20(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositEth(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositNft(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositNftReclaim(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     depositReclaim(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     escape(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      assetId: BigNumberish,
-      quantizedAmount: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     freezeRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     fullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     getAssetInfo(
-      assetType: BigNumberish,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     getCancellationRequest(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getEthKey(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<string>;
 
     getFullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1723,14 +1821,14 @@ export interface StarkV3 extends BaseContract {
     getOrderTreeHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     getQuantizedDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getQuantum(
-      presumedAssetType: BigNumberish,
+      presumedAssetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -1747,153 +1845,189 @@ export interface StarkV3 extends BaseContract {
     getVaultTreeHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     getWithdrawalBalance(
-      ownerKey: BigNumberish,
-      assetId: BigNumberish,
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isAvailabilityVerifier(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     isFrozen(overrides?: CallOverrides): Promise<void>;
 
-    isOperator(arg0: string, overrides?: CallOverrides): Promise<void>;
+    isOperator(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    isTokenAdmin(arg0: string, overrides?: CallOverrides): Promise<void>;
+    isTokenAdmin(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    isUserAdmin(arg0: string, overrides?: CallOverrides): Promise<void>;
+    isUserAdmin(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
-    isVerifier(arg0: string, overrides?: CallOverrides): Promise<void>;
+    isVerifier(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     mainAcceptGovernance(overrides?: CallOverrides): Promise<void>;
 
     mainCancelNomination(overrides?: CallOverrides): Promise<void>;
 
-    mainIsGovernor(arg0: string, overrides?: CallOverrides): Promise<void>;
-
-    mainNominateNewGovernor(
-      arg0: string,
+    mainIsGovernor(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    mainRemoveGovernor(arg0: string, overrides?: CallOverrides): Promise<void>;
+    mainNominateNewGovernor(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    mainRemoveGovernor(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     registerAndDepositERC20(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     registerAndDepositEth(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     registerAvailabilityVerifier(
-      arg0: string,
-      arg1: string,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    registerOperator(arg0: string, overrides?: CallOverrides): Promise<void>;
+    registerOperator(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     registerToken(
-      arg0: BigNumberish,
-      arg1: BytesLike,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    registerTokenAdmin(arg0: string, overrides?: CallOverrides): Promise<void>;
+    registerTokenAdmin(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     registerUser(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    registerUserAdmin(arg0: string, overrides?: CallOverrides): Promise<void>;
+    registerUserAdmin(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     registerVerifier(
-      arg0: string,
-      arg1: string,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     removeAvailabilityVerifier(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    removeVerifier(arg0: string, overrides?: CallOverrides): Promise<void>;
+    removeVerifier(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     unFreeze(overrides?: CallOverrides): Promise<void>;
 
-    unregisterOperator(arg0: string, overrides?: CallOverrides): Promise<void>;
-
-    unregisterTokenAdmin(
-      arg0: string,
+    unregisterOperator(
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    unregisterUserAdmin(arg0: string, overrides?: CallOverrides): Promise<void>;
+    unregisterTokenAdmin(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    unregisterUserAdmin(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     updateState(
-      publicInput: BigNumberish[],
-      applicationData: BigNumberish[],
+      publicInput: PromiseOrValue<BigNumberish>[],
+      applicationData: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdraw(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdrawAndMint(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdrawNft(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdrawNftTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: BigNumberish,
-      arg3: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdrawTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -2097,122 +2231,122 @@ export interface StarkV3 extends BaseContract {
 
   estimateGas: {
     announceAvailabilityVerifierRemovalIntent(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     announceVerifierRemovalIntent(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "deposit(uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     "deposit(uint256,uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     depositCancel(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     depositERC20(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     depositEth(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     depositNft(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     depositNftReclaim(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     depositReclaim(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     escape(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      assetId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     freezeRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     fullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getAssetInfo(
-      assetType: BigNumberish,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getCancellationRequest(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getEthKey(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getFullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -2223,23 +2357,23 @@ export interface StarkV3 extends BaseContract {
     getOrderTreeHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     getQuantizedDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getQuantum(
-      presumedAssetType: BigNumberish,
+      presumedAssetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getRegisteredAvailabilityVerifiers(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getRegisteredVerifiers(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     getSequenceNumber(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2249,319 +2383,319 @@ export interface StarkV3 extends BaseContract {
     getVaultTreeHeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     getWithdrawalBalance(
-      ownerKey: BigNumberish,
-      assetId: BigNumberish,
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     isAvailabilityVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isFrozen(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     isVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mainAcceptGovernance(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mainCancelNomination(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mainIsGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mainNominateNewGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     mainRemoveGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerAndDepositERC20(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerAndDepositEth(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerAvailabilityVerifier(
-      arg0: string,
-      arg1: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerToken(
-      arg0: BigNumberish,
-      arg1: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerUser(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerVerifier(
-      arg0: string,
-      arg1: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     removeAvailabilityVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     removeVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     unFreeze(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     unregisterOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     unregisterTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     unregisterUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     updateState(
-      publicInput: BigNumberish[],
-      applicationData: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      publicInput: PromiseOrValue<BigNumberish>[],
+      applicationData: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdraw(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdrawAndMint(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdrawNft(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdrawNftTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: BigNumberish,
-      arg3: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdrawTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     announceAvailabilityVerifierRemovalIntent(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     announceVerifierRemovalIntent(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "deposit(uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     "deposit(uint256,uint256,uint256,uint256)"(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     depositCancel(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     depositERC20(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     depositEth(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     depositNft(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     depositNftReclaim(
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     depositReclaim(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     escape(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      assetId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     freezeRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     fullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getAssetInfo(
-      assetType: BigNumberish,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getCancellationRequest(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getEthKey(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getFullWithdrawalRequest(
-      starkKey: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
@@ -2574,23 +2708,23 @@ export interface StarkV3 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getQuantizedDepositBalance(
-      starkKey: BigNumberish,
-      assetId: BigNumberish,
-      vaultId: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getQuantum(
-      presumedAssetType: BigNumberish,
+      presumedAssetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getRegisteredAvailabilityVerifiers(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getRegisteredVerifiers(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     getSequenceNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2602,198 +2736,198 @@ export interface StarkV3 extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     getWithdrawalBalance(
-      ownerKey: BigNumberish,
-      assetId: BigNumberish,
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     isAvailabilityVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isFrozen(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     isVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mainAcceptGovernance(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mainCancelNomination(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mainIsGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mainNominateNewGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     mainRemoveGovernor(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerAndDepositERC20(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      quantizedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      quantizedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerAndDepositEth(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      vaultId: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      vaultId: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerAvailabilityVerifier(
-      arg0: string,
-      arg1: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerToken(
-      arg0: BigNumberish,
-      arg1: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerUser(
-      arg0: string,
-      arg1: BigNumberish,
-      arg2: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerVerifier(
-      arg0: string,
-      arg1: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     removeAvailabilityVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     removeVerifier(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     unFreeze(
-      overrides?: Overrides & { from?: string | Promise<string> }
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     unregisterOperator(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     unregisterTokenAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     unregisterUserAdmin(
-      arg0: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     updateState(
-      publicInput: BigNumberish[],
-      applicationData: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> }
+      publicInput: PromiseOrValue<BigNumberish>[],
+      applicationData: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdrawAndMint(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdrawNft(
-      ownerKey: BigNumberish,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      ownerKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdrawNftTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: BigNumberish,
-      arg3: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdrawTo(
-      arg0: BigNumberish,
-      arg1: BigNumberish,
-      arg2: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

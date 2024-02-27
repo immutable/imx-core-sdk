@@ -20,7 +20,8 @@ import type {
   TypedEvent,
   TypedListener,
   OnEvent,
-} from "../common";
+  PromiseOrValue,
+} from "../../common";
 
 export interface RegistrationV4Interface extends utils.Interface {
   functions: {
@@ -51,23 +52,44 @@ export interface RegistrationV4Interface extends utils.Interface {
   encodeFunctionData(functionFragment: "imx", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "isRegistered",
-    values: [BigNumberish]
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "registerAndWithdrawAll",
-    values: [string, BigNumberish, BytesLike, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerAndWithdrawNft",
-    values: [string, BigNumberish, BytesLike, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerWithdrawAndMint",
-    values: [string, BigNumberish, BytesLike, BigNumberish, BytesLike]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "withdrawAll",
-    values: [BigNumberish, BigNumberish, BigNumberish]
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
 
   decodeFunctionResult(functionFragment: "getVersion", data: BytesLike): Result;
@@ -128,41 +150,41 @@ export interface RegistrationV4 extends BaseContract {
     imx(overrides?: CallOverrides): Promise<[string]>;
 
     isRegistered(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
     registerAndWithdrawAll(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerAndWithdrawNft(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     registerWithdrawAndMint(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
     withdrawAll(
-      ethKey: BigNumberish,
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<BigNumberish>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
   };
 
@@ -171,41 +193,41 @@ export interface RegistrationV4 extends BaseContract {
   imx(overrides?: CallOverrides): Promise<string>;
 
   isRegistered(
-    starkKey: BigNumberish,
+    starkKey: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   registerAndWithdrawAll(
-    ethKey: string,
-    starkKey: BigNumberish,
-    signature: BytesLike,
-    assetType: BigNumberish,
-    overrides?: Overrides & { from?: string }
+    ethKey: PromiseOrValue<string>,
+    starkKey: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    assetType: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerAndWithdrawNft(
-    ethKey: string,
-    starkKey: BigNumberish,
-    signature: BytesLike,
-    assetType: BigNumberish,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string }
+    ethKey: PromiseOrValue<string>,
+    starkKey: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    assetType: PromiseOrValue<BigNumberish>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   registerWithdrawAndMint(
-    ethKey: string,
-    starkKey: BigNumberish,
-    signature: BytesLike,
-    assetType: BigNumberish,
-    mintingBlob: BytesLike,
-    overrides?: Overrides & { from?: string }
+    ethKey: PromiseOrValue<string>,
+    starkKey: PromiseOrValue<BigNumberish>,
+    signature: PromiseOrValue<BytesLike>,
+    assetType: PromiseOrValue<BigNumberish>,
+    mintingBlob: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   withdrawAll(
-    ethKey: BigNumberish,
-    starkKey: BigNumberish,
-    assetType: BigNumberish,
-    overrides?: Overrides & { from?: string }
+    ethKey: PromiseOrValue<BigNumberish>,
+    starkKey: PromiseOrValue<BigNumberish>,
+    assetType: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -214,40 +236,40 @@ export interface RegistrationV4 extends BaseContract {
     imx(overrides?: CallOverrides): Promise<string>;
 
     isRegistered(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<boolean>;
 
     registerAndWithdrawAll(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     registerAndWithdrawNft(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     registerWithdrawAndMint(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
 
     withdrawAll(
-      ethKey: BigNumberish,
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
+      ethKey: PromiseOrValue<BigNumberish>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
   };
@@ -260,41 +282,41 @@ export interface RegistrationV4 extends BaseContract {
     imx(overrides?: CallOverrides): Promise<BigNumber>;
 
     isRegistered(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     registerAndWithdrawAll(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerAndWithdrawNft(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     registerWithdrawAndMint(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
     withdrawAll(
-      ethKey: BigNumberish,
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<BigNumberish>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
   };
 
@@ -304,41 +326,41 @@ export interface RegistrationV4 extends BaseContract {
     imx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isRegistered(
-      starkKey: BigNumberish,
+      starkKey: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     registerAndWithdrawAll(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerAndWithdrawNft(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     registerWithdrawAndMint(
-      ethKey: string,
-      starkKey: BigNumberish,
-      signature: BytesLike,
-      assetType: BigNumberish,
-      mintingBlob: BytesLike,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<string>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      signature: PromiseOrValue<BytesLike>,
+      assetType: PromiseOrValue<BigNumberish>,
+      mintingBlob: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
     withdrawAll(
-      ethKey: BigNumberish,
-      starkKey: BigNumberish,
-      assetType: BigNumberish,
-      overrides?: Overrides & { from?: string }
+      ethKey: PromiseOrValue<BigNumberish>,
+      starkKey: PromiseOrValue<BigNumberish>,
+      assetType: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

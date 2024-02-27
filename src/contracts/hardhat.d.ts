@@ -32,6 +32,14 @@ declare module "hardhat/types/runtime" {
       name: "Registration",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Registration__factory>;
+    getContractFactory(
+      name: "CoreV4",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.CoreV4__factory>;
+    getContractFactory(
+      name: "RegistrationV4",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.RegistrationV4__factory>;
 
     getContractAt(
       name: "IERC20",
@@ -58,6 +66,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.Registration>;
+    getContractAt(
+      name: "CoreV4",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.CoreV4>;
+    getContractAt(
+      name: "RegistrationV4",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.RegistrationV4>;
 
     // default types
     getContractFactory(

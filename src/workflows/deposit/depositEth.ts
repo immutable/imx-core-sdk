@@ -2,11 +2,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, UsersApi } from '../../api';
 import { parseUnits } from '@ethersproject/units';
-import {
-  StarkV3,
-  StarkV3__factory,
-  Registration__factory,
-} from '../../contracts';
+import { Core, Core__factory, Registration__factory } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
@@ -25,7 +21,7 @@ async function executeRegisterAndDepositEth(
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
-  contract: StarkV3,
+  contract: Core,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
@@ -54,7 +50,7 @@ async function executeDepositEth(
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
-  contract: StarkV3,
+  contract: Core,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction[
     'deposit(uint256,uint256,uint256)'
@@ -103,7 +99,7 @@ export async function depositEthWorkflow(
   const starkPublicKey = signableDepositResult.data.stark_key;
   const vaultId = signableDepositResult.data.vault_id;
 
-  const coreContract = StarkV3__factory.connect(
+  const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
