@@ -60,6 +60,7 @@ import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
 import { exchangeTransfersWorkflow } from './exchangeTransfers';
 import axios, { AxiosResponse } from 'axios';
+import { Signer } from '@ethersproject/abstract-signer';
 import {
   CreatePrimarySaleWorkflow,
   AcceptPrimarySalesWorkflow,
@@ -70,7 +71,6 @@ import {
   completeWithdrawalV1Workflow,
   completeWithdrawalV2Workflow,
 } from './withdrawal/completeWithdrawal';
-import { Signer } from 'ethers';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
