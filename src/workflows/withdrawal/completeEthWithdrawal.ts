@@ -5,9 +5,9 @@ import { ImmutableXConfiguration } from '../../config';
 import {
   StarkV3,
   StarkV3__factory,
-  StarkV4__factory,
   Registration,
   Registration__factory,
+  StarkV4__factory,
 } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
