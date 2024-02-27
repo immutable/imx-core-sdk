@@ -121,8 +121,8 @@ import { SignableRejectPrimarySaleUnprocessableEntityBody } from '../models';
 export const PrimarySalesApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * [Experimental] Accept Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Accept Primary Sale
+         * Accept Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -161,8 +161,8 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * [Experimental] Create Primary Sale. This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Create Primary Sale
+         * Create Primary Sale. This endpoint is experimental and may change in the future.
+         * @summary Create Primary Sale
          * @param {CreatePrimarySaleParamsBody} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -201,8 +201,8 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * [Experimental] Get a single primary sale by ID. This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Get a single primary sale by ID
+         * Get a single primary sale by ID. This endpoint is experimental and may change in the future.
+         * @summary Get a single primary sale by ID
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -235,8 +235,8 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Reject Primary Sale
+         * Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Reject Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -275,8 +275,8 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Accept Primary Sale
+         * Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -309,8 +309,8 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * [Experimental] Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Create Primary Sale
+         * Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Create Primary Sale
          * @param {SignableCreatePrimarySaleParamsBody} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -343,8 +343,8 @@ export const PrimarySalesApiAxiosParamCreator = function (configuration?: Config
             };
         },
         /**
-         * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Reject Primary Sale
+         * Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Reject Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -387,8 +387,8 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PrimarySalesApiAxiosParamCreator(configuration)
     return {
         /**
-         * [Experimental] Accept Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Accept Primary Sale
+         * Accept Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -398,8 +398,8 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * [Experimental] Create Primary Sale. This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Create Primary Sale
+         * Create Primary Sale. This endpoint is experimental and may change in the future.
+         * @summary Create Primary Sale
          * @param {CreatePrimarySaleParamsBody} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -409,8 +409,8 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * [Experimental] Get a single primary sale by ID. This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Get a single primary sale by ID
+         * Get a single primary sale by ID. This endpoint is experimental and may change in the future.
+         * @summary Get a single primary sale by ID
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -420,8 +420,8 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Reject Primary Sale
+         * Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Reject Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -431,8 +431,8 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Accept Primary Sale
+         * Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -442,8 +442,8 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * [Experimental] Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Create Primary Sale
+         * Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Create Primary Sale
          * @param {SignableCreatePrimarySaleParamsBody} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -453,8 +453,8 @@ export const PrimarySalesApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Reject Primary Sale
+         * Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Reject Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -474,8 +474,8 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
     const localVarFp = PrimarySalesApiFp(configuration)
     return {
         /**
-         * [Experimental] Accept Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Accept Primary Sale
+         * Accept Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -484,8 +484,8 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
             return localVarFp.acceptPrimarySale(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * [Experimental] Create Primary Sale. This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Create Primary Sale
+         * Create Primary Sale. This endpoint is experimental and may change in the future.
+         * @summary Create Primary Sale
          * @param {CreatePrimarySaleParamsBody} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -494,8 +494,8 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
             return localVarFp.createPrimarySale(body, options).then((request) => request(axios, basePath));
         },
         /**
-         * [Experimental] Get a single primary sale by ID. This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Get a single primary sale by ID
+         * Get a single primary sale by ID. This endpoint is experimental and may change in the future.
+         * @summary Get a single primary sale by ID
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -504,8 +504,8 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
             return localVarFp.getPrimarySale(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Reject Primary Sale
+         * Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Reject Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -514,8 +514,8 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
             return localVarFp.rejectPrimarySale(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Accept Primary Sale
+         * Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Accept Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -524,8 +524,8 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
             return localVarFp.signableAcceptPrimarySale(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * [Experimental] Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Create Primary Sale
+         * Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Create Primary Sale
          * @param {SignableCreatePrimarySaleParamsBody} [body] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -534,8 +534,8 @@ export const PrimarySalesApiFactory = function (configuration?: Configuration, b
             return localVarFp.signableCreatePrimarySale(body, options).then((request) => request(axios, basePath));
         },
         /**
-         * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
-         * @summary [Experimental] Signable Reject Primary Sale
+         * Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+         * @summary Signable Reject Primary Sale
          * @param {number} id Global Primary Sale identifier
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -652,8 +652,8 @@ export interface PrimarySalesApiSignableRejectPrimarySaleRequest {
  */
 export class PrimarySalesApi extends BaseAPI {
     /**
-     * [Experimental] Accept Primary Sale.  This endpoint is experimental and may change in the future.
-     * @summary [Experimental] Accept Primary Sale
+     * Accept Primary Sale.  This endpoint is experimental and may change in the future.
+     * @summary Accept Primary Sale
      * @param {PrimarySalesApiAcceptPrimarySaleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -664,8 +664,8 @@ export class PrimarySalesApi extends BaseAPI {
     }
 
     /**
-     * [Experimental] Create Primary Sale. This endpoint is experimental and may change in the future.
-     * @summary [Experimental] Create Primary Sale
+     * Create Primary Sale. This endpoint is experimental and may change in the future.
+     * @summary Create Primary Sale
      * @param {PrimarySalesApiCreatePrimarySaleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -676,8 +676,8 @@ export class PrimarySalesApi extends BaseAPI {
     }
 
     /**
-     * [Experimental] Get a single primary sale by ID. This endpoint is experimental and may change in the future.
-     * @summary [Experimental] Get a single primary sale by ID
+     * Get a single primary sale by ID. This endpoint is experimental and may change in the future.
+     * @summary Get a single primary sale by ID
      * @param {PrimarySalesApiGetPrimarySaleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -688,8 +688,8 @@ export class PrimarySalesApi extends BaseAPI {
     }
 
     /**
-     * [Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.
-     * @summary [Experimental] Reject Primary Sale
+     * Reject Primary Sale.  This endpoint is experimental and may change in the future.
+     * @summary Reject Primary Sale
      * @param {PrimarySalesApiRejectPrimarySaleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -700,8 +700,8 @@ export class PrimarySalesApi extends BaseAPI {
     }
 
     /**
-     * [Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
-     * @summary [Experimental] Signable Accept Primary Sale
+     * Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.
+     * @summary Signable Accept Primary Sale
      * @param {PrimarySalesApiSignableAcceptPrimarySaleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -712,8 +712,8 @@ export class PrimarySalesApi extends BaseAPI {
     }
 
     /**
-     * [Experimental] Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
-     * @summary [Experimental] Signable Create Primary Sale
+     * Signable Create Primary Sale.  This endpoint is experimental and may change in the future.
+     * @summary Signable Create Primary Sale
      * @param {PrimarySalesApiSignableCreatePrimarySaleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -724,8 +724,8 @@ export class PrimarySalesApi extends BaseAPI {
     }
 
     /**
-     * [Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
-     * @summary [Experimental] Signable Reject Primary Sale
+     * Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.
+     * @summary Signable Reject Primary Sale
      * @param {PrimarySalesApiSignableRejectPrimarySaleRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
