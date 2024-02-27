@@ -42,6 +42,7 @@ import { Registration__factory } from '../contracts';
 import {
   isRegisteredOnChainWorkflow,
   registerOffchainWorkflow,
+  registerOnchainWorkflow,
 } from './registration';
 import { mintingWorkflow } from './minting';
 import { transfersWorkflow, batchTransfersWorkflow } from './transfers';
@@ -124,6 +125,12 @@ export class Workflows {
       throw new Error(
         'The wallet used for this operation is not from the correct network.',
       );
+  }
+
+  public async registerOnchain(walletConnection: WalletConnection) {
+    await this.validateChain(walletConnection.ethSigner);
+
+    return registerOnchainWorkflow(walletConnection, this.config);
   }
 
   public async registerOffchain(walletConnection: WalletConnection) {

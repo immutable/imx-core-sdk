@@ -1,11 +1,17 @@
+import { ImmutableXConfiguration } from '..';
 import {
   UsersApi,
   GetSignableRegistrationResponse,
   RegisterUserResponse,
 } from '../api';
-import { WalletConnection } from '../types';
-import { signRaw } from '../utils';
-import { Registration } from '../contracts';
+import { StarkSigner, WalletConnection } from '../types';
+import { serializePackedSignature, signRaw, starkEcOrder } from '../utils';
+import { Registration, CoreV4__factory } from '../contracts';
+import { solidityKeccak256 } from 'ethers/lib/utils';
+import BN from 'bn.js';
+import * as encUtils from 'enc-utils';
+import { ec } from 'elliptic';
+import { TransactionResponse } from '@ethersproject/providers';
 
 type registerOffchainWorkflowParams = WalletConnection & {
   usersApi: UsersApi;
@@ -80,4 +86,50 @@ export async function getSignableRegistrationOnchain(
     readable_transaction: response.data.readable_transaction,
     verification_signature: response.data.verification_signature,
   };
+}
+
+export async function signRegisterEthAddress(
+  starkSigner: StarkSigner,
+  ethAddress: string,
+  starkPublicKey: string,
+): Promise<string> {
+  const hash: string = solidityKeccak256(
+    ['string', 'address', 'uint256'],
+    ['UserRegistration:', ethAddress, starkPublicKey],
+  );
+  const msgHash: BN = new BN(encUtils.removeHexPrefix(hash), 16);
+  const modMsgHash: BN = msgHash.mod(starkEcOrder);
+  const signature: ec.Signature = await starkSigner.sign(
+    modMsgHash.toString(16),
+  );
+  const pubY: string = encUtils.sanitizeHex(starkSigner.getYCoordinate());
+  return serializePackedSignature(signature, pubY);
+}
+
+export async function registerOnchainWorkflow(
+  walletConnection: WalletConnection,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const ethAddress = await walletConnection.ethSigner.getAddress();
+  const starkPublicKey = await walletConnection.starkSigner.getAddress();
+
+  const signature = await signRegisterEthAddress(
+    walletConnection.starkSigner,
+    ethAddress,
+    starkPublicKey,
+  );
+
+  const contract = CoreV4__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    walletConnection.ethSigner,
+  );
+
+  const populatedTransaction =
+    await contract.populateTransaction.registerEthAddress(
+      ethAddress,
+      starkPublicKey,
+      signature,
+    );
+
+  return walletConnection.ethSigner.sendTransaction(populatedTransaction);
 }
