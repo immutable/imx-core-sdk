@@ -621,24 +621,6 @@ export class ImmutableX {
   }
 
   /**
-   * Register and complete a Withdrawal
-   * @param walletConnection - the pair of L1/L2 signers
-   * @param token - the token
-   * @returns a promise that resolves with the transaction
-   * @throws {@link index.IMXError}
-   */
-  public registerAndCompleteWithdrawal(
-    walletConnection: WalletConnection,
-    token: AnyToken,
-  ) {
-    return this.workflows
-      .registerAndCompleteWithdrawal(walletConnection, token)
-      .catch(err => {
-        throw formatError(err);
-      });
-  }
-
-  /**
    * Get details of an Order with the given ID
    * @param request - the request object containing the parameters to be provided in the API request
    * @returns a promise that resolves with the requested Order

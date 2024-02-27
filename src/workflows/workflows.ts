@@ -312,7 +312,6 @@ export class Workflows {
     const starkPublicKey = await walletConnection.starkSigner.getAddress();
 
     if (majorContractVersion === 3) {
-      const starkPublicKey = await walletConnection.starkSigner.getAddress();
       return completeWithdrawalV1Workflow(
         walletConnection.ethSigner,
         starkPublicKey,
@@ -336,81 +335,6 @@ export class Workflows {
   }
 
   private async completeWithdrawalAll(
-    walletConnection: WalletConnection,
-    starkPublicKey: string,
-    token: AnyToken,
-  ): Promise<TransactionResponse> {
-    const ethAddress = await walletConnection.ethSigner.getAddress();
-    const { v3Balance, v4Balance } = await this.getWithdrawalBalances(
-      walletConnection.ethSigner,
-      starkPublicKey,
-      ethAddress,
-      token,
-    );
-
-    if (v3Balance.gt(0)) {
-      const isRegistered = await this.isRegisteredOnchain(walletConnection);
-      if (isRegistered) {
-        return completeAllWithdrawalWorkflow(
-          walletConnection.ethSigner,
-          starkPublicKey,
-          token,
-          this.encodingApi,
-          this.mintsApi,
-          this.config,
-        );
-      }
-      throw new Error('User unregistered');
-    }
-    if (v4Balance.gt(0)) {
-      return completeWithdrawalV2Workflow(
-        walletConnection.ethSigner,
-        ethAddress,
-        token,
-        this.encodingApi,
-        this.mintsApi,
-        this.config,
-      );
-    }
-    throw new Error('Nothing to withdraw');
-  }
-
-  public async registerAndCompleteWithdrawal(
-    walletConnection: WalletConnection,
-    token: AnyToken,
-  ): Promise<TransactionResponse> {
-    await this.validateChain(walletConnection.ethSigner);
-
-    const starkExContractInfo = await this.getStarkExContractVersion();
-    const majorContractVersion = await this.parseMajorContractVersion(
-      starkExContractInfo.data.version,
-    );
-    const starkPublicKey = await walletConnection.starkSigner.getAddress();
-
-    if (majorContractVersion === 3) {
-      return completeWithdrawalV1Workflow(
-        walletConnection.ethSigner,
-        starkPublicKey,
-        token,
-        this.encodingApi,
-        this.usersApi,
-        this.mintsApi,
-        this.config,
-      );
-    } else if (majorContractVersion >= 4) {
-      return this.registerAndCompleteWithdrawalAll(
-        walletConnection,
-        starkPublicKey,
-        token,
-      );
-    } else {
-      throw new Error(
-        `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
-      );
-    }
-  }
-
-  private async registerAndCompleteWithdrawalAll(
     walletConnection: WalletConnection,
     starkPublicKey: string,
     token: AnyToken,
