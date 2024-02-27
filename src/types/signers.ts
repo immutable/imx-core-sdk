@@ -16,19 +16,23 @@ export interface StarkSigner {
   signMessage(message: string): Promise<string>;
 
   /**
+   * Get the Signer address
+   * @returns the Signer's checksum address
+   */
+  getAddress(): string | Promise<string>;
+
+  /**
    * Signs the prefixed-message
    * @params message - this must be a UTF8-message
    * @returns the signed prefixed-message
    */
   sign(message: string): Promise<ec.Signature>;
 
-  getYCoordinate(): string;
-
   /**
-   * Get the Signer address
-   * @returns the Signer's checksum address
+   * Get the Y-coordinate of the public key
+   * @returns the Y-coordinate of the public key
    */
-  getAddress(): string | Promise<string>;
+  getYCoordinate(): string;
 }
 
 /**
