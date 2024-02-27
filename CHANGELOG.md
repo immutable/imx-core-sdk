@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added on chain registration workflow for StarkEx V4 contract.
-- [BREAKING CHANGE] Update `StarkSigner` interface to add 2 methods - `signMessage` and `getYCoordinate`.
+- Update `StarkSigner` interface to add 2 methods - `signMessage` and `getYCoordinate`.
 
 ## [3.3.0] - 2024-02-27
 
