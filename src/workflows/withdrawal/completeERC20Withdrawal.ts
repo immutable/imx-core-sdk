@@ -10,10 +10,11 @@ import {
   Registration__factory,
   RegistrationV4__factory,
 } from '../../contracts';
-import { ERC20Token } from '../../types';
+import { ERC20Token, WalletConnection } from '../../types';
 import {
   getSignableRegistrationOnchain,
   isRegisteredOnChainWorkflow,
+  signRegisterEthAddress,
 } from '../registration';
 import { getEncodeAssetInfo } from './getEncodeAssetInfo';
 
@@ -152,4 +153,38 @@ export async function completeAllERC20WithdrawalWorkflow(
     );
 
   return signer.sendTransaction(populatedTransaction);
+}
+
+export async function registerAndCompleteAllERC20WithdrawalWorkflow(
+  walletConnection: WalletConnection,
+  ethAddress: string,
+  starkPublicKey: string,
+  token: ERC20Token,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
+    token_address: token.tokenAddress,
+  });
+
+  const registrationContract = RegistrationV4__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    walletConnection.ethSigner,
+  );
+
+  const starkSignature = await signRegisterEthAddress(
+    walletConnection.starkSigner,
+    ethAddress,
+    starkPublicKey,
+  );
+
+  const populatedTransaction =
+    await registrationContract.populateTransaction.registerAndWithdrawAll(
+      ethAddress,
+      starkPublicKey,
+      starkSignature,
+      assetType.asset_id,
+    );
+
+  return walletConnection.ethSigner.sendTransaction(populatedTransaction);
 }
