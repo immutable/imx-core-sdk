@@ -68,9 +68,12 @@ import {
 } from './primarySales';
 import { TransactionResponse } from '@ethersproject/providers';
 import {
+  completeAllWithdrawalWorkflow,
   completeWithdrawalV1Workflow,
   completeWithdrawalV2Workflow,
 } from './withdrawal/completeWithdrawal';
+import { BigNumber } from 'ethers';
+import { getWithdrawalBalanceWorkflow } from './withdrawal/getWithdrawalBalance';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -298,6 +301,7 @@ export class Workflows {
     const majorContractVersion = await this.parseMajorContractVersion(
       starkExContractInfo.data.version,
     );
+    const starkPublicKey = await walletConnection.starkSigner.getAddress();
 
     if (majorContractVersion === 3) {
       const starkPublicKey = await walletConnection.starkSigner.getAddress();
@@ -311,7 +315,46 @@ export class Workflows {
         this.config,
       );
     } else if (majorContractVersion >= 4) {
-      const ethAddress = await walletConnection.ethSigner.getAddress();
+      return this.completeWithdrawalAll(
+        walletConnection,
+        starkPublicKey,
+        token,
+      );
+    } else {
+      throw new Error(
+        `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
+      );
+    }
+  }
+
+  private async completeWithdrawalAll(
+    walletConnection: WalletConnection,
+    starkPublicKey: string,
+    token: AnyToken,
+  ): Promise<TransactionResponse> {
+    const ethAddress = await walletConnection.ethSigner.getAddress();
+    const { v3Balance, v4Balance } = await this.getWithdrawalBalances(
+      walletConnection.ethSigner,
+      starkPublicKey,
+      ethAddress,
+      token,
+    );
+
+    if (v3Balance.gt(0)) {
+      const isRegistered = await this.isRegisteredOnchain(walletConnection);
+      if (isRegistered) {
+        return completeAllWithdrawalWorkflow(
+          walletConnection.ethSigner,
+          starkPublicKey,
+          token,
+          this.encodingApi,
+          this.mintsApi,
+          this.config,
+        );
+      }
+      throw new Error('User unregistered');
+    }
+    if (v4Balance.gt(0)) {
       return completeWithdrawalV2Workflow(
         walletConnection.ethSigner,
         ethAddress,
@@ -320,11 +363,33 @@ export class Workflows {
         this.mintsApi,
         this.config,
       );
-    } else {
-      throw new Error(
-        `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
-      );
     }
+    throw new Error('Nothing to withdraw');
+  }
+
+  private async getWithdrawalBalances(
+    signer: Signer,
+    starkPublicKey: string,
+    ethAddress: string,
+    token: AnyToken,
+  ): Promise<{ v3Balance: BigNumber; v4Balance: BigNumber }> {
+    const v3Balance = await getWithdrawalBalanceWorkflow(
+      signer,
+      starkPublicKey,
+      token,
+      this.encodingApi,
+      this.mintsApi,
+      this.config,
+    );
+    const v4Balance = await getWithdrawalBalanceWorkflow(
+      signer,
+      ethAddress,
+      token,
+      this.encodingApi,
+      this.mintsApi,
+      this.config,
+    );
+    return { v3Balance, v4Balance };
   }
 
   public async createOrder(

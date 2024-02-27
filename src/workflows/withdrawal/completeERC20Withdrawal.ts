@@ -5,9 +5,10 @@ import { ImmutableXConfiguration } from '../../config';
 import {
   Core,
   Core__factory,
+  CoreV4__factory,
   Registration,
   Registration__factory,
-  CoreV4__factory,
+  RegistrationV4__factory,
 } from '../../contracts';
 import { ERC20Token } from '../../types';
 import {
@@ -122,6 +123,33 @@ export async function completeERC20WithdrawalV2Workflow(
     ownerKey,
     assetType.asset_type,
   );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
+export async function completeAllERC20WithdrawalWorkflow(
+  signer: Signer,
+  starkPublicKey: string,
+  token: ERC20Token,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
+    token_address: token.tokenAddress,
+  });
+
+  const registrationContract = RegistrationV4__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    signer,
+  );
+
+  const ethAddress = await signer.getAddress();
+  const populatedTransaction =
+    await registrationContract.populateTransaction.withdrawAll(
+      ethAddress,
+      starkPublicKey,
+      assetType.asset_id,
+    );
 
   return signer.sendTransaction(populatedTransaction);
 }

@@ -1,13 +1,15 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { TransactionResponse } from '@ethersproject/providers';
 import { AnyToken } from 'src/types';
-import {
-  completeEthWithdrawalV1Workflow,
-  completeEthWithdrawalV2Workflow,
-} from './completeEthWithdrawal';
 import { EncodingApi, MintsApi, UsersApi } from 'src/api';
 import { ImmutableXConfiguration } from 'src/config';
 import {
+  completeAllEthWithdrawalWorkflow,
+  completeEthWithdrawalV1Workflow,
+  completeEthWithdrawalV2Workflow,
+} from './completeEthWithdrawal';
+import {
+  completeAllERC20WithdrawalWorkflow,
   completeERC20WithdrawalV1Workflow,
   completeERC20WithdrawalV2Workflow,
 } from './completeERC20Withdrawal';
@@ -78,6 +80,43 @@ export async function completeWithdrawalV2Workflow(
       return completeERC721WithdrawalV2Workflow(
         signer,
         ownerKey,
+        token,
+        encodingApi,
+        mintsApi,
+        config,
+      );
+  }
+}
+
+export async function completeAllWithdrawalWorkflow(
+  signer: Signer,
+  starkPublicKey: string,
+  token: AnyToken,
+  encodingApi: EncodingApi,
+  mintsApi: MintsApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  switch (token.type) {
+    case 'ETH':
+      return completeAllEthWithdrawalWorkflow(
+        signer,
+        starkPublicKey,
+        encodingApi,
+        config,
+      );
+    case 'ERC20':
+      return completeAllERC20WithdrawalWorkflow(
+        signer,
+        starkPublicKey,
+        token,
+        encodingApi,
+        config,
+      );
+    case 'ERC721':
+      // for ERC721, if the v3 balance > 0, then the v4 balance is 0
+      return completeERC721WithdrawalV2Workflow(
+        signer,
+        starkPublicKey,
         token,
         encodingApi,
         mintsApi,

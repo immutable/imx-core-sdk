@@ -5,9 +5,10 @@ import { ImmutableXConfiguration } from '../../config';
 import {
   Core,
   Core__factory,
+  CoreV4__factory,
   Registration,
   Registration__factory,
-  CoreV4__factory,
+  RegistrationV4__factory,
 } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
@@ -115,6 +116,30 @@ export async function completeEthWithdrawalV2Workflow(
     ownerKey,
     assetType.asset_type,
   );
+
+  return signer.sendTransaction(populatedTransaction);
+}
+
+export async function completeAllEthWithdrawalWorkflow(
+  signer: Signer,
+  starkPublicKey: string,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
+
+  const registrationContract = RegistrationV4__factory.connect(
+    config.ethConfiguration.registrationContractAddress,
+    signer,
+  );
+
+  const ethAddress = await signer.getAddress();
+  const populatedTransaction =
+    await registrationContract.populateTransaction.withdrawAll(
+      ethAddress,
+      starkPublicKey,
+      assetType.asset_id,
+    );
 
   return signer.sendTransaction(populatedTransaction);
 }
