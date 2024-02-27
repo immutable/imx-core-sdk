@@ -11,9 +11,9 @@
       "url": "https://support.immutable.com",
       "email": "support@immutable.com"
     },
-    "version": "3.0"
+    "version": "3.0.0"
   },
-  "host": "api.sandbox.x.immutable.com",
+  "host": "api.sandbox.immutable.com",
   "basePath": "/",
   "paths": {
     "/v1/assets": {
@@ -1666,7 +1666,7 @@
             "ImxEthSignature": []
           }
         ],
-        "description": "[Experimental] Create Primary Sale. This endpoint is experimental and may change in the future.",
+        "description": "Create Primary Sale. This endpoint is experimental and may change in the future.",
         "consumes": [
           "application/json"
         ],
@@ -1676,7 +1676,7 @@
         "tags": [
           "primary-sales"
         ],
-        "summary": "[Experimental] Create Primary Sale",
+        "summary": "Create Primary Sale",
         "operationId": "CreatePrimarySale",
         "parameters": [
           {
@@ -1735,7 +1735,7 @@
     },
     "/v1/primary_sales/signable-primary-sale-details": {
       "post": {
-        "description": "[Experimental] Signable Create Primary Sale.  This endpoint is experimental and may change in the future.",
+        "description": "Signable Create Primary Sale.  This endpoint is experimental and may change in the future.",
         "consumes": [
           "application/json"
         ],
@@ -1745,7 +1745,7 @@
         "tags": [
           "primary-sales"
         ],
-        "summary": "[Experimental] Signable Create Primary Sale",
+        "summary": "Signable Create Primary Sale",
         "operationId": "SignableCreatePrimarySale",
         "parameters": [
           {
@@ -1792,14 +1792,14 @@
     },
     "/v1/primary_sales/{id}": {
       "get": {
-        "description": "[Experimental] Get a single primary sale by ID. This endpoint is experimental and may change in the future.",
+        "description": "Get a single primary sale by ID. This endpoint is experimental and may change in the future.",
         "produces": [
           "application/json"
         ],
         "tags": [
           "primary-sales"
         ],
-        "summary": "[Experimental] Get a single primary sale by ID",
+        "summary": "Get a single primary sale by ID",
         "operationId": "GetPrimarySale",
         "parameters": [
           {
@@ -1853,14 +1853,14 @@
             "ImxEthSignature": []
           }
         ],
-        "description": "[Experimental] Accept Primary Sale.  This endpoint is experimental and may change in the future.",
+        "description": "Accept Primary Sale.  This endpoint is experimental and may change in the future.",
         "produces": [
           "application/json"
         ],
         "tags": [
           "primary-sales"
         ],
-        "summary": "[Experimental] Accept Primary Sale",
+        "summary": "Accept Primary Sale",
         "operationId": "AcceptPrimarySale",
         "parameters": [
           {
@@ -1932,14 +1932,14 @@
             "ImxEthSignature": []
           }
         ],
-        "description": "[Experimental] Reject Primary Sale.  This endpoint is experimental and may change in the future.",
+        "description": "Reject Primary Sale.  This endpoint is experimental and may change in the future.",
         "produces": [
           "application/json"
         ],
         "tags": [
           "primary-sales"
         ],
-        "summary": "[Experimental] Reject Primary Sale",
+        "summary": "Reject Primary Sale",
         "operationId": "RejectPrimarySale",
         "parameters": [
           {
@@ -2005,14 +2005,14 @@
     },
     "/v1/primary_sales/{id}/signable-accept-details": {
       "post": {
-        "description": "[Experimental] Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.",
+        "description": "Signable Accept Primary Sale.  This endpoint is experimental and may change in the future.",
         "produces": [
           "application/json"
         ],
         "tags": [
           "primary-sales"
         ],
-        "summary": "[Experimental] Signable Accept Primary Sale",
+        "summary": "Signable Accept Primary Sale",
         "operationId": "SignableAcceptPrimarySale",
         "parameters": [
           {
@@ -2066,14 +2066,14 @@
     },
     "/v1/primary_sales/{id}/signable-reject-details": {
       "post": {
-        "description": "[Experimental] Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.",
+        "description": "Signable Reject Primary Sale.  This endpoint is experimental and may change in the future.",
         "produces": [
           "application/json"
         ],
         "tags": [
           "primary-sales"
         ],
-        "summary": "[Experimental] Signable Reject Primary Sale",
+        "summary": "Signable Reject Primary Sale",
         "operationId": "SignableRejectPrimarySale",
         "parameters": [
           {
@@ -14003,7 +14003,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError400"
             }
           }
         },
@@ -14013,7 +14013,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError403"
             }
           }
         },
@@ -14023,7 +14023,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError500"
             }
           }
         },
@@ -14033,7 +14033,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError404"
             }
           }
         },
@@ -14043,7 +14043,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError501"
             }
           }
         },
@@ -14053,7 +14053,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError429"
             }
           }
         },
@@ -14063,7 +14063,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError401"
             }
           }
         },
@@ -14073,7 +14073,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/definitions/APIError"
+              "$ref": "../../../../common/openapi/errors/api_errors_v2.yaml#/definitions/APIError422"
             }
           }
         },
