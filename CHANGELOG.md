@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove experimental flag for primary sales functions
 
+## [2.6.1] - 2024-02-26
+
+### Added
+
+- `prepareWithdrawal` has been updated to use V2 withdrawal logic for StarkEx V4 contract.
+- Add StarkEx V4 contract bindings so that SDK can interact with the contract.
+
 ## [2.5.4] - 2024-02-20
 
 ### Added
