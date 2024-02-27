@@ -19,5 +19,5 @@ export type { StarkV4 } from './contracts/StarkV4';
 export { StarkV4__factory } from './factories/contracts/StarkV4__factory';
 export type { Registration } from './contracts/Registration';
 export { Registration__factory } from './factories/contracts/Registration__factory';
-export type { RegistrationV2 } from './contracts/RegistrationV2';
-export { RegistrationV2__factory } from './factories/contracts/RegistrationV2__factory';
+export type { RegistrationV4 } from './contracts/RegistrationV4';
+export { RegistrationV4__factory } from './factories/contracts/RegistrationV4__factory';

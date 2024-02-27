@@ -22,7 +22,7 @@ import type {
   OnEvent,
 } from "../common";
 
-export interface RegistrationV2Interface extends utils.Interface {
+export interface RegistrationV4Interface extends utils.Interface {
   functions: {
     "getVersion()": FunctionFragment;
     "imx()": FunctionFragment;
@@ -96,12 +96,12 @@ export interface RegistrationV2Interface extends utils.Interface {
   events: {};
 }
 
-export interface RegistrationV2 extends BaseContract {
+export interface RegistrationV4 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: RegistrationV2Interface;
+  interface: RegistrationV4Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

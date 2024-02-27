@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from "ethers";
 import type { Provider } from "@ethersproject/providers";
 import type {
-  RegistrationV2,
-  RegistrationV2Interface,
-} from "../../contracts/RegistrationV2";
+  RegistrationV4,
+  RegistrationV4Interface,
+} from "../../contracts/RegistrationV4";
 
 const _abi = [
   {
@@ -185,15 +185,15 @@ const _abi = [
   },
 ] as const;
 
-export class RegistrationV2__factory {
+export class RegistrationV4__factory {
   static readonly abi = _abi;
-  static createInterface(): RegistrationV2Interface {
-    return new utils.Interface(_abi) as RegistrationV2Interface;
+  static createInterface(): RegistrationV4Interface {
+    return new utils.Interface(_abi) as RegistrationV4Interface;
   }
   static connect(
     address: string,
     signerOrProvider: Signer | Provider
-  ): RegistrationV2 {
-    return new Contract(address, _abi, signerOrProvider) as RegistrationV2;
+  ): RegistrationV4 {
+    return new Contract(address, _abi, signerOrProvider) as RegistrationV4;
   }
 }

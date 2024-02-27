@@ -4,4 +4,4 @@
 export { StarkV3__factory } from "./StarkV3__factory";
 export { StarkV4__factory } from "./StarkV4__factory";
 export { Registration__factory } from "./Registration__factory";
-export { RegistrationV2__factory } from "./RegistrationV2__factory";
+export { RegistrationV4__factory } from "./RegistrationV4__factory";

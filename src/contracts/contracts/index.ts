@@ -4,4 +4,4 @@
 export type { StarkV3 } from "./StarkV3";
 export type { StarkV4 } from "./StarkV4";
 export type { Registration } from "./Registration";
-export type { RegistrationV2 } from "./RegistrationV2";
+export type { RegistrationV4 } from "./RegistrationV4";
