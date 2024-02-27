@@ -7,6 +7,7 @@ import {
   StarkV3__factory,
   Registration,
   Registration__factory,
+  StarkV4__factory,
 } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
@@ -54,13 +55,13 @@ async function executeWithdrawEth(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function completeEthWithdrawalWorkflow(
+export async function completeEthWithdrawalV1Workflow(
   signer: Signer,
   starkPublicKey: string,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   const coreContract = StarkV3__factory.connect(
@@ -94,4 +95,26 @@ export async function completeEthWithdrawalWorkflow(
       coreContract,
     );
   }
+}
+
+export async function completeEthWithdrawalV2Workflow(
+  signer: Signer,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
+
+  const coreContract = StarkV4__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    signer,
+  );
+
+  const ownerKey = await signer.getAddress();
+
+  const populatedTransaction = await coreContract.populateTransaction.withdraw(
+    ownerKey,
+    assetType.asset_type,
+  );
+
+  return signer.sendTransaction(populatedTransaction);
 }
