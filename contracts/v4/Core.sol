@@ -1,7 +1,15 @@
-// SPDX-License-Identifier: UNLICENSED
+// Copyright (c) Immutable Pty Ltd 2018 - 2024
+// SPDX-License-Identifier: MIT
+//
+// This contract is an interface for the StarkEx Core contract v4 version.
+// It is used to interact with the StarkEx Core contract from the Registration contract.
+// The Core contract is used to register and withdraw users and assets from the StarkEx system.
+//
+// This file was generated using the abi-to-sol tool.
+// the StarkEx contract ABI that was provided by StarkWare via slack.
 pragma solidity ^0.8.19;
 
-interface Core {
+interface CoreV4 {
     fallback() external payable;
 
     function VERSION() external view returns (string memory);
