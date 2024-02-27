@@ -3,10 +3,11 @@ import { TransactionResponse } from '@ethersproject/providers';
 import { EncodingApi, UsersApi } from '../../api';
 import { ImmutableXConfiguration } from '../../config';
 import {
-  Core,
-  Core__factory,
+  StarkV3,
+  StarkV3__factory,
   Registration,
   Registration__factory,
+  StarkV4__factory,
 } from '../../contracts';
 import {
   getSignableRegistrationOnchain,
@@ -44,7 +45,7 @@ async function executeWithdrawEth(
   signer: Signer,
   assetType: string,
   starkPublicKey: string,
-  contract: Core,
+  contract: StarkV3,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction.withdraw(
     starkPublicKey,
@@ -54,16 +55,16 @@ async function executeWithdrawEth(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function completeEthWithdrawalWorkflow(
+export async function completeEthWithdrawalV1Workflow(
   signer: Signer,
   starkPublicKey: string,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
-  const coreContract = Core__factory.connect(
+  const coreContract = StarkV3__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
@@ -94,4 +95,26 @@ export async function completeEthWithdrawalWorkflow(
       coreContract,
     );
   }
+}
+
+export async function completeEthWithdrawalV2Workflow(
+  signer: Signer,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
+
+  const coreContract = StarkV4__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    signer,
+  );
+
+  const ownerKey = await signer.getAddress();
+
+  const populatedTransaction = await coreContract.populateTransaction.withdraw(
+    ownerKey,
+    assetType.asset_type,
+  );
+
+  return signer.sendTransaction(populatedTransaction);
 }
