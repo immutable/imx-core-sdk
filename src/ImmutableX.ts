@@ -170,7 +170,7 @@ export class ImmutableX {
   }
 
   /**
-   * Register a User to StarkEx contract if they are not already
+   * Register a User to StarkEx contract if they are not registered already
    * @param walletConnection - the pair of L1/L2 signers
    * @returns a promise that resolves with void if successful
    * @throws {@link index.IMXError}
