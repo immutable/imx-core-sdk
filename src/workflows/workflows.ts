@@ -1,4 +1,3 @@
-import { Signer } from '@ethersproject/abstract-signer';
 import {
   DepositsApi,
   EncodingApi,
@@ -35,7 +34,6 @@ import {
   ETHAmount,
   ERC20Amount,
   AnyToken,
-  ERC20Token,
   EthSigner,
   UnsignedExchangeTransferRequest,
   StarkExContractVersion,
@@ -53,9 +51,6 @@ import {
   depositEthWorkflow,
 } from './deposit';
 import {
-  completeERC20WithdrawalWorkflow,
-  completeERC721WithdrawalWorkflow,
-  completeEthWithdrawalWorkflow,
   prepareWithdrawalV2Workflow,
   prepareWithdrawalWorkflow,
 } from './withdrawal';
@@ -65,11 +60,17 @@ import { generateIMXAuthorisationHeaders } from '../utils';
 import { ImmutableXConfiguration } from '../config';
 import { exchangeTransfersWorkflow } from './exchangeTransfers';
 import axios, { AxiosResponse } from 'axios';
+import { Signer } from '@ethersproject/abstract-signer';
 import {
   CreatePrimarySaleWorkflow,
   AcceptPrimarySalesWorkflow,
   RejectPrimarySalesWorkflow,
 } from './primarySales';
+import { TransactionResponse } from '@ethersproject/providers';
+import {
+  completeWithdrawalV1Workflow,
+  completeWithdrawalV2Workflow,
+} from './withdrawal/completeWithdrawal';
 
 export class Workflows {
   private readonly depositsApi: DepositsApi;
@@ -287,66 +288,43 @@ export class Workflows {
     return parseInt(contractVersion.charAt(0));
   }
 
-  public completeWithdrawal(
-    signer: Signer,
-    starkPublicKey: string,
+  public async completeWithdrawal(
+    walletConnection: WalletConnection,
     token: AnyToken,
-  ) {
-    switch (token.type) {
-      case 'ETH':
-        return this.completeEthWithdrawal(signer, starkPublicKey);
-      case 'ERC20':
-        return this.completeERC20Withdrawal(signer, starkPublicKey, token);
-      case 'ERC721':
-        return this.completeERC721Withdrawal(signer, starkPublicKey, token);
+  ): Promise<TransactionResponse> {
+    await this.validateChain(walletConnection.ethSigner);
+
+    const starkExContractInfo = await this.getStarkExContractVersion();
+    const majorContractVersion = await this.parseMajorContractVersion(
+      starkExContractInfo.data.version,
+    );
+
+    if (majorContractVersion === 3) {
+      const starkPublicKey = await walletConnection.starkSigner.getAddress();
+      return completeWithdrawalV1Workflow(
+        walletConnection.ethSigner,
+        starkPublicKey,
+        token,
+        this.encodingApi,
+        this.usersApi,
+        this.mintsApi,
+        this.config,
+      );
+    } else if (majorContractVersion >= 4) {
+      const ethAddress = await walletConnection.ethSigner.getAddress();
+      return completeWithdrawalV2Workflow(
+        walletConnection.ethSigner,
+        ethAddress,
+        token,
+        this.encodingApi,
+        this.mintsApi,
+        this.config,
+      );
+    } else {
+      throw new Error(
+        `Invalid StarkEx contract version (${majorContractVersion}). Please try again later.`,
+      );
     }
-  }
-
-  private async completeEthWithdrawal(signer: Signer, starkPublicKey: string) {
-    await this.validateChain(signer);
-
-    return completeEthWithdrawalWorkflow(
-      signer,
-      starkPublicKey,
-      this.encodingApi,
-      this.usersApi,
-      this.config,
-    );
-  }
-
-  private async completeERC20Withdrawal(
-    signer: Signer,
-    starkPublicKey: string,
-    token: ERC20Token,
-  ) {
-    await this.validateChain(signer);
-
-    return completeERC20WithdrawalWorkflow(
-      signer,
-      starkPublicKey,
-      token,
-      this.encodingApi,
-      this.usersApi,
-      this.config,
-    );
-  }
-
-  private async completeERC721Withdrawal(
-    signer: Signer,
-    starkPublicKey: string,
-    token: ERC721Token,
-  ) {
-    await this.validateChain(signer);
-
-    return completeERC721WithdrawalWorkflow(
-      signer,
-      starkPublicKey,
-      token,
-      this.encodingApi,
-      this.mintsApi,
-      this.usersApi,
-      this.config,
-    );
   }
 
   public async createOrder(

@@ -7,6 +7,7 @@ import {
   StarkV3__factory,
   Registration,
   Registration__factory,
+  StarkV4__factory,
 } from '../../contracts';
 import { ERC20Token } from '../../types';
 import {
@@ -55,14 +56,14 @@ async function executeWithdrawERC20(
   return signer.sendTransaction(populatedTransaction);
 }
 
-export async function completeERC20WithdrawalWorkflow(
+export async function completeERC20WithdrawalV1Workflow(
   signer: Signer,
   starkPublicKey: string,
   token: ERC20Token,
   encodingApi: EncodingApi,
   usersApi: UsersApi,
   config: ImmutableXConfiguration,
-) {
+): Promise<TransactionResponse> {
   const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
     token_address: token.tokenAddress,
   });
@@ -98,4 +99,29 @@ export async function completeERC20WithdrawalWorkflow(
       coreContract,
     );
   }
+}
+
+export async function completeERC20WithdrawalV2Workflow(
+  signer: Signer,
+  token: ERC20Token,
+  encodingApi: EncodingApi,
+  config: ImmutableXConfiguration,
+): Promise<TransactionResponse> {
+  const assetType = await getEncodeAssetInfo('asset', 'ERC20', encodingApi, {
+    token_address: token.tokenAddress,
+  });
+
+  const coreContract = StarkV4__factory.connect(
+    config.ethConfiguration.coreContractAddress,
+    signer,
+  );
+
+  const ownerKey = await signer.getAddress();
+
+  const populatedTransaction = await coreContract.populateTransaction.withdraw(
+    ownerKey,
+    assetType.asset_type,
+  );
+
+  return signer.sendTransaction(populatedTransaction);
 }
