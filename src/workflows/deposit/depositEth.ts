@@ -9,7 +9,11 @@ import {
 } from '../registration';
 import { ETHAmount } from '../../types';
 import { BigNumber } from '@ethersproject/bignumber';
-import { ImmutableXConfiguration } from '../../config';
+import {
+  ContractVersion,
+  ImmutableXConfiguration,
+  contractAddressToVersion,
+} from '../../config';
 
 interface ETHTokenData {
   decimals: number;
@@ -103,35 +107,41 @@ export async function depositEthWorkflow(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
-
-  const registrationContract = Registration__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
-    signer,
+  const version = contractAddressToVersion.get(
+    config.ethConfiguration.coreContractAddress,
   );
 
-  const isRegistered = await isRegisteredOnChainWorkflow(
-    starkPublicKey,
-    registrationContract,
-  );
+  if (version == ContractVersion.V3) {
+    const registrationContract = Registration__factory.connect(
+      config.ethConfiguration.registrationContractAddress,
+      signer,
+    );
 
-  if (!isRegistered) {
-    return executeRegisterAndDepositEth(
-      signer,
-      amount,
-      assetType,
+    const isRegistered = await isRegisteredOnChainWorkflow(
       starkPublicKey,
-      vaultId,
-      coreContract,
-      usersApi,
+      registrationContract,
     );
-  } else {
-    return executeDepositEth(
-      signer,
-      amount,
-      assetType,
-      starkPublicKey,
-      vaultId,
-      coreContract,
-    );
+
+    if (!isRegistered) {
+      return executeRegisterAndDepositEth(
+        signer,
+        amount,
+        assetType,
+        starkPublicKey,
+        vaultId,
+        coreContract,
+        usersApi,
+      );
+    }
   }
+
+  // if V4, skip registration
+  return executeDepositEth(
+    signer,
+    amount,
+    assetType,
+    starkPublicKey,
+    vaultId,
+    coreContract,
+  );
 }
