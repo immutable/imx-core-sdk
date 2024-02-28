@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [3.5.0] - 2024-02-28
+
+### Added
+
+- Update `completeWithdrawal`:
+  - If the user has only v4 balance, `completeWithdrawal` will withdraw v4 balance.
+  - If the user has v3 balance, `completeWithdrawal` will try to withdraw both v3 and v4 balance.
+  - If the user has v3 balance, and is not registered on-chain, `completeWithdrawal` will try to register the user and then withdraw both v3 and v4 balance.
+  - If the v3 balance is not zero for an NFT, `completeWithdrawal` will only try to withdraw v3 balance.
+- v3 balance refers to withdrawal prepared using /v1/withdrawal API.
+- v4 balance refers to withdrawal prepared using /v2/withdrawal API.
+
 ## [3.4.0] - 2024-02-27
 
 ### Added

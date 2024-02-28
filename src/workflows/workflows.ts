@@ -72,6 +72,7 @@ import {
   completeAllWithdrawalWorkflow,
   completeWithdrawalV1Workflow,
   completeWithdrawalV2Workflow,
+  registerAndCompleteAllWithdrawalWorkflow,
 } from './withdrawal/completeWithdrawal';
 import { BigNumber } from 'ethers';
 import { getWithdrawalBalanceWorkflow } from './withdrawal/getWithdrawalBalance';
@@ -311,7 +312,6 @@ export class Workflows {
     const starkPublicKey = await walletConnection.starkSigner.getAddress();
 
     if (majorContractVersion === 3) {
-      const starkPublicKey = await walletConnection.starkSigner.getAddress();
       return completeWithdrawalV1Workflow(
         walletConnection.ethSigner,
         starkPublicKey,
@@ -359,7 +359,15 @@ export class Workflows {
           this.config,
         );
       }
-      throw new Error('User unregistered');
+      return registerAndCompleteAllWithdrawalWorkflow(
+        walletConnection,
+        ethAddress,
+        starkPublicKey,
+        token,
+        this.encodingApi,
+        this.mintsApi,
+        this.config,
+      );
     }
     if (v4Balance.gt(0)) {
       return completeWithdrawalV2Workflow(
