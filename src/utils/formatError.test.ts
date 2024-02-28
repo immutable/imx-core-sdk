@@ -28,6 +28,7 @@ describe('formatError', () => {
       ethConfiguration: {
         coreContractAddress: '',
         registrationContractAddress: '',
+        registrationV4ContractAddress: '',
         chainID: 3,
       },
     };
