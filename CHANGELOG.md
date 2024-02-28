@@ -54,7 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `completeWithdrawal` has been updated to use V2 withdrawal logic for StarkEx V4 contract.
-- [BREAKING CHANGE] `completeWithdrawal` now requires `WalletConnection` instead of Eth Signer.
+- [BREAKING CHANGE] `completeWithdrawal` now requires `WalletConnection` instead of Eth Signer. See https://github.com/immutable/imx-core-sdk/blob/3.0.0/examples/completeEthWithdrawal.ts.
 
 ## [2.6.1] - 2024-02-26
 
