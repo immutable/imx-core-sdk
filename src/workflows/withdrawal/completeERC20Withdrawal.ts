@@ -140,7 +140,7 @@ export async function completeAllERC20WithdrawalWorkflow(
   });
 
   const registrationContract = RegistrationV4__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
+    config.ethConfiguration.registrationV4ContractAddress,
     signer,
   );
 
@@ -168,7 +168,7 @@ export async function registerAndCompleteAllERC20WithdrawalWorkflow(
   });
 
   const registrationContract = RegistrationV4__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
+    config.ethConfiguration.registrationV4ContractAddress,
     walletConnection.ethSigner,
   );
 

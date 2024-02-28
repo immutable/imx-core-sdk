@@ -131,7 +131,7 @@ export async function completeAllEthWithdrawalWorkflow(
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   const registrationContract = RegistrationV4__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
+    config.ethConfiguration.registrationV4ContractAddress,
     signer,
   );
 
@@ -156,7 +156,7 @@ export async function registerAndCompleteAllEthWithdrawalWorkflow(
   const assetType = await getEncodeAssetInfo('asset', 'ETH', encodingApi);
 
   const registrationContract = RegistrationV4__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
+    config.ethConfiguration.registrationV4ContractAddress,
     walletConnection.ethSigner,
   );
 

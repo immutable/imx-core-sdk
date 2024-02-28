@@ -353,7 +353,7 @@ async function registerAndCompleteMintableERC721WithdrawalV2(
   );
   const mintingBlob = getMintingBlob(token);
   const contract = RegistrationV4__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
+    config.ethConfiguration.registrationV4ContractAddress,
     signer,
   );
 
@@ -383,7 +383,7 @@ async function registerAndCompleteERC721WithdrawalV2(
   });
 
   const contract = RegistrationV4__factory.connect(
-    config.ethConfiguration.registrationContractAddress,
+    config.ethConfiguration.registrationV4ContractAddress,
     signer,
   );
 
