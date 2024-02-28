@@ -10,6 +10,7 @@ describe('createConfig', () => {
       Config.createConfig({
         coreContractAddress: '0x1',
         registrationContractAddress: '0x2',
+        registrationV4ContractAddress: '0x3',
         chainID: 3,
         basePath: ' ',
       }),
@@ -21,6 +22,7 @@ describe('createConfig', () => {
       Config.createConfig({
         coreContractAddress: '0x1',
         registrationContractAddress: '0x2',
+        registrationV4ContractAddress: '0x3',
         chainID: 3,
         basePath: '',
       }),
@@ -31,6 +33,7 @@ describe('createConfig', () => {
     const basePath = 'https://api.sandbox.x.immutable.com';
     const coreContractAddress = '0x1';
     const registrationContractAddress = '0x2';
+    const registrationV4ContractAddress = '0x3';
     const chainID = 3;
     const customHeaders = {
       'x-custom-headers': 'x values',
@@ -47,12 +50,14 @@ describe('createConfig', () => {
         chainID,
         coreContractAddress,
         registrationContractAddress,
+        registrationV4ContractAddress,
       },
     };
 
     const actual = Config.createConfig({
       coreContractAddress,
       registrationContractAddress,
+      registrationV4ContractAddress,
       chainID,
       basePath,
       headers: customHeaders,
@@ -66,6 +71,7 @@ describe('createConfig', () => {
     const basePath = 'https://api.sandbox.x.immutable.com';
     const coreContractAddress = '0x1';
     const registrationContractAddress = '0x2';
+    const registrationV4ContractAddress = '0x3';
     const chainID = 3;
     const customHeaders = {
       'x-custom-headers': 'x values',
@@ -85,12 +91,14 @@ describe('createConfig', () => {
         chainID,
         coreContractAddress,
         registrationContractAddress,
+        registrationV4ContractAddress,
       },
     };
 
     const actual = Config.createConfig({
       coreContractAddress,
       registrationContractAddress,
+      registrationV4ContractAddress,
       chainID,
       basePath,
       headers: customHeaders,
