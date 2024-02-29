@@ -1,8 +1,8 @@
 import { Signer } from '@ethersproject/abstract-signer';
 import { EncodingApi, MintsApi, UsersApi } from '../../api';
 import {
-  StarkV3,
-  StarkV3__factory,
+  Core,
+  Core__factory,
   Registration,
   Registration__factory,
 } from '../../contracts';
@@ -30,7 +30,7 @@ async function executeWithdrawMintableERC721(
   assetType: string,
   starkPublicKey: string,
   mintingBlob: string,
-  contract: StarkV3,
+  contract: Core,
 ): Promise<TransactionResponse> {
   const populatedTransaction =
     await contract.populateTransaction.withdrawAndMint(
@@ -95,7 +95,7 @@ async function completeMintableERC721Withdrawal(
   );
   const mintingBlob = getMintingBlob(token);
 
-  const coreContract = StarkV3__factory.connect(
+  const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
@@ -163,7 +163,7 @@ async function executeWithdrawERC721(
   assetType: string,
   starkPublicKey: string,
   tokenId: string,
-  contract: StarkV3,
+  contract: Core,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction.withdrawNft(
     starkPublicKey,
@@ -186,7 +186,7 @@ async function completeERC721Withdrawal(
     token_address: token.tokenAddress,
   });
 
-  const coreContract = StarkV3__factory.connect(
+  const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );

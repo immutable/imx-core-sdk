@@ -3,8 +3,8 @@ import { TransactionResponse } from '@ethersproject/providers';
 import { DepositsApi, EncodingApi, TokensApi, UsersApi } from '../../api';
 import { parseUnits } from '@ethersproject/units';
 import {
-  StarkV3,
-  StarkV3__factory,
+  Core,
+  Core__factory,
   IERC20__factory,
   Registration__factory,
 } from '../../contracts';
@@ -27,7 +27,7 @@ async function executeDepositERC20(
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
-  contract: StarkV3,
+  contract: Core,
 ): Promise<TransactionResponse> {
   const populatedTransaction = await contract.populateTransaction.depositERC20(
     starkPublicKey,
@@ -45,7 +45,7 @@ async function executeRegisterAndDepositERC20(
   assetType: string,
   starkPublicKey: string,
   vaultId: number,
-  contract: StarkV3,
+  contract: Core,
   usersApi: UsersApi,
 ): Promise<TransactionResponse> {
   const etherKey = await signer.getAddress();
@@ -130,7 +130,7 @@ export async function depositERC20Workflow(
   const vaultId = signableDepositResult.data.vault_id;
   const quantizedAmount = BigNumber.from(signableDepositResult.data.amount);
 
-  const coreContract = StarkV3__factory.connect(
+  const coreContract = Core__factory.connect(
     config.ethConfiguration.coreContractAddress,
     signer,
   );
